@@ -188,7 +188,9 @@ dependencies {
 
     //jpa 사용
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
 }
+
 
 test {
     useJUnitPlatform()

@@ -24,7 +24,7 @@ public class UsdKrw {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "uid", columnDefinition = "int unsigned")
-    private Long uid;
+    private long uid;
 
     @Column(name = "regdate", nullable = false)
     private Date regdate;
