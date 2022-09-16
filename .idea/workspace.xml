@@ -1,7 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e151a247-abc6-466f-8815-2d515e9d1cab" name="Changes" comment="" />
+    <list default="true" id="e151a247-abc6-466f-8815-2d515e9d1cab" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/backend/.gitattributes" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.gitattributes" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/backend/gradlew" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/backend/gradlew.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/backend/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/generated/com/ssafy/db/entity/QBaseEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/generated/com/ssafy/db/entity/QBaseEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/generated/com/ssafy/db/entity/QUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/generated/com/ssafy/db/entity/QUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/SsenApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/SsenApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/api/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/api/controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/api/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/api/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/api/request/UserLoginPostReq.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/api/request/UserLoginPostReq.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/api/request/UserRegisterPostReq.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/api/request/UserRegisterPostReq.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/api/response/UserLoginPostRes.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/api/response/UserLoginPostRes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/api/response/UserRes.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/api/response/UserRes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/api/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/api/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/api/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/api/service/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/common/auth/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/common/auth/JwtAuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/common/auth/SsafyUserDetailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/common/auth/SsafyUserDetailService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/common/auth/SsafyUserDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/common/auth/SsafyUserDetails.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/common/exception/handler/NotFoundHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/common/exception/handler/NotFoundHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/common/model/response/BaseResponseBody.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/common/model/response/BaseResponseBody.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/common/util/JwtTokenUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/common/util/JwtTokenUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/common/util/ResponseBodyWriteUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/common/util/ResponseBodyWriteUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/config/JpaConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/config/JpaConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/config/SwaggerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/config/SwaggerConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/config/WebMvcConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/config/WebMvcConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/db/entity/CnyKrw.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/db/entity/CnyKrw.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/db/entity/EurKrw.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/db/entity/EurKrw.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/db/entity/GbpKrw.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/db/entity/GbpKrw.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/db/entity/JpyKrw.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/db/entity/JpyKrw.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/db/entity/UsdKrw.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/db/entity/UsdKrw.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/db/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/db/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/db/entity/VarianceDate.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/db/entity/VarianceDate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/db/entity/VarianceKeyword.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/db/entity/VarianceKeyword.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/db/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/db/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/db/repository/UserRepositorySupport.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ssafy/db/repository/UserRepositorySupport.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/resources/application.properties" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,13 +59,13 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -34,6 +75,7 @@
       <option name="presentableId" value="Default" />
       <updated>1663300565844</updated>
       <workItem from="1663300568411" duration="13000" />
+      <workItem from="1663307422232" duration="16000" />
     </task>
     <servers />
   </component>
