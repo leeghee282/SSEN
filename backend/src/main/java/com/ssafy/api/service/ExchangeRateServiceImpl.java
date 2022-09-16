@@ -1,18 +1,16 @@
 package com.ssafy.api.service;
 
 import com.ssafy.api.response.ExchangeRateRes;
-import com.ssafy.db.entity.UsdKrw;
-import com.ssafy.db.repository.UsdKrwRepository;
+import com.ssafy.db.entity.*;
+import com.ssafy.db.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.ParseException;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.ssafy.db.entity.QUsdKrw.usdKrw;
 
 
 @Service
@@ -21,6 +19,12 @@ import static com.ssafy.db.entity.QUsdKrw.usdKrw;
 public class ExchangeRateServiceImpl implements ExchangeRateService {
 
     private final UsdKrwRepository usdKrwRepository;
+    private final JpyKrwRepository jpyKrwRepository;
+    private final EurKrwRepository eurKrwRepository;
+    private final GbpKrwRepository gbpKrwRepository;
+    private final CnyKrwRepository cnyKrwRepository;
+
+
 
     @Override
     public List<ExchangeRateRes> getExchangeRate(Date startDate, Date endDate, String code) {
@@ -34,15 +38,26 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
                 dtoList.add(ExchangeRateRes.of(u));
             }
         } else if (code.equals("JPY")) {
-
+            List<JpyKrw> jpyKrwList = jpyKrwRepository.findByRegdateBetween(startDate, endDate);
+            for (JpyKrw j : jpyKrwList) {
+                dtoList.add(ExchangeRateRes.of(j));
+            }
         } else if (code.equals("EUR")) {
-
+            List<EurKrw> eurKrwList = eurKrwRepository.findByRegdateBetween(startDate, endDate);
+            for (EurKrw e : eurKrwList) {
+                dtoList.add(ExchangeRateRes.of(e));
+            }
         } else if (code.equals("GBP")) {
-
+            List<GbpKrw> gbpKrwList = gbpKrwRepository.findByRegdateBetween(startDate, endDate);
+            for (GbpKrw g : gbpKrwList) {
+                dtoList.add(ExchangeRateRes.of(g));
+            }
         } else if (code.equals("CNY")) {
-
+            List<CnyKrw> cnyKrwList = cnyKrwRepository.findByRegdateBetween(startDate, endDate);
+            for (CnyKrw c : cnyKrwList) {
+                dtoList.add(ExchangeRateRes.of(c));
+            }
         }
-
         return dtoList;
     }
 }

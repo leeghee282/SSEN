@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.List;
 
 public interface UsdKrwRepository extends JpaRepository<UsdKrw, Long> {
-
-    public List<UsdKrw> findByRegdateBetween(Date startDate, Date endDate); // 맞는지 모르겠음
+    public List<UsdKrw> findByRegdateBetween(Date startDate, Date endDate);
 
 }

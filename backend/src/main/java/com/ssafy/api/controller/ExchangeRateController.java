@@ -19,7 +19,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
 public class ExchangeRateController {
-
     private final ExchangeRateService exchangeRateService;
 
     @PostMapping("/curr")
