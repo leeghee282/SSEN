@@ -14,4 +14,5 @@ public interface UserService {
 	User getUserByNickname(String nickname);
 	User updateUser(UserUpdateReq updateInfo);
 	User updateUserPassword(UserPasswordUpdateReq passwordUpdateInfo);
+	boolean deleteUser(String nickname);
 }

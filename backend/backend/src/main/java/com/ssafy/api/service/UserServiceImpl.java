@@ -79,4 +79,13 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(passwordUpdateInfo.getNewPassword()));
         return userRepository.save(user);
     }
+
+    @Override
+    public boolean deleteUser(String nickname) {
+        User user = userRepository.findByNickname(nickname).get();
+        // user가 null이면 false 리턴
+        if(user == null) return false;
+        userRepository.deleteByNickname(nickname);
+        return true;
+    }
 }

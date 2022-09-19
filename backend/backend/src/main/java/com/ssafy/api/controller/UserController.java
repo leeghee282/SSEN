@@ -19,6 +19,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.util.List;
+
 /**
  * 유저 관련 API 요청 처리를 위한 컨트롤러 정의.
  */
@@ -141,15 +143,10 @@ public class UserController {
     public ResponseEntity<UserRes> profileSearch(
             @ApiParam(value = "넥네임 정보", required = true) @RequestParam("nickname") String nickname) {
 
-        System.out.println(nickname);
         // user를 가져와서
         User user = userService.getUserByNickname(nickname);
 
-        System.out.println("nickname");
-        // 로그인 요청한 유저로부터 입력된 패스워드 와 디비에 저장된 유저의 암호화된 패스워드가 같은지 확인.(유효한 패스워드인지 여부 확인)
         if (user != null) {
-            System.out.println(user);
-            // 유효한 패스워드가 맞는 경우, 로그인 성공으로 응답.(액세스 토큰을 포함하여 응답값 전달)
             return ResponseEntity.ok(UserRes.of(200, "Success", user));
         } else {
             return ResponseEntity.status(401).body(UserRes.of(401, "닉네임 정보가 없습니다.", null));
@@ -166,8 +163,6 @@ public class UserController {
     public ResponseEntity<UserRes> updateUser(
             @RequestBody @ApiParam(value = "변경할 유저 정보", required = true) UserUpdateReq updateInfo) {
 
-        System.out.println("들어오나요?");
-        System.out.println(updateInfo.toString());
         User user = userService.updateUser(updateInfo);
         return ResponseEntity.ok(UserRes.of(200, "Success", user));
 
@@ -175,8 +170,10 @@ public class UserController {
 
     @PutMapping("/edit/password")
     @ApiOperation(value = "회원 비밀번호 수정", notes = "<strong>비밀번호</strong>를 수정한다.")
-    @ApiResponses({@ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"),
-            @ApiResponse(code = 404, message = "사용자 없음"), @ApiResponse(code = 500, message = "서버 오류")})
+    @ApiResponses({@ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<UserRes> updatePassword(
             @RequestBody @ApiParam(value = "수정할 회원 비밀번호 정보", required = true) UserPasswordUpdateReq passwordUpdateInfo) {
         User user = userService.updateUserPassword(passwordUpdateInfo);
@@ -184,4 +181,24 @@ public class UserController {
             return ResponseEntity.status(401).body(null);
         return ResponseEntity.ok(UserRes.of(200, "Success", user));
     }
+
+    @DeleteMapping()
+    @ApiOperation(value = "닉네임으로 회원 탈퇴", notes = "<strong>닉네임</strong>를 통해 회원 정보를 삭제한다.")
+    @ApiResponses({@ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")})
+    public ResponseEntity<String> delete(
+            @ApiParam(value = "삭제할 회원 닉네임", required = true) @RequestParam("nickname") String nickname) {
+        User user = userService.getUserByNickname(nickname);
+        if (user == null) {
+            return ResponseEntity.status(404).body("회원 없음");
+        }
+        boolean result = userService.deleteUser(nickname);
+        if (result)
+            return ResponseEntity.status(200).body("Success");
+        else
+            return ResponseEntity.status(404).body("Fail");
+    }
+
 }
