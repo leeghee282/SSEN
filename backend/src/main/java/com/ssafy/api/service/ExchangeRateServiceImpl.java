@@ -30,7 +30,7 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
 
 
     @Override
-    public List<ExchangeRateRes> getExchangeRate(Date startDate, Date endDate, String code) {
+    public List<ExchangeRateRes> getExchangeRatePeriod(Date startDate, Date endDate, String code) {
 
         List<ExchangeRateRes> dtoList = new LinkedList<>();
 
@@ -66,10 +66,8 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
 
     @Override
     public List<CommissionRes> getCommission(String code) {
-        System.out.println("==============================================================================================="+code);
         List<CommissionRes> dtoList = new LinkedList<>();
         CurrencyCategory currencyCategory = currencyCategoryRepository.findByCode(code);
-        System.out.println("==============================================================================================="+currencyCategory.getCode());
         List<BankExchangeRate> bankExchangeRateList = bankExchangeRateRepository.findByCurrencyCategory(currencyCategory);
         for (BankExchangeRate b : bankExchangeRateList) {
             dtoList.add(CommissionRes.of(b));

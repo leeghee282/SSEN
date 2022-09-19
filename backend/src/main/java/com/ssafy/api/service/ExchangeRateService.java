@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ExchangeRateService {
 
-    List<ExchangeRateRes> getExchangeRate(Date startDate, Date endDate, String code);
+    List<ExchangeRateRes> getExchangeRatePeriod(Date startDate, Date endDate, String code);
 
     List<CommissionRes> getCommission(String code);
 
