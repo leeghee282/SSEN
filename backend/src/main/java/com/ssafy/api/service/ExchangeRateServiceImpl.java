@@ -1,5 +1,6 @@
 package com.ssafy.api.service;
 
+import com.ssafy.api.response.CommissionRes;
 import com.ssafy.api.response.ExchangeRateRes;
 import com.ssafy.db.entity.*;
 import com.ssafy.db.repository.*;
@@ -23,6 +24,8 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
     private final EurKrwRepository eurKrwRepository;
     private final GbpKrwRepository gbpKrwRepository;
     private final CnyKrwRepository cnyKrwRepository;
+    private final CurrencyCategoryRepository currencyCategoryRepository;
+    private final BankExchangeRateRepository bankExchangeRateRepository;
 
 
 
@@ -60,4 +63,18 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
         }
         return dtoList;
     }
+
+    @Override
+    public List<CommissionRes> getCommission(String code) {
+        System.out.println("==============================================================================================="+code);
+        List<CommissionRes> dtoList = new LinkedList<>();
+        CurrencyCategory currencyCategory = currencyCategoryRepository.findByCode(code);
+        System.out.println("==============================================================================================="+currencyCategory.getCode());
+        List<BankExchangeRate> bankExchangeRateList = bankExchangeRateRepository.findByCurrencyCategory(currencyCategory);
+        for (BankExchangeRate b : bankExchangeRateList) {
+            dtoList.add(CommissionRes.of(b));
+        }
+        return dtoList;
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.ssafy.api.controller;
 
+import com.ssafy.api.response.CommissionRes;
 import com.ssafy.api.response.ExchangeRateRes;
 import com.ssafy.api.service.ExchangeRateService;
 import io.swagger.annotations.ApiOperation;
@@ -44,6 +45,14 @@ public class ExchangeRateController {
         endDate = cal.getTime();
 
         List<ExchangeRateRes> dtoList = exchangeRateService.getExchangeRate(startDate, endDate, code);
+        return new ResponseEntity<>(dtoList, HttpStatus.OK);
+    }
+
+    @GetMapping("/commission")
+    @ApiOperation(value = "통화코드에 따른 은행별 환율 정보 제공")
+
+    public ResponseEntity<List<CommissionRes>> getCommission(@RequestBody String code){
+        List<CommissionRes> dtoList = exchangeRateService.getCommission(code);
         return new ResponseEntity<>(dtoList, HttpStatus.OK);
     }
 
