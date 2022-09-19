@@ -37,15 +37,37 @@
   }
 }
 
-
+/* 글꼴 */
 @font-face {
   font-family: 'MICEGothic Bold';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-01@1.0/MICEGothic Bold.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
 }
+@font-face {
+  font-family: 'GmarketSansMedium';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'InfinitySans-RegularA1';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
 
+/* 고딕체 */
 #font_test {
   font-family: 'MICEGothic Bold';
-  
+}
+
+/* Gmarket체 */
+#font_Gmarket {
+  font-family: 'GmarketSansMedium';
+}
+
+/* Sans체 */
+#font_Sans {
+  font-family: 'InfinitySans-RegularA1';
 }
