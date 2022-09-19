@@ -32,8 +32,8 @@ public class User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(name = "password", length = 45, nullable = false)
     private String password;
-    @Column(name = "phone", columnDefinition = "int(11)", nullable = false)
-    private int phone;
+    @Column(name = "phone", length = 11, nullable = false)
+    private String phone;
     @Column(name = "email", length = 100, nullable = false)
     private String email;
     @Column(name = "token", length = 200)
