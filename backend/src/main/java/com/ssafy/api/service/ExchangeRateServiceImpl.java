@@ -65,6 +65,31 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
     }
 
     @Override
+    public ExchangeRateRes getExchangeRateOneDay(Date date, String code) {
+        ExchangeRateRes dto = null;
+        // code에 따라서 repository 구분하기
+        if (code.equals("USD")) {
+            UsdKrw usdKrw = usdKrwRepository.findByRegdate(date);
+            dto = ExchangeRateRes.of(usdKrw);
+        } else if (code.equals("JPY")) {
+            JpyKrw jpyKrw = jpyKrwRepository.findByRegdate(date);
+            dto = ExchangeRateRes.of(jpyKrw);
+        } else if (code.equals("EUR")) {
+            EurKrw eurKrw = eurKrwRepository.findByRegdate(date);
+            System.out.println(eurKrw==null?"null":"not null");
+            System.out.println("=-=========================================================================================================");
+            dto = ExchangeRateRes.of(eurKrw);
+        } else if (code.equals("GBP")) {
+            GbpKrw gbpKrw = gbpKrwRepository.findByRegdate(date);
+            dto = ExchangeRateRes.of(gbpKrw);
+        } else if (code.equals("CNY")) {
+            CnyKrw cnyKrw = cnyKrwRepository.findByRegdate(date);
+            dto = ExchangeRateRes.of(cnyKrw);
+        }
+        return dto;
+    }
+
+    @Override
     public List<CommissionRes> getCommission(String code) {
         List<CommissionRes> dtoList = new LinkedList<>();
         CurrencyCategory currencyCategory = currencyCategoryRepository.findByCode(code);

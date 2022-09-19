@@ -11,7 +11,8 @@ import java.util.List;
 public interface ExchangeRateService {
 
     List<ExchangeRateRes> getExchangeRatePeriod(Date startDate, Date endDate, String code);
-
+    ExchangeRateRes getExchangeRateOneDay(Date date, String code);
     List<CommissionRes> getCommission(String code);
+
 
 }

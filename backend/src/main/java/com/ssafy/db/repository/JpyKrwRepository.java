@@ -10,5 +10,6 @@ import java.util.List;
 public interface JpyKrwRepository extends JpaRepository<JpyKrw, Long> {
 
     public List<JpyKrw> findByRegdateBetween(Date startDate, Date endDate);
+    public JpyKrw findByRegdate(Date date);
 
 }

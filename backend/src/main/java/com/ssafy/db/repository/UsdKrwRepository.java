@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface UsdKrwRepository extends JpaRepository<UsdKrw, Long> {
     public List<UsdKrw> findByRegdateBetween(Date startDate, Date endDate);
+    public UsdKrw findByRegdate(Date date);
 
 }

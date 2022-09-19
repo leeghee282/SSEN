@@ -10,5 +10,6 @@ import java.util.List;
 public interface EurKrwRepository extends JpaRepository<EurKrw, Long> {
 
     public List<EurKrw> findByRegdateBetween(Date startDate, Date endDate);
+    public EurKrw findByRegdate(Date date);
 
 }

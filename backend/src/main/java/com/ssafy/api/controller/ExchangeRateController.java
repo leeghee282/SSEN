@@ -48,19 +48,22 @@ public class ExchangeRateController {
         return new ResponseEntity<>(dtoList, HttpStatus.OK);
     }
 
-//    @GetMapping("/currcal")
-//    @ApiOperation(value = "통화코드, 특정 날짜에 따른 환율 정보 제공", notes = "example value:  \n" +
-//            "{\n" +
-//            "\"date\": \"2000-10-04\",\n" +
-//            "\"code\": \"USD\"\n" +
-//            "}")
-//    public ResponseEntity<List<ExchangeRateRes>> getExchangeRateOneDay(@RequestBody Map<String, Object> map) throws ParseException {
-//        String Date = (String) map.get("date");
-//        String code = (String) map.get("code");
-//
-//        List<ExchangeRateRes> dtoList = exchangeRateService.getExchangeRate(startDate, endDate, code);
-//        return new ResponseEntity<>(dtoList, HttpStatus.OK);
-//    }
+    @GetMapping("/currone")
+    @ApiOperation(value = "통화코드 따른 환율 정보 제공(특정 날짜)", notes = "example value:  \n" +
+            "{\n" +
+            "\"date\": \"2000-10-04\",\n" +
+            "\"code\": \"USD\"\n" +
+            "}")
+    public ResponseEntity<ExchangeRateRes> getExchangeRateOneDay(@RequestBody Map<String, Object> map) throws ParseException {
+        String idate = (String) map.get("date");
+        String code = (String) map.get("code");
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = formatter.parse(idate);
+
+        ExchangeRateRes dto = exchangeRateService.getExchangeRateOneDay(date, code);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
 
     @GetMapping("/commission")
     @ApiOperation(value = "통화코드에 따른 은행별 환율 정보 제공")

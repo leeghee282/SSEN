@@ -10,5 +10,5 @@ import java.util.List;
 public interface GbpKrwRepository extends JpaRepository<GbpKrw, Long> {
 
     public List<GbpKrw> findByRegdateBetween(Date startDate, Date endDate);
-
+    public GbpKrw findByRegdate(Date date);
 }
