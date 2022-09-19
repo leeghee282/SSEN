@@ -26,7 +26,7 @@ public class UserRes {
     @ApiModelProperty(name = "유저 nickname", example = "보이지않는 손")
     String nickname;
     @ApiModelProperty(name = "유저 phone", example = "01012341234")
-    int phone;
+    String phone;
     @ApiModelProperty(name = "유저 email", example = "ssafy123@saafy.com")
     String email;
 

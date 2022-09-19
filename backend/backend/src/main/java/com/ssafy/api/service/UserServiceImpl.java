@@ -1,5 +1,7 @@
 package com.ssafy.api.service;
 
+import com.ssafy.api.request.UserPasswordUpdateReq;
+import com.ssafy.api.request.UserUpdateReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -52,5 +54,29 @@ public class UserServiceImpl implements UserService {
             return null;
         User user = userRepositorySupport.findUserByNickname(nickname).get();
         return user;
+    }
+
+    @Override
+    public User updateUser(UserUpdateReq updateInfo) {
+        User user = userRepository.findByUserId(updateInfo.getUserId()).get();
+
+        user.setName(updateInfo.getName());
+        user.setPhone(updateInfo.getPhone());
+        user.setNickname(updateInfo.getNickname());
+        user.setPhone(updateInfo.getPhone());
+        user.setEmail(updateInfo.getEmail());
+        return userRepository.save(user);
+
+    }
+
+    @Override
+    public User updateUserPassword(UserPasswordUpdateReq passwordUpdateInfo) {
+        User user = userRepository.findByUserId(passwordUpdateInfo.getUserId()).get();
+        // user가 null이거나 현재 비밀번호가 틀렸을 때 null 리턴
+        if(user == null || !passwordEncoder.matches(passwordUpdateInfo.getPassword(), user.getPassword()))
+            return null;
+        // 비밀번호만 수정
+        user.setPassword(passwordEncoder.encode(passwordUpdateInfo.getNewPassword()));
+        return userRepository.save(user);
     }
 }

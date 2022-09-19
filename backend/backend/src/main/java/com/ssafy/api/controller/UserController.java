@@ -1,7 +1,9 @@
 package com.ssafy.api.controller;
 
 import com.ssafy.api.request.UserLoginPostReq;
+import com.ssafy.api.request.UserPasswordUpdateReq;
 import com.ssafy.api.request.UserRegisterPostReq;
+import com.ssafy.api.request.UserUpdateReq;
 import com.ssafy.api.response.UserLoginPostRes;
 import com.ssafy.api.response.UserRes;
 import com.ssafy.api.service.UserService;
@@ -116,17 +118,70 @@ public class UserController {
             @ApiResponse(code = 404, message = "사용자 없음", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<UserLoginPostRes> login(@RequestBody @ApiParam(value="로그인 정보", required = true) UserLoginPostReq loginInfo) {
+    public ResponseEntity<UserLoginPostRes> login(@RequestBody @ApiParam(value = "로그인 정보", required = true) UserLoginPostReq loginInfo) {
         String userId = loginInfo.getUserId();
         String password = loginInfo.getPassword();
 
         User user = userService.getUserByUserId(userId);
         // 로그인 요청한 유저로부터 입력된 패스워드 와 디비에 저장된 유저의 암호화된 패스워드가 같은지 확인.(유효한 패스워드인지 여부 확인)
-        if(passwordEncoder.matches(password, user.getPassword())) {
+        if (passwordEncoder.matches(password, user.getPassword())) {
             // 유효한 패스워드가 맞는 경우, 로그인 성공으로 응답.(액세스 토큰을 포함하여 응답값 전달)
             return ResponseEntity.ok(UserLoginPostRes.of(200, "Success", JwtTokenUtil.getToken(userId)));
         }
         // 유효하지 않는 패스워드인 경우, 로그인 실패로 응답.
         return ResponseEntity.status(401).body(UserLoginPostRes.of(401, "Invalid Password", null));
+    }
+
+    @GetMapping("/mypage")
+    @ApiOperation(value = "회원 정보 보기", notes = "회원정보를 확인한다.")
+    @ApiResponses({@ApiResponse(code = 200, message = "성공", response = UserLoginPostRes.class),
+            @ApiResponse(code = 401, message = "인증 실패", response = BaseResponseBody.class),
+            @ApiResponse(code = 404, message = "사용자 없음", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)})
+    public ResponseEntity<UserRes> profileSearch(
+            @ApiParam(value = "넥네임 정보", required = true) @RequestParam("nickname") String nickname) {
+
+        System.out.println(nickname);
+        // user를 가져와서
+        User user = userService.getUserByNickname(nickname);
+
+        System.out.println("nickname");
+        // 로그인 요청한 유저로부터 입력된 패스워드 와 디비에 저장된 유저의 암호화된 패스워드가 같은지 확인.(유효한 패스워드인지 여부 확인)
+        if (user != null) {
+            System.out.println(user);
+            // 유효한 패스워드가 맞는 경우, 로그인 성공으로 응답.(액세스 토큰을 포함하여 응답값 전달)
+            return ResponseEntity.ok(UserRes.of(200, "Success", user));
+        } else {
+            return ResponseEntity.status(401).body(UserRes.of(401, "닉네임 정보가 없습니다.", null));
+        }
+    }
+
+
+    @PutMapping("/edit")
+    @ApiOperation(value = "프로필 수정", notes = "<strong>프로필을 수정한다.")
+    @ApiResponses({@ApiResponse(code = 200, message = "성공", response = UserLoginPostRes.class),
+            @ApiResponse(code = 401, message = "인증 실패", response = BaseResponseBody.class),
+            @ApiResponse(code = 404, message = "사용자 없음", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)})
+    public ResponseEntity<UserRes> updateUser(
+            @RequestBody @ApiParam(value = "변경할 유저 정보", required = true) UserUpdateReq updateInfo) {
+
+        System.out.println("들어오나요?");
+        System.out.println(updateInfo.toString());
+        User user = userService.updateUser(updateInfo);
+        return ResponseEntity.ok(UserRes.of(200, "Success", user));
+
+    }
+
+    @PutMapping("/edit/password")
+    @ApiOperation(value = "회원 비밀번호 수정", notes = "<strong>비밀번호</strong>를 수정한다.")
+    @ApiResponses({@ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"), @ApiResponse(code = 500, message = "서버 오류")})
+    public ResponseEntity<UserRes> updatePassword(
+            @RequestBody @ApiParam(value = "수정할 회원 비밀번호 정보", required = true) UserPasswordUpdateReq passwordUpdateInfo) {
+        User user = userService.updateUserPassword(passwordUpdateInfo);
+        if (user == null)
+            return ResponseEntity.status(401).body(null);
+        return ResponseEntity.ok(UserRes.of(200, "Success", user));
     }
 }
