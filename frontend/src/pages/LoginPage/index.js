@@ -62,39 +62,42 @@ export default function Login() {
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <TextField
+                
                 margin="normal"
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label="이메일"
                 name="email"
                 autoComplete="email"
                 autoFocus
               />
               <TextField
+                
                 margin="normal"
                 required
                 fullWidth
                 name="password"
-                label="Password"
+                label="비밀번호"
                 type="password"
                 id="password"
                 autoComplete="current-password"
               />
               
               <Button
+                id="font_test"
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                LogIn
+                로그인
               </Button>
               <Grid container justifyContent="flex-end">
                 
                 <Grid item>
                   <Link href="#" variant="body2">
-                    {"Don't have an account? Sign Up"}
+                    {"계정이 없으신가요 ? 회원가입하기"}
                   </Link>
                 </Grid>
               </Grid>
