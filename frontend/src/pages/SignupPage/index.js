@@ -1,31 +1,18 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
+import * as React from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
 
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import "./styles.css"
-
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import Checkbox from "@mui/material/Checkbox";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import "./styles.css";
 
 const theme = createTheme();
 
@@ -34,8 +21,8 @@ export default function SignUp() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+      email: data.get("email"),
+      password: data.get("password"),
     });
   };
 
@@ -52,128 +39,164 @@ export default function SignUp() {
           }}
         >
           {/* 로고 이미지 */}
-          <Avatar
-            sx={{ width: 250, height: 250 }}
-            alt="Academy"
-            src="/images/Ssenlogo.png"
-          ></Avatar>
-          <Grid container sx={{dispaly:"flex", flexDirection: "column", justifyContent:"flex-start"}}>
-          <Typography 
-            component="h1"
-            
-            id="font_test"
-            sx={{ pl:1,color: "rgba(0, 0, 0, 0.6)" ,height:"50px",fontWeight:"900",fontSize:"30px"}}
+          <Link href="/">
+            <Avatar
+              sx={{ width: 350, height: 350 }}
+              alt="Academy"
+              src="/images/Ssenlogo.png"
+            ></Avatar>
+          </Link>
+          <Grid
+            container
+            sx={{
+              dispaly: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-start",
+            }}
           >
-            회원가입
-            
-          </Typography>
-          <Typography
-            component="h6"
-            
-            id="font_test"
-            sx={{ pl:1,color: "rgba(0, 0, 0, 0.6)", fontSize:"14px" }}
-          >
-            본인의 이름과 휴대전화번호 및 이메일을 모두 정확하게 입력해 주세요.
-            
-          </Typography>
+            <Typography
+              component="h1"
+              id="font_test"
+              sx={{
+                pl: 1,
+                color: "rgba(0, 0, 0, 0.6)",
+                height: "50px",
+                fontWeight: "900",
+                fontSize: "30px",
+              }}
+            >
+              회원가입
+            </Typography>
+            <Typography
+              component="h6"
+              id="font_test"
+              sx={{ pl: 1, color: "rgba(0, 0, 0, 0.6)", fontSize: "14px" }}
+            >
+              본인의 이름과 휴대전화번호 및 이메일을 모두 정확하게 입력해
+              주세요.
+            </Typography>
           </Grid>
           {/* 회원가입 form */}
-          <Box
-            component="form"
-            noValidate
-            
-            sx={{ mt: 5 }}
-          >
+          <Box component="form" noValidate sx={{ mt: 5 }}>
             <Grid container spacing={2}>
-              {/* 이미지 업로드 */}
-              
               {/* 이메일 입력창*/}
               <Grid item xs={12} sm={12}>
-                
                 <TextField
+                  required
                   className="inputRounded"
                   fullWidth
-                  id="email"
+                  id="name"
                   label="이름"
                   name="name"
                   autoComplete="name"
                   autoFocus
-                
-                  sx={{ background: "white", mt: 2.2  }}
+                  sx={{ mt: 2.2 }}
                 />
-                
               </Grid>
-              
-              {/* 비밀번호 입력창*/}
-              <Grid item xs={12} sm={12}>
 
+              {/* 전화번호 */}
+              <Grid item xs={12} sm={12}>
+                <TextField
+                  required
+                  className="inputRounded"
+                  fullWidth
+                  name="phone_number"
+                  label="전화번호"
+                  id="phone_number"
+                />
+              </Grid>
+              {/* 이메일 입력 */}
+              <Grid item xs={9.5}>
+                <TextField
+                  className="inputRounded"
+                  required
+                  fullWidth
+                  name="email"
+                  label="이메일"
+                  id="email"
+                />
+              </Grid>
+              <Grid item xs={2.5}>
+                <Button
+                  sx={{
+                    background: "#DDF2FD",
+                    height: "40px",
+                    display: "flex",
+                    mt: 1,
+                    ml: 1,
+                    width: "90px",
+                    color : "black",
+                    fontWeight : 700,
+                    borderRadius :3
+                  }}
+                >
+                  본인인증
+                </Button>
+              </Grid>
+              <Box sx={{ height: 50, width: 100 }}></Box>
+              {/* 아이디 입력 */}
+              <Grid item xs={12}>
+                <TextField
+                  className="inputRounded"
+                  required
+                  fullWidth
+                  name="user_id"
+                  label="아이디"
+                  id="user_id"
+                />
+              </Grid>
+              {/* 비밀번호 입력 */}
+              <Grid item xs={12}>
                 <TextField
                   className="inputRounded"
                   required
                   fullWidth
                   name="password"
-                  label="전화번호"
-                  type="password"
+                  label="비밀번호"
                   id="password"
-                  autoComplete="new-password"
-                  
-            
-                  sx={{ background: "white" }}
+                  type="password"
                 />
-                
               </Grid>
-              <Box sx={{ height:50,width:100}}></Box>
-              {/* 비밀번호 재입력창 */}
+              {/* 비밀번호 확인 */}
               <Grid item xs={12}>
-                
                 <TextField
                   className="inputRounded"
                   required
                   fullWidth
                   name="check_password"
-                  label="이메일"
+                  label="비밀번호확인"
                   id="check_password"
                   type="password"
-                  autoComplete="check_password"
-                  
-                
-                  sx={{ background: "white" }}
                 />
-                
               </Grid>
-              {/* 이름 입력창 */}
-              <Grid item xs={12}>
-              
+              {/* 닉네임 설정 */}
+              <Grid sx={{ mt: 7 }} item xs={9.5}>
                 <TextField
+                  placeholder="사용할 닉네임을 입력해 주세요"
                   className="inputRounded"
                   required
                   fullWidth
-                  name="username"
-                  label="비밀번호"
-                  id="username"
-                  autoComplete="username"
-                
-                
-                  sx={{ background: "white" }}
-                />
-                
-              </Grid>
-              {/* 전화번호 입력창 */}
-              <Grid item xs={12}>
-              
-                <TextField
-                  className="inputRounded"
-                  required
-                  fullWidth
-                  name="phone_number"
-                  label="비밀번호확인"
-                  id="phone_number"
-                  autoComplete="phone_number"
+                  name="nickname"
                   
-                
-                  sx={{ background: "white" }}
+                  id="nickname"
                 />
-              
+              </Grid>
+              <Grid sx={{ mt: 7 }} item xs={2}>
+                <Button
+                  sx={{
+                    background: "#DDF2FD",
+                    height: "40px",
+                    display: "flex",
+                    mt: 1,
+                    ml: 1,
+                    color : "black",
+                    fontWeight : 700,
+                    width: "90px",
+                    borderRadius :3
+                  }}
+                >
+                  중복확인
+                </Button>
               </Grid>
             </Grid>
             {/* 회원가입 버튼 */}
@@ -181,9 +204,7 @@ export default function SignUp() {
               type="submit"
               fullWidth
               variant="contained"
-              
-              sx={{ mt: 10, mb: 2 ,borderRadius:"20px"}}
-            
+              sx={{ mt: 10, mb: 2, borderRadius: "20px" }}
             >
               <Typography id="font_test" component="h6" variant="h6">
                 회원가입
@@ -193,7 +214,7 @@ export default function SignUp() {
               {/* 로그인 페이지로 연결 */}
               <Grid item>
                 <Link
-                  href="/"
+                  href="/login"
                   variant="body2"
                   id="font_test"
                   style={{ color: "#808080", textDecoration: "none" }}
