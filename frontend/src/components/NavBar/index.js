@@ -43,7 +43,7 @@ const Header = () => {
           </IconButton>
         </Stack>
         <Stack spacing={1} direction="row">
-          <Button id="font_test" variant="outlined" size="small" href="#">
+          <Button id="font_test" variant="outlined" size="small" href="/exchangecalc">
             환율계산기
           </Button>
           <Button id="font_test" variant="contained" size="small" href="/login">
