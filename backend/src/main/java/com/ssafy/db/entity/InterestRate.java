@@ -26,6 +26,7 @@ public class InterestRate {
     @Column(name = "rate", nullable = false)
     @ColumnDefault("0.00")
     private double rate;
+    @Temporal(TemporalType.DATE)
     @Column(name = "regdate", nullable = false)
     private Date regdate;
 

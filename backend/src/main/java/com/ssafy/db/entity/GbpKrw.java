@@ -23,7 +23,7 @@ public class GbpKrw {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "uid", columnDefinition = "int unsigned")
     private Long uid;
-
+    @Temporal(TemporalType.DATE)
     @Column(name = "regdate", nullable = false)
     private Date regdate;
 

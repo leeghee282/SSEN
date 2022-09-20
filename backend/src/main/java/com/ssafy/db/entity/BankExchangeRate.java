@@ -30,10 +30,11 @@ public class BankExchangeRate {
     private double commission;
     @Column(name = "basic_rate", nullable = true, columnDefinition = "int(3)")
     private int basicRate;
-    @Column(name = "max_rate", nullable = true, columnDefinition = "int(3)")
-    private int maxRate;
+    @Column(name = "max_rate", nullable = true, length = 200)
+    private String maxRate;
     @Column(name = "rate_description", nullable = true, length = 3000)
     private String rateDescription;
+    @Temporal(TemporalType.DATE)
     @Column(name = "reference_date", nullable = false)
     private Date referenceDate;
 
