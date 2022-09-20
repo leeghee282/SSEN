@@ -37,5 +37,12 @@ public class HoldingCurrency {
     @JoinColumn(nullable = false)
     private CurrencyCategory currencyCategory;
 
+    public void patch(HoldingCurrency holdingCurrency){
+        if(holdingCurrency.price != 0)
+            this.price = holdingCurrency.price;
+        if(holdingCurrency.quantity != 0)
+            this.quantity = holdingCurrency.quantity;
+    }
+
 
 }

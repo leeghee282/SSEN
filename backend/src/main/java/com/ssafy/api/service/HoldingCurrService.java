@@ -9,4 +9,5 @@ import java.util.List;
 public interface HoldingCurrService {
     List<HoldingCurrencyRes> getHoldingCurrByUser(User user);
     String addHoldingCurr(HoldingCurrencyAddReq holdingCurrencyReq);
+    HoldingCurrencyRes updateHoldingCurr(HoldingCurrencyAddReq holdingCurrencyReq);
 }

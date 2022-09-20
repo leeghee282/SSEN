@@ -40,25 +40,39 @@ public class HoldingCurrServiceImpl implements HoldingCurrService {
         String message = "";
         String userId = holdingCurrencyReq.getUserId();
         String code = holdingCurrencyReq.getCode();
-
-        // 통화코드 중복 체크(존재 중복 체크)
         User user = userRepositorySupport.findUserByUserId(userId).get();
         CurrencyCategory currencyCategory = currencyCategoryRepository.findByCode(code);
+        // 통화코드 중복 체크(존재 중복 체크)
         HoldingCurrency hcDup = holdingCurrencyRepository.findByUserAndCurrencyCategory(user, currencyCategory);
 
         if (hcDup != null) {
             message = "DUPLICATE";
         } else {
-            HoldingCurrency hc = HoldingCurrency.builder()
-                    .quantity(holdingCurrencyReq.getQuantity())
-                    .price(holdingCurrencyReq.getPrice())
-                    .user(user)
-                    .currencyCategory(currencyCategory)
-                    .build();
+            HoldingCurrency hc = holdingCurrencyReq.toEntity(user, currencyCategory);
             holdingCurrencyRepository.save(hc);
             message = "SUCCESS";
         }
         return message;
     }
+
+    @Override
+    public HoldingCurrencyRes updateHoldingCurr(HoldingCurrencyAddReq holdingCurrencyReq) {
+
+        String userId = holdingCurrencyReq.getUserId();
+        String code = holdingCurrencyReq.getCode();
+        User user = userRepositorySupport.findUserByUserId(userId).get();
+        CurrencyCategory currencyCategory = currencyCategoryRepository.findByCode(code);
+        HoldingCurrency target = holdingCurrencyRepository.findByUserAndCurrencyCategory(user, currencyCategory);
+        HoldingCurrency hcAfter = HoldingCurrency.builder()
+                .quantity(holdingCurrencyReq.getQuantity())
+                .price(holdingCurrencyReq.getPrice())
+                .user(user)
+                .currencyCategory(currencyCategory)
+                .build();
+        target.patch(hcAfter);
+
+        return null;
+    }
+
 
 }
