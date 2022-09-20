@@ -1,8 +1,7 @@
 package com.ssafy.api.controller;
 
-import com.ssafy.api.response.ExchangeRateRes;
+import com.ssafy.api.request.HoldingCurrencyAddReq;
 import com.ssafy.api.response.HoldingCurrencyRes;
-import com.ssafy.api.service.ExchangeRateService;
 import com.ssafy.api.service.HoldingCurrService;
 import com.ssafy.api.service.UserService;
 import com.ssafy.db.entity.User;
@@ -10,16 +9,9 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /*
  * 사용자 부가 기능(보유 통화 , 관심 통화)
@@ -28,9 +20,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
 public class UserCurrController {
-
     private final UserService userService;
-
     private final HoldingCurrService holdingCurrService;
 
     @GetMapping("/holdcurr")
@@ -43,6 +33,14 @@ public class UserCurrController {
 
         return new ResponseEntity<>(dtoList, HttpStatus.OK);
     }
+
+    @PostMapping("/holdcurr")
+    @ApiOperation(value = "보유 통화 등록")
+    public ResponseEntity<String> addHoldingCurr(@RequestBody HoldingCurrencyAddReq holdingCurrencyReq){
+        String message = holdingCurrService.addHoldingCurr(holdingCurrencyReq);
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
 
 
 
