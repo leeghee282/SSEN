@@ -1,7 +1,5 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Provider } from "react-redux";
-import store from "./store/index";
 
 import Main from "./pages/MainPage";
 import Signup from "./pages/SignupPage";
@@ -13,22 +11,20 @@ import Calculator from "./pages/CalculatorPage";
 
 function App() {
   return (
-    <Provider store={store}>
-      <Router>
-        <Routes>
-          {/* Header 있는 페이지 */}
-          <Route element={<Header />}>
-            <Route path="/" element={<Main />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/profileupdate" element={<ProfileUpdate />} />
-          </Route>
-          {/* Header 없는 페이지 */}
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/exchangecalc" element={<Calculator />} />
-        </Routes>
-      </Router>
-    </Provider>
+    <Router>
+      <Routes>
+        {/* Header 있는 페이지 */}
+        <Route element={<Header />}>
+          <Route path="/" element={<Main />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/profileupdate" element={<ProfileUpdate />} />
+        </Route>
+        {/* Header 없는 페이지 */}
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/exchangecalc" element={<Calculator />} />
+      </Routes>
+    </Router>
   );
 }
 

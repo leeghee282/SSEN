@@ -7,10 +7,62 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
+import { useState } from "react";
+import EditName from "./EditName";
+import EditNickname from "./EditNickname";
+import EditPhoneNumber from "./EditPhoneNumber";
 
 const theme = createTheme();
 
 const ProfileUpdate = () => {
+  const [insertFlag1, setInsertFlag1] = useState(false);
+  const [insertFlag2, setInsertFlag2] = useState(false);
+  const [insertFlag3, setInsertFlag3] = useState(false);
+  const [insertFlag4, setInsertFlag4] = useState(false);
+  const [userName, setUserName] = useState("배지우");
+  const [userNickName, setUserNickName] = useState("환율짱짱");
+  const [userPhoneNumber, setUserPhoneNumber] = useState("010-4791-5385");
+
+  const insertClicked1 = () => {
+    // 반 등록 컴포넌트에 대한 state값 toggle
+
+    insertComponentToggle1();
+  };
+
+  function insertComponentToggle1() {
+    setInsertFlag1((insertFlag1) => !insertFlag1);
+  }
+
+  const insertClicked2 = () => {
+    // 반 등록 컴포넌트에 대한 state값 toggle
+
+    insertComponentToggle2();
+  };
+
+  function insertComponentToggle2() {
+    setInsertFlag2((insertFlag2) => !insertFlag2);
+  }
+
+  const insertClicked3 = () => {
+    // 반 등록 컴포넌트에 대한 state값 toggle
+
+    insertComponentToggle3();
+  };
+
+  function insertComponentToggle3() {
+    setInsertFlag3((insertFlag3) => !insertFlag3);
+  }
+
+  const insertClicked4 = () => {
+    // 반 등록 컴포넌트에 대한 state값 toggle
+
+    insertComponentToggle4();
+  };
+
+  function insertComponentToggle4() {
+    setInsertFlag4((insertFlag4) => !insertFlag4);
+  }
+
   const user_id = "potr12";
   return (
     <ThemeProvider theme={theme}>
@@ -84,11 +136,29 @@ const ProfileUpdate = () => {
             <Grid item xs={4}>
               <Box sx={{ pl: 2 }}>이름</Box>
             </Grid>
-            <Grid item xs={4}>
-              <Box>{user_id}</Box>
+            <Grid item xs={5}>
+              {!insertFlag1 && <Box>{userName}</Box>}
+
+              {insertFlag1 && (
+                <Box
+                  sx={{
+                    marginTop: "10px",
+                    marginBottom: "10px",
+                    marginLeft: "10px",
+                  }}
+                >
+                  <EditName
+                    cancelClicked={insertComponentToggle1}
+                    userName={userName}
+                    setUserName={setUserName}
+                  />
+                </Box>
+              )}
             </Grid>
-            <Grid item xs={4}>
-              <Button>변경하기</Button>
+            <Grid item xs={3}>
+              {!insertFlag1 && (
+                <Button onClick={insertClicked1}>변경하기</Button>
+              )}
             </Grid>
           </Grid>
 
@@ -107,11 +177,29 @@ const ProfileUpdate = () => {
             <Grid item xs={4}>
               <Box sx={{ pl: 2 }}>닉네임</Box>
             </Grid>
-            <Grid item xs={4}>
-              <Box>환율짱짱</Box>
+            <Grid item xs={5}>
+              {!insertFlag2 && <Box>{userNickName}</Box>}
+
+              {insertFlag2 && (
+                <Box
+                  sx={{
+                    marginTop: "10px",
+                    marginBottom: "10px",
+                    marginLeft: "10px",
+                  }}
+                >
+                  <EditNickname
+                    cancelClicked2={insertComponentToggle2}
+                    userNickName={userNickName}
+                    setUserNickName={setUserNickName}
+                  />
+                </Box>
+              )}
             </Grid>
-            <Grid item xs={4}>
-              <Button>변경하기</Button>
+            <Grid item xs={3}>
+              {!insertFlag2 && (
+                <Button onClick={insertClicked2}>변경하기</Button>
+              )}
             </Grid>
           </Grid>
           {/*휴대전화번호*/}
@@ -129,11 +217,29 @@ const ProfileUpdate = () => {
             <Grid item xs={4}>
               <Box sx={{ pl: 2 }}>휴대전화번호</Box>
             </Grid>
-            <Grid item xs={4}>
-              <Box>010-4791-5385</Box>
+            <Grid item xs={5}>
+              {!insertFlag3 && <Box>{userPhoneNumber}</Box>}
+
+              {insertFlag3 && (
+                <Box
+                  sx={{
+                    marginTop: "10px",
+                    marginBottom: "10px",
+                    marginLeft: "10px",
+                  }}
+                >
+                  <EditPhoneNumber
+                    cancelClicked3={insertComponentToggle3}
+                    userPhoneNumber={userPhoneNumber}
+                    setUserPhoneNumber={setUserPhoneNumber}
+                  />
+                </Box>
+              )}
             </Grid>
-            <Grid item xs={4}>
-              <Button>변경하기</Button>
+            <Grid item xs={3}>
+              {!insertFlag3 && (
+                <Button onClick={insertClicked3}>변경하기</Button>
+              )}
             </Grid>
           </Grid>
           {/*비밀번호 변경*/}
@@ -155,7 +261,9 @@ const ProfileUpdate = () => {
               <Box>비밀번호 설정</Box>
             </Grid>
             <Grid item xs={4}>
-              <Button>비밀번호 변경하기</Button>
+              <Button variant="outlined" color="warning" size="large">
+                비밀번호 변경하기
+              </Button>
             </Grid>
           </Grid>
 
