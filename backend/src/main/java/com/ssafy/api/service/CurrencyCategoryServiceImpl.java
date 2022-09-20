@@ -14,8 +14,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-@Service("chatService")
+@Service("CurrencyCategoryService")
 public class CurrencyCategoryServiceImpl implements CurrencyCategoryService {
+    @Autowired
+    ChatService chatService;
+    @Autowired
+    CurrencyCategoryService currencyCategoryService;
 
     @Autowired
     CurrencyCategoryRepository currencyCategoryRepository;

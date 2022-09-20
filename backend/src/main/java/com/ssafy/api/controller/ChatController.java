@@ -1,11 +1,11 @@
 package com.ssafy.api.controller;
 
 import com.ssafy.api.request.ChatReq;
-import com.ssafy.api.request.UserRegisterPostReq;
 import com.ssafy.api.service.ChatService;
+import com.ssafy.api.service.CurrencyCategoryService;
 import com.ssafy.api.service.UserService;
 import com.ssafy.common.model.response.BaseResponseBody;
-import com.ssafy.db.entity.User;
+import com.ssafy.db.entity.Chat;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -41,10 +41,7 @@ public class ChatController {
     public ResponseEntity<? extends BaseResponseBody> register(
             @RequestBody @ApiParam(value = "채팅 등록 정보", required = true) ChatReq chatInfo) {
         System.out.println("============chat controller");
-        User user = userService.getUserByNickname(chatInfo.getNickname());
-        long userUid = user.getUid();
-
-
+            Chat chat = chatService.createChat(chatInfo);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
