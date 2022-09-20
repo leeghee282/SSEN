@@ -34,6 +34,7 @@ public class BankExchangeRate {
     private String maxRate;
     @Column(name = "rate_description", nullable = true, length = 3000)
     private String rateDescription;
+    @Temporal(TemporalType.DATE)
     @Column(name = "reference_date", nullable = false)
     private Date referenceDate;
 

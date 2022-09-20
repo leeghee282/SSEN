@@ -25,7 +25,7 @@ public class VarianceDate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "uid", columnDefinition = "int unsigned")
     private Long uid;
-
+    @Temporal(TemporalType.DATE)
     @Column(name = "reference_date", nullable = false)
     private Date referenceDate;
 

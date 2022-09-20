@@ -5,9 +5,11 @@ import com.ssafy.api.response.ExchangeRateRes;
 import com.ssafy.db.entity.*;
 import com.ssafy.db.repository.*;
 import lombok.RequiredArgsConstructor;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -26,8 +28,6 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
     private final CnyKrwRepository cnyKrwRepository;
     private final CurrencyCategoryRepository currencyCategoryRepository;
     private final BankExchangeRateRepository bankExchangeRateRepository;
-
-
 
     @Override
     public List<ExchangeRateRes> getExchangeRatePeriod(Date startDate, Date endDate, String code) {
@@ -76,8 +76,6 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
             dto = ExchangeRateRes.of(jpyKrw);
         } else if (code.equals("EUR")) {
             EurKrw eurKrw = eurKrwRepository.findByRegdate(date);
-            System.out.println(eurKrw==null?"null":"not null");
-            System.out.println("=-=========================================================================================================");
             dto = ExchangeRateRes.of(eurKrw);
         } else if (code.equals("GBP")) {
             GbpKrw gbpKrw = gbpKrwRepository.findByRegdate(date);

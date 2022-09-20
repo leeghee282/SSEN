@@ -25,7 +25,7 @@ public class UsdKrw {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "uid", columnDefinition = "int unsigned")
     private long uid;
-
+    @Temporal(TemporalType.DATE)
     @Column(name = "regdate", nullable = false)
     private Date regdate;
 
