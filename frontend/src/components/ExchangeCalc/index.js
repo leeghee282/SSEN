@@ -5,10 +5,7 @@ import moment from "moment";
 
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import {
-  getExchangeRate,
-  getBankInfos,
-} from "../../store/actions/exchange_action";
+import { getExchangeRate, getBanksInfo } from "../../_actions/exchange_action";
 
 function ExchangeCalc() {
   const dispatch = useDispatch();
@@ -18,12 +15,12 @@ function ExchangeCalc() {
     onSetBanklist();
   }, []);
 
-  //   const [bankInfos, setBankInfos] = useState([]);
-  const bankInfos = [
-    { bank: "신한", commission: 0.05, basic_rate: 0.1 },
-    { bank: "국민", commission: 0.05, basic_rate: 0.2 },
-    { bank: "농협", commission: 0.1, basic_rate: 0.25 },
-  ];
+  const [banksInfo, setBanksInfo] = useState([]);
+  //   const bankInfos = [
+  //     { bank: "신한", commission: 0.05, basic_rate: 0.1 },
+  //     { bank: "국민", commission: 0.05, basic_rate: 0.2 },
+  //     { bank: "농협", commission: 0.1, basic_rate: 0.25 },
+  //   ];
 
   const [banklist, setBanklist] = useState([]);
   const [selectBank, setSelectBank] = useState("");
@@ -55,7 +52,7 @@ function ExchangeCalc() {
   const [toCurrencyName, setToCurrencyName] = useState("");
 
   const onSetBanklist = () => {
-    bankInfos.map((info) => {
+    banksInfo.map((info) => {
       var addBanklist = {
         value: info.bank,
         label: info.bank,
@@ -68,7 +65,7 @@ function ExchangeCalc() {
     setExchangeRate(1400);
 
     setSelectBank(selectedOption.value);
-    const bankinfo = bankInfos.filter(
+    const bankinfo = banksInfo.filter(
       (info) => info.bank === selectedOption.value
     );
     setBankInfo({
@@ -82,33 +79,33 @@ function ExchangeCalc() {
     setCurrencyCode(selectedOption.value);
     setFromCurrencyName(selectedOption.value.substr(0, 3));
     setToCurrencyName(selectedOption.value.substr(-3));
+    onGetBankInfosHandler();
   };
 
-  //   const onExchangeRateHandler = (event) => {
-  //     event.preventDefault();
+  const onExchangeRateHandler = (event) => {
+    event.preventDefault();
 
-  //     let body = {
-  //       start_date: selectDate,
-  //       end_date: selectDate,
-  //       currency_code: currencyCode,
-  //     };
+    const body = {
+      date: onSelectDateHandler(selectDate),
+      code: "USD",
+    };
+    console.log(body);
 
-  //     dispatch(getExchangeRate(body)).then((response) => {
-  //       setExchangeRate(response.payload);
-  //     });
-  //   };
+    dispatch(getExchangeRate(body)).then((response) => {
+      console.log(response.payload);
+      //   setExchangeRate(response.payload.exchangeRate.closePrice);
+    });
+  };
 
-  //   const onGetBankInfosHandler = (event) => {
-  //     event.preventDefault();
+  const onGetBankInfosHandler = () => {
+    let body = {
+      code: currencyCode,
+    };
 
-  //     let body = {
-  //       currency_code: currencyCode,
-  //     };
-
-  //     dispatch(getBanksInfo(body)).then((response) => {
-  //       setBankInfos(response.body);
-  //     });
-  //   };
+    dispatch(getBanksInfo(body)).then((response) => {
+      setBanksInfo(response.body);
+    });
+  };
 
   const onExchangeCalculation = (event) => {
     setFromCurrency(event.currentTarget.value);
@@ -151,6 +148,7 @@ function ExchangeCalc() {
         <p>{`${toCurrencyName} : ${toCurrency}`}</p>
         <button onClick={onChangeCalculation}>change</button>
       </div>
+      <button onClick={onExchangeRateHandler}>테스트</button>
     </div>
   );
 }

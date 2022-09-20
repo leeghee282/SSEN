@@ -1,4 +1,4 @@
-import { GET_EXCHANGE_RATE, GET_BANK_INFOS } from "../actions/types";
+import { GET_EXCHANGE_RATE, GET_BANKS_INFO } from "../_actions/types";
 
 export default function (state = {}, action) {
   switch (action.type) {
@@ -6,8 +6,8 @@ export default function (state = {}, action) {
       return { ...state, exchangeRate: action.payload };
       break;
 
-    case GET_BANK_INFOS:
-      return { ...state, bankInfos: action.payload };
+    case GET_BANKS_INFO:
+      return { ...state, banksInfo: action.payload };
       break;
 
     default:
