@@ -5,7 +5,10 @@ import moment from "moment";
 
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getExchangeRate, getBankInfos } from "../../_actions/exchange_action";
+import {
+  getExchangeRate,
+  getBankInfos,
+} from "../../store/actions/exchange_action";
 
 function ExchangeCalc() {
   const dispatch = useDispatch();
