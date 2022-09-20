@@ -2,7 +2,7 @@ import Axios from "axios";
 import { baseURL } from "./index";
 
 const urls = {
-  Login: "/user/login",
+  Login: "/api/v1/user/login",
 };
 
 const axios = Axios.create({
