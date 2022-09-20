@@ -1,7 +1,7 @@
 import React from 'react';
 import Calendar from '../../components/Calendar';
 
-const UserLogin = () => {
+const MainCalendar = () => {
   return (
     <>
     <Calendar/>
@@ -9,4 +9,4 @@ const UserLogin = () => {
   );
 };
 
-export default UserLogin;
+export default MainCalendar;
