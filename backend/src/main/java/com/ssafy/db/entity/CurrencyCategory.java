@@ -21,8 +21,6 @@ public class CurrencyCategory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "uid", columnDefinition = "int unsigned")
     private Long uid;
-    @Column(name = "name", length = 100, nullable = false)
-    private String name;
     @Column(name = "code", columnDefinition = "char(3)", nullable = false)
     private String code;
     @Column(name = "country", length = 100, nullable = false)

@@ -28,6 +28,7 @@ public class StockMarket {
     @Column(name = "price", nullable = false)
     @ColumnDefault("0.00")
     private double price;
+    @Temporal(TemporalType.DATE)
     @Column(name = "regdate", nullable = false)
     private Date regdate;
 
