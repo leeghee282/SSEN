@@ -38,10 +38,10 @@ public class HoldingCurrency {
     private CurrencyCategory currencyCategory;
 
     public void patch(HoldingCurrency holdingCurrency){
-        if(holdingCurrency.price != 0)
-            this.price = holdingCurrency.price;
-        if(holdingCurrency.quantity != 0)
-            this.quantity = holdingCurrency.quantity;
+        if(holdingCurrency.getPrice() != 0)
+            this.price = holdingCurrency.getPrice();
+        if(holdingCurrency.getQuantity() != 0)
+            this.quantity = holdingCurrency.getQuantity();
     }
 
 

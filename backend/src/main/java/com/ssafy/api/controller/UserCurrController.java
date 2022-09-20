@@ -1,5 +1,6 @@
 package com.ssafy.api.controller;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ssafy.api.request.HoldingCurrencyAddReq;
 import com.ssafy.api.response.HoldingCurrencyRes;
 import com.ssafy.api.service.HoldingCurrService;
@@ -42,6 +43,7 @@ public class UserCurrController {
     }
 
     @PatchMapping("/holdcurr")
+    @JsonProperty("holdingCurrencyReq")
     @ApiOperation(value = "보유 통화 수정")
     public ResponseEntity<HoldingCurrencyRes> updateHoldingCurr(@RequestBody HoldingCurrencyAddReq holdingCurrencyReq){
         HoldingCurrencyRes dto = holdingCurrService.updateHoldingCurr(holdingCurrencyReq);
