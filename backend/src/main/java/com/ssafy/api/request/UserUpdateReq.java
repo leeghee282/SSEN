@@ -11,13 +11,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @ApiModel("UserRegisterPostRequest")
-public class UserRegisterPostReq {
+public class UserUpdateReq {
 	@ApiModelProperty(name="유저 ID", example="ssafy123")
 	String userId;
 	@ApiModelProperty(name="유저 이름", example="김싸피")
 	String name;
-	@ApiModelProperty(name="유저 Password", example="qlalsqjfgh12")
-	String password;
 	@ApiModelProperty(name="유저 nickname", example="보이지않는 손")
 	String nickname;
 	@ApiModelProperty(name="유저 phone", example="01012341234")
