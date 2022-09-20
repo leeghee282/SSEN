@@ -26,6 +26,8 @@ public class ChatController {
     UserService userService;
     @Autowired
     ChatService chatService;
+    @Autowired
+    CurrencyCategoryService currencyCategoryService;
 
     //등록, 삭제, 전체조회
     @PostMapping()
@@ -38,6 +40,9 @@ public class ChatController {
     })
     public ResponseEntity<? extends BaseResponseBody> register(
             @RequestBody @ApiParam(value = "채팅 등록 정보", required = true) ChatReq chatInfo) {
+        System.out.println("============chat controller");
+        User user = userService.getUserByNickname(chatInfo.getNickname());
+        long userUid = user.getUid();
 
 
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
