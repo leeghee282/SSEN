@@ -50,7 +50,7 @@ public class UserController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
-    @GetMapping("/id-info")
+    @GetMapping("/id-info/{userId}")
     @ApiOperation(value = "아이디 중복 검사", notes = "<strong>아이디가 DB에 있는 지 확인한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -59,7 +59,7 @@ public class UserController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<UserRes> idOverlapCheck(
-            @ApiParam(value = "아이디 정보", required = true) @RequestParam("user-id") String userId) {
+            @ApiParam(value = "아이디 정보", required = true)  @PathVariable("userId") String userId) {
         System.out.println("중복확인 시작");
         User user = userService.getUserByUserId(userId);
         if (user == null) {
@@ -71,7 +71,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/nickname-info")
+    @GetMapping("/nickname-info/{nickname}")
     @ApiOperation(value = "닉네임 중복 검사", notes = "<strong>닉네임이 DB에 있는 지 확인한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -80,7 +80,7 @@ public class UserController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<UserRes> nicknameOverlapCheck(
-            @ApiParam(value = "닉네임 정보", required = true) @RequestParam("nickname") String nickname) {
+            @ApiParam(value = "닉네임 정보", required = true) @PathVariable("nickname") String nickname) {
         System.out.println("중복확인 시작");
         User user = userService.getUserByNickname(nickname);
         if (user == null) {
@@ -182,19 +182,19 @@ public class UserController {
         return ResponseEntity.ok(UserRes.of(200, "Success", user));
     }
 
-    @DeleteMapping()
-    @ApiOperation(value = "닉네임으로 회원 탈퇴", notes = "<strong>닉네임</strong>를 통해 회원 정보를 삭제한다.")
+    @DeleteMapping("/{userId}")
+    @ApiOperation(value = "아이디로 회원 탈퇴", notes = "<strong>아이디</strong>를 통해 회원 정보를 삭제한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<String> delete(
-            @ApiParam(value = "삭제할 회원 닉네임", required = true) @RequestParam("nickname") String nickname) {
-        User user = userService.getUserByNickname(nickname);
+            @ApiParam(value = "삭제할 회원 닉네임", required = true) @PathVariable("userId") String userId) {
+        User user = userService.getUserByUserId(userId);
         if (user == null) {
             return ResponseEntity.status(404).body("회원 없음");
         }
-        boolean result = userService.deleteUser(nickname);
+        boolean result = userService.deleteUser(userId);
         if (result)
             return ResponseEntity.status(200).body("Success");
         else
