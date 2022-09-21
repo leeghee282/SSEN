@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import retrofit2.http.Path;
 
 import java.util.List;
 import java.util.Map;
@@ -28,9 +29,9 @@ public class UserCurrController {
     private final HoldingCurrService holdingCurrService;
     private final InterestedCurrService interestedCurrService;
 
-    @GetMapping("/holdcurr")
+    @GetMapping("/holdcurr/{userId}")
     @ApiOperation(value = "보유 통화 조회")
-    public ResponseEntity<List<HoldingCurrencyRes>> getHoldingCurr(@RequestBody String userId) {
+    public ResponseEntity<List<HoldingCurrencyRes>> getHoldingCurr(@PathVariable String userId) {
         List<HoldingCurrencyRes> dtoList = null;
 
         User user = userService.getUserByUserId(userId);
@@ -60,9 +61,9 @@ public class UserCurrController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-    @GetMapping("/intrcurr")
+    @GetMapping("/intrcurr/{userId}")
     @ApiOperation(value = "관심 통화 조회")
-    public ResponseEntity<List<InterestedCurrencyRes>> getInterestedCurr(@RequestBody String userId) {
+    public ResponseEntity<List<InterestedCurrencyRes>> getInterestedCurr(@PathVariable String userId) {
         List<InterestedCurrencyRes> dtoList = null;
 
         User user = userService.getUserByUserId(userId);
