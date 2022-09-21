@@ -36,7 +36,6 @@ public class HoldingCurrServiceImpl implements HoldingCurrService {
     @Override
     public String addHoldingCurr(HoldingCurrencyAddReq holdingCurrencyReq) {
         // userId와 code가 데이터베이스에 있는 값(존재하는 값)이 들어왔다는 가정
-
         String message = "";
         String userId = holdingCurrencyReq.getUserId();
         String code = holdingCurrencyReq.getCode();
@@ -68,4 +67,24 @@ public class HoldingCurrServiceImpl implements HoldingCurrService {
         HoldingCurrency updated = holdingCurrencyRepository.save(target);
         return HoldingCurrencyRes.of(updated);
     }
+
+    @Override
+    public String deleteHoldingCurr(HoldingCurrencyAddReq holdingCurrencyReq) {
+        // userId와 code가 데이터베이스에 있는 값(존재하는 값)이 들어왔다는 가정
+        String message = "";
+        String userId = holdingCurrencyReq.getUserId();
+        String code = holdingCurrencyReq.getCode();
+        User user = userRepositorySupport.findUserByUserId(userId).get();
+        CurrencyCategory currencyCategory = currencyCategoryRepository.findByCode(code);
+        HoldingCurrency target = holdingCurrencyRepository.findByUserAndCurrencyCategory(user, currencyCategory);
+        if (target == null) {
+            message = "NO DATA";
+        } else {
+            holdingCurrencyRepository.delete(target);
+            message = "SUCCESS";
+        }
+        return message;
+    }
+
+
 }

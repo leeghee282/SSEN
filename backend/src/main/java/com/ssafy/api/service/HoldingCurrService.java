@@ -10,4 +10,5 @@ public interface HoldingCurrService {
     List<HoldingCurrencyRes> getHoldingCurrByUser(User user);
     String addHoldingCurr(HoldingCurrencyAddReq holdingCurrencyReq);
     HoldingCurrencyRes updateHoldingCurr(HoldingCurrencyAddReq holdingCurrencyReq);
+    String deleteHoldingCurr(HoldingCurrencyAddReq holdingCurrencyReq);
 }

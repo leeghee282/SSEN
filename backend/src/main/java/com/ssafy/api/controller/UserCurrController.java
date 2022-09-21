@@ -49,6 +49,13 @@ public class UserCurrController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
+    @DeleteMapping("/holdcurr")
+    @ApiOperation(value = "보유 통화 삭제")
+    public ResponseEntity<String> deleteHoldingCurr(@RequestBody HoldingCurrencyAddReq holdingCurrencyReq){
+        String message = holdingCurrService.deleteHoldingCurr(holdingCurrencyReq);
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
 
 
 
