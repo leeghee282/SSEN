@@ -11,9 +11,8 @@ const axios = Axios.create({
 
 export function getExchangeRate(dataToSubmit) {
   const request = axios
-    .get("/api/v1/currone", dataToSubmit)
-    .then((response) => response.data)
-    .catch((err) => console.log(err));
+    .get(`/api/v1/curr/one/${dataToSubmit.date}/${dataToSubmit.code}`)
+    .then((response) => response.data);
 
   return {
     type: GET_EXCHANGE_RATE,
@@ -23,7 +22,7 @@ export function getExchangeRate(dataToSubmit) {
 
 export function getBanksInfo(dataToSubmit) {
   const request = axios
-    .get("/commission", dataToSubmit)
+    .get(`/api/v1/commission/${dataToSubmit.code}`)
     .then((response) => response.data);
 
   return {
