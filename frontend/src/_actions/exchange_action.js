@@ -11,7 +11,7 @@ const axios = Axios.create({
 
 export function getExchangeRate(dataToSubmit) {
   const request = axios
-    .get("/api/v1/currone", dataToSubmit)
+    .get(`/api/v1/curr/one/${dataToSubmit.date}/${dataToSubmit.code}`)
     .then((response) => response.data);
 
   return {
@@ -22,7 +22,7 @@ export function getExchangeRate(dataToSubmit) {
 
 export function getBanksInfo(dataToSubmit) {
   const request = axios
-    .get("/commission", dataToSubmit)
+    .get(`/api/v1/commission/${dataToSubmit.code}`)
     .then((response) => response.data);
 
   return {
