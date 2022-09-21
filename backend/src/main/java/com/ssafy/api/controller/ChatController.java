@@ -9,15 +9,12 @@ import com.ssafy.db.entity.Chat;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 채팅 관련 API 요청 처리를 위한 컨트롤러 정의.
  */
-@Api(value = "유저 API", tags = {"User"})
+@Api(value = "Chat API", tags = {"Chat"})
 @RestController
 @RequestMapping("/api/v1/chat")
 public class ChatController {
@@ -29,7 +26,6 @@ public class ChatController {
     @Autowired
     CurrencyCategoryService currencyCategoryService;
 
-    //등록, 삭제, 전체조회
     @PostMapping()
     @ApiOperation(value = "채팅 등록", notes = "채팅을 등록한다.")
     @ApiResponses({
@@ -45,4 +41,22 @@ public class ChatController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
+    @DeleteMapping()
+    @ApiOperation(value = "채팅 삭제", notes = "<strong>uid</strong>를 통해 채팅을 삭제한다.")
+    @ApiResponses({@ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")})
+    public ResponseEntity<String> delete(
+            @ApiParam(value = "삭제할 채팅 uid", required = true) @RequestParam("uid") long uid) {
+        Chat chat = chatService.getChatbyUid(uid);
+        if (chat == null) {
+            return ResponseEntity.status(404).body("채팅 없음");
+        }
+        boolean result = chatService.deleteChat(uid);
+        if (result)
+            return ResponseEntity.status(200).body("Success");
+        else
+            return ResponseEntity.status(404).body("Fail");
+    }
 }
