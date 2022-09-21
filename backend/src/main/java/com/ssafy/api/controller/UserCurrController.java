@@ -3,8 +3,11 @@ package com.ssafy.api.controller;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ssafy.api.request.HoldingCurrencyAddReq;
 import com.ssafy.api.response.HoldingCurrencyRes;
+import com.ssafy.api.response.InterestedCurrencyRes;
 import com.ssafy.api.service.HoldingCurrService;
+import com.ssafy.api.service.InterestedCurrService;
 import com.ssafy.api.service.UserService;
+import com.ssafy.db.entity.InterestedCurrency;
 import com.ssafy.db.entity.User;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +26,7 @@ import java.util.List;
 public class UserCurrController {
     private final UserService userService;
     private final HoldingCurrService holdingCurrService;
+    private final InterestedCurrService interestedCurrService;
 
     @GetMapping("/holdcurr")
     @ApiOperation(value = "보유 통화 조회")
@@ -56,6 +60,16 @@ public class UserCurrController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
+    @GetMapping("/intrcurr")
+    @ApiOperation(value = "관심 통화 조회")
+    public ResponseEntity<List<InterestedCurrencyRes>> getInterestedCurr(@RequestBody String userId){
+        List<InterestedCurrencyRes> dtoList = null;
+
+        User user = userService.getUserByUserId(userId);
+        dtoList = interestedCurrService.getInterestedCurrByUser(user);
+
+        return new ResponseEntity<>(dtoList, HttpStatus.OK);
+    }
 
 
 

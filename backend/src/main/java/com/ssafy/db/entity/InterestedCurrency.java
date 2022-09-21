@@ -43,4 +43,6 @@ public class InterestedCurrency {
     @JoinColumn(nullable = false)
     private CurrencyCategory currencyCategory;
 
+
+
 }
