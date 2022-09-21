@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByNickname(String nickname) {
         // 디비에 유저 정보 조회 (nickname 를 통한 조회).
-        if (!userRepository.findByNickname(nickname).isPresent())
+        if (!userRepository.findByUserId(nickname).isPresent())
             return null;
         User user = userRepositorySupport.findUserByNickname(nickname).get();
         return user;
@@ -81,11 +81,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean deleteUser(String nickname) {
-        User user = userRepository.findByNickname(nickname).get();
+    public boolean deleteUser(String userId) {
+        User user = userRepository.findByUserId(userId).get();
         // user가 null이면 false 리턴
         if(user == null) return false;
-        userRepository.deleteByNickname(nickname);
+        userRepository.deleteByUserId(userId);
         return true;
     }
 }
