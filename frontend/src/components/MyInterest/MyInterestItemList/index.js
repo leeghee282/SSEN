@@ -1,6 +1,6 @@
-// 보유 원화 목록으로 보여주기
-import React, { useEffect, useState} from "react";
-//mui
+// 관심 화폐 목록으로 보여주기
+import React from "react";
+// mui
 import Box from "@mui/material/Box";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -11,8 +11,9 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 
-export default function MyAssetItemList({ myAsset, onRemove }) {
-  
+
+export default function MyInterestItemList({ interests, onRemove }) {
+
   return (
     <Box>
       <TableContainer component={Paper}>
@@ -21,24 +22,23 @@ export default function MyAssetItemList({ myAsset, onRemove }) {
             <TableRow>
               <TableCell>ID</TableCell>
               <TableCell align="center">Nation</TableCell>
-              <TableCell align="center">Quatity</TableCell>
-              <TableCell align="center">Price</TableCell>
-              <TableCell align="center">UPDATE</TableCell>
+              <TableCell align="center">Target</TableCell>
+              <TableCell align="center">현재환율</TableCell>
               <TableCell align="center">DELETE</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {myAsset.map((asset) => (
+          {interests.map((interest) => (
             <TableRow
-            key={asset.id}
+            key={interest.id}
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell component="th" scope="row">{asset.id}</TableCell>
-              <TableCell align="center">{asset.currency_code}</TableCell>
-              <TableCell align="center">{asset.quantity}</TableCell>
-              <TableCell align="center">{asset.price}</TableCell>
-              <TableCell align="center">수정 아직 안되욥... ㅠ</TableCell>
-              <TableCell align="center" onClick={() => onRemove(asset.id)} style={{ cursor:"pointer"}}><DeleteForeverRoundedIcon/></TableCell>
+              <TableCell component="th" scope="row">{interest.id}</TableCell>
+              <TableCell align="center">{interest.nation}</TableCell>
+              <TableCell align="center">{interest.interestCurrency}</TableCell>
+              <TableCell align="center">현재 환율 어케 가져와욥?</TableCell>
+              {/* <TableCell align="center">UPDATE</TableCell> */}
+              <TableCell align="center" onClick={() => onRemove(interest.id)} style={{ cursor:"pointer"}}><DeleteForeverRoundedIcon/></TableCell>
             </TableRow>
             ))}
           </TableBody>

@@ -6,50 +6,29 @@ import Box from "@mui/material/Box";
 
 export default function MySet() {
   // 임시 데이터
-  const [myAsset, setMyAsset] = useState([
-    {
-      id: 1,
-      currncy_code: 'USD',
-      quantity: '30',
-      price: '41673.30',
-    },
-    {
-      id: 2,
-      currncy_code: 'USD',
-      quantity: '50',
-      price: '69455.50',
-    },
-    {
-      id: 3,
-      currncy_code: 'EUR',
-      quantity: '40',
-      price: '55695.76',
-    },
-    {
-      id: 4,
-      currncy_code: 'JPY',
-      quantity: '5000',
-      price: '48514.42',
-    },
-  ]);
+  const [myAsset, setMyAsset] = useState([]);
 
-  const nextId = useRef(5); //수정 필요
+  const nextId = useRef(0);
   const handleSumit = (currency_code, quantity, price) => {
-    const repo = {
+    const asset = {
       id: nextId.current,
       currency_code,
       quantity,
       price,
     };
-    setMyAsset(myAsset.concat(repo));
+    setMyAsset(myAsset.concat(asset));
     nextId.current += 1;
-    // console.log(repo)
   };
 
   // 삭제 기능
   const onRemove = (id) => {
-    setMyAsset(myAsset.filter((repo) => repo.id !== id));
+    setMyAsset(myAsset.filter((asset) => asset.id !== id));
   };
+
+  // // 수정 기능
+  // const onUpdate = (id) => {
+  //   setMyAsset()
+  // }
 
   return (
     <Box
@@ -63,7 +42,9 @@ export default function MySet() {
       <Typography id="font_test" component="h1" variant="h4">
         보유 외화 목록
       </Typography>
+      <br/>
       <BasicModal onSubmit={handleSumit}/>
+      <br/>
       <MyAssetItemList myAsset={myAsset} onRemove={onRemove} />
     </Box>
   );
