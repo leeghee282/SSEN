@@ -1,6 +1,7 @@
 package com.ssafy.api.service;
 
 import com.ssafy.api.request.ChatReq;
+import com.ssafy.api.response.ChatRes;
 import com.ssafy.db.entity.Chat;
 import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.ChatRepository;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * 유저 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
@@ -58,5 +61,16 @@ public class ChatServiceImpl implements ChatService {
         chatRepository.deleteByUid(uid);
         return true;
 
+    }
+
+    @Override
+    public List<ChatRes> serchChatListByCode(long currencyCode) {
+        List<ChatRes> chatList = new LinkedList<>();
+        List<Chat> chats= chatRepositorySupport.findChatList(currencyCode);
+        for (Chat c : chats){
+            chatList.add(ChatRes.of(c));
+        }
+
+        return chatList;
     }
 }

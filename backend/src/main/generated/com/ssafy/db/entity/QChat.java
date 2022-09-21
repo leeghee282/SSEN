@@ -30,6 +30,7 @@ public class QChat extends EntityPathBase<Chat> {
 
     public final DatePath<Date> regDate = createDate("regDate", Date.class);
 
+
     public QChat(String variable) {
         super(Chat.class, forVariable(variable));
     }
