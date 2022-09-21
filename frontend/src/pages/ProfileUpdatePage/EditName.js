@@ -21,6 +21,7 @@ const EditName = (props) => {
       <TextField
         id="font_test"
         onChange={onChange}
+        defaultValue={userName}
         placeholder="이름을 변경하세요"
       ></TextField>
       <Button
