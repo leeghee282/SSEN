@@ -1,9 +1,6 @@
 package com.ssafy.db.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -16,6 +13,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(name = "holding_currencies")
 public class HoldingCurrency {
     @Id
@@ -38,5 +36,13 @@ public class HoldingCurrency {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
     private CurrencyCategory currencyCategory;
+
+    public void patch(HoldingCurrency holdingCurrency){
+        if(holdingCurrency.getPrice() != 0)
+            this.price = holdingCurrency.getPrice();
+        if(holdingCurrency.getQuantity() != 0)
+            this.quantity = holdingCurrency.getQuantity();
+    }
+
 
 }
