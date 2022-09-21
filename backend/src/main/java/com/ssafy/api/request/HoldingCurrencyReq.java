@@ -7,7 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-public class HoldingCurrencyAddReq {
+public class HoldingCurrencyReq {
     @ApiModelProperty(name="유저 ID", example="ssafy10")
     private String userId;
     @ApiModelProperty(name="통화 코드", example="USD")

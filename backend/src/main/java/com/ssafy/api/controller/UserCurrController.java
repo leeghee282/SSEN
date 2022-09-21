@@ -1,13 +1,11 @@
 package com.ssafy.api.controller;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.ssafy.api.request.HoldingCurrencyAddReq;
+import com.ssafy.api.request.HoldingCurrencyReq;
 import com.ssafy.api.response.HoldingCurrencyRes;
 import com.ssafy.api.response.InterestedCurrencyRes;
 import com.ssafy.api.service.HoldingCurrService;
 import com.ssafy.api.service.InterestedCurrService;
 import com.ssafy.api.service.UserService;
-import com.ssafy.db.entity.InterestedCurrency;
 import com.ssafy.db.entity.User;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -41,21 +39,21 @@ public class UserCurrController {
 
     @PostMapping("/holdcurr")
     @ApiOperation(value = "보유 통화 등록")
-    public ResponseEntity<String> addHoldingCurr(@RequestBody HoldingCurrencyAddReq holdingCurrencyReq){
+    public ResponseEntity<String> addHoldingCurr(@RequestBody HoldingCurrencyReq holdingCurrencyReq){
         String message = holdingCurrService.addHoldingCurr(holdingCurrencyReq);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
     @PatchMapping("/holdcurr")
     @ApiOperation(value = "보유 통화 수정")
-    public ResponseEntity<HoldingCurrencyRes> updateHoldingCurr(@RequestBody HoldingCurrencyAddReq holdingCurrencyReq){
+    public ResponseEntity<HoldingCurrencyRes> updateHoldingCurr(@RequestBody HoldingCurrencyReq holdingCurrencyReq){
         HoldingCurrencyRes dto = holdingCurrService.updateHoldingCurr(holdingCurrencyReq);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     @DeleteMapping("/holdcurr")
     @ApiOperation(value = "보유 통화 삭제")
-    public ResponseEntity<String> deleteHoldingCurr(@RequestBody HoldingCurrencyAddReq holdingCurrencyReq){
+    public ResponseEntity<String> deleteHoldingCurr(@RequestBody HoldingCurrencyReq holdingCurrencyReq){
         String message = holdingCurrService.deleteHoldingCurr(holdingCurrencyReq);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
@@ -70,6 +68,13 @@ public class UserCurrController {
 
         return new ResponseEntity<>(dtoList, HttpStatus.OK);
     }
+
+//    @PostMapping("/intrcurr")
+//    @ApiOperation(value = "관심 통화 등록")
+//    public ResponseEntity<String> addInterestedCurr(@RequestBody HoldingCurrencyAddReq holdingCurrencyReq){
+//        String message = holdingCurrService.addHoldingCurr(holdingCurrencyReq);
+//        return new ResponseEntity<>(message, HttpStatus.OK);
+//    }
 
 
 

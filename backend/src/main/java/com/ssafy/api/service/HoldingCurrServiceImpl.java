@@ -1,6 +1,6 @@
 package com.ssafy.api.service;
 
-import com.ssafy.api.request.HoldingCurrencyAddReq;
+import com.ssafy.api.request.HoldingCurrencyReq;
 import com.ssafy.api.response.HoldingCurrencyRes;
 import com.ssafy.db.entity.CurrencyCategory;
 import com.ssafy.db.entity.HoldingCurrency;
@@ -34,7 +34,7 @@ public class HoldingCurrServiceImpl implements HoldingCurrService {
     }
 
     @Override
-    public String addHoldingCurr(HoldingCurrencyAddReq holdingCurrencyReq) {
+    public String addHoldingCurr(HoldingCurrencyReq holdingCurrencyReq) {
         // userId와 code가 데이터베이스에 있는 값(존재하는 값)이 들어왔다는 가정
         String message = "";
         String userId = holdingCurrencyReq.getUserId();
@@ -55,7 +55,7 @@ public class HoldingCurrServiceImpl implements HoldingCurrService {
     }
 
     @Override
-    public HoldingCurrencyRes updateHoldingCurr(HoldingCurrencyAddReq holdingCurrencyReq) {
+    public HoldingCurrencyRes updateHoldingCurr(HoldingCurrencyReq holdingCurrencyReq) {
         String userId = holdingCurrencyReq.getUserId();
         String code = holdingCurrencyReq.getCode();
         User user = userRepositorySupport.findUserByUserId(userId).get();
@@ -69,7 +69,7 @@ public class HoldingCurrServiceImpl implements HoldingCurrService {
     }
 
     @Override
-    public String deleteHoldingCurr(HoldingCurrencyAddReq holdingCurrencyReq) {
+    public String deleteHoldingCurr(HoldingCurrencyReq holdingCurrencyReq) {
         // userId와 code가 데이터베이스에 있는 값(존재하는 값)이 들어왔다는 가정
         String message = "";
         String userId = holdingCurrencyReq.getUserId();
