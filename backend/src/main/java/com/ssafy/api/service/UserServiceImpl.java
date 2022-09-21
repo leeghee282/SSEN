@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByNickname(String nickname) {
         // 디비에 유저 정보 조회 (nickname 를 통한 조회).
-        if (!userRepository.findByUserId(nickname).isPresent())
+        if (!userRepository.findByNickname(nickname).isPresent())
             return null;
         User user = userRepositorySupport.findUserByNickname(nickname).get();
         return user;
