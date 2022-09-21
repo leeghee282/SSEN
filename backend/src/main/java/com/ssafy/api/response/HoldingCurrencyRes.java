@@ -13,10 +13,14 @@ import java.util.Date;
 @Getter
 @Setter
 @Builder
-@ApiModel(value = "HoldingCurrencyResponse", description = "관심 통화 정보 응답 Dto")
+@ApiModel(value = "HoldingCurrencyResponse", description = "보유 통화 정보 응답 Dto")
 public class HoldingCurrencyRes {
     @ApiModelProperty(name="uid")
     long uid;
+    @ApiModelProperty(name="userId")
+    String userId;
+    @ApiModelProperty(name="code")
+    String code;
     @ApiModelProperty(name = "quantity")
     double quantity;
     @ApiModelProperty(name = "price")
@@ -25,6 +29,8 @@ public class HoldingCurrencyRes {
     public static HoldingCurrencyRes of(HoldingCurrency holdingCurrency) {
         return HoldingCurrencyRes.builder()
                 .uid(holdingCurrency.getUid())
+                .userId(holdingCurrency.getUser().getUserId())
+                .code(holdingCurrency.getCurrencyCategory().getCode())
                 .quantity(holdingCurrency.getQuantity())
                 .price(holdingCurrency.getPrice())
                 .build();
