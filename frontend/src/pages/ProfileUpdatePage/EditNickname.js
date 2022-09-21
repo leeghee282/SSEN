@@ -23,6 +23,7 @@ const EditNickname = (props) => {
       <TextField
         id="font_test"
         onChange={onChange}
+        defaultValue={userNickName}
         placeholder="닉네임을 변경하세요"
       ></TextField>
       <Button
