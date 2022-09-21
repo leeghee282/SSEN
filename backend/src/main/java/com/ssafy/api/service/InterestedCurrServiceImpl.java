@@ -14,8 +14,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -36,7 +38,8 @@ public class InterestedCurrServiceImpl implements InterestedCurrService {
     }
 
     @Override
-    public int checkTargetCnt(InterestedCurrencyReq interestedCurrencyReq) {
+    public Map<String, Object> checkTargetCnt(InterestedCurrencyReq interestedCurrencyReq) {
+        Map<String, Object> res = new LinkedHashMap<>();
         int cnt = 0;
         String userId = interestedCurrencyReq.getUserId();
         String code = interestedCurrencyReq.getCode();
@@ -46,23 +49,16 @@ public class InterestedCurrServiceImpl implements InterestedCurrService {
         if (ic == null) { // 0개(저장된 통화 없음)
             cnt = -1;
         } else {
-            // target 수정, 삭제에서 값을 앞으로 밀 때
-//            if (interestedCurrencyReq.getTarget1() == 0)
-//                cnt = 0;
-//            else if (interestedCurrencyReq.getTarget2() == 0)
-//                cnt = 1;
-//            else if (interestedCurrencyReq.getTarget3() == 0)
-//                cnt = 2;
-//            else if (interestedCurrencyReq.getTarget3() != 0)
-//                cnt = 3;
-            // target 수정, 삭제에서 값을 안 밀 때
             double target[] = {ic.getTarget1(), ic.getTarget2(), ic.getTarget3()};
             for (double t : target) {
-                if(t!=0)
+                if (t != 0)
                     cnt++;
             }
         }
-        return cnt;
+        res.put("cnt", cnt);
+        res.put("user", user);
+        res.put("cc", currencyCategory);
+        return res;
     }
 
 
@@ -80,5 +76,44 @@ public class InterestedCurrServiceImpl implements InterestedCurrService {
         message = "SUCCESS";
         return message;
     }
+
+    //   =================================================================================================
+
+
+    @Override
+    public String updateTargetInterestedCurr(Map<String, Object> map, InterestedCurrencyReq interestedCurrencyReq) {
+        String message = "";
+        int targetCnt = (int)map.get("cnt");
+        double target = interestedCurrencyReq.getTarget();
+        if (targetCnt != -1) { // add
+            InterestedCurrency targetIC = interestedCurrencyRepository.findByUserAndCurrencyCategory((User) map.get("user"), (CurrencyCategory) map.get("cc"));
+            InterestedCurrency icAfter = interestedCurrencyReq.toEntity((User) map.get("user"), (CurrencyCategory) map.get("cc"));
+            double targetBefore[] = {targetIC.getTarget1(), targetIC.getTarget2(), targetIC.getTarget3()};
+            for (double t : targetBefore) {
+                if(t==target){
+                    message = "DUPLICATE";
+                    break;
+                }
+                if(t==0){
+
+                }
+            }
+        }else{ // edit
+
+        }
+//        String userId = holdingCurrencyReq.getUserId();
+//        String code = holdingCurrencyReq.getCode();
+//        User user = userRepositorySupport.findUserByUserId(userId).get();
+//        CurrencyCategory currencyCategory = currencyCategoryRepository.findByCode(code);
+//        HoldingCurrency target = holdingCurrencyRepository.findByUserAndCurrencyCategory(user, currencyCategory);
+//        HoldingCurrency hcAfter = holdingCurrencyReq.toEntity(user, currencyCategory);
+//        target.patch(hcAfter);
+//        System.out.println(target.getPrice());
+//        HoldingCurrency updated = holdingCurrencyRepository.save(target);
+//        return HoldingCurrencyRes.of(updated);
+
+        return null;
+    }
+
 
 }

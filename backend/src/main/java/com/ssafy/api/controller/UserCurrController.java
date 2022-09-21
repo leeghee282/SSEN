@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /*
  * 사용자 부가 기능(보유 통화 , 관심 통화)
@@ -74,11 +75,13 @@ public class UserCurrController {
     @ApiOperation(value = "관심 통화 등록")
     public ResponseEntity<String> addInterestedCurr(@RequestBody InterestedCurrencyReq interestedCurrencyReq) {
         String message = "FAIL";
-        int targetCnt = interestedCurrService.checkTargetCnt(interestedCurrencyReq);
-        if (targetCnt == -1) {// 통화 추가
+        Map<String, Object> map = interestedCurrService.checkTargetCnt(interestedCurrencyReq);
+        if ((int) map.get("cnt") == 3) {
+            message = "FULL";
+        } else if ((int) map.get("cnt") == -1) {// 통화 추가
             message = interestedCurrService.addInterestedCurr(interestedCurrencyReq);
         } else {// 타겟 추가
-
+            message = interestedCurrService.updateTargetInterestedCurr(map, interestedCurrencyReq);
         }
         return new ResponseEntity<>(message, HttpStatus.OK);
     }

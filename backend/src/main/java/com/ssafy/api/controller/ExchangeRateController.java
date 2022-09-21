@@ -24,13 +24,8 @@ import java.util.Map;
 public class ExchangeRateController {
     private final ExchangeRateService exchangeRateService;
 
-    @GetMapping("/curr")
-    @ApiOperation(value = "통화코드에 따른 환율 정보 제공(기간)", notes = "example value:  \n" +
-            "{\n" +
-            "\"start_date\": \"2000-10-04\",\n" +
-            "\"end_date\": \"2001-10-04\",\n" +
-            "\"code\": \"USD\"\n" +
-            "}")
+    @GetMapping("/curr/{startDate}/{endDate}/{code}")
+    @ApiOperation(value = "통화코드에 따른 환율 정보 제공(기간)")
     public ResponseEntity<List<ExchangeRateRes>> getExchangeRatePeriod(@RequestBody Map<String, Object> map) throws ParseException {
         String sDate = (String) map.get("start_date");
         String eDate = (String) map.get("end_date");

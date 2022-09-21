@@ -8,10 +8,13 @@ import com.ssafy.db.entity.InterestedCurrency;
 import com.ssafy.db.entity.User;
 
 import java.util.List;
+import java.util.Map;
 
 public interface InterestedCurrService{
     List<InterestedCurrencyRes> getInterestedCurrByUser(User user);
 
-    int checkTargetCnt(InterestedCurrencyReq interestedCurrencyReq);
+    Map<String, Object> checkTargetCnt(InterestedCurrencyReq interestedCurrencyReq);
     String addInterestedCurr(InterestedCurrencyReq interestedCurrencyReq);
+
+    String updateTargetInterestedCurr(Map<String, Object> map, InterestedCurrencyReq interestedCurrencyReq);
 }
