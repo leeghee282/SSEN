@@ -2,6 +2,7 @@ package com.ssafy.api.service;
 
 import com.ssafy.api.request.ChatReq;
 import com.ssafy.db.entity.Chat;
+import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.ChatRepository;
 import com.ssafy.db.repository.ChatRepositorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,14 @@ public class ChatServiceImpl implements ChatService {
         Chat chat = new Chat();
         LocalDateTime currentDateTime = LocalDateTime.now();
         Date date = java.sql.Timestamp.valueOf(currentDateTime);
-        chat.setUser(userService.getUserByNickname(chatInfo.getNickname()));
+        User user = userService.getUserByNickname(chatInfo.getNickname());
+        if (user == null) {
+            System.out.println("회원이 없습니다. 실패");
+            return null;
+        } else {
+            System.out.println("회원 있습니다. 성공");
+        }
+        chat.setUser(user);
         chat.setContent(chatInfo.getContent());
         chat.setCurrencyCategory(currencyCategoryService.getCurrencyCategorybyCode(chatInfo.getCurrencyCode()));
         chat.setRegdate(date);
