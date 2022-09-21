@@ -43,7 +43,6 @@ public class UserCurrController {
     }
 
     @PatchMapping("/holdcurr")
-    @JsonProperty("holdingCurrencyReq")
     @ApiOperation(value = "보유 통화 수정")
     public ResponseEntity<HoldingCurrencyRes> updateHoldingCurr(@RequestBody HoldingCurrencyAddReq holdingCurrencyReq){
         HoldingCurrencyRes dto = holdingCurrService.updateHoldingCurr(holdingCurrencyReq);
