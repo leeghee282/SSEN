@@ -60,6 +60,8 @@ public class UserCurrController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
+//    =================================================================================================================
+
     @GetMapping("/intrcurr/{userId}")
     @ApiOperation(value = "관심 통화 조회")
     public ResponseEntity<List<InterestedCurrencyRes>> getInterestedCurr(@PathVariable String userId) {
@@ -82,6 +84,17 @@ public class UserCurrController {
             message = interestedCurrService.addInterestedCurr(interestedCurrencyReq);
         } else {// 타겟 추가
             message = interestedCurrService.addTargetInterestedCurr(map, interestedCurrencyReq);
+        }
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
+    @PatchMapping("/intrcurr")
+    @ApiOperation(value = "관심 통화 수정")
+    public ResponseEntity<String> updateInterestedCurr(@RequestBody InterestedCurrencyReq interestedCurrencyReq) {
+        String message = "FAIL";
+        Map<String, Object> map = interestedCurrService.checkTargetCnt(interestedCurrencyReq);
+        if ((int) map.get("cnt") > 0) {
+            message = interestedCurrService.updateInterestedCurr(map, interestedCurrencyReq);
         }
         return new ResponseEntity<>(message, HttpStatus.OK);
     }

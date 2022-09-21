@@ -63,7 +63,6 @@ public class HoldingCurrServiceImpl implements HoldingCurrService {
         HoldingCurrency target = holdingCurrencyRepository.findByUserAndCurrencyCategory(user, currencyCategory);
         HoldingCurrency hcAfter = holdingCurrencyReq.toEntity(user, currencyCategory);
         target.patch(hcAfter);
-        System.out.println(target.getPrice());
         HoldingCurrency updated = holdingCurrencyRepository.save(target);
         return HoldingCurrencyRes.of(updated);
     }

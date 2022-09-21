@@ -14,10 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -77,24 +74,20 @@ public class InterestedCurrServiceImpl implements InterestedCurrService {
         return message;
     }
 
-    //   =================================================================================================
-
-
     @Override
     public String addTargetInterestedCurr(Map<String, Object> map, InterestedCurrencyReq interestedCurrencyReq) {
         String message = "FAIL";
-        int targetCnt = (int)map.get("cnt");
+        int targetCnt = (int) map.get("cnt");
         double target = interestedCurrencyReq.getTarget();
         InterestedCurrency targetIC = interestedCurrencyRepository.findByUserAndCurrencyCategory((User) map.get("user"), (CurrencyCategory) map.get("cc"));
         InterestedCurrency icAfter = interestedCurrencyReq.toEntity((User) map.get("user"), (CurrencyCategory) map.get("cc"));
         double targetArr[] = {targetIC.getTarget1(), targetIC.getTarget2(), targetIC.getTarget3()};
-        int idx = 0;
         for (int i = 0; i < targetArr.length; i++) {
-            if(targetArr[i] == target) {
+            if (targetArr[i] == target) {
                 message = "DUPLICATE";
                 break;
             }
-            if(targetArr[i]==0){
+            if (targetArr[i] == 0) {
                 targetArr[i] = target;
                 message = "SUCCESS";
                 icAfter.setTarget(targetArr);
@@ -105,5 +98,53 @@ public class InterestedCurrServiceImpl implements InterestedCurrService {
         return message;
     }
 
-
+    @Override
+    public String updateInterestedCurr(Map<String, Object> map, InterestedCurrencyReq interestedCurrencyReq) {
+        String message = "FAIL";
+        InterestedCurrency targetIC = interestedCurrencyRepository.findByUserAndCurrencyCategory((User) map.get("user"), (CurrencyCategory) map.get("cc"));
+        InterestedCurrency icAfter = interestedCurrencyReq.toEntity((User) map.get("user"), (CurrencyCategory) map.get("cc"));
+        // target 재설정
+        double previous = interestedCurrencyReq.getPrevious();
+        double target = interestedCurrencyReq.getTarget();
+        if (previous != 0 && target != 0) {
+            double targetArr[] = {targetIC.getTarget1(), targetIC.getTarget2(), targetIC.getTarget3()};
+            System.out.println(Arrays.toString(targetArr));
+            boolean duplicateCheck = false;
+            boolean existCheck = false;
+            for (int i = 0; i < targetArr.length; i++) {
+                System.out.println("i: " + i + "==============================================");
+                if (targetArr[i] == target) {
+                    System.out.println("target==================================================");
+                    duplicateCheck = true;
+                    break;
+                }
+            }
+            if (!duplicateCheck) {
+                for (int i = 0; i < targetArr.length; i++) {
+                    System.out.println("i: " + i + "==============================================");
+                    if (targetArr[i] == previous) {
+                        System.out.println("previous======================================================================");
+                        targetArr[i] = target;
+                        existCheck = true;
+                        icAfter.setTarget(targetArr);
+                        targetIC.patch(icAfter);
+                        interestedCurrencyRepository.save(targetIC);
+                        break;
+                    }
+                }
+            }
+            // message 세팅
+            if (existCheck) {
+                message = "SUCCESS";
+            } else if (duplicateCheck) {
+                message = "DUPLICATE";
+            } else {
+                message = "NO VALUE";
+            }
+        } else {
+            message = "ZERO VALUE";
+        }
+        return message;
+    }
+    
 }
