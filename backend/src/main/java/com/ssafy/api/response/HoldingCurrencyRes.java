@@ -13,7 +13,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Builder
-@ApiModel(value = "HoldingCurrencyResponse", description = "관심 통화 정보 응답 Dto")
+@ApiModel(value = "HoldingCurrencyResponse", description = "보유 통화 정보 응답 Dto")
 public class HoldingCurrencyRes {
     @ApiModelProperty(name="uid")
     long uid;
