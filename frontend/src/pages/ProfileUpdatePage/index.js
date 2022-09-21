@@ -11,6 +11,8 @@ import { useState } from "react";
 import EditName from "./EditName";
 import EditNickname from "./EditNickname";
 import EditPhoneNumber from "./EditPhoneNumber";
+import EditPassword from "./EditPassword";
+import Link from "@mui/material/Link";
 
 const theme = createTheme();
 
@@ -18,13 +20,14 @@ const ProfileUpdate = () => {
   const [insertFlag1, setInsertFlag1] = useState(false);
   const [insertFlag2, setInsertFlag2] = useState(false);
   const [insertFlag3, setInsertFlag3] = useState(false);
-  const [insertFlag4, setInsertFlag4] = useState(false);
+  const [insertFlag4, setInsertFlag4] = useState(true);
+  const [insertFlag5, setInsertFlag5] = useState(false);
   const [userName, setUserName] = useState("배지우");
   const [userNickName, setUserNickName] = useState("환율짱짱");
   const [userPhoneNumber, setUserPhoneNumber] = useState("010-4791-5385");
-
+  console.log(insertFlag5, 55);
   const insertClicked1 = () => {
-    // 반 등록 컴포넌트에 대한 state값 toggle
+    // 이름 변경
 
     insertComponentToggle1();
   };
@@ -34,7 +37,7 @@ const ProfileUpdate = () => {
   }
 
   const insertClicked2 = () => {
-    // 반 등록 컴포넌트에 대한 state값 toggle
+    // 닉네임 변경
 
     insertComponentToggle2();
   };
@@ -44,9 +47,10 @@ const ProfileUpdate = () => {
   }
 
   const insertClicked3 = () => {
-    // 반 등록 컴포넌트에 대한 state값 toggle
+    // 전화번호 변경
 
     insertComponentToggle3();
+    console.log(insertFlag3, 3);
   };
 
   function insertComponentToggle3() {
@@ -54,9 +58,10 @@ const ProfileUpdate = () => {
   }
 
   const insertClicked4 = () => {
-    // 반 등록 컴포넌트에 대한 state값 toggle
+    // 비밀번호변경
 
     insertComponentToggle4();
+    console.log(insertFlag4, 4);
   };
 
   function insertComponentToggle4() {
@@ -77,7 +82,7 @@ const ProfileUpdate = () => {
           alignItems: "center",
         }}
       >
-        <Box sx={{ mt: 15, width: 1000, height: 1200, background: "white" }}>
+        <Box sx={{ mt: 15, width: 1000, height: 1100, background: "white" }}>
           <Grid
             container
             sx={{
@@ -117,7 +122,7 @@ const ProfileUpdate = () => {
               <Box sx={{ pl: 2 }}>아이디</Box>
             </Grid>
             <Grid item xs={4}>
-              <Box>{user_id}</Box>
+              <Box sx={{ pl: 2 }}>{user_id}</Box>
             </Grid>
             <Grid item xs={4}></Grid>
           </Grid>
@@ -137,7 +142,7 @@ const ProfileUpdate = () => {
               <Box sx={{ pl: 2 }}>이름</Box>
             </Grid>
             <Grid item xs={5}>
-              {!insertFlag1 && <Box>{userName}</Box>}
+              {!insertFlag1 && <Box sx={{ pl: 2 }}>{userName}</Box>}
 
               {insertFlag1 && (
                 <Box
@@ -157,7 +162,18 @@ const ProfileUpdate = () => {
             </Grid>
             <Grid item xs={3}>
               {!insertFlag1 && (
-                <Button onClick={insertClicked1}>변경하기</Button>
+                <Button
+                  sx={{
+                    color: "#3C3C3D",
+                    background: "#DEE0E4",
+                    width: 80,
+                    height: 40,
+                  }}
+                  id="font_test"
+                  onClick={insertClicked1}
+                >
+                  변경하기
+                </Button>
               )}
             </Grid>
           </Grid>
@@ -178,7 +194,7 @@ const ProfileUpdate = () => {
               <Box sx={{ pl: 2 }}>닉네임</Box>
             </Grid>
             <Grid item xs={5}>
-              {!insertFlag2 && <Box>{userNickName}</Box>}
+              {!insertFlag2 && <Box sx={{ pl: 2 }}>{userNickName}</Box>}
 
               {insertFlag2 && (
                 <Box
@@ -198,7 +214,18 @@ const ProfileUpdate = () => {
             </Grid>
             <Grid item xs={3}>
               {!insertFlag2 && (
-                <Button onClick={insertClicked2}>변경하기</Button>
+                <Button
+                  sx={{
+                    color: "#3C3C3D",
+                    background: "#DEE0E4",
+                    width: 80,
+                    height: 40,
+                  }}
+                  id="font_test"
+                  onClick={insertClicked2}
+                >
+                  변경하기
+                </Button>
               )}
             </Grid>
           </Grid>
@@ -218,7 +245,7 @@ const ProfileUpdate = () => {
               <Box sx={{ pl: 2 }}>휴대전화번호</Box>
             </Grid>
             <Grid item xs={5}>
-              {!insertFlag3 && <Box>{userPhoneNumber}</Box>}
+              {!insertFlag3 && <Box sx={{ pl: 2 }}>{userPhoneNumber}</Box>}
 
               {insertFlag3 && (
                 <Box
@@ -238,7 +265,18 @@ const ProfileUpdate = () => {
             </Grid>
             <Grid item xs={3}>
               {!insertFlag3 && (
-                <Button onClick={insertClicked3}>변경하기</Button>
+                <Button
+                  sx={{
+                    color: "#3C3C3D",
+                    background: "#DEE0E4",
+                    width: 80,
+                    height: 40,
+                  }}
+                  id="font_test"
+                  onClick={insertClicked3}
+                >
+                  변경하기
+                </Button>
               )}
             </Grid>
           </Grid>
@@ -254,132 +292,67 @@ const ProfileUpdate = () => {
               alignItems: "center",
             }}
           >
-            <Grid item xs={2}>
+            <Grid item xs={3}>
               <Box sx={{ pl: 8 }}>🔒</Box>
             </Grid>
             <Grid item xs={4}>
               <Box>비밀번호 설정</Box>
             </Grid>
             <Grid item xs={4}>
-              <Button variant="outlined" color="warning" size="large">
-                비밀번호 변경하기
-              </Button>
+              {insertFlag4 && !insertFlag5 && (
+                <Button
+                  id="font_test"
+                  onClick={insertClicked4}
+                  variant="contained"
+                  color="warning"
+                  size="large"
+                >
+                  비밀번호 변경하기
+                </Button>
+              )}
+              {insertFlag4 && insertFlag5 && (
+                <Typography id="font_test" sx={{ color: "blue" }}>
+                  비밀번호 변경이 완료되었습니다.
+                </Typography>
+              )}
             </Grid>
           </Grid>
-
-          {/*비밀번호변경*/}
-
-          <Grid
-            container
-            sx={{
-              mt: 12,
-              dispaly: "flex",
-              flexDirection: "column",
-              justifyContent: "flex-start",
-            }}
-          >
-            <Typography
-              component="h1"
-              id="font_test"
+          {!insertFlag4 && (
+            <EditPassword
+              insertFlag5={insertFlag5}
+              setInsertFlag5={setInsertFlag5}
+              insertFlag4={insertFlag4}
+              setInsertFlag4={setInsertFlag4}
+              cancelClicked4={insertComponentToggle4}
+            ></EditPassword>
+          )}
+          {insertFlag4 && (
+            <Box
               sx={{
-                background: "#E7E9ED",
-                pl: 3,
-                color: "rgba(0, 0, 0, 0.6)",
-                height: "50px",
-                fontWeight: "900",
-                fontSize: "30px",
+                width: 1000,
+                height: 200,
+                display: "flex",
+                justifyContent: "center",
               }}
             >
-              비밀번호 변경
-            </Typography>
-          </Grid>
-          {/*현재비밀번호*/}
-          <Grid
-            container
-            sx={{
-              borderStyle: "none none dashed",
-              borderColor: "#BFC1C4",
-              height: 100,
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-            }}
-          >
-            <Grid item xs={4}>
-              <Box sx={{ pl: 2 }}>현재비밀번호</Box>
-            </Grid>
-            <Grid item xs={7}>
-              <TextField
-                placeholder="현재비밀번호 를 입력하세요"
-                sx={{ width: 400 }}
-              ></TextField>
-            </Grid>
-          </Grid>
-          {/*변경비밀번호*/}
-          <Grid
-            container
-            sx={{
-              borderStyle: "none none dashed",
-              borderColor: "#BFC1C4",
-              height: 100,
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-            }}
-          >
-            <Grid item xs={4}>
-              <Box sx={{ pl: 2 }}>변경할 비밀번호</Box>
-            </Grid>
-            <Grid item xs={7}>
-              <TextField
-                placeholder="변경할 비밀번호 를 입력하세요"
-                sx={{ width: 400 }}
-              ></TextField>
-            </Grid>
-          </Grid>
-          {/*비밀번호확인*/}
-          <Grid
-            container
-            sx={{
-              borderStyle: "none none dashed",
-              borderColor: "#BFC1C4",
-              height: 100,
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-            }}
-          >
-            <Grid item xs={4}>
-              <Box sx={{ pl: 2 }}>비밀번호확인</Box>
-            </Grid>
-            <Grid item xs={7}>
-              <TextField
-                placeholder="변경할 비밀번호를 입력하세요"
-                sx={{ width: 400 }}
-              ></TextField>
-            </Grid>
-          </Grid>
-          <Box
-            sx={{
-              width: 1000,
-              height: 200,
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <Button
-              id="font_test"
-              sx={{ background: "#81CDFD", height: 50, mt: 5, mr: 3 }}
-            >
-              저장
-            </Button>
-            <Button
-              id="font_test"
-              sx={{ background: "#FAF8DF", height: 50, mt: 5, ml: 3 }}
-            >
-              취소
-            </Button>
-          </Box>
+              <Link href="/">
+                <Button
+                  id="font_test"
+                  sx={{ background: "#81CDFD", height: 50, mt: 5, mr: 3 }}
+                >
+                  저장
+                </Button>
+              </Link>
+              <Link href="/">
+                <Button
+                  id="font_test"
+                  sx={{ background: "#FAF8DF", height: 50, mt: 5, ml: 3 }}
+                >
+                  취소
+                </Button>
+              </Link>
+            </Box>
+          )}
         </Box>
       </Box>
     </ThemeProvider>
