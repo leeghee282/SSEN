@@ -20,6 +20,7 @@ const EditPhoneNumber = (props) => {
     <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
       <TextField
         id="font_test"
+        defaultValue={userPhoneNumber}
         onChange={onChange}
         placeholder="전화번호를 변경하세요"
       ></TextField>
