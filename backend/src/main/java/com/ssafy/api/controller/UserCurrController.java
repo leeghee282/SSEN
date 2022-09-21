@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import retrofit2.http.Path;
 
 import java.util.List;
 import java.util.Map;
@@ -82,7 +81,7 @@ public class UserCurrController {
         } else if ((int) map.get("cnt") == -1) {// 통화 추가
             message = interestedCurrService.addInterestedCurr(interestedCurrencyReq);
         } else {// 타겟 추가
-            message = interestedCurrService.updateTargetInterestedCurr(map, interestedCurrencyReq);
+            message = interestedCurrService.addTargetInterestedCurr(map, interestedCurrencyReq);
         }
         return new ResponseEntity<>(message, HttpStatus.OK);
     }

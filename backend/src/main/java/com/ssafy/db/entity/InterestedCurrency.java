@@ -41,6 +41,24 @@ public class InterestedCurrency {
     @JoinColumn(nullable = false)
     private CurrencyCategory currencyCategory;
 
+    public void setTarget(double[] target){
+        if(target.length == 3){
+            this.target1 = target[0];
+            this.target2 = target[1];
+            this.target3 = target[2];
+        }
+    }
+
+    public void patch(InterestedCurrency interestedCurrency){
+        if(interestedCurrency.getTarget1() != 0)
+            this.target1 = interestedCurrency.getTarget1();
+        if(interestedCurrency.getTarget2() != 0)
+            this.target2 = interestedCurrency.getTarget2();
+        if(interestedCurrency.getTarget3() != 0)
+            this.target3 = interestedCurrency.getTarget3();
+    }
+
+
 
 
 }

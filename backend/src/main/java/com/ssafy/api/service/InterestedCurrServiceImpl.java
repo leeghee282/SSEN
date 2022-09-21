@@ -81,38 +81,28 @@ public class InterestedCurrServiceImpl implements InterestedCurrService {
 
 
     @Override
-    public String updateTargetInterestedCurr(Map<String, Object> map, InterestedCurrencyReq interestedCurrencyReq) {
-        String message = "";
+    public String addTargetInterestedCurr(Map<String, Object> map, InterestedCurrencyReq interestedCurrencyReq) {
+        String message = "FAIL";
         int targetCnt = (int)map.get("cnt");
         double target = interestedCurrencyReq.getTarget();
-        if (targetCnt != -1) { // add
-            InterestedCurrency targetIC = interestedCurrencyRepository.findByUserAndCurrencyCategory((User) map.get("user"), (CurrencyCategory) map.get("cc"));
-            InterestedCurrency icAfter = interestedCurrencyReq.toEntity((User) map.get("user"), (CurrencyCategory) map.get("cc"));
-            double targetBefore[] = {targetIC.getTarget1(), targetIC.getTarget2(), targetIC.getTarget3()};
-            for (double t : targetBefore) {
-                if(t==target){
-                    message = "DUPLICATE";
-                    break;
-                }
-                if(t==0){
-
-                }
+        InterestedCurrency targetIC = interestedCurrencyRepository.findByUserAndCurrencyCategory((User) map.get("user"), (CurrencyCategory) map.get("cc"));
+        InterestedCurrency icAfter = interestedCurrencyReq.toEntity((User) map.get("user"), (CurrencyCategory) map.get("cc"));
+        double targetArr[] = {targetIC.getTarget1(), targetIC.getTarget2(), targetIC.getTarget3()};
+        int idx = 0;
+        for (int i = 0; i < targetArr.length; i++) {
+            if(targetArr[i] == target) {
+                message = "DUPLICATE";
+                break;
             }
-        }else{ // edit
-
+            if(targetArr[i]==0){
+                targetArr[i] = target;
+                message = "SUCCESS";
+                icAfter.setTarget(targetArr);
+                targetIC.patch(icAfter);
+                break;
+            }
         }
-//        String userId = holdingCurrencyReq.getUserId();
-//        String code = holdingCurrencyReq.getCode();
-//        User user = userRepositorySupport.findUserByUserId(userId).get();
-//        CurrencyCategory currencyCategory = currencyCategoryRepository.findByCode(code);
-//        HoldingCurrency target = holdingCurrencyRepository.findByUserAndCurrencyCategory(user, currencyCategory);
-//        HoldingCurrency hcAfter = holdingCurrencyReq.toEntity(user, currencyCategory);
-//        target.patch(hcAfter);
-//        System.out.println(target.getPrice());
-//        HoldingCurrency updated = holdingCurrencyRepository.save(target);
-//        return HoldingCurrencyRes.of(updated);
-
-        return null;
+        return message;
     }
 
 
