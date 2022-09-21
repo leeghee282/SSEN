@@ -12,8 +12,7 @@ const axios = Axios.create({
 export function getExchangeRate(dataToSubmit) {
   const request = axios
     .get("/api/v1/currone", dataToSubmit)
-    .then((response) => response.data)
-    .catch((err) => console.log(err));
+    .then((response) => response.data);
 
   return {
     type: GET_EXCHANGE_RATE,
