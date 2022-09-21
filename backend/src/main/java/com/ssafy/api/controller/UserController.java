@@ -44,8 +44,7 @@ public class UserController {
         System.out.println("sign in controller");
         //임의로 리턴된 User 인스턴스. 현재 코드는 회원 가입 성공 여부만 판단하기 때문에 굳이 Insert 된 유저 정보를 응답하지 않음.
         User user = userService.createUser(registerInfo);
-        return ResponseEntity.status(200).body(UserRes.of(200, "Success", user));
-      //  return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success",user));
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
     @GetMapping("/id-info/{userId}")
@@ -132,17 +131,17 @@ public class UserController {
         return ResponseEntity.status(401).body(UserLoginPostRes.of(401, "Invalid Password", null));
     }
 
-    @GetMapping("/mypage")
-    @ApiOperation(value = "회원 정보 보기", notes = "회원정보를 확인한다.")
+    @GetMapping("/mypage/{userId}")
+    @ApiOperation(value = "아이디로 회원 정보 보기", notes = "회원정보를 확인한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "성공", response = UserLoginPostRes.class),
             @ApiResponse(code = 401, message = "인증 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 404, message = "사용자 없음", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)})
     public ResponseEntity<UserRes> profileSearch(
-            @ApiParam(value = "넥네임 정보", required = true) @RequestParam("nickname") String nickname) {
+            @ApiParam(value = "아이디 정보", required = true) @PathVariable("userId") String userId) {
 
         // user를 가져와서
-        User user = userService.getUserByNickname(nickname);
+        User user = userService.getUserByUserId(userId);
 
         if (user != null) {
             return ResponseEntity.ok(UserRes.of(200, "Success", user));
