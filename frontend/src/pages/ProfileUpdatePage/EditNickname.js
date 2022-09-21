@@ -3,6 +3,7 @@ import TextField from "@mui/material/TextField";
 import { Box } from "@mui/system";
 import { Button } from "@mui/material";
 import { useState } from "react";
+import useWordCloud from "../../components/WordCloud";
 
 const EditNickname = (props) => {
   const { setUserNickName, userNickName, cancelClicked2 } = props;
@@ -38,6 +39,7 @@ const EditNickname = (props) => {
       >
         취소
       </Button>
+      
     </Box>
   );
 };
