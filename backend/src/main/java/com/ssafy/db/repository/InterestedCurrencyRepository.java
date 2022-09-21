@@ -12,5 +12,5 @@ import java.util.List;
 @Repository
 public interface InterestedCurrencyRepository extends JpaRepository<InterestedCurrency, Long> {
     public List<InterestedCurrency> findByUser(User user);
-//    public InterestedCurrency findByUserAndCurrencyCategory(User user, CurrencyCategory category);
+    public InterestedCurrency findByUserAndCurrencyCategory(User user, CurrencyCategory category);
 }
