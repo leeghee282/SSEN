@@ -3,6 +3,7 @@ package com.ssafy.api.response;
 import com.ssafy.db.entity.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +15,7 @@ import java.util.Date;
 @Builder
 @ApiModel(value = "ExchangeRateResponse", description = "환율 정보 응답 Dto")
 public class ExchangeRateRes {
+
     @ApiModelProperty(name="uid")
     long uid;
     @ApiModelProperty(name="regedate")
