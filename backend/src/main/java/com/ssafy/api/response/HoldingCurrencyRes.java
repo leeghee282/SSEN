@@ -25,6 +25,8 @@ public class HoldingCurrencyRes {
     double quantity;
     @ApiModelProperty(name = "price")
     double price;
+    @ApiModelProperty(name = "multi")
+    double multi;
 
     public static HoldingCurrencyRes of(HoldingCurrency holdingCurrency) {
         return HoldingCurrencyRes.builder()
@@ -33,6 +35,7 @@ public class HoldingCurrencyRes {
                 .code(holdingCurrency.getCurrencyCategory().getCode())
                 .quantity(holdingCurrency.getQuantity())
                 .price(holdingCurrency.getPrice())
+                .multi(holdingCurrency.getPrice()*holdingCurrency.getQuantity())
                 .build();
     }
 }
