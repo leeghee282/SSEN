@@ -38,11 +38,11 @@ function ExchangeCalc() {
   };
 
   const currencylist = [
-    { value: "USD/KRW", label: "USD/KRW" },
-    { value: "EUR/KRW", label: "EUR/KRW" },
-    { value: "GBP/KRW", label: "GBP/KRW" },
-    { value: "JPY/KRW", label: "JPY/KRW" },
-    { value: "CNY/KRW", label: "CNY/KRW" },
+    { value: "USD", label: "USD/KRW" },
+    { value: "EUR", label: "EUR/KRW" },
+    { value: "GBP", label: "GBP/KRW" },
+    { value: "JPY", label: "JPY/KRW" },
+    { value: "CNY", label: "CNY/KRW" },
   ];
   const [currencyCode, setCurrencyCode] = useState("");
   const [exchangeRate, setExchangeRate] = useState("");
@@ -87,9 +87,8 @@ function ExchangeCalc() {
 
     const body = {
       date: onSelectDateHandler(selectDate),
-      code: "USD",
+      code: currencyCode,
     };
-    console.log(body);
 
     dispatch(getExchangeRate(body)).then((response) => {
       console.log(response.payload);
