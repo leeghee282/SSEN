@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -23,7 +24,7 @@ public class ChatRes {
     @ApiModelProperty(name = "currencyCode", example = "USD")
     String currencyCode;
     @ApiModelProperty(name = "채팅 작성 날짜, 시간", example = "2022-09-20 14:23:41")
-    Date regdate;
+    LocalDateTime regdate;
 
     public static ChatRes of(Chat chat) {
         return ChatRes.builder()

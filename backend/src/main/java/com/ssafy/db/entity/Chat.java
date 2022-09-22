@@ -7,6 +7,8 @@ import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -26,7 +28,7 @@ public class Chat {
     @Column(name = "content", nullable = false, length = 3000)
     private String content;
     @Column(name = "regdate", nullable = false)
-    private Date regdate;
+    private LocalDateTime regdate;
 
     //users
     @ManyToOne(fetch = FetchType.LAZY)
