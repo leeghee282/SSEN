@@ -163,12 +163,10 @@ public class InterestedCurrServiceImpl implements InterestedCurrService {
     }
 
     @Override
-    public String deleteTargetInterestedCurr(String userId, String code, double target) {
+    public String deleteTargetInterestedCurr(long uid, double target) {
         // userId와 code가 데이터베이스에 있는 값(존재하는 값)이 들어왔다는 가정
         String message = "FAIL";
-        User user = userRepositorySupport.findUserByUserId(userId).get();
-        CurrencyCategory currencyCategory = currencyCategoryRepository.findByCode(code);
-        InterestedCurrency targetIC = interestedCurrencyRepository.findByUserAndCurrencyCategory(user, currencyCategory);
+        InterestedCurrency targetIC = interestedCurrencyRepository.findByUid(uid);
         if (targetIC == null) { // 통화 없음
             message = "NO INTRCURR";
         } else {

@@ -111,14 +111,13 @@ public class UserCurrController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-    @DeleteMapping("/intrcurr/{userId}/{code}/{target}")
+    @DeleteMapping("/intrcurr/{uid}/{target}")
     @ApiOperation(value = "관심 통화 타겟 삭제", notes ="관심 통화 타겟 삭제 기능. \nString 반환\n" +
             "\n성공 => 성공: SUCCESS" +
             "\n실패 => target이 하나만 있을 때 타겟 삭제: SUCCESS(DELETE INTRCURR) | 없는 통화: NO INTRCURR | 타겟 없음: NO TARGET | 기타 실패: FAIL")
-    public ResponseEntity<String> deleteTargetInterestedCurr(@ApiParam(value = "사용자 아이디", example = "ssafy10", required = true)@PathVariable String userId,
-                                                             @ApiParam(value = "통화코드", example = "USD", required = true)@PathVariable String code,
+    public ResponseEntity<String> deleteTargetInterestedCurr(@ApiParam(value = "interesedCurrencyUid", example = "16", required = true)@PathVariable long uid,
                                                              @ApiParam(value = "타겟(목표환율)", example = "1200", required = true)@PathVariable String target) {
-        String message = interestedCurrService.deleteTargetInterestedCurr(userId, code, Double.parseDouble(target));
+        String message = interestedCurrService.deleteTargetInterestedCurr(uid, Double.parseDouble(target));
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
