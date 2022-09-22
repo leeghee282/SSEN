@@ -55,18 +55,18 @@ public class UserCurrController {
     @ApiOperation(value = "보유 통화 수정", notes ="보유 통화 수정 기능. \nmap 반환(message, dto)\n" +
             "\n성공 => 성공: SUCCESS + 수정한 데이터 dto" +
             "\n실패 => 없는 통화: NO DATA | 기타 실패: FAIL")
-    public ResponseEntity<Map<String, Object>> updateHoldingCurr(@PathVariable long uid, @RequestBody HoldingCurrencyReq holdingCurrencyReq) {
+    public ResponseEntity<Map<String, Object>> updateHoldingCurr(@ApiParam(value = "holdingCurrencyUid", example = "16", required = true)@PathVariable long uid,
+                                                                 @RequestBody HoldingCurrencyReq holdingCurrencyReq) {
         Map<String, Object> dto = holdingCurrService.updateHoldingCurr(uid, holdingCurrencyReq);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
-    @DeleteMapping("/holdcurr/{userId}/{code}")
+    @DeleteMapping("/holdcurr/{uid}")
     @ApiOperation(value = "보유 통화 삭제", notes ="보유 통화 삭제 기능. \nString 반환\n" +
             "\n성공 => 성공: SUCCESS" +
             "\n실패 => 없는 통화: NO DATA")
-    public ResponseEntity<String> deleteHoldingCurr(@ApiParam(value = "사용자 아이디", example = "ssafy10", required = true)@PathVariable String userId,
-                                                    @ApiParam(value = "통화코드", example = "USD", required = true)@PathVariable String code) {
-        String message = holdingCurrService.deleteHoldingCurr(userId, code);
+    public ResponseEntity<String> deleteHoldingCurr(@ApiParam(value = "holdingCurrencyUid", example = "16", required = true)@PathVariable long uid) {
+        String message = holdingCurrService.deleteHoldingCurr(uid);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
