@@ -3,7 +3,6 @@ package com.ssafy.api.service;
 import com.ssafy.api.request.InterestedCurrencyReq;
 import com.ssafy.api.response.InterestedCurrencyRes;
 import com.ssafy.db.entity.CurrencyCategory;
-import com.ssafy.db.entity.HoldingCurrency;
 import com.ssafy.db.entity.InterestedCurrency;
 import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.CurrencyCategoryRepository;
@@ -154,6 +153,57 @@ public class InterestedCurrServiceImpl implements InterestedCurrService {
             message = "SUCCESS";
         }
         return message;
+    }
+
+    @Override
+    public String deleteTargetInterestedCurr(String userId, String code, double target) {
+        // userId와 code가 데이터베이스에 있는 값(존재하는 값)이 들어왔다는 가정
+        String message = "FAIL";
+        User user = userRepositorySupport.findUserByUserId(userId).get();
+        CurrencyCategory currencyCategory = currencyCategoryRepository.findByCode(code);
+        InterestedCurrency targetIC = interestedCurrencyRepository.findByUserAndCurrencyCategory(user, currencyCategory);
+        if (targetIC == null) {
+            message = "NO INTRCURR";
+        } else {
+            double targetArr[] = {targetIC.getTarget1(), targetIC.getTarget2(), targetIC.getTarget3()};
+            boolean existCheck = false;
+            for (int i = 0; i < targetArr.length; i++) {
+                if (targetArr[i] == target) {
+                    existCheck = true;
+                    targetArr[i] = 0;
+                    break;
+                }
+            }
+            if (existCheck) { // target 존재
+                if(targetArr[0]==0&&targetArr[1]==0&&targetArr[2]==0){ // 통화 삭제
+                    interestedCurrencyRepository.delete(targetIC);
+                    message = "DELETE INTRCURR";
+                }else{ // 0 뒤로 밀기
+                    System.out.println(Arrays.toString(targetArr));
+                    int idx = 0;
+                    for (int i = 0; i< targetArr.length; i++){
+                        if(targetArr[i] !=0){
+                            targetArr[idx] = targetArr[i];
+                            idx++;
+                        }
+                    }
+                    while(idx < targetArr.length){
+                        targetArr[idx]=0;
+                        idx++;
+                    }
+                    System.out.println("============================================");
+                    System.out.println(Arrays.toString(targetArr));
+
+                    targetIC.setTarget(targetArr);
+                    interestedCurrencyRepository.save(targetIC);
+                    message = "SUCCESS";
+                }
+            }else{
+                message = "NO TARGET";
+            }
+        }
+        return message;
+
     }
 
 

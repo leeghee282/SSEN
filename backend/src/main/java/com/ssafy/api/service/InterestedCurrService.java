@@ -14,4 +14,5 @@ public interface InterestedCurrService{
     String addTargetInterestedCurr(Map<String, Object> map, InterestedCurrencyReq interestedCurrencyReq);
     String updateInterestedCurr(Map<String, Object> map, InterestedCurrencyReq interestedCurrencyReq);
     String deleteInterestedCurr(String userId, String code);
+    String deleteTargetInterestedCurr(String userId, String code, double target);
 }
