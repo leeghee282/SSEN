@@ -81,11 +81,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean deleteUser(String nickname) {
-        User user = userRepository.findByNickname(nickname).get();
+    public boolean deleteUser(String userId) {
+        User user = userRepository.findByUserId(userId).get();
         // user가 null이면 false 리턴
         if(user == null) return false;
-        userRepository.deleteByNickname(nickname);
+        userRepository.deleteByUserId(userId);
         return true;
     }
 }
