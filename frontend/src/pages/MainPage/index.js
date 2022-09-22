@@ -1,10 +1,12 @@
-import React from 'react';
-import Calendar from '../../components/Calendar';
+import React from "react";
+import Calendar from "../../components/Calendar";
+import Chart from "../../components/Chart";
 
 const MainCalendar = () => {
   return (
     <>
-    <Calendar/>
+      <Calendar />
+      <Chart />
     </>
   );
 };
