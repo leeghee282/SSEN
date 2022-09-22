@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * 채팅 관련 API 요청 처리를 위한 컨트롤러 정의.
  */
-@Api(value = "Chat API", tags = {"Chat"})
+@Api(value = "InterestedRate API", tags = {"InterestedRate"})
 @RestController
 @RequestMapping("/api/v1/intrrate")
 public class IntrRateController {
