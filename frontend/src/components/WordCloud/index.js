@@ -1,28 +1,50 @@
-// import React from "react";
+import React from "react";
+import ReactWordcloud from "react-wordcloud";
 
-// import { Box } from "@mui/system";
+const options = {
+  rotations: 0,
+  fontSizes: [20, 60], //기본 폰트 사이즈 //fontSizes를 쓰면 React does not recognize the `fontSizes` prop on a DOM element.가 뜹니다...왜?
+  fontStyle: "normal",
+  fontWeight: "normal",
+};
 
-// const useWordCloud = () => {
-//   const data = [
-//     { text: "Hey", value: 1000 },
-//     { text: "lol", value: 200 },
-//     { text: "much wow", value: 800 },
-//     { text: "very cool", value: 1000000 },
-//     { text: "duck", value: 5 },
-//   ];
+// 임시 데이터
+const words = [
+  {
+    text: "배지우 정말",
+    value: 300,
+  },
+  {
+    text: "S$EN",
+    value: 200,
+  },
+  {
+    text: "환율",
+    value: 100,
+  },
+  {
+    text: "힘내자!",
+    value: 80,
+  },
+  {
+    text: "뉴스",
+    value: 70,
+  },
+  {
+    text: "오잉",
+    value: 60,
+  },
+  {
+    text: "하이",
+    value: 50,
+  },
+  {
+    text: "바이",
+    value: 40,
+  },
+];
 
-//   const fontSizeMapper = (word) => Math.log2(word.value) * 5;
-
-//   return (
-//     <Box>
-//       <WordCloud
-//         data={data}
-//         fontSizeMapper={fontSizeMapper}
-//         height={window.innerHeight - 130}
-//         width={window.innerWidth - 30}
-//       ></WordCloud>
-//     </Box>
-//   );
-// };
-
-// export default useWordCloud;
+const SimpleWordcloud = () => {
+  return <ReactWordcloud options={options} words={words} fontSizes={"30px"} />;
+};
+export default SimpleWordcloud;

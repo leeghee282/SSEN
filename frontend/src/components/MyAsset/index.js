@@ -42,9 +42,9 @@ export default function MySet() {
       <Typography id="font_test" component="h1" variant="h4">
         보유 외화 목록
       </Typography>
-      <br/>
-      <BasicModal onSubmit={handleSumit}/>
-      <br/>
+      <br />
+      <BasicModal onSubmit={handleSumit} />
+      <br />
       <MyAssetItemList myAsset={myAsset} onRemove={onRemove} />
     </Box>
   );
