@@ -1,5 +1,5 @@
 import Axios from "axios";
-import { GET_CHART_DATES, GET_CHART_CODE } from "./types";
+import { GET_CHART_DATES, GET_CHART_CODE, GET_DATA } from "./types";
 import { baseURL } from "../api/index";
 
 const axios = Axios.create({
@@ -10,11 +10,10 @@ const axios = Axios.create({
 });
 
 export function getChartDates(dataToSubmit) {
-  const request = axios
-    .get(
-      `/api/v1/curr/period/${dataToSubmit.startDate}/${dataToSubmit.endDate}/${dataToSubmit.code}`
-    )
-    .then((response) => response.data);
+  const request = {
+    startDate: dataToSubmit.startDate,
+    endDate: dataToSubmit.endDate,
+  };
 
   return {
     type: GET_CHART_DATES,
@@ -27,6 +26,19 @@ export function getChartCode(dataToSubmit) {
 
   return {
     type: GET_CHART_CODE,
+    payload: request,
+  };
+}
+
+export function getData(dataToSubmit) {
+  const request = axios
+    .get(
+      `/api/v1/curr/period/${dataToSubmit.startDate}/${dataToSubmit.endDate}/${dataToSubmit.code}`
+    )
+    .then((response) => response.data);
+
+  return {
+    type: GET_DATA,
     payload: request,
   };
 }
