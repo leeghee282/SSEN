@@ -1,6 +1,17 @@
-import { GET_CHART_DATES, GET_CHART_CODE } from "../_actions/types";
+import { GET_CHART_DATES, GET_CHART_CODE, GET_DATA } from "../_actions/types";
 
-export default function (state = {}, action) {
+const today = new Date();
+const dayOfToday = today.getDate();
+const lastWeek = today.setDate(dayOfToday - 7);
+const startDate = new Date(lastWeek);
+const endDate = new Date();
+
+const INITIAL_STATE = {
+  chartDates: { startDate: startDate, endDate: endDate },
+  chartCode: "USD",
+};
+
+export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
     case GET_CHART_DATES:
       return { ...state, chartDates: action.payload };
@@ -8,6 +19,10 @@ export default function (state = {}, action) {
 
     case GET_CHART_CODE:
       return { ...state, chartCode: action.payload };
+      break;
+
+    case GET_DATA:
+      return { ...state, data: action.payload };
       break;
 
     default:

@@ -1,15 +1,51 @@
-import { useLayoutEffect } from "react";
-import { useSelector } from "react-redux";
+import { useLayoutEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 import * as am5 from "@amcharts/amcharts5";
 import * as am5xy from "@amcharts/amcharts5/xy";
-
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 
+import moment from "moment";
+
+import { getData } from "../../_actions/chart_action";
+
 function Chart(props) {
+  const dispatch = useDispatch();
+
   const currencyCode = useSelector((state) => state.chartReducer.chartCode);
   console.log(currencyCode);
-  useLayoutEffect(() => {
+  const chartDates = useSelector((state) => state.chartReducer.chartDates);
+  const startDate = moment(chartDates.startDate).format("YYYY-MM-DD");
+  const endDate = moment(chartDates.endDate).format("YYYY-MM-DD");
+  console.log(startDate);
+  console.log(endDate);
+
+  const [chartData, setChartData] = useState([]);
+
+  const onSetData = () => {
+    let body = {
+      startDate: startDate,
+      endDate: endDate,
+      code: currencyCode,
+    };
+
+    dispatch(getData(body)).then((response) => {
+      setChartData([]);
+
+      response.payload.map((data) => {
+        var addChartData = {
+          date: new Date(data.regdate),
+          open: data.openPrice,
+          high: data.highPrice,
+          low: data.lowPrice,
+          close: data.closePrice,
+        };
+        return setChartData((prevList) => [...prevList, addChartData]);
+      });
+    });
+  };
+
+  const onSetChart = () => {
     var root = am5.Root.new("chartdiv");
 
     root.setThemes([am5themes_Animated.new(root)]);
@@ -24,71 +60,72 @@ function Chart(props) {
     );
 
     // Define data
-    var data = [
-      {
-        date: new Date(2021, 0, 1).getTime(),
-        open: 1200,
-        high: 1205,
-        low: 1198,
-        close: 1202,
-      },
-      {
-        date: new Date(2021, 0, 2).getTime(),
-        open: 1204,
-        high: 1204,
-        low: 1197,
-        close: 1199,
-      },
-      {
-        date: new Date(2021, 0, 3).getTime(),
-        open: 1188,
-        high: 1191,
-        low: 1183,
-        close: 1189,
-      },
-      {
-        date: new Date(2021, 0, 4).getTime(),
-        open: 1194,
-        high: 1197,
-        low: 1189,
-        close: 1195,
-      },
-      {
-        date: new Date(2021, 0, 5).getTime(),
-        open: 1189,
-        high: 1198,
-        low: 1189,
-        close: 1196,
-      },
-      {
-        date: new Date(2021, 0, 6).getTime(),
-        open: 1197,
-        high: 1200,
-        low: 1196,
-        close: 1196,
-      },
-      {
-        date: new Date(2021, 0, 7).getTime(),
-        open: 1207,
-        high: 1208,
-        low: 1202,
-        close: 1202,
-      },
-      {
-        date: new Date(2021, 0, 8).getTime(),
-        open: 1212,
-        high: 1213,
-        low: 1206,
-        close: 1209,
-      },
-      {
-        date: new Date(2021, 0, 9).getTime(),
-        open: 1206,
-        high: 1208,
-        low: 1197,
-        close: 1201,
-      },
-    ];
+    var data = chartData;
+    // [
+    //   {
+    //     date: new Date(2021, 0, 1).getTime(),
+    //     open: 1200,
+    //     high: 1205,
+    //     low: 1198,
+    //     close: 1202,
+    //   },
+    //   {
+    //     date: new Date(2021, 0, 2).getTime(),
+    //     open: 1204,
+    //     high: 1204,
+    //     low: 1197,
+    //     close: 1199,
+    //   },
+    //   {
+    //     date: new Date(2021, 0, 3).getTime(),
+    //     open: 1188,
+    //     high: 1191,
+    //     low: 1183,
+    //     close: 1189,
+    //   },
+    //   {
+    //     date: new Date(2021, 0, 4).getTime(),
+    //     open: 1194,
+    //     high: 1197,
+    //     low: 1189,
+    //     close: 1195,
+    //   },
+    //   {
+    //     date: new Date(2021, 0, 5).getTime(),
+    //     open: 1189,
+    //     high: 1198,
+    //     low: 1189,
+    //     close: 1196,
+    //   },
+    //   {
+    //     date: new Date(2021, 0, 6).getTime(),
+    //     open: 1197,
+    //     high: 1200,
+    //     low: 1196,
+    //     close: 1196,
+    //   },
+    //   {
+    //     date: new Date(2021, 0, 7).getTime(),
+    //     open: 1207,
+    //     high: 1208,
+    //     low: 1202,
+    //     close: 1202,
+    //   },
+    //   {
+    //     date: new Date(2021, 0, 8).getTime(),
+    //     open: 1212,
+    //     high: 1213,
+    //     low: 1206,
+    //     close: 1209,
+    //   },
+    //   {
+    //     date: new Date(2021, 0, 9).getTime(),
+    //     open: 1206,
+    //     high: 1208,
+    //     low: 1197,
+    //     close: 1201,
+    //   },
+    // ];
 
     // Create Y-axis
     var yAxis = chart.yAxes.push(
@@ -161,9 +198,21 @@ function Chart(props) {
         themeTags: ["axis"],
       })
     );
+  };
+
+  useLayoutEffect(() => {
+    onSetData();
+    onSetChart();
   }, []);
 
-  return <div id="chartdiv" style={{ width: "100%", height: "500px" }}></div>;
+  return (
+    <div>
+      <div id="chartdiv" style={{ width: "100%", height: "500px" }}></div>
+      <div>
+        <button onClick={onSetData}>ddddd</button>
+      </div>
+    </div>
+  );
 }
 
 export default Chart;

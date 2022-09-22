@@ -20,19 +20,19 @@ import { getChartDates, getChartCode } from "../../_actions/chart_action";
 // 나라 선택 라디오 버튼 컴포넌트
 const RowRadioButtonsGroup = () => {
   const dispatch = useDispatch();
-
   const [type, setType] = useState("USD");
+
   const selectChange = (event) => {
     setType(event.target.value);
 
     let body = {
       code: event.target.value,
     };
+
     dispatch(getChartCode(body)).then((response) => {
-      console.log(response.payload);
+      setType(response.payload);
     });
   };
-  console.log(type);
 
   return (
     <FormControl>
@@ -56,6 +56,7 @@ const RowRadioButtonsGroup = () => {
 
 // 날짜 선택 컴포넌트
 const Calendar = () => {
+  const dispatch = useDispatch();
   // 날짜 선택 버튼 만들기 위해서 선언한 것
   const DateFilterData = [
     {
@@ -87,44 +88,99 @@ const Calendar = () => {
   const handleBtnClicked = (e) => {
     const { value } = e.target;
     setBtnClicked(value);
+
     // 1개월 전부터 오늘까지의 기간
     if (value === "1개월") {
       const oneMonthAgo = new Date(
-        new Date().getFullYear(),
-        new Date().getMonth() - 1,
-        new Date().getDate()
+        endDate.getFullYear(),
+        endDate.getMonth() - 1,
+        endDate.getDate()
       );
       setStartDate(oneMonthAgo);
-      setEndDate(new Date());
-    }
-    // 3개월 전부터 오늘까지의 기간
-    if (value === "3개월") {
+
+      let body = {
+        startDate: oneMonthAgo,
+        endDate: endDate,
+      };
+
+      dispatch(getChartDates(body)).then((response) => {
+        console.log(response.payload);
+      });
+    } else if (value === "3개월") {
       const threeMonthAgo = new Date(
-        new Date().getFullYear(),
-        new Date().getMonth() - 3,
-        new Date().getDate()
+        endDate.getFullYear(),
+        endDate.getMonth() - 3,
+        endDate.getDate()
       );
       setStartDate(threeMonthAgo);
-      setEndDate(new Date());
-    }
-    if (value === "6개월") {
+
+      let body = {
+        startDate: threeMonthAgo,
+        endDate: endDate,
+      };
+
+      dispatch(getChartDates(body)).then((response) => {
+        console.log(response.payload);
+      });
+    } else if (value === "6개월") {
       const sixMonthAgo = new Date(
-        new Date().getFullYear(),
-        new Date().getMonth() - 6,
-        new Date().getDate()
+        endDate.getFullYear(),
+        endDate.getMonth() - 6,
+        endDate.getDate()
       );
       setStartDate(sixMonthAgo);
-      setEndDate(new Date());
-    }
-    if (value === "1년") {
+
+      let body = {
+        startDate: sixMonthAgo,
+        endDate: endDate,
+      };
+
+      dispatch(getChartDates(body)).then((response) => {
+        console.log(response.payload);
+      });
+    } else if (value === "1년") {
       const lastYear = new Date(
-        new Date().getFullYear() - 1,
-        new Date().getMonth(),
-        new Date().getDate()
+        endDate.getFullYear() - 1,
+        endDate.getMonth(),
+        endDate.getDate()
       );
       setStartDate(lastYear);
-      setEndDate(new Date());
+
+      let body = {
+        startDate: lastYear,
+        endDate: endDate,
+      };
+
+      dispatch(getChartDates(body)).then((response) => {
+        console.log(response.payload);
+      });
     }
+  };
+
+  const onSetStartDate = (date) => {
+    setStartDate(date);
+
+    let body = {
+      startDate: date,
+      endDate: endDate,
+    };
+
+    dispatch(getChartDates(body)).then((response) => {
+      console.log(response.payload);
+    });
+  };
+
+  const onSetEndDate = (date) => {
+    setEndDate(date);
+
+    let body = {
+      startDate: startDate,
+      endDate: date,
+    };
+
+    dispatch(getChartDates(body)).then((response) => {
+      console.log(response.payload);
+    });
   };
 
   return (
@@ -136,7 +192,7 @@ const Calendar = () => {
               dateFormat="yyyy년 MM월 dd일"
               locale={ko}
               selected={startDate}
-              onChange={(date) => setStartDate(date)}
+              onChange={(date) => onSetStartDate(date)}
               selectsStart
               startDate={startDate}
               endDate={endDate}
@@ -145,7 +201,7 @@ const Calendar = () => {
               dateFormat="yyyy년 MM월 dd일"
               locale={ko}
               selected={endDate}
-              onChange={(date) => setEndDate(date)}
+              onChange={(date) => onSetEndDate(date)}
               selectsEnd
               startDate={startDate}
               endDate={endDate}
