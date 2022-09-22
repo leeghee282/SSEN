@@ -24,10 +24,13 @@
     "react-router-dom": "^6.4.0",
     "react-scripts": "5.0.1",
     "react-select": "^5.4.0",
+    "react-wordcloud": "^1.2.7",
     "redux": "^4.2.0",
     "redux-promise": "^0.6.0",
     "redux-thunk": "^2.4.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "word-cloud": "^0.0.3",
+    "wordcloud": "^1.2.2"
   },
   "scripts": {
     "start": "react-scripts start",
