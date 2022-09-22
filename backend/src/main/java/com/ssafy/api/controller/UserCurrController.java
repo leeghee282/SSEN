@@ -92,7 +92,7 @@ public class UserCurrController {
 
     @PatchMapping("/intrcurr")
     @ApiOperation(value = "관심 통화 수정", notes ="관심 통화 수정 기능. \nmap 반환(message, dto)\n" +
-            "\n성공 => 성공: SUCCESS + 등록한 데이터 dto" +
+            "\n성공 => 성공: SUCCESS + 등록한 데이터 dto " +
             "\n실패 => 이미 들어있던 금액: DUPLICATE | 0 들어옴: ZERO VALUE | 없는 금액이 previous 들어옴: NO VALUE")
     public ResponseEntity<Map<String, Object>> updateInterestedCurr(@RequestBody InterestedCurrencyReq interestedCurrencyReq) {
         Map<String, Object> dto = interestedCurrService.updateInterestedCurr(interestedCurrencyReq);
