@@ -13,7 +13,7 @@ import com.querydsl.core.types.Path;
  * QUser is a Querydsl query type for User
  */
 @Generated("com.querydsl.codegen.EntitySerializer")
-public class QLiveCurrency extends EntityPathBase<QLiveCurrency> {
+public class QLiveCurrency extends EntityPathBase<LiveCurrency> {
 
     private static final long serialVersionUID = 846542477L;
 
@@ -23,6 +23,7 @@ public class QLiveCurrency extends EntityPathBase<QLiveCurrency> {
 
 
     //inherited
+    public final NumberPath<Long> id = _super.id;
 
     public final NumberPath<double> buyPrice = createNumber("buyPrice", double.class);
 
