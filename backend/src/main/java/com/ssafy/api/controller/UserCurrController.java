@@ -51,12 +51,12 @@ public class UserCurrController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
-    @PatchMapping("/holdcurr")
+    @PatchMapping("/holdcurr/{uid}")
     @ApiOperation(value = "보유 통화 수정", notes ="보유 통화 수정 기능. \nmap 반환(message, dto)\n" +
             "\n성공 => 성공: SUCCESS + 수정한 데이터 dto" +
             "\n실패 => 없는 통화: NO DATA | 기타 실패: FAIL")
-    public ResponseEntity<Map<String, Object>> updateHoldingCurr(@RequestBody HoldingCurrencyReq holdingCurrencyReq) {
-        Map<String, Object> dto = holdingCurrService.updateHoldingCurr(holdingCurrencyReq);
+    public ResponseEntity<Map<String, Object>> updateHoldingCurr(@PathVariable long uid, @RequestBody HoldingCurrencyReq holdingCurrencyReq) {
+        Map<String, Object> dto = holdingCurrService.updateHoldingCurr(uid, holdingCurrencyReq);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
