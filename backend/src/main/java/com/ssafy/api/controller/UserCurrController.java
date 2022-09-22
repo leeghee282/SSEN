@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import retrofit2.http.Path;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -81,20 +82,12 @@ public class UserCurrController {
     }
 
     @PostMapping("/intrcurr")
-    @ApiOperation(value = "관심 통화 등록", notes ="관심 통화 등록 기능. \nString 반환\n" +
-            "\n성공 => 성공: SUCCESS" +
+    @ApiOperation(value = "관심 통화 등록", notes ="관심 통화 등록 기능. \nmap 반환(message, dto)\n" +
+            "\n성공 => 성공: SUCCESS + 등록한 데이터 dto" +
             "\n실패 => 이미 들어있던 금액: DUPLICATE | target 다 참: FULL | 기타 실패: FAIL")
-    public ResponseEntity<String> addInterestedCurr(@RequestBody InterestedCurrencyReq interestedCurrencyReq) {
-        String message = "FAIL";
-        Map<String, Object> map = interestedCurrService.checkTargetCnt(interestedCurrencyReq);
-        if ((int) map.get("cnt") == 3) {
-            message = "FULL";
-        } else if ((int) map.get("cnt") == -1) {// 통화 추가
-            message = interestedCurrService.addInterestedCurr(interestedCurrencyReq);
-        } else {// 타겟 추가
-            message = interestedCurrService.addTargetInterestedCurr(map, interestedCurrencyReq);
-        }
-        return new ResponseEntity<>(message, HttpStatus.OK);
+    public ResponseEntity<Map<String, Object>> addInterestedCurr(@RequestBody InterestedCurrencyReq interestedCurrencyReq) {
+        Map<String, Object> dto = interestedCurrService.addInterestedCurr(interestedCurrencyReq);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     @PatchMapping("/intrcurr")

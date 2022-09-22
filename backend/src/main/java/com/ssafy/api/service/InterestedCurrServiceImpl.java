@@ -12,10 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -59,44 +56,47 @@ public class InterestedCurrServiceImpl implements InterestedCurrService {
         return res;
     }
 
-
     @Override
-    public String addInterestedCurr(InterestedCurrencyReq interestedCurrencyReq) {
+    public Map<String, Object> addInterestedCurr(InterestedCurrencyReq interestedCurrencyReq) {
         // userId와 code가 데이터베이스에 있는 값(존재하는 값)이 들어왔다는 가정
-        String message = "";
-        String userId = interestedCurrencyReq.getUserId();
-        String code = interestedCurrencyReq.getCode();
-        User user = userRepositorySupport.findUserByUserId(userId).get();
-        CurrencyCategory currencyCategory = currencyCategoryRepository.findByCode(code);
-        InterestedCurrency icNew = interestedCurrencyReq.toEntity(user, currencyCategory);
-        icNew.setTarget1(interestedCurrencyReq.getTarget());
-        interestedCurrencyRepository.save(icNew);
-        message = "SUCCESS";
-        return message;
-    }
-
-    @Override
-    public String addTargetInterestedCurr(Map<String, Object> map, InterestedCurrencyReq interestedCurrencyReq) {
+        Map<String, Object> map = new HashMap<>();
         String message = "FAIL";
-        double target = interestedCurrencyReq.getTarget();
-        InterestedCurrency targetIC = interestedCurrencyRepository.findByUserAndCurrencyCategory((User) map.get("user"), (CurrencyCategory) map.get("cc"));
-        InterestedCurrency icAfter = interestedCurrencyReq.toEntity((User) map.get("user"), (CurrencyCategory) map.get("cc"));
-        double targetArr[] = {targetIC.getTarget1(), targetIC.getTarget2(), targetIC.getTarget3()};
-        for (int i = 0; i < targetArr.length; i++) {
-            if (targetArr[i] == target) {
-                message = "DUPLICATE";
-                break;
-            }
-            if (targetArr[i] == 0) {
-                targetArr[i] = target;
-                message = "SUCCESS";
-                icAfter.setTarget(targetArr);
-                targetIC.patch(icAfter);
-                break;
+        Map<String, Object> checkTarget = this.checkTargetCnt(interestedCurrencyReq);
+        int targetCnt = (int)checkTarget.get("cnt");
+        User user = (User)checkTarget.get("user");
+        CurrencyCategory currencyCategory = (CurrencyCategory)checkTarget.get("cc");
+        if (targetCnt == 3) { // 타겟 3개(가득 참)
+            message = "FULL";
+        } else if(targetCnt == -1){
+            InterestedCurrency icNew = interestedCurrencyReq.toEntity(user, currencyCategory);
+            icNew.setTarget1(interestedCurrencyReq.getTarget());
+            InterestedCurrencyRes added = InterestedCurrencyRes.of(interestedCurrencyRepository.save(icNew));
+            message = "SUCCESS";
+            map.put("dto", added);
+        } else{
+            double target = interestedCurrencyReq.getTarget();
+            InterestedCurrency targetIC = interestedCurrencyRepository.findByUserAndCurrencyCategory(user, currencyCategory);
+            InterestedCurrency icAfter = interestedCurrencyReq.toEntity(user, currencyCategory);
+            double targetArr[] = {targetIC.getTarget1(), targetIC.getTarget2(), targetIC.getTarget3()};
+            for (int i = 0; i < targetArr.length; i++) {
+                if (targetArr[i] == target) {
+                    message = "DUPLICATE";
+                    break;
+                }
+                if (targetArr[i] == 0) {
+                    targetArr[i] = target;
+                    message = "SUCCESS";
+                    icAfter.setTarget(targetArr);
+                    targetIC.patch(icAfter);
+                    map.put("dto", targetIC);
+                    break;
+                }
             }
         }
-        return message;
+        map.put("message", message);
+        return map;
     }
+
 
     @Override
     public String updateInterestedCurr(Map<String, Object> map, InterestedCurrencyReq interestedCurrencyReq) {
