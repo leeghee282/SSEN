@@ -100,15 +100,12 @@ public class InterestedCurrServiceImpl implements InterestedCurrService {
 
 
     @Override
-    public Map<String, Object> updateInterestedCurr(InterestedCurrencyReq interestedCurrencyReq) {
+    public Map<String, Object> updateInterestedCurr(long uid, InterestedCurrencyReq interestedCurrencyReq) {
         Map<String, Object> map = new HashMap<>();
         String message = "FAIL";
-        Map<String, Object> checkTarget = this.checkTargetCnt(interestedCurrencyReq);
-        User user = (User)checkTarget.get("user");
-        CurrencyCategory currencyCategory = (CurrencyCategory)checkTarget.get("cc");
-        if ((int) checkTarget.get("cnt") > 0) {
-            InterestedCurrency targetIC = interestedCurrencyRepository.findByUserAndCurrencyCategory(user, currencyCategory);
-            InterestedCurrency icAfter = interestedCurrencyReq.toEntity(user, currencyCategory);
+        InterestedCurrency targetIC = interestedCurrencyRepository.findByUid(uid);
+        if (targetIC != null) {
+            InterestedCurrency icAfter = interestedCurrencyReq.toEntity(targetIC.getUser(), targetIC.getCurrencyCategory());
             // target 재설정
             double previous = interestedCurrencyReq.getPrevious();
             double target = interestedCurrencyReq.getTarget();

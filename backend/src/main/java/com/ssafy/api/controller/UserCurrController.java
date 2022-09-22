@@ -92,12 +92,13 @@ public class UserCurrController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
-    @PatchMapping("/intrcurr")
+    @PatchMapping("/intrcurr/{uid}")
     @ApiOperation(value = "관심 통화 수정", notes ="관심 통화 수정 기능. \nmap 반환(message, dto)\n" +
             "\n성공 => 성공: SUCCESS + 수정한 데이터 dto " +
             "\n실패 => 이미 들어있던 금액: DUPLICATE | 0 들어옴: ZERO VALUE | 없는 금액이 previous 들어옴: NO VALUE")
-    public ResponseEntity<Map<String, Object>> updateInterestedCurr(@RequestBody InterestedCurrencyReq interestedCurrencyReq) {
-        Map<String, Object> dto = interestedCurrService.updateInterestedCurr(interestedCurrencyReq);
+    public ResponseEntity<Map<String, Object>> updateInterestedCurr(@ApiParam(value = "interesedCurrencyUid", example = "16", required = true)@PathVariable long uid,
+                                                                    @RequestBody InterestedCurrencyReq interestedCurrencyReq) {
+        Map<String, Object> dto = interestedCurrService.updateInterestedCurr(uid, interestedCurrencyReq);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 

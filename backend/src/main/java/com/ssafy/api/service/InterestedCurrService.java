@@ -11,7 +11,7 @@ public interface InterestedCurrService{
     List<InterestedCurrencyRes> getInterestedCurrByUser(User user);
     Map<String, Object> checkTargetCnt(InterestedCurrencyReq interestedCurrencyReq);
     Map<String, Object> addInterestedCurr(InterestedCurrencyReq interestedCurrencyReq);
-    Map<String, Object> updateInterestedCurr(InterestedCurrencyReq interestedCurrencyReq);
+    Map<String, Object> updateInterestedCurr(long uid, InterestedCurrencyReq interestedCurrencyReq);
     String deleteInterestedCurr(String userId, String code);
     String deleteTargetInterestedCurr(String userId, String code, double target);
 }
