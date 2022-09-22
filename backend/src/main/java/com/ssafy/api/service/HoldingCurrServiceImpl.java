@@ -12,8 +12,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -34,8 +36,9 @@ public class HoldingCurrServiceImpl implements HoldingCurrService {
     }
 
     @Override
-    public String addHoldingCurr(HoldingCurrencyReq holdingCurrencyReq) {
+    public Map<String, Object> addHoldingCurr(HoldingCurrencyReq holdingCurrencyReq) {
         // userId와 code가 데이터베이스에 있는 값(존재하는 값)이 들어왔다는 가정
+        Map<String, Object> map = new HashMap<>();
         String message = "";
         String userId = holdingCurrencyReq.getUserId();
         String code = holdingCurrencyReq.getCode();
@@ -43,15 +46,16 @@ public class HoldingCurrServiceImpl implements HoldingCurrService {
         CurrencyCategory currencyCategory = currencyCategoryRepository.findByCode(code);
         // 통화코드 중복 체크(존재 중복 체크)
         HoldingCurrency hcDup = holdingCurrencyRepository.findByUserAndCurrencyCategory(user, currencyCategory);
-
         if (hcDup != null) {
             message = "DUPLICATE";
         } else {
             HoldingCurrency hc = holdingCurrencyReq.toEntity(user, currencyCategory);
-            holdingCurrencyRepository.save(hc);
+            HoldingCurrencyRes added = HoldingCurrencyRes.of(holdingCurrencyRepository.save(hc));
             message = "SUCCESS";
+            map.put("dto", added);
         }
-        return message;
+        map.put("message", message);
+        return map;
     }
 
     @Override

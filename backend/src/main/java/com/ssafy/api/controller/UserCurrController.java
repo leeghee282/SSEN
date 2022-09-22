@@ -42,12 +42,12 @@ public class UserCurrController {
     }
 
     @PostMapping("/holdcurr")
-    @ApiOperation(value = "보유 통화 등록", notes ="보유 통화 등록 기능. \nString 반환\n" +
-            "\n성공 => 성공: SUCCESS" +
+    @ApiOperation(value = "보유 통화 등록", notes ="보유 통화 등록 기능. \nmap 반환(message, dto)\n" +
+            "\n성공 => 성공: SUCCESS + 등록한 데이터 dto" +
             "\n실패 => 이미 들어있던 통화: DUPLICATE")
-    public ResponseEntity<String> addHoldingCurr(@RequestBody HoldingCurrencyReq holdingCurrencyReq) {
-        String message = holdingCurrService.addHoldingCurr(holdingCurrencyReq);
-        return new ResponseEntity<>(message, HttpStatus.OK);
+    public ResponseEntity<Map<String, Object>> addHoldingCurr(@RequestBody HoldingCurrencyReq holdingCurrencyReq) {
+        Map<String, Object> dto = holdingCurrService.addHoldingCurr(holdingCurrencyReq);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     @PatchMapping("/holdcurr")
