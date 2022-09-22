@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -37,8 +38,7 @@ public class StockMarket {
     @Column(name = "variance", nullable = false)
     @ColumnDefault("0.00")
     private double variance;
-    @Temporal(TemporalType.DATE)
     @Column(name = "regdate", nullable = false)
-    private Date regdate;
+    private LocalDateTime regdate;
 
 }
