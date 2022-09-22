@@ -3,6 +3,7 @@ package com.ssafy.api.service;
 import com.ssafy.api.request.InterestedCurrencyReq;
 import com.ssafy.api.response.InterestedCurrencyRes;
 import com.ssafy.db.entity.CurrencyCategory;
+import com.ssafy.db.entity.HoldingCurrency;
 import com.ssafy.db.entity.InterestedCurrency;
 import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.CurrencyCategoryRepository;
@@ -138,5 +139,22 @@ public class InterestedCurrServiceImpl implements InterestedCurrService {
         }
         return message;
     }
-    
+
+    @Override
+    public String deleteInterestedCurr(String userId, String code) {
+        // userId와 code가 데이터베이스에 있는 값(존재하는 값)이 들어왔다는 가정
+        String message = "";
+        User user = userRepositorySupport.findUserByUserId(userId).get();
+        CurrencyCategory currencyCategory = currencyCategoryRepository.findByCode(code);
+        InterestedCurrency targetIC = interestedCurrencyRepository.findByUserAndCurrencyCategory(user, currencyCategory);
+        if (targetIC == null) {
+            message = "NO DATA";
+        } else {
+            interestedCurrencyRepository.delete(targetIC);
+            message = "SUCCESS";
+        }
+        return message;
+    }
+
+
 }

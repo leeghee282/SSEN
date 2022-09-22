@@ -101,5 +101,12 @@ public class UserCurrController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
+    @DeleteMapping("/intrcurr/{userId}/{code}")
+    @ApiOperation(value = "보유 통화 삭제")
+    public ResponseEntity<String> deleteInterestedCurr(@PathVariable String userId, @PathVariable String code) {
+        String message = interestedCurrService.deleteInterestedCurr(userId, code);
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
 
 }
