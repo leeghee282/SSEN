@@ -44,16 +44,10 @@ public class HoldingCurrServiceImpl implements HoldingCurrService {
         String code = holdingCurrencyReq.getCode();
         User user = userRepositorySupport.findUserByUserId(userId).get();
         CurrencyCategory currencyCategory = currencyCategoryRepository.findByCode(code);
-        // 통화코드 중복 체크(존재 중복 체크)
-        HoldingCurrency hcDup = holdingCurrencyRepository.findByUserAndCurrencyCategory(user, currencyCategory);
-        if (hcDup != null) {
-            message = "DUPLICATE";
-        } else {
-            HoldingCurrency hc = holdingCurrencyReq.toEntity(user, currencyCategory);
-            HoldingCurrencyRes added = HoldingCurrencyRes.of(holdingCurrencyRepository.save(hc));
-            message = "SUCCESS";
-            map.put("dto", added);
-        }
+        HoldingCurrency hc = holdingCurrencyReq.toEntity(user, currencyCategory);
+        HoldingCurrencyRes added = HoldingCurrencyRes.of(holdingCurrencyRepository.save(hc));
+        message = "SUCCESS";
+        map.put("dto", added);
         map.put("message", message);
         return map;
     }
