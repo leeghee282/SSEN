@@ -9,8 +9,86 @@ import TextField from "@mui/material/TextField";
 import { useState } from "react";
 
 const EditPassword = (props) => {
+
+  const initialValues = {
+    
+    password: "",
+    changePassword:"",
+    confirmChangePassword: "",
+    
+  };
   
   const {insertFlag4,setInsertFlag4,insertFlag5,setInsertFlag5,cancelClicked4} = props;
+  const [changePassword,setChangePassword] = useState('');
+  const [confirmChangePassword,setConfirmChangePassword] = useState('');
+  const [formValues, setFormValues] = useState(initialValues);
+  const [formErrors, setFormErrors] = useState({});
+
+
+  
+
+
+  const validate = () => {
+    console.log(formValues.changePassword)
+    const errors = {};
+    if (!formValues.password) {
+      errors.password = "비밀번호를 입력해주세요.";
+      
+    }
+
+    if (!formValues.changePassword) {
+      errors.changePassword = "변경비밀번호를 입력해주세요.";
+      console.log(errors.changePassword)
+    }
+
+    if (!formValues.confirmChangePassword) {
+      errors.confirmChangePassword = "변경비밀번호확인 입력해주세요.";
+      console.log(errors.confirmChangePassword)
+      
+    }
+
+    if (formValues.changePassword !== formValues.confirmChangePassword) {
+      errors.checkPassword = "변경비밀번호가 같지않습니다."
+      console.log(errors.checkPassword)
+    }
+    setFormErrors(errors);
+    if (!(errors.changePassword + errors.confirmChangePassword + errors.checkPassword + errors.password)) {
+      return true;
+    }
+    return false;
+    
+    
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    
+    if(validate()) {
+      insertClicked5();
+    }
+  };
+
+   //비밀번호 변경 폼 입력 
+   const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormValues({ ...formValues, [name]: value });
+    //setFormErrors(validate(event.target));
+  };
+
+  
+
+   // 비밀번호 변경
+  const onChangeChangePassword = (e) => {
+    setChangePassword(( ) => e.target.value);
+    console.log(changePassword)
+  };
+
+  // 비밀번호 변경확인
+  const onChangeConfirmChangePassword = (e) => {
+    setConfirmChangePassword(( ) => e.target.value);
+    console.log(confirmChangePassword)
+  };
 
   //등록완료 상태관리 Flag5 (유효성 검사 후 마지막 상태변화 필요 ! )
   const insertClicked5 =() =>{
@@ -64,11 +142,17 @@ const EditPassword = (props) => {
         <Grid item xs={4}>
           <Box sx={{ pl: 2 }}>현재비밀번호</Box>
         </Grid>
-        <Grid item xs={7}>
+        <Grid item xs={5}>
           <TextField
+            name="password"
+            onChange={handleChange}
             placeholder="현재비밀번호 를 입력하세요"
             sx={{ width: 400 }}
           ></TextField>
+          
+        </Grid>
+        <Grid item xs={3}>
+          <Typography id="font_test" sx={{color:"red",pl:1}}>{formErrors.password}</Typography>
         </Grid>
       </Grid>
       <Grid
@@ -85,12 +169,15 @@ const EditPassword = (props) => {
         <Grid item xs={4}>
           <Box sx={{ pl: 2 }}>변경할 비밀번호</Box>
         </Grid>
-        <Grid item xs={7}>
+        <Grid item xs={5}>
           <TextField
+            name="changePassword"
+            onChange={handleChange}
             placeholder="변경할 비밀번호 를 입력하세요"
             sx={{ width: 400 }}
           ></TextField>
         </Grid>
+        <Grid item xs={3}><Typography id="font_test" sx={{color:"red",pl:1}}>{formErrors.changePassword}</Typography></Grid>
       </Grid>
       <Grid
         container
@@ -106,12 +193,16 @@ const EditPassword = (props) => {
         <Grid item xs={4}>
           <Box sx={{ pl: 2 }}>비밀번호확인</Box>
         </Grid>
-        <Grid item xs={7}>
+        <Grid item xs={5}>
           <TextField
+            onChange={handleChange}
+            
+            name="confirmChangePassword"
             placeholder="변경할 비밀번호를 입력하세요"
             sx={{ width: 400 }}
           ></TextField>
         </Grid>
+        <Grid item xs={3}><Typography id="font_test" sx={{color:"red",pl:1}} >{formErrors.checkPassword}</Typography></Grid>
       </Grid>
       <Box
             sx={{
@@ -122,7 +213,7 @@ const EditPassword = (props) => {
             }}
           >
             
-            <Button onClick={insertClicked5}
+            <Button onClick={handleSubmit}
               id="font_test"
               sx={{ background: "#81CDFD", height: 50, mt: 5, mr: 3 }}
             >
