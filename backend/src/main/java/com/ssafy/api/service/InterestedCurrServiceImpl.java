@@ -1,10 +1,8 @@
 package com.ssafy.api.service;
 
 import com.ssafy.api.request.InterestedCurrencyReq;
-import com.ssafy.api.response.HoldingCurrencyRes;
 import com.ssafy.api.response.InterestedCurrencyRes;
 import com.ssafy.db.entity.CurrencyCategory;
-import com.ssafy.db.entity.HoldingCurrency;
 import com.ssafy.db.entity.InterestedCurrency;
 import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.CurrencyCategoryRepository;
@@ -77,7 +75,6 @@ public class InterestedCurrServiceImpl implements InterestedCurrService {
     @Override
     public String addTargetInterestedCurr(Map<String, Object> map, InterestedCurrencyReq interestedCurrencyReq) {
         String message = "FAIL";
-        int targetCnt = (int) map.get("cnt");
         double target = interestedCurrencyReq.getTarget();
         InterestedCurrency targetIC = interestedCurrencyRepository.findByUserAndCurrencyCategory((User) map.get("user"), (CurrencyCategory) map.get("cc"));
         InterestedCurrency icAfter = interestedCurrencyReq.toEntity((User) map.get("user"), (CurrencyCategory) map.get("cc"));
@@ -108,22 +105,17 @@ public class InterestedCurrServiceImpl implements InterestedCurrService {
         double target = interestedCurrencyReq.getTarget();
         if (previous != 0 && target != 0) {
             double targetArr[] = {targetIC.getTarget1(), targetIC.getTarget2(), targetIC.getTarget3()};
-            System.out.println(Arrays.toString(targetArr));
             boolean duplicateCheck = false;
             boolean existCheck = false;
             for (int i = 0; i < targetArr.length; i++) {
-                System.out.println("i: " + i + "==============================================");
                 if (targetArr[i] == target) {
-                    System.out.println("target==================================================");
                     duplicateCheck = true;
                     break;
                 }
             }
             if (!duplicateCheck) {
                 for (int i = 0; i < targetArr.length; i++) {
-                    System.out.println("i: " + i + "==============================================");
                     if (targetArr[i] == previous) {
-                        System.out.println("previous======================================================================");
                         targetArr[i] = target;
                         existCheck = true;
                         icAfter.setTarget(targetArr);

@@ -1,7 +1,6 @@
 package com.ssafy.api.request;
 
 import com.ssafy.db.entity.CurrencyCategory;
-import com.ssafy.db.entity.HoldingCurrency;
 import com.ssafy.db.entity.InterestedCurrency;
 import com.ssafy.db.entity.User;
 import io.swagger.annotations.ApiModelProperty;
