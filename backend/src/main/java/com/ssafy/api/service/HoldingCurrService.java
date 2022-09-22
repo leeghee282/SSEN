@@ -10,6 +10,6 @@ import java.util.Map;
 public interface HoldingCurrService {
     List<HoldingCurrencyRes> getHoldingCurrByUser(User user);
     Map<String, Object> addHoldingCurr(HoldingCurrencyReq holdingCurrencyReq);
-    HoldingCurrencyRes updateHoldingCurr(HoldingCurrencyReq holdingCurrencyReq);
+    Map<String, Object> updateHoldingCurr(HoldingCurrencyReq holdingCurrencyReq);
     String deleteHoldingCurr(String userId, String code);
 }

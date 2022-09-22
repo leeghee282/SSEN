@@ -52,9 +52,11 @@ public class UserCurrController {
     }
 
     @PatchMapping("/holdcurr")
-    @ApiOperation(value = "보유 통화 수정", notes ="보유 통화 수정 기능. \n수정된 데이터 Res 반환")
-    public ResponseEntity<HoldingCurrencyRes> updateHoldingCurr(@RequestBody HoldingCurrencyReq holdingCurrencyReq) {
-        HoldingCurrencyRes dto = holdingCurrService.updateHoldingCurr(holdingCurrencyReq);
+    @ApiOperation(value = "보유 통화 수정", notes ="보유 통화 수정 기능. \nmap 반환(message, dto)\n" +
+            "\n성공 => 성공: SUCCESS + 수정한 데이터 dto" +
+            "\n실패 => 없는 통화: NO DATA | 기타 실패: FAIL")
+    public ResponseEntity<Map<String, Object>> updateHoldingCurr(@RequestBody HoldingCurrencyReq holdingCurrencyReq) {
+        Map<String, Object> dto = holdingCurrService.updateHoldingCurr(holdingCurrencyReq);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
@@ -92,7 +94,7 @@ public class UserCurrController {
 
     @PatchMapping("/intrcurr")
     @ApiOperation(value = "관심 통화 수정", notes ="관심 통화 수정 기능. \nmap 반환(message, dto)\n" +
-            "\n성공 => 성공: SUCCESS + 등록한 데이터 dto " +
+            "\n성공 => 성공: SUCCESS + 수정한 데이터 dto " +
             "\n실패 => 이미 들어있던 금액: DUPLICATE | 0 들어옴: ZERO VALUE | 없는 금액이 previous 들어옴: NO VALUE")
     public ResponseEntity<Map<String, Object>> updateInterestedCurr(@RequestBody InterestedCurrencyReq interestedCurrencyReq) {
         Map<String, Object> dto = interestedCurrService.updateInterestedCurr(interestedCurrencyReq);

@@ -59,19 +59,25 @@ public class HoldingCurrServiceImpl implements HoldingCurrService {
     }
 
     @Override
-    public HoldingCurrencyRes updateHoldingCurr(HoldingCurrencyReq holdingCurrencyReq) {
+    public Map<String, Object> updateHoldingCurr(HoldingCurrencyReq holdingCurrencyReq) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        String message = "FAIL";
         String userId = holdingCurrencyReq.getUserId();
         String code = holdingCurrencyReq.getCode();
         User user = userRepositorySupport.findUserByUserId(userId).get();
         CurrencyCategory currencyCategory = currencyCategoryRepository.findByCode(code);
-        HoldingCurrency target = holdingCurrencyRepository.findByUserAndCurrencyCategory(user, currencyCategory);
-        if (target == null) {
-            return null;
+        HoldingCurrency targetHC = holdingCurrencyRepository.findByUserAndCurrencyCategory(user, currencyCategory);
+        if (targetHC == null) {
+            message = "NO DATA";
+        }else{
+            HoldingCurrency hcAfter = holdingCurrencyReq.toEntity(user, currencyCategory);
+            targetHC.patch(hcAfter);
+            HoldingCurrencyRes updated = HoldingCurrencyRes.of(holdingCurrencyRepository.save(targetHC));
+            message = "SUCCESS";
+            map.put("dto", updated);
         }
-        HoldingCurrency hcAfter = holdingCurrencyReq.toEntity(user, currencyCategory);
-        target.patch(hcAfter);
-        HoldingCurrency updated = holdingCurrencyRepository.save(target);
-        return HoldingCurrencyRes.of(updated);
+        map.put("message", message);
+        return map;
     }
 
     @Override

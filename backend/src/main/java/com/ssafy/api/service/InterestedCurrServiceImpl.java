@@ -88,7 +88,7 @@ public class InterestedCurrServiceImpl implements InterestedCurrService {
                     message = "SUCCESS(ADD TARGET)";
                     icAfter.setTarget(targetArr);
                     targetIC.patch(icAfter);
-                    InterestedCurrencyRes added = InterestedCurrencyRes.of(targetIC);
+                    InterestedCurrencyRes added = InterestedCurrencyRes.of(interestedCurrencyRepository.save(targetIC));
                     map.put("dto", added);
                     break;
                 }
