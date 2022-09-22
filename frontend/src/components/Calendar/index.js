@@ -14,13 +14,26 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 
+import { useDispatch } from "react-redux";
+import { getChartDates, getChartCode } from "../../_actions/chart_action";
+
 // 나라 선택 라디오 버튼 컴포넌트
 const RowRadioButtonsGroup = () => {
+  const dispatch = useDispatch();
+
   const [type, setType] = useState("USD");
   const selectChange = (event) => {
     setType(event.target.value);
+
+    let body = {
+      code: event.target.value,
+    };
+    dispatch(getChartCode(body)).then((response) => {
+      console.log(response.payload);
+    });
   };
   console.log(type);
+
   return (
     <FormControl>
       <FormLabel id="demo-row-radio-buttons-group-label">Nation</FormLabel>
@@ -152,6 +165,8 @@ const Calendar = () => {
           <RowRadioButtonsGroup />
         </Grid>
       </Box>
+      <p>{`${startDate}`}</p>
+      <p>{`${endDate}`}</p>
     </div>
   );
 };

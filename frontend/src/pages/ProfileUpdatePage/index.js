@@ -71,7 +71,7 @@ const ProfileUpdate = () => {
   const user_id = "potr12";
   return (
     <ThemeProvider theme={theme}>
-      <Container maxWidth="sm"></Container>
+      
       <CssBaseline />
       <Box
         id="font_test"
@@ -80,6 +80,7 @@ const ProfileUpdate = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          
         }}
       >
         <Box sx={{ mt: 15, width: 1000, height: 1100, background: "white" }}>
@@ -139,7 +140,7 @@ const ProfileUpdate = () => {
             }}
           >
             <Grid item xs={4}>
-              <Box sx={{ pl: 2 }}>이름</Box>
+              <Box sx={{ pl: 2  }}>이름</Box>
             </Grid>
             <Grid item xs={5}>
               {!insertFlag1 && <Box sx={{ pl: 2 }}>{userName}</Box>}

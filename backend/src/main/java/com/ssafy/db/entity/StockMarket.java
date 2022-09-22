@@ -25,9 +25,18 @@ public class StockMarket {
     private Long uid;
     @Column(name = "name", length = 15, nullable = false)
     private String name;
-    @Column(name = "price", nullable = false)
+    @Column(name = "close_price", nullable = false)
     @ColumnDefault("0.00")
-    private double price;
+    private double closePrice;
+    @Column(name = "high_price", nullable = false)
+    @ColumnDefault("0.00")
+    private double highPrice;
+    @Column(name = "low_price", nullable = false)
+    @ColumnDefault("0.00")
+    private double lowPrice;
+    @Column(name = "variance", nullable = false)
+    @ColumnDefault("0.00")
+    private double variance;
     @Temporal(TemporalType.DATE)
     @Column(name = "regdate", nullable = false)
     private Date regdate;
