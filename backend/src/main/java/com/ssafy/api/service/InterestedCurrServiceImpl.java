@@ -12,7 +12,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -162,12 +165,12 @@ public class InterestedCurrServiceImpl implements InterestedCurrService {
         User user = userRepositorySupport.findUserByUserId(userId).get();
         CurrencyCategory currencyCategory = currencyCategoryRepository.findByCode(code);
         InterestedCurrency targetIC = interestedCurrencyRepository.findByUserAndCurrencyCategory(user, currencyCategory);
-        if (targetIC == null) {
+        if (targetIC == null) { // 통화 없음
             message = "NO INTRCURR";
         } else {
             double targetArr[] = {targetIC.getTarget1(), targetIC.getTarget2(), targetIC.getTarget3()};
             boolean existCheck = false;
-            for (int i = 0; i < targetArr.length; i++) {
+            for (int i = 0; i < targetArr.length; i++) { // target 찾기
                 if (targetArr[i] == target) {
                     existCheck = true;
                     targetArr[i] = 0;
@@ -177,9 +180,8 @@ public class InterestedCurrServiceImpl implements InterestedCurrService {
             if (existCheck) { // target 존재
                 if(targetArr[0]==0&&targetArr[1]==0&&targetArr[2]==0){ // 통화 삭제
                     interestedCurrencyRepository.delete(targetIC);
-                    message = "DELETE INTRCURR";
+                    message = "SUCCESS(DELETE INTRCURR)";
                 }else{ // 0 뒤로 밀기
-                    System.out.println(Arrays.toString(targetArr));
                     int idx = 0;
                     for (int i = 0; i< targetArr.length; i++){
                         if(targetArr[i] !=0){
@@ -191,9 +193,7 @@ public class InterestedCurrServiceImpl implements InterestedCurrService {
                         targetArr[idx]=0;
                         idx++;
                     }
-                    System.out.println("============================================");
-                    System.out.println(Arrays.toString(targetArr));
-
+                    // update to 0
                     targetIC.setTarget(targetArr);
                     interestedCurrencyRepository.save(targetIC);
                     message = "SUCCESS";
