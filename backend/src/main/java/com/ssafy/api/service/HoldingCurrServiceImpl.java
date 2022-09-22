@@ -68,11 +68,9 @@ public class HoldingCurrServiceImpl implements HoldingCurrService {
     }
 
     @Override
-    public String deleteHoldingCurr(HoldingCurrencyReq holdingCurrencyReq) {
+    public String deleteHoldingCurr(String userId, String code) {
         // userId와 code가 데이터베이스에 있는 값(존재하는 값)이 들어왔다는 가정
         String message = "";
-        String userId = holdingCurrencyReq.getUserId();
-        String code = holdingCurrencyReq.getCode();
         User user = userRepositorySupport.findUserByUserId(userId).get();
         CurrencyCategory currencyCategory = currencyCategoryRepository.findByCode(code);
         HoldingCurrency target = holdingCurrencyRepository.findByUserAndCurrencyCategory(user, currencyCategory);

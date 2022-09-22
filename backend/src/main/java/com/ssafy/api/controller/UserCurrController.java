@@ -9,10 +9,12 @@ import com.ssafy.api.service.InterestedCurrService;
 import com.ssafy.api.service.UserService;
 import com.ssafy.db.entity.User;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import retrofit2.http.Path;
 
 import java.util.List;
 import java.util.Map;
@@ -53,10 +55,10 @@ public class UserCurrController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
-    @DeleteMapping("/holdcurr")
+    @DeleteMapping("/holdcurr/{userId}/{code}")
     @ApiOperation(value = "보유 통화 삭제")
-    public ResponseEntity<String> deleteHoldingCurr(@RequestBody HoldingCurrencyReq holdingCurrencyReq) {
-        String message = holdingCurrService.deleteHoldingCurr(holdingCurrencyReq);
+    public ResponseEntity<String> deleteHoldingCurr(@PathVariable String userId, @PathVariable String code) {
+        String message = holdingCurrService.deleteHoldingCurr(userId, code);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
