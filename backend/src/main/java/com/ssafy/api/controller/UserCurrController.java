@@ -102,13 +102,12 @@ public class UserCurrController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
-    @DeleteMapping("/intrcurr/{userId}/{code}")
+    @DeleteMapping("/intrcurr/{uid}")
     @ApiOperation(value = "관심 통화 삭제", notes ="관심 통화 삭제 기능. \nString 반환\n" +
             "\n성공 => 성공: SUCCESS" +
             "\n실패 => 없는 통화: NO DATA")
-    public ResponseEntity<String> deleteInterestedCurr(@ApiParam(value = "사용자 아이디", example = "ssafy10", required = true)@PathVariable String userId,
-                                                       @ApiParam(value = "통화코드", example = "USD", required = true)@PathVariable String code) {
-        String message = interestedCurrService.deleteInterestedCurr(userId, code);
+    public ResponseEntity<String> deleteInterestedCurr(@ApiParam(value = "interesedCurrencyUid", example = "16", required = true)@PathVariable long uid) {
+        String message = interestedCurrService.deleteInterestedCurr(uid);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
