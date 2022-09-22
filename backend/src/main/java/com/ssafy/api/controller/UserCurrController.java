@@ -83,7 +83,7 @@ public class UserCurrController {
 
     @PostMapping("/intrcurr")
     @ApiOperation(value = "관심 통화 등록", notes ="관심 통화 등록 기능. \nmap 반환(message, dto)\n" +
-            "\n성공 => 성공: SUCCESS + 등록한 데이터 dto" +
+            "\n성공 => 성공: SUCCESS(ADD TARGET)/SUCCESS(ADD INTRCURR), + 등록한 데이터 dto" +
             "\n실패 => 이미 들어있던 금액: DUPLICATE | target 다 참: FULL | 기타 실패: FAIL")
     public ResponseEntity<Map<String, Object>> addInterestedCurr(@RequestBody InterestedCurrencyReq interestedCurrencyReq) {
         Map<String, Object> dto = interestedCurrService.addInterestedCurr(interestedCurrencyReq);
@@ -91,16 +91,12 @@ public class UserCurrController {
     }
 
     @PatchMapping("/intrcurr")
-    @ApiOperation(value = "관심 통화 수정", notes ="관심 통화 수정 기능. \nString 반환\n" +
-            "\n성공 => 성공: SUCCESS" +
+    @ApiOperation(value = "관심 통화 수정", notes ="관심 통화 수정 기능. \nmap 반환(message, dto)\n" +
+            "\n성공 => 성공: SUCCESS + 등록한 데이터 dto" +
             "\n실패 => 이미 들어있던 금액: DUPLICATE | 0 들어옴: ZERO VALUE | 없는 금액이 previous 들어옴: NO VALUE")
-    public ResponseEntity<String> updateInterestedCurr(@RequestBody InterestedCurrencyReq interestedCurrencyReq) {
-        String message = "FAIL";
-        Map<String, Object> map = interestedCurrService.checkTargetCnt(interestedCurrencyReq);
-        if ((int) map.get("cnt") > 0) {
-            message = interestedCurrService.updateInterestedCurr(map, interestedCurrencyReq);
-        }
-        return new ResponseEntity<>(message, HttpStatus.OK);
+    public ResponseEntity<Map<String, Object>> updateInterestedCurr(@RequestBody InterestedCurrencyReq interestedCurrencyReq) {
+        Map<String, Object> dto = interestedCurrService.updateInterestedCurr(interestedCurrencyReq);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     @DeleteMapping("/intrcurr/{userId}/{code}")

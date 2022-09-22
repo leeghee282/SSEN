@@ -71,7 +71,7 @@ public class InterestedCurrServiceImpl implements InterestedCurrService {
             InterestedCurrency icNew = interestedCurrencyReq.toEntity(user, currencyCategory);
             icNew.setTarget1(interestedCurrencyReq.getTarget());
             InterestedCurrencyRes added = InterestedCurrencyRes.of(interestedCurrencyRepository.save(icNew));
-            message = "SUCCESS";
+            message = "SUCCESS(ADD INTRCURR)";
             map.put("dto", added);
         } else{
             double target = interestedCurrencyReq.getTarget();
@@ -85,10 +85,11 @@ public class InterestedCurrServiceImpl implements InterestedCurrService {
                 }
                 if (targetArr[i] == 0) {
                     targetArr[i] = target;
-                    message = "SUCCESS";
+                    message = "SUCCESS(ADD TARGET)";
                     icAfter.setTarget(targetArr);
                     targetIC.patch(icAfter);
-                    map.put("dto", targetIC);
+                    InterestedCurrencyRes added = InterestedCurrencyRes.of(targetIC);
+                    map.put("dto", added);
                     break;
                 }
             }
@@ -99,47 +100,55 @@ public class InterestedCurrServiceImpl implements InterestedCurrService {
 
 
     @Override
-    public String updateInterestedCurr(Map<String, Object> map, InterestedCurrencyReq interestedCurrencyReq) {
+    public Map<String, Object> updateInterestedCurr(InterestedCurrencyReq interestedCurrencyReq) {
+        Map<String, Object> map = new HashMap<>();
         String message = "FAIL";
-        InterestedCurrency targetIC = interestedCurrencyRepository.findByUserAndCurrencyCategory((User) map.get("user"), (CurrencyCategory) map.get("cc"));
-        InterestedCurrency icAfter = interestedCurrencyReq.toEntity((User) map.get("user"), (CurrencyCategory) map.get("cc"));
-        // target 재설정
-        double previous = interestedCurrencyReq.getPrevious();
-        double target = interestedCurrencyReq.getTarget();
-        if (previous != 0 && target != 0) {
-            double targetArr[] = {targetIC.getTarget1(), targetIC.getTarget2(), targetIC.getTarget3()};
-            boolean duplicateCheck = false;
-            boolean existCheck = false;
-            for (int i = 0; i < targetArr.length; i++) {
-                if (targetArr[i] == target) {
-                    duplicateCheck = true;
-                    break;
-                }
-            }
-            if (!duplicateCheck) {
+        Map<String, Object> checkTarget = this.checkTargetCnt(interestedCurrencyReq);
+        User user = (User)checkTarget.get("user");
+        CurrencyCategory currencyCategory = (CurrencyCategory)checkTarget.get("cc");
+        if ((int) checkTarget.get("cnt") > 0) {
+            InterestedCurrency targetIC = interestedCurrencyRepository.findByUserAndCurrencyCategory(user, currencyCategory);
+            InterestedCurrency icAfter = interestedCurrencyReq.toEntity(user, currencyCategory);
+            // target 재설정
+            double previous = interestedCurrencyReq.getPrevious();
+            double target = interestedCurrencyReq.getTarget();
+            if (previous != 0 && target != 0) {
+                double targetArr[] = {targetIC.getTarget1(), targetIC.getTarget2(), targetIC.getTarget3()};
+                boolean duplicateCheck = false;
+                boolean existCheck = false;
                 for (int i = 0; i < targetArr.length; i++) {
-                    if (targetArr[i] == previous) {
-                        targetArr[i] = target;
-                        existCheck = true;
-                        icAfter.setTarget(targetArr);
-                        targetIC.patch(icAfter);
-                        interestedCurrencyRepository.save(targetIC);
+                    if (targetArr[i] == target) {
+                        duplicateCheck = true;
                         break;
                     }
                 }
-            }
-            // message 세팅
-            if (existCheck) {
-                message = "SUCCESS";
-            } else if (duplicateCheck) {
-                message = "DUPLICATE";
+                if (!duplicateCheck) {
+                    for (int i = 0; i < targetArr.length; i++) {
+                        if (targetArr[i] == previous) {
+                            targetArr[i] = target;
+                            existCheck = true;
+                            icAfter.setTarget(targetArr);
+                            targetIC.patch(icAfter);
+                            InterestedCurrencyRes updated = InterestedCurrencyRes.of(interestedCurrencyRepository.save(targetIC));
+                            map.put("dto", updated);
+                            break;
+                        }
+                    }
+                }
+                // message 세팅
+                if (existCheck) {
+                    message = "SUCCESS";
+                } else if (duplicateCheck) {
+                    message = "DUPLICATE";
+                } else {
+                    message = "NO VALUE";
+                }
             } else {
-                message = "NO VALUE";
+                message = "ZERO VALUE";
             }
-        } else {
-            message = "ZERO VALUE";
         }
-        return message;
+        map.put("message",message);
+        return map;
     }
 
     @Override
