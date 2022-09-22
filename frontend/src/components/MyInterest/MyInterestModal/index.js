@@ -1,4 +1,4 @@
-// 모달창으로 입력하는 부분
+// 관심 화폐 모달창으로 입력하는 부분
 import React from "react";
 import { useState } from "react";
 
@@ -11,8 +11,8 @@ import Grid from "@mui/material/Grid";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import InputLabel from '@mui/material/InputLabel';
-import Stack from '@mui/material/Stack';
+import InputLabel from "@mui/material/InputLabel";
+import Stack from "@mui/material/Stack";
 
 // 모달창 스타일
 const style = {
@@ -27,7 +27,7 @@ const style = {
 };
 
 // 국가 선택 select box
-const BasicSelect = ({nation, setNation}) => {
+const BasicSelect = ({ nation, setNation }) => {
   const handleChange = (event) => {
     setNation(event.target.value);
   };
@@ -42,25 +42,25 @@ const BasicSelect = ({nation, setNation}) => {
           label="currency_code"
           onChange={handleChange}
         >
-          <MenuItem value='USD'>USD</MenuItem>
-          <MenuItem value='EUR'>EUR</MenuItem>
-          <MenuItem value='GBP'>GBP</MenuItem>
-          <MenuItem value='CNY'>CNY</MenuItem>
-          <MenuItem value='JPY'>JPY</MenuItem>
+          <MenuItem value="USD">USD</MenuItem>
+          <MenuItem value="EUR">EUR</MenuItem>
+          <MenuItem value="GBP">GBP</MenuItem>
+          <MenuItem value="CNY">CNY</MenuItem>
+          <MenuItem value="JPY">JPY</MenuItem>
         </Select>
       </FormControl>
     </Box>
   );
-}
+};
 
 // 숫자만 입력 가능하게 해 놓은 것(0 입력 방지)
 const enteredOnlyNumber = (val) => {
-  return val.replace(/[^0-9]/g,'');
-}
+  return val.replace(/[^0-9]/g, "");
+};
 // 천 단위 ',' 자동 입력을 위한 것
 const addComma = (num) => {
-  return num.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-}
+  return num.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
 
 // 모달창
 export default function MyInterestModal(props) {
@@ -74,7 +74,7 @@ export default function MyInterestModal(props) {
     setOpen(false);
     setNation("");
     setInterest("");
-  }
+  };
 
   const handleSumit = (e) => {
     e.preventDefault(); //새로고침 방지
@@ -88,7 +88,9 @@ export default function MyInterestModal(props) {
 
   // 천단위별 ',' 자동 입력 되게 하는 함수(quantity)
   const amountInterest = (event) => {
-    const isNotNumber = /^[^1-9][^0-9]{0,11}$/g.test(event.target.value) ? true : false;
+    const isNotNumber = /^[^1-9][^0-9]{0,11}$/g.test(event.target.value)
+      ? true
+      : false;
     setIsEnteredWrongAmount(isNotNumber);
     if (isNotNumber) return;
 
@@ -122,7 +124,7 @@ export default function MyInterestModal(props) {
               </Typography>
             </Box>
             <Box sx={{ m: 2 }}>
-              <BasicSelect nation={nation} setNation={setNation}/>
+              <BasicSelect nation={nation} setNation={setNation} />
             </Box>
             <Box sx={{ my: 3, mx: 2 }}>
               <Grid container alignItems="center">
@@ -139,9 +141,13 @@ export default function MyInterestModal(props) {
                 </Grid>
               </Grid>
             </Box>
-            <Stack mt={1} spacing={1} direction="row" justifyContent='center'>
-              <Button variant="contained" onClick={handleSumit} id="font_test">등록</Button>
-              <Button variant="outlined" onClick={handleClose} id="font_test">취소</Button>
+            <Stack mt={1} spacing={1} direction="row" justifyContent="center">
+              <Button variant="contained" onClick={handleSumit} id="font_test">
+                등록
+              </Button>
+              <Button variant="outlined" onClick={handleClose} id="font_test">
+                취소
+              </Button>
             </Stack>
           </Box>
         </Box>

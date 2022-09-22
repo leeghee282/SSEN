@@ -8,6 +8,7 @@ import Box from "@mui/material/Box";
 export default function MyInerest() {
   // 임시 데이터
   const [interests, setInterests] = useState([]);
+  const [updateInts, setUpdateInts] = useState([]);
 
   const nextId = useRef(0);
   const handleSumit = (nation, interestCurrency) => {
@@ -19,6 +20,14 @@ export default function MyInerest() {
     setInterests(interests.concat(interest));
     nextId.current += 1;
   };
+
+  // const onUpdate = (nation, interestCurrency) => {
+  //   const updateInt = {
+  //     nation,
+  //     interestCurrency,
+  //   };
+  //   setUpdateInts(updateInts.concat(updateInt));
+  // };
 
   // 삭제 기능
   const onRemove = (id) => {
@@ -36,10 +45,14 @@ export default function MyInerest() {
       <Typography id="font_test" component="h1" variant="h4">
         관심 화폐 등록
       </Typography>
-      <br/>
+      <br />
       <MyInterestModal onSubmit={handleSumit} />
-      <br/>
-      <MyInterestItemList interests={interests} onRemove={onRemove} />
+      <br />
+      <MyInterestItemList
+        interests={interests}
+        onRemove={onRemove}
+        // onUpdate={onUpdate}
+      />
     </Box>
   );
 }
