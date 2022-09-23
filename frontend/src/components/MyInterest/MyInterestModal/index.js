@@ -1,6 +1,8 @@
 // 관심 화폐 모달창으로 입력하는 부분
 import React from "react";
 import { useState } from "react";
+import axios from "../../../api/user";
+import { baseURL } from "../../../api";
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -63,9 +65,10 @@ const addComma = (num) => {
 };
 
 // 모달창
-export default function MyInterestModal(props) {
-  const [nation, setNation] = useState("");
-  const [interest, setInterest] = useState("");
+export default function MyInterestModal({ getInterest }) {
+  const [nation, setNation] = useState(""); //국가 선택
+  const [previous, setPrevious] = useState(""); //이전 값
+  const [interest, setInterest] = useState(""); //타겟
   const [isEnteredWrongAmount, setIsEnteredWrongAmount] = useState(false);
 
   const [open, setOpen] = React.useState(false);
@@ -76,17 +79,32 @@ export default function MyInterestModal(props) {
     setInterest("");
   };
 
+  // 서버에 보유 통화 보내기(post 방식)
+  const sendMyInterest = () => {
+    const body = {
+      code: nation,
+      previous: previous,
+      target: parseInt(interest.replaceAll(",", "")),
+      userId: "ssafy10",
+    };
+    console.log(body);
+    axios
+      .post(baseURL + "/api/v1/intrcurr/", body)
+      .then((response) => getInterest());
+  };
+
   const handleSumit = (e) => {
     e.preventDefault(); //새로고침 방지
     // 아무것도 입력하지 않았을 때, submit 방지
     if (!nation || !interest) return;
-    props.onSubmit(nation, interest);
+    // props.onSubmit(nation, interest);
     setOpen(false); //submit 후 창 닫기
     setNation("");
     setInterest(""); //submit 후 textfield 창 비우기
+    sendMyInterest();
   };
 
-  // 천단위별 ',' 자동 입력 되게 하는 함수(quantity)
+  // 천단위별 ',' 자동 입력 되게 하는 함수
   const amountInterest = (event) => {
     const isNotNumber = /^[^1-9][^0-9]{0,11}$/g.test(event.target.value)
       ? true
