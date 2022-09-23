@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -26,7 +27,7 @@ public class StockMarketRes {
     @ApiModelProperty(name = "변동률", example = "5.6")
     double variance;
     @ApiModelProperty(name = "증시 기준 날짜, 시간", example = "2022-09-20 14:23:41")
-    Date regdate;
+    LocalDateTime regdate;
 
     public static StockMarketRes of(StockMarket sm) {
         return StockMarketRes.builder()
