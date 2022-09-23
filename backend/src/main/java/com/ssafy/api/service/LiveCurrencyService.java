@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface LiveCurrencyService {
     LiveCurrencyRes findLiveCurrencyByCCUid(String currencyCode);
+    List<LiveCurrencyRes> getLiveCurrency();
 }

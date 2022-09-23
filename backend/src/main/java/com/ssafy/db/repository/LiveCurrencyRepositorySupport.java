@@ -20,4 +20,9 @@ public class LiveCurrencyRepositorySupport {
         LiveCurrency liveCurrency = jpaQueryFactory.select(qLiveCurrency).from(qLiveCurrency).where(qLiveCurrency.currencyCategory.uid.eq(ccUid)).fetchOne();
         return liveCurrency;
     }
+
+    public List<LiveCurrency> getLiveCurrency() {
+        List<LiveCurrency> lcList = jpaQueryFactory.select(qLiveCurrency).from(qLiveCurrency).fetch();
+        return  lcList;
+    }
 }
