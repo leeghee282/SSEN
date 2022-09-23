@@ -196,7 +196,7 @@ test {
 }
 
 bootJar{
-    mainClassName = 'com.ssafy.GroupCallApplication'
+    mainClassName = 'com.ssafy.SsenApplication'
 }
 
 bootRun {
