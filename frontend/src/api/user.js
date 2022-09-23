@@ -10,3 +10,5 @@ const axios = Axios.create({
 });
 
 axios.interceptors.request.use();
+
+export default axios;

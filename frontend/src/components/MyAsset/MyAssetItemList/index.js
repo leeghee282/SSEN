@@ -1,7 +1,7 @@
 // 보유 원화 목록으로 보여주기
 import React, { useEffect, useState } from "react";
 
-import { axios, urls, UserContext } from "../../../api/user";
+import axios from "../../../api/user";
 import { baseURL } from "../../../api";
 //mui
 import Box from "@mui/material/Box";

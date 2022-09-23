@@ -1,6 +1,8 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import MyInterestModal from "./MyInterestModal";
 import MyInterestItemList from "./MyInterestItemList";
+import axios from "../../api/user";
+import { baseURL } from "../../api/index";
 
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -10,12 +12,25 @@ export default function MyInerest() {
   const [interests, setInterests] = useState([]);
   const [updateInts, setUpdateInts] = useState([]);
 
+  const getInterest = () => {
+    axios
+      .get(baseURL + "/api/v1/intrcurr/ssafy10")
+      .then((response) => setInterests(response.data));
+  };
+  useEffect(() => {
+    getInterest();
+  }, []);
+
+  useEffect(() => {}, [interests]);
+
   const nextId = useRef(0);
   const handleSumit = (nation, interestCurrency) => {
     const interest = {
       id: nextId.current,
       nation,
-      interestCurrency,
+      target: interestCurrency,
+      target2: 0,
+      target3: 14000,
     };
     setInterests(interests.concat(interest));
     nextId.current += 1;

@@ -1,42 +1,42 @@
-import Axios from "axios";
-import { baseURL } from "./index";
+import axios from "axios";
+// import baseURL from "./index";
 
-const axios = Axios.create({
-  baseURL: baseURL,
-});
+// const axios = Axios.create({
+//   baseURL: baseURL,
+// });
 
-const code = "USD";
+// const code = "USD";
 
-// URL에 ?가 있는 경우
-function getchat() {
-  const chatData = axios
-    .get("/api/v1/chat", { params: { currencyCode: code } })
-    .then((res) => res.data);
+// // URL에 ?가 있는 경우
+// function getchat() {
+//   const chatData = axios
+//     .get("/api/v1/chat", { params: { currencyCode: code } })
+//     .then((res) => res.data);
 
-  console.log(chatData);
-}
+//   console.log(chatData);
+// }
 
-// URL에 {}가 있는 경우
-const userId = "kk";
+// // URL에 {}가 있는 경우
+// const userId = "kk";
 
-function getcurr() {
-  const currData = axios
-    .get(`/api/v1/intrcurr/${userId}`)
-    .then((res) => res.data);
+// // function getcurr() {
+// //   const currData = axios
+// //     .get(`/api/v1/intrcurr/${userId}`)
+// //     .then((res) => res.data);
 
-  console.log(currData);
-}
+// //   console.log(currData);
+// // }
 
 function Apitest() {
-  // const getchat = () => {
-  //   const ans = axios
-  //     .get("http://localhost:8080/api/v1/chat", {
-  //       params: { currencyCode: "USD" },
-  //     })
-  //     .then((res) => res.data);
+  const getchat = () => {
+    const ans = axios
+      .get("http://localhost:8080/api/v1/chat", {
+        params: { currencyCode: "USD" },
+      })
+      .then((res) => res.data);
 
-  //   console.log(ans);
-  // };
+    console.log(ans);
+  };
 
   const getcurr = () => {
     const ans = axios

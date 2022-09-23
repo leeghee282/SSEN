@@ -1,7 +1,7 @@
 // 보유 원화 모달창으로 입력하는 부분
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { axios, urls, UserContext } from "../../../api/user";
+import axios from "../../../api/user";
 import { baseURL } from "../../../api";
 // import axios from "axios";
 
