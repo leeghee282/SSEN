@@ -1,10 +1,8 @@
 package com.ssafy.api.service;
 
 import com.ssafy.api.request.InterestedCurrencyReq;
-import com.ssafy.api.response.HoldingCurrencyRes;
 import com.ssafy.api.response.InterestedCurrencyRes;
 import com.ssafy.db.entity.CurrencyCategory;
-import com.ssafy.db.entity.HoldingCurrency;
 import com.ssafy.db.entity.InterestedCurrency;
 import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.CurrencyCategoryRepository;
@@ -14,10 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -61,58 +56,156 @@ public class InterestedCurrServiceImpl implements InterestedCurrService {
         return res;
     }
 
-
     @Override
-    public String addInterestedCurr(InterestedCurrencyReq interestedCurrencyReq) {
+    public Map<String, Object> addInterestedCurr(InterestedCurrencyReq interestedCurrencyReq) {
         // userId와 code가 데이터베이스에 있는 값(존재하는 값)이 들어왔다는 가정
-        String message = "";
-        String userId = interestedCurrencyReq.getUserId();
-        String code = interestedCurrencyReq.getCode();
-        User user = userRepositorySupport.findUserByUserId(userId).get();
-        CurrencyCategory currencyCategory = currencyCategoryRepository.findByCode(code);
-        InterestedCurrency icNew = interestedCurrencyReq.toEntity(user, currencyCategory);
-        icNew.setTarget1(interestedCurrencyReq.getTarget());
-        interestedCurrencyRepository.save(icNew);
-        message = "SUCCESS";
-        return message;
-    }
-
-    //   =================================================================================================
-
-
-    @Override
-    public String updateTargetInterestedCurr(Map<String, Object> map, InterestedCurrencyReq interestedCurrencyReq) {
-        String message = "";
-        int targetCnt = (int)map.get("cnt");
-        double target = interestedCurrencyReq.getTarget();
-        if (targetCnt != -1) { // add
-            InterestedCurrency targetIC = interestedCurrencyRepository.findByUserAndCurrencyCategory((User) map.get("user"), (CurrencyCategory) map.get("cc"));
-            InterestedCurrency icAfter = interestedCurrencyReq.toEntity((User) map.get("user"), (CurrencyCategory) map.get("cc"));
-            double targetBefore[] = {targetIC.getTarget1(), targetIC.getTarget2(), targetIC.getTarget3()};
-            for (double t : targetBefore) {
-                if(t==target){
+        Map<String, Object> map = new HashMap<>();
+        String message = "FAIL";
+        Map<String, Object> checkTarget = this.checkTargetCnt(interestedCurrencyReq);
+        int targetCnt = (int)checkTarget.get("cnt");
+        User user = (User)checkTarget.get("user");
+        CurrencyCategory currencyCategory = (CurrencyCategory)checkTarget.get("cc");
+        if (targetCnt == 3) { // 타겟 3개(가득 참)
+            message = "FULL";
+        } else if(targetCnt == -1){
+            InterestedCurrency icNew = interestedCurrencyReq.toEntity(user, currencyCategory);
+            icNew.setTarget1(interestedCurrencyReq.getTarget());
+            InterestedCurrencyRes added = InterestedCurrencyRes.of(interestedCurrencyRepository.save(icNew));
+            message = "SUCCESS(ADD INTRCURR)";
+            map.put("dto", added);
+        } else{
+            double target = interestedCurrencyReq.getTarget();
+            InterestedCurrency targetIC = interestedCurrencyRepository.findByUserAndCurrencyCategory(user, currencyCategory);
+            InterestedCurrency icAfter = interestedCurrencyReq.toEntity(user, currencyCategory);
+            double targetArr[] = {targetIC.getTarget1(), targetIC.getTarget2(), targetIC.getTarget3()};
+            for (int i = 0; i < targetArr.length; i++) {
+                if (targetArr[i] == target) {
                     message = "DUPLICATE";
                     break;
                 }
-                if(t==0){
-
+                if (targetArr[i] == 0) {
+                    targetArr[i] = target;
+                    message = "SUCCESS(ADD TARGET)";
+                    icAfter.setTarget(targetArr);
+                    targetIC.patch(icAfter);
+                    InterestedCurrencyRes added = InterestedCurrencyRes.of(interestedCurrencyRepository.save(targetIC));
+                    map.put("dto", added);
+                    break;
                 }
             }
-        }else{ // edit
-
         }
-//        String userId = holdingCurrencyReq.getUserId();
-//        String code = holdingCurrencyReq.getCode();
-//        User user = userRepositorySupport.findUserByUserId(userId).get();
-//        CurrencyCategory currencyCategory = currencyCategoryRepository.findByCode(code);
-//        HoldingCurrency target = holdingCurrencyRepository.findByUserAndCurrencyCategory(user, currencyCategory);
-//        HoldingCurrency hcAfter = holdingCurrencyReq.toEntity(user, currencyCategory);
-//        target.patch(hcAfter);
-//        System.out.println(target.getPrice());
-//        HoldingCurrency updated = holdingCurrencyRepository.save(target);
-//        return HoldingCurrencyRes.of(updated);
+        map.put("message", message);
+        return map;
+    }
 
-        return null;
+
+    @Override
+    public Map<String, Object> updateInterestedCurr(long uid, InterestedCurrencyReq interestedCurrencyReq) {
+        Map<String, Object> map = new HashMap<>();
+        String message = "FAIL";
+        InterestedCurrency targetIC = interestedCurrencyRepository.findByUid(uid);
+        if (targetIC != null) {
+            InterestedCurrency icAfter = interestedCurrencyReq.toEntity(targetIC.getUser(), targetIC.getCurrencyCategory());
+            // target 재설정
+            double previous = interestedCurrencyReq.getPrevious();
+            double target = interestedCurrencyReq.getTarget();
+            if (previous != 0 && target != 0) {
+                double targetArr[] = {targetIC.getTarget1(), targetIC.getTarget2(), targetIC.getTarget3()};
+                boolean duplicateCheck = false;
+                boolean existCheck = false;
+                for (int i = 0; i < targetArr.length; i++) {
+                    if (targetArr[i] == target) {
+                        duplicateCheck = true;
+                        break;
+                    }
+                }
+                if (!duplicateCheck) {
+                    for (int i = 0; i < targetArr.length; i++) {
+                        if (targetArr[i] == previous) {
+                            targetArr[i] = target;
+                            existCheck = true;
+                            icAfter.setTarget(targetArr);
+                            targetIC.patch(icAfter);
+                            InterestedCurrencyRes updated = InterestedCurrencyRes.of(interestedCurrencyRepository.save(targetIC));
+                            map.put("dto", updated);
+                            break;
+                        }
+                    }
+                }
+                // message 세팅
+                if (existCheck) {
+                    message = "SUCCESS";
+                } else if (duplicateCheck) {
+                    message = "DUPLICATE";
+                } else {
+                    message = "NO VALUE";
+                }
+            } else {
+                message = "ZERO VALUE";
+            }
+        }
+        map.put("message",message);
+        return map;
+    }
+
+    @Override
+    public String deleteInterestedCurr(long uid) {
+        // userId와 code가 데이터베이스에 있는 값(존재하는 값)이 들어왔다는 가정
+        String message = "";
+        InterestedCurrency targetIC = interestedCurrencyRepository.findByUid(uid);
+        if (targetIC == null) {
+            message = "NO DATA";
+        } else {
+            interestedCurrencyRepository.delete(targetIC);
+            message = "SUCCESS";
+        }
+        return message;
+    }
+
+    @Override
+    public String deleteTargetInterestedCurr(long uid, double target) {
+        // userId와 code가 데이터베이스에 있는 값(존재하는 값)이 들어왔다는 가정
+        String message = "FAIL";
+        InterestedCurrency targetIC = interestedCurrencyRepository.findByUid(uid);
+        if (targetIC == null) { // 통화 없음
+            message = "NO INTRCURR";
+        } else {
+            double targetArr[] = {targetIC.getTarget1(), targetIC.getTarget2(), targetIC.getTarget3()};
+            boolean existCheck = false;
+            for (int i = 0; i < targetArr.length; i++) { // target 찾기
+                if (targetArr[i] == target) {
+                    existCheck = true;
+                    targetArr[i] = 0;
+                    break;
+                }
+            }
+            if (existCheck) { // target 존재
+                if(targetArr[0]==0&&targetArr[1]==0&&targetArr[2]==0){ // 통화 삭제
+                    interestedCurrencyRepository.delete(targetIC);
+                    message = "SUCCESS(DELETE INTRCURR)";
+                }else{ // 0 뒤로 밀기
+                    int idx = 0;
+                    for (int i = 0; i< targetArr.length; i++){
+                        if(targetArr[i] !=0){
+                            targetArr[idx] = targetArr[i];
+                            idx++;
+                        }
+                    }
+                    while(idx < targetArr.length){
+                        targetArr[idx]=0;
+                        idx++;
+                    }
+                    // update to 0
+                    targetIC.setTarget(targetArr);
+                    interestedCurrencyRepository.save(targetIC);
+                    message = "SUCCESS";
+                }
+            }else{
+                message = "NO TARGET";
+            }
+        }
+        return message;
+
     }
 
 
