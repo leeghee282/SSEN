@@ -39,16 +39,4 @@ public class User {
     @Column(name = "token", length = 200)
     private String token;
 
-    // interested_currencies
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<InterestedCurrency> interestedCurrencyList = new ArrayList<InterestedCurrency>();
-
-    // holding_currencies
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<HoldingCurrency> holdingCurrencyList = new ArrayList<HoldingCurrency>();
-
-    // chat
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Chat> chatList = new ArrayList<Chat>();
-
 }

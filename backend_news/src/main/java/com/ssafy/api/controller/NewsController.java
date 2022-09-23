@@ -1,29 +1,15 @@
 package com.ssafy.api.controller;
 
-import com.google.gson.JsonObject;
 import com.jcraft.jsch.Session;
-import com.ssafy.api.request.UserLoginPostReq;
 import com.ssafy.api.response.KeywordRes;
 import com.ssafy.api.response.NewsRes;
-import com.ssafy.api.response.UserLoginPostRes;
-import com.ssafy.api.service.UserService;
-import com.ssafy.common.model.response.BaseResponseBody;
-import com.ssafy.common.util.JwtTokenUtil;
-import com.ssafy.db.entity.User;
-import com.ssafy.jsch.SSHUtil;
+import com.ssafy.common.util.jsch.SSHUtil;
 import io.swagger.annotations.*;
-import org.apache.tomcat.jni.Local;
-import org.checkerframework.checker.units.qual.K;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Key;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -105,7 +91,7 @@ public class NewsController {
         return new ResponseEntity<>(keywordList, HttpStatus.OK);
     }
 
-    @GetMapping("/{start_date}/{end_date}/{keyword}")
+    @GetMapping("/{keyword}/{start_date}/{end_date}")
     @ApiOperation(value = "키워드로 뉴스 검색", notes = "<strong>시작 날짜, 종료 날짜, 키워드</strong>를 입력해서 해당 범위의 키워드를 포함하는 뉴스 목록을 조회한다. (하루만 조회할 경우 start_date만 입력해도 가능)")
     @ApiResponses({@ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 400, message = "조회 결과 없음(날짜, 하둡 등 확인필요)"),
@@ -133,7 +119,7 @@ public class NewsController {
             dateRange.append(" " + date);
         dateRange.append(" "+ keyword);
         String cmd = "~/mapreduce/news.sh " + dateRange.toString() + "> /dev/null 2>&1 &&  /home/hadoop/hadoop/bin/hdfs dfs -cat news_out/*";
-        System.out.println(cmd);
+//        System.out.println(cmd);
 
         String response = sshUtil.cmd(jschSession, cmd);
 
@@ -151,7 +137,7 @@ public class NewsController {
 //                String time = LocalDateTime.parse(st2.nextToken(), formatter);
                 String time = st2.nextToken();
                 st2.nextToken(); //언론사, 개선할 여지 있음..
-                String press = st2.nextToken();
+                String press = st2.nextToken().trim();
                 String title = st2.nextToken();
                 String content = st2.nextToken();
                 String url = st2.nextToken();

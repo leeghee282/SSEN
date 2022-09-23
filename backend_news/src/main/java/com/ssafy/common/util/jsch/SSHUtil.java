@@ -1,12 +1,10 @@
-package com.ssafy.jsch;
+package com.ssafy.common.util.jsch;
 
 import com.jcraft.jsch.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.StringTokenizer;
 
 public class SSHUtil {
 
@@ -119,17 +117,17 @@ public class SSHUtil {
     }
 
     public static void main(String[] args) {
-
+        // 연결 확인용 코드
         Session jschSession = sessionConnect();
 
 //        String localFile = "test.txt";
 //        String remoteFile = "/home/ubuntu/test.txt";
 //        fileTransfer(jschSession, localFile, remoteFile, false);
 
-        String script = "/home/hadoop/hadoop/bin/hdfs dfs -cat keyword_out2/part-r-00000";
+//        String script = "/home/hadoop/hadoop/bin/hdfs dfs -cat keyword_out2/part-r-00000";
 //        String script = "touch touch.txt";
-        String result = cmd(jschSession, script);
-        System.out.println("result : " + result);
+//        String result = cmd(jschSession, script);
+//        System.out.println("result : " + result);
 
         sessionDisconnect(jschSession);
         System.out.println("Done");

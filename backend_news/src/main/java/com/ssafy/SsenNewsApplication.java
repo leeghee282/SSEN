@@ -10,9 +10,9 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import java.nio.charset.StandardCharsets;
 
 @SpringBootApplication
-public class SsenApplication {
+public class SsenNewsApplication {
 	public static void main(String[] args) {
-        SpringApplication.run(SsenApplication.class, args);
+        SpringApplication.run(SsenNewsApplication.class, args);
     }
 
     @Bean
