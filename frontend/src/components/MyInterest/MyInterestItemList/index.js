@@ -10,8 +10,33 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
+import MyInterestEdit from "../MyInterestEdit";
+import { useState } from "react";
+import { Modal, TextField } from "@mui/material";
+import Grid from "@mui/material/Grid";
 
 export default function MyInterestItemList({ interests, onRemove }) {
+  // 수정 모달 오픈관리
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    boxShadow: 24,
+    p: 4,
+  };
+  const [details, setDetails] = useState("");
+  const [open2, setOpen2] = useState(false);
+  const handleOpen2 = () => setOpen2(true);
+  const handleClose2 = () => setOpen2(false);
+
+  const detailNotice = (data) => {
+    setDetails(data);
+    console.log(details);
+  };
+
   return (
     <Box>
       <TableContainer component={Paper}>
@@ -38,18 +63,77 @@ export default function MyInterestItemList({ interests, onRemove }) {
                 </TableCell>
                 <TableCell align="center">{interest.nation}</TableCell>
                 <TableCell align="center">
-                  {interest.interestCurrency}
+                  <Grid container>
+                    <Grid item xs={10}>
+                      {interest.target}
+                    </Grid>
+                    <Grid
+                      sx={{ pl: 0.5, cursor: "pointer" }}
+                      item
+                      xs={1}
+                      onClick={() => {
+                        const data = {
+                          nation: interest.nation,
+                          target: interest.target,
+                        };
+                        handleOpen2();
+                        detailNotice(data);
+                      }}
+                    >
+                      🖋
+                    </Grid>
+                  </Grid>
                 </TableCell>
                 <TableCell align="center">
-                  {interest.interestCurrency}
+                  <Grid container>
+                    <Grid item xs={10}>
+                      {interest.target2}
+                    </Grid>
+                    <Grid
+                      sx={{ pl: 0.5, cursor: "pointer" }}
+                      item
+                      xs={1}
+                      onClick={() => {
+                        const data = {
+                          nation: interest.nation,
+                          target: interest.target2,
+                        };
+                        handleOpen2();
+                        detailNotice(data);
+                      }}
+                    >
+                      🖋
+                    </Grid>
+                  </Grid>
                 </TableCell>
-                <TableCell align="center">수정</TableCell>
+                <TableCell align="center">
+                  <Grid container>
+                    <Grid item xs={10}>
+                      {interest.target3}
+                    </Grid>
+                    <Grid
+                      sx={{ pl: 0.5, cursor: "pointer" }}
+                      item
+                      xs={1}
+                      onClick={() => {
+                        const data = {
+                          nation: interest.nation,
+                          target: interest.target3,
+                        };
+                        handleOpen2();
+                        detailNotice(data);
+                      }}
+                    >
+                      🖋
+                    </Grid>
+                  </Grid>
+                </TableCell>
                 <TableCell align="center">현재 환율 어케 가져와욥?</TableCell>
                 {/* <TableCell align="center">UPDATE</TableCell> */}
                 <TableCell
                   align="center"
                   onClick={() => onRemove(interest.id)}
-                  style={{ cursor: "pointer" }}
+                  sx={{ cursor: "pointer" }}
                 >
                   <DeleteForeverRoundedIcon />
                 </TableCell>
@@ -58,6 +142,12 @@ export default function MyInterestItemList({ interests, onRemove }) {
           </TableBody>
         </Table>
       </TableContainer>
+
+      <Modal open={open2} onClose={handleClose2}>
+        <Box sx={style}>
+          <MyInterestEdit details={details} handleClose2={handleClose2} />
+        </Box>
+      </Modal>
     </Box>
   );
 }
