@@ -1,6 +1,5 @@
 import axios from "axios";
 // import baseURL from "./index";
-
 // const axios = Axios.create({
 //   baseURL: baseURL,
 // });
