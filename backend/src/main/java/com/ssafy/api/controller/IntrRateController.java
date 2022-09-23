@@ -31,7 +31,7 @@ public class IntrRateController {
     @GetMapping()
     @ApiOperation(value = "금리 보기", notes = "금리 보기")
     @ApiResponses({@ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"),
-            @ApiResponse(code = 404, message = "게임 방 없음"), @ApiResponse(code = 500, message = "서버 오류")})
+            @ApiResponse(code = 404, message = " 없음"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<List<IntrRateRes>> getIntrRate() {
         List<IntrRateRes> intrRateList = intrRateService.getIntrRate();
        return new ResponseEntity<>(intrRateList, HttpStatus.OK);
