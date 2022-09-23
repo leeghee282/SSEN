@@ -1,34 +1,47 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import BasicModal from "./MyAssetModal";
 import MyAssetItemList from "./MyAssetItemList";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
+import { axios, urls, UserContext } from "../../api/user";
+import { baseURL } from "../../api";
+
 export default function MySet() {
-  // 임시 데이터
   const [myAsset, setMyAsset] = useState([]);
 
-  const nextId = useRef(0);
-  const handleSumit = (currency_code, quantity, price) => {
-    const asset = {
-      id: nextId.current,
-      currency_code,
-      quantity,
-      price,
-    };
-    setMyAsset(myAsset.concat(asset));
-    nextId.current += 1;
-  };
-
   // 삭제 기능
-  const onRemove = (id) => {
-    setMyAsset(myAsset.filter((asset) => asset.id !== id));
+  const myAssetRemove = (uid) => {
+    setMyAsset(myAsset.filter((asset) => asset.uid !== uid));
   };
 
-  // // 수정 기능
-  // const onUpdate = (id) => {
-  //   setMyAsset()
-  // }
+  // const { userId } = useContext(UserContext);
+  // 서버에서 보유 통화 받아오기(get방식)1
+  const getMyAssetData = () => {
+    axios
+      .get(baseURL + "/api/v1/holdcurr/ssafy10")
+      .then((response) => setMyAsset(response.data));
+  };
+  useEffect(() => {
+    getMyAssetData();
+  }, []);
+
+  useEffect(() => {}, [myAsset]);
+
+  // 서버에서 보유 통화 받아오기(get방식)2
+  // const getMyAssetData = (e) => {
+  //   try {
+  //     axios
+  //       .get("http://localhost:8080/api/v1/holdcurr/ssafy10")
+  //       .then((response) => setMyAsset(response.data));
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   getMyAssetData();
+  // }, []);
 
   return (
     <Box
@@ -43,9 +56,14 @@ export default function MySet() {
         보유 외화 목록
       </Typography>
       <br />
-      <BasicModal onSubmit={handleSumit} />
+      <BasicModal getMyAssetData={getMyAssetData} />
       <br />
-      <MyAssetItemList myAsset={myAsset} onRemove={onRemove} />
+      <MyAssetItemList
+        myAsset={myAsset}
+        key={myAsset.uid}
+        myassetremove={myAssetRemove}
+        getMyAssetData={getMyAssetData}
+      />
     </Box>
   );
 }
