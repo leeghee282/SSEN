@@ -1,6 +1,6 @@
 import React from "react";
 import Calendar from "../../components/Calendar";
-import Chart from "../../components/Chart/index";
+import Chart from "../../components/Chart";
 import SimpleWordcloud from "../../components/WordCloud";
 
 const MainCalendar = () => {
@@ -8,7 +8,6 @@ const MainCalendar = () => {
     <>
       <Calendar />
       <Chart />
-      <SimpleWordcloud />
     </>
   );
 };

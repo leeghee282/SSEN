@@ -32,7 +32,7 @@ public class ChatServiceImpl implements ChatService {
     public Chat createChat(ChatReq chatInfo) {
         Chat chat = new Chat();
         LocalDateTime currentDateTime = LocalDateTime.now();
-        Date date = java.sql.Timestamp.valueOf(currentDateTime);
+       // Date date = java.sql.Timestamp.valueOf(currentDateTime);
         User user = userService.getUserByNickname(chatInfo.getNickname());
         if (user == null) {
             System.out.println("회원이 없습니다. 실패");
@@ -43,7 +43,7 @@ public class ChatServiceImpl implements ChatService {
         chat.setUser(user);
         chat.setContent(chatInfo.getContent());
         chat.setCurrencyCategory(currencyCategoryService.getCurrencyCategorybyCode(chatInfo.getCurrencyCode()));
-        chat.setRegdate(date);
+        chat.setRegdate(currentDateTime);
         return chatRepository.save(chat);
     }
 

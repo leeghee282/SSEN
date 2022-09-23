@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
@@ -20,7 +21,7 @@ public class IntrRateRes {
     @ApiModelProperty(name = "rate ", example = "2.5")
     Double rate;
     @ApiModelProperty(name = "기준 날짜", example = "2022-09-20")
-    Date regdate;
+    LocalDate regdate;
 
     public static IntrRateRes of(InterestRate intrRate) {
         return IntrRateRes.builder()

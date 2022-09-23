@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import * as am5 from "@amcharts/amcharts5";
@@ -10,17 +10,17 @@ import moment from "moment";
 import { getData } from "../../_actions/chart_action";
 
 function Chart(props) {
+  useEffect(() => {
+    onSetData();
+  }, []);
+
   const dispatch = useDispatch();
 
   const currencyCode = useSelector((state) => state.chartReducer.chartCode);
-  console.log(currencyCode);
   const chartDates = useSelector((state) => state.chartReducer.chartDates);
   const startDate = moment(chartDates.startDate).format("YYYY-MM-DD");
   const endDate = moment(chartDates.endDate).format("YYYY-MM-DD");
-  console.log(startDate);
-  console.log(endDate);
-
-  const [chartData, setChartData] = useState([]);
+  const chartData = useSelector((state) => state.chartReducer.data);
 
   const onSetData = () => {
     let body = {
@@ -29,20 +29,7 @@ function Chart(props) {
       code: currencyCode,
     };
 
-    dispatch(getData(body)).then((response) => {
-      setChartData([]);
-
-      response.payload.map((data) => {
-        var addChartData = {
-          date: new Date(data.regdate),
-          open: data.openPrice,
-          high: data.highPrice,
-          low: data.lowPrice,
-          close: data.closePrice,
-        };
-        return setChartData((prevList) => [...prevList, addChartData]);
-      });
-    });
+    dispatch(getData(body)).then((response) => console.log(response.payload));
   };
 
   const onSetChart = () => {
@@ -61,71 +48,7 @@ function Chart(props) {
 
     // Define data
     var data = chartData;
-    // [
-    //   {
-    //     date: new Date(2021, 0, 1).getTime(),
-    //     open: 1200,
-    //     high: 1205,
-    //     low: 1198,
-    //     close: 1202,
-    //   },
-    //   {
-    //     date: new Date(2021, 0, 2).getTime(),
-    //     open: 1204,
-    //     high: 1204,
-    //     low: 1197,
-    //     close: 1199,
-    //   },
-    //   {
-    //     date: new Date(2021, 0, 3).getTime(),
-    //     open: 1188,
-    //     high: 1191,
-    //     low: 1183,
-    //     close: 1189,
-    //   },
-    //   {
-    //     date: new Date(2021, 0, 4).getTime(),
-    //     open: 1194,
-    //     high: 1197,
-    //     low: 1189,
-    //     close: 1195,
-    //   },
-    //   {
-    //     date: new Date(2021, 0, 5).getTime(),
-    //     open: 1189,
-    //     high: 1198,
-    //     low: 1189,
-    //     close: 1196,
-    //   },
-    //   {
-    //     date: new Date(2021, 0, 6).getTime(),
-    //     open: 1197,
-    //     high: 1200,
-    //     low: 1196,
-    //     close: 1196,
-    //   },
-    //   {
-    //     date: new Date(2021, 0, 7).getTime(),
-    //     open: 1207,
-    //     high: 1208,
-    //     low: 1202,
-    //     close: 1202,
-    //   },
-    //   {
-    //     date: new Date(2021, 0, 8).getTime(),
-    //     open: 1212,
-    //     high: 1213,
-    //     low: 1206,
-    //     close: 1209,
-    //   },
-    //   {
-    //     date: new Date(2021, 0, 9).getTime(),
-    //     open: 1206,
-    //     high: 1208,
-    //     low: 1197,
-    //     close: 1201,
-    //   },
-    // ];
+    console.log(data);
 
     // Create Y-axis
     var yAxis = chart.yAxes.push(
@@ -136,7 +59,7 @@ function Chart(props) {
 
     // Create X-Axis
     var xAxis = chart.xAxes.push(
-      am5xy.DateAxis.new(root, {
+      am5xy.GaplessDateAxis.new(root, {
         baseInterval: { timeUnit: "day", count: 1 },
         renderer: am5xy.AxisRendererX.new(root, {
           minGridDistance: 20,
@@ -150,11 +73,11 @@ function Chart(props) {
         name: "Series",
         xAxis: xAxis,
         yAxis: yAxis,
-        openValueYField: "open",
-        highValueYField: "high",
-        lowValueYField: "low",
-        valueYField: "close",
-        valueXField: "date",
+        openValueYField: "openPrice",
+        highValueYField: "highPrice",
+        lowValueYField: "lowPrice",
+        valueYField: "closePrice",
+        valueXField: "regdate",
         tooltip: am5.Tooltip.new(root, {}),
       })
     );
@@ -200,17 +123,10 @@ function Chart(props) {
     );
   };
 
-  useLayoutEffect(() => {
-    onSetData();
-    onSetChart();
-  }, []);
-
   return (
     <div>
       <div id="chartdiv" style={{ width: "100%", height: "500px" }}></div>
-      <div>
-        <button onClick={onSetData}>ddddd</button>
-      </div>
+      <button onClick={onSetChart}>ddddd</button>
     </div>
   );
 }

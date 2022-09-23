@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -26,9 +27,8 @@ public class InterestRate {
     @Column(name = "rate", nullable = false)
     @ColumnDefault("0.00")
     private double rate;
-    @Temporal(TemporalType.DATE)
     @Column(name = "regdate", nullable = false)
-    private Date regdate;
+    private LocalDate regdate;
 
     // currency_categories
     @OneToOne
