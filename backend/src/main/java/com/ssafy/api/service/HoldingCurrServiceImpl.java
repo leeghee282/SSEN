@@ -12,8 +12,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -34,49 +36,45 @@ public class HoldingCurrServiceImpl implements HoldingCurrService {
     }
 
     @Override
-    public String addHoldingCurr(HoldingCurrencyReq holdingCurrencyReq) {
+    public Map<String, Object> addHoldingCurr(HoldingCurrencyReq holdingCurrencyReq) {
         // userId와 code가 데이터베이스에 있는 값(존재하는 값)이 들어왔다는 가정
+        Map<String, Object> map = new HashMap<>();
         String message = "";
         String userId = holdingCurrencyReq.getUserId();
         String code = holdingCurrencyReq.getCode();
         User user = userRepositorySupport.findUserByUserId(userId).get();
         CurrencyCategory currencyCategory = currencyCategoryRepository.findByCode(code);
-        // 통화코드 중복 체크(존재 중복 체크)
-        HoldingCurrency hcDup = holdingCurrencyRepository.findByUserAndCurrencyCategory(user, currencyCategory);
+        HoldingCurrency hc = holdingCurrencyReq.toEntity(user, currencyCategory);
+        HoldingCurrencyRes added = HoldingCurrencyRes.of(holdingCurrencyRepository.save(hc));
+        message = "SUCCESS";
+        map.put("dto", added);
+        map.put("message", message);
+        return map;
+    }
 
-        if (hcDup != null) {
-            message = "DUPLICATE";
-        } else {
-            HoldingCurrency hc = holdingCurrencyReq.toEntity(user, currencyCategory);
-            holdingCurrencyRepository.save(hc);
+    @Override
+    public Map<String, Object> updateHoldingCurr(long uid, HoldingCurrencyReq holdingCurrencyReq) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        String message = "FAIL";
+        HoldingCurrency targetHC = holdingCurrencyRepository.findByUid(uid);
+        if (targetHC == null) {
+            message = "NO DATA";
+        }else{
+            HoldingCurrency hcAfter = holdingCurrencyReq.toEntity(targetHC.getUser(), targetHC.getCurrencyCategory());
+            targetHC.patch(hcAfter);
+            HoldingCurrencyRes updated = HoldingCurrencyRes.of(holdingCurrencyRepository.save(targetHC));
             message = "SUCCESS";
+            map.put("dto", updated);
         }
-        return message;
+        map.put("message", message);
+        return map;
     }
 
     @Override
-    public HoldingCurrencyRes updateHoldingCurr(HoldingCurrencyReq holdingCurrencyReq) {
-        String userId = holdingCurrencyReq.getUserId();
-        String code = holdingCurrencyReq.getCode();
-        User user = userRepositorySupport.findUserByUserId(userId).get();
-        CurrencyCategory currencyCategory = currencyCategoryRepository.findByCode(code);
-        HoldingCurrency target = holdingCurrencyRepository.findByUserAndCurrencyCategory(user, currencyCategory);
-        HoldingCurrency hcAfter = holdingCurrencyReq.toEntity(user, currencyCategory);
-        target.patch(hcAfter);
-        System.out.println(target.getPrice());
-        HoldingCurrency updated = holdingCurrencyRepository.save(target);
-        return HoldingCurrencyRes.of(updated);
-    }
-
-    @Override
-    public String deleteHoldingCurr(HoldingCurrencyReq holdingCurrencyReq) {
+    public String deleteHoldingCurr(long uid) {
         // userId와 code가 데이터베이스에 있는 값(존재하는 값)이 들어왔다는 가정
         String message = "";
-        String userId = holdingCurrencyReq.getUserId();
-        String code = holdingCurrencyReq.getCode();
-        User user = userRepositorySupport.findUserByUserId(userId).get();
-        CurrencyCategory currencyCategory = currencyCategoryRepository.findByCode(code);
-        HoldingCurrency target = holdingCurrencyRepository.findByUserAndCurrencyCategory(user, currencyCategory);
+        HoldingCurrency target = holdingCurrencyRepository.findByUid(uid);
         if (target == null) {
             message = "NO DATA";
         } else {
