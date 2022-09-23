@@ -50,4 +50,8 @@ public class CurrencyCategory {
     @OneToMany(mappedBy = "currencyCategory", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BankExchangeRate> bankExchangeRateList = new ArrayList<BankExchangeRate>();
 
+    // live_currencies
+    @OneToOne(mappedBy = "currencyCategory", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private LiveCurrency liveCurrency;
+
 }
