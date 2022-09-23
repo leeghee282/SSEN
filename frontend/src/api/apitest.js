@@ -1,5 +1,5 @@
 import Axios from "axios";
-import baseURL from "./index";
+import { baseURL } from "./index";
 
 const axios = Axios.create({
   baseURL: baseURL,
