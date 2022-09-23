@@ -12,10 +12,16 @@ export default function MyInerest() {
 
   const nextId = useRef(0);
   const handleSumit = (nation, interestCurrency) => {
+    
+    
     const interest = {
       id: nextId.current,
       nation,
-      interestCurrency,
+      target: interestCurrency,
+      target2: 0,
+      target3: 14000
+
+
     };
     setInterests(interests.concat(interest));
     nextId.current += 1;
