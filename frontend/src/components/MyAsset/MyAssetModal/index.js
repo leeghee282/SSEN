@@ -1,7 +1,9 @@
 // 보유 원화 모달창으로 입력하는 부분
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { Axios } from "axios";
+import { axios, urls, UserContext } from "../../../api/user";
+import { baseURL } from "../../../api";
+// import axios from "axios";
 
 //mui
 import Box from "@mui/material/Box";
@@ -65,49 +67,52 @@ const addComma = (num) => {
 };
 
 // 모달창
-export default function BasicModal(props) {
-  const [code, setCode] = useState(""); //국가선택
-  const [quantity, setQuantity] = useState(""); //양
-  const [price, setPrice] = useState(""); //구매 금액
+export default function BasicModal({ getMyAssetData }) {
+  const [currCode, setCurrCode] = useState(""); //국가선택
+  const [currQuantity, setCurrQuantity] = useState(""); //양
+  const [currPrice, setCurrPrice] = useState(""); //구매 금액
   const [isEnteredWrongAmount, setIsEnteredWrongAmount] = useState(false);
-
-  // 세션에 저장된 데이터가 있으면 가져오기 위한 것
-  const [userId, setUserId] = useState(() => sessionStorage.getItem("userId"));
-
-  // 값 변경시 세션 적용을 위한 것
-  useEffect(() => {
-    sessionStorage.setItem("userId", userId);
-  }, [userId]);
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = (e) => {
     setOpen(false);
-    setQuantity(""); //close 후 창 비우기
-    setCode("");
-    setPrice("");
+    currQuantity(""); //close 후 창 비우기
+    currCode("");
+    currPrice("");
   };
 
-  // const sendMyAsset = () => {
-  //   const body = {
-  //     code:code,
-  //     price:price,
-  //     quantity:quantity,
-  //     userId:userId,
-  //   };
-  //   Axios.create({
+  // 세션에 저장된 데이터가 있으면 가져오기 위한 것
+  // const [userId, setUserId] = useState(() => sessionStorage.getItem("userId"));
+  // console.log(userId);
 
-  //   })
-  // }
+  // 값 변경시 세션 적용을 위한 것
+  // useEffect(() => {
+  //   sessionStorage.setItem("userId", userId);
+  // }, [userId]);
+
+  // 서버에서 보유 통화 보내기(post 방식)
+  const sendMyAsset = () => {
+    const body = {
+      code: currCode,
+      price: currPrice,
+      quantity: currQuantity,
+      userId: "ssafy10",
+    };
+    // console.log(body);
+    axios
+      .post(baseURL + "/api/v1/holdcurr/", body)
+      .then((response) => getMyAssetData());
+  };
 
   const handleSumit = (e) => {
     e.preventDefault(); //새로고침 방지
-    if (!code || !quantity || !price) return; // 아무것도 입력하지 않았을 때, submit 방지
-    props.onSubmit(code, quantity, price);
+    if (!currCode || !currQuantity || !currPrice) return; // 아무것도 입력하지 않았을 때, submit 방지
     setOpen(false); //submit 후 창 닫기
-    setCode("");
-    setQuantity("");
-    setPrice(""); //submit 창 비우기
+    setCurrCode("");
+    setCurrQuantity("");
+    setCurrPrice(""); //submit 창 비우기
+    sendMyAsset();
   };
 
   // 천단위별 ',' 자동 입력 되게 하는 함수(quantity)
@@ -119,7 +124,7 @@ export default function BasicModal(props) {
     if (isNotNumber) return;
 
     const amount = addComma(enteredOnlyNumber(event.target.value));
-    setQuantity(amount);
+    setCurrQuantity(amount);
   };
 
   // 천단위별 ',' 자동 입력 되게 하는 함수(price)
@@ -131,7 +136,7 @@ export default function BasicModal(props) {
     if (isNotNumber) return;
 
     const amount = addComma(enteredOnlyNumber(event.target.value));
-    setPrice(amount);
+    setCurrPrice(amount);
   };
 
   return (
@@ -158,7 +163,7 @@ export default function BasicModal(props) {
               보유 외화 등록
             </Typography>
             <Box sx={{ m: 2 }}>
-              <BasicSelect code={code} setCode={setCode} />
+              <BasicSelect code={currCode} setCode={setCurrCode} />
             </Box>
             <Box sx={{ my: 3, mx: 2 }}>
               <Grid container alignItems="center">
@@ -167,7 +172,7 @@ export default function BasicModal(props) {
                     name="quantity"
                     fullWidth
                     type="text"
-                    value={quantity}
+                    value={currQuantity}
                     onChange={amountQuantity}
                     placeholder="보유하신 원화의 양을 입력하세요"
                     required
@@ -180,7 +185,7 @@ export default function BasicModal(props) {
                     name="price"
                     fullWidth
                     type="text"
-                    value={price}
+                    value={currPrice}
                     onChange={amountPrice}
                     placeholder="구매한 금액을 입력하세요."
                     required
