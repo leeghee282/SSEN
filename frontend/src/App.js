@@ -8,6 +8,8 @@ import Profile from "./pages/ProfilePage";
 import ProfileUpdate from "./pages/ProfileUpdatePage";
 import Header from "./components/NavBar";
 import Calculator from "./pages/CalculatorPage";
+import Chart from "./components/Chart";
+import Apitest from "./api/apitest";
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/exchangecalc" element={<Calculator />} />
+        <Route path="/chart" element={<Chart />} />
+        <Route path="/apitest" element={<Apitest />} />
       </Routes>
     </Router>
   );
