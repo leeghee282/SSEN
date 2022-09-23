@@ -19,9 +19,8 @@ public class SSHUtil {
         return instance;
     }
 
-    private static final String REMOTE_HOST = "cluster.ssafy.io";
-    private static final String USERNAME = "j7e204";
-    //    private static final String USERNAME = "hadoop";
+    private static final String REMOTE_HOST = "j7e204.p.ssafy.io";
+    private static final String USERNAME = "ubuntu";
     private static final int REMOTE_PORT = 22;
     private static final int SESSION_TIMEOUT = 10000;
     private static final int CHANNEL_TIMEOUT = 5000;
@@ -123,20 +122,14 @@ public class SSHUtil {
 
         Session jschSession = sessionConnect();
 
-//        String script =
-//                "hdfs dfs -rm -r keyword_in keyword_out1 keyword_out2; hdfs dfs -mkdir keyword_in keyword_out1 keyword_out2; hdfs dfs -put input/2022/FILENAME.csv keyword_in; hadoop jar ssen.jar keyword keyword_in keyword_out1 keyword_out2; rm output/keyword/FILENAME.txt; hdfs dfs -get keyword_out2/part-r-00000 output/keyword/FILENAME.txt";
-//
-//        script = script.replaceAll("FILENAME", "keyword");
-//
-//        cmd(jschSession, script);
+//        String localFile = "test.txt";
+//        String remoteFile = "/home/ubuntu/test.txt";
+//        fileTransfer(jschSession, localFile, remoteFile, false);
 
-       String script = "cat output/keyword/keyword.txt";
+        String script = "/home/hadoop/hadoop/bin/hdfs dfs -cat keyword_out2/part-r-00000";
+//        String script = "touch touch.txt";
         String result = cmd(jschSession, script);
-        StringTokenizer st = new StringTokenizer(result, "\t");
-        while(st.hasMoreTokens()) {
-            System.out.println(st.nextToken());
-        }
-//        System.out.println("result : " + result);
+        System.out.println("result : " + result);
 
         sessionDisconnect(jschSession);
         System.out.println("Done");
