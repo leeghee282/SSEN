@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import * as am5 from "@amcharts/amcharts5";
@@ -10,17 +10,17 @@ import moment from "moment";
 import { getData } from "../../_actions/chart_action";
 
 function Chart(props) {
-  useEffect(() => {
-    onSetData();
-  }, []);
-
   const dispatch = useDispatch();
 
   const currencyCode = useSelector((state) => state.chartReducer.chartCode);
   const chartDates = useSelector((state) => state.chartReducer.chartDates);
   const startDate = moment(chartDates.startDate).format("YYYY-MM-DD");
   const endDate = moment(chartDates.endDate).format("YYYY-MM-DD");
-  const chartData = useSelector((state) => state.chartReducer.data);
+  const rawChartData = useSelector((state) => state.chartReducer.data);
+
+  useEffect(() => {
+    onSetData();
+  }, [startDate, endDate, currencyCode]);
 
   const onSetData = () => {
     let body = {
@@ -28,11 +28,25 @@ function Chart(props) {
       endDate: endDate,
       code: currencyCode,
     };
-
+    console.log(body);
     dispatch(getData(body)).then((response) => console.log(response.payload));
   };
 
   const onSetChart = () => {
+    let chartData = [];
+    console.log(rawChartData);
+    rawChartData.map((data) => {
+      var addChartData = {
+        date: new Date(data.regdate).getTime(),
+        open: data.openPrice,
+        high: data.highPrice,
+        low: data.lowPrice,
+        close: data.closePrice,
+      };
+      return chartData.push(addChartData);
+    });
+    console.log(chartData);
+
     var root = am5.Root.new("chartdiv");
 
     root.setThemes([am5themes_Animated.new(root)]);
@@ -73,11 +87,11 @@ function Chart(props) {
         name: "Series",
         xAxis: xAxis,
         yAxis: yAxis,
-        openValueYField: "openPrice",
-        highValueYField: "highPrice",
-        lowValueYField: "lowPrice",
-        valueYField: "closePrice",
-        valueXField: "regdate",
+        openValueYField: "open",
+        highValueYField: "high",
+        lowValueYField: "low",
+        valueYField: "close",
+        valueXField: "date",
         tooltip: am5.Tooltip.new(root, {}),
       })
     );
@@ -123,10 +137,32 @@ function Chart(props) {
     );
   };
 
+  const onDeleteChart = (divId) => {
+    am5.array.each(am5.registry.rootElements, function (root) {
+      if (root.dom.id === divId) {
+        root.dispose();
+      }
+    });
+
+    const newDiv = document.createElement("div");
+    newDiv.id = "chartdiv";
+    const chart = document.getElementById("chart");
+    chart.appendChild(newDiv);
+  };
+
+  const onMakeChart = () => {
+    onSetData();
+    onDeleteChart("chartdiv");
+    onSetChart();
+  };
+
   return (
     <div>
-      <div id="chartdiv" style={{ width: "100%", height: "500px" }}></div>
       <button onClick={onSetChart}>ddddd</button>
+      <button onClick={onMakeChart}>수정</button>
+      <div id="chart">
+        <div id="chartdiv" style={{ width: "100%", height: "500px" }}></div>
+      </div>
     </div>
   );
 }
