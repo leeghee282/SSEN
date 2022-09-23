@@ -195,3 +195,12 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+bootJar{
+    mainClassName = 'com.ssafy.SsenApplication'
+}
+
+bootRun {
+    String activeProfile = System.properties['spring.profiles.active']
+    systemProperty "spring.profiles.active", activeProfile
+}
