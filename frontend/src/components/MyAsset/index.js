@@ -4,8 +4,8 @@ import MyAssetItemList from "./MyAssetItemList";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
-import { axios, urls, UserContext } from "../../api/user";
-import { baseURL } from "../../api";
+import axios from "../../api/user";
+import { baseURL } from "../../api/index";
 
 export default function MySet() {
   const [myAsset, setMyAsset] = useState([]);
