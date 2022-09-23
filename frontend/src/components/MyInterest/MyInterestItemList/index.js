@@ -1,5 +1,7 @@
 // 관심 화폐 목록으로 보여주기
 import React from "react";
+import axios from "../../../api/user";
+import { baseURL } from "../../../api";
 // mui
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
@@ -15,7 +17,7 @@ import { useState } from "react";
 import { Modal, TextField } from "@mui/material";
 import Grid from "@mui/material/Grid";
 
-export default function MyInterestItemList({ interests, onRemove }) {
+export default function MyInterestItemList({ interests, getInterest }) {
   // 수정 모달 오픈관리
   const style = {
     position: "absolute",
@@ -37,13 +39,26 @@ export default function MyInterestItemList({ interests, onRemove }) {
     console.log(details);
   };
 
+  // 보유 통화 삭제(delete)
+  const deleteMyAsset = (event) => {
+    try {
+      axios.delete(baseURL + `/api/v1/intrcurr/` + event).then((response) => {
+        if (response.status === 200) {
+          getInterest();
+        }
+      });
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
   return (
     <Box>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
+              <TableCell>uid</TableCell>
               <TableCell align="center">Nation</TableCell>
               <TableCell align="center">Target 1</TableCell>
               <TableCell align="center">Target 2</TableCell>
@@ -55,17 +70,17 @@ export default function MyInterestItemList({ interests, onRemove }) {
           <TableBody>
             {interests.map((interest) => (
               <TableRow
-                key={interest.id}
+                key={interest.uid}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  {interest.id}
+                  {interest.uid}
                 </TableCell>
-                <TableCell align="center">{interest.nation}</TableCell>
+                <TableCell align="center">{interest.code}</TableCell>
                 <TableCell align="center">
                   <Grid container>
                     <Grid item xs={10}>
-                      {interest.target}
+                      {interest.target1}
                     </Grid>
                     <Grid
                       sx={{ pl: 0.5, cursor: "pointer" }}
@@ -132,7 +147,7 @@ export default function MyInterestItemList({ interests, onRemove }) {
                 {/* <TableCell align="center">UPDATE</TableCell> */}
                 <TableCell
                   align="center"
-                  onClick={() => onRemove(interest.id)}
+                  onClick={() => deleteMyAsset(interest.uid)}
                   sx={{ cursor: "pointer" }}
                 >
                   <DeleteForeverRoundedIcon />
