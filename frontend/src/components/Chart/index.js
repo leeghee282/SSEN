@@ -178,7 +178,6 @@ function Chart(props) {
 
     // Define data
     var data = chartData;
-    console.log(data);
 
     // Create Y-axis
     var yAxis = chart.yAxes.push(
