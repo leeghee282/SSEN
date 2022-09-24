@@ -54,17 +54,17 @@ export default function MyInterestItemList({ interests, getInterest }) {
 
   return (
     <Box>
-      <TableContainer component={Paper}>
+      <TableContainer  component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>uid</TableCell>
-              <TableCell align="center">Nation</TableCell>
-              <TableCell align="center">Target 1</TableCell>
-              <TableCell align="center">Target 2</TableCell>
-              <TableCell align="center">Target 3</TableCell>
-              <TableCell align="center">현재 환율</TableCell>
-              <TableCell align="center">DELETE</TableCell>
+              <TableCell id="font_test" >번호</TableCell>
+              <TableCell id="font_test" align="center">국가</TableCell>
+              <TableCell id="font_test" align="center">목표금액 1</TableCell>
+              <TableCell id="font_test" align="center">목표금액 2</TableCell>
+              <TableCell id="font_test" align="center">목표금액 3</TableCell>
+              <TableCell id="font_test" align="center">현재 환율</TableCell>
+              <TableCell id="font_test" align="center">삭제</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -80,16 +80,19 @@ export default function MyInterestItemList({ interests, getInterest }) {
                 <TableCell align="center">
                   <Grid container>
                     <Grid item xs={10}>
-                      {interest.target1}
+                      {interest.target1}원
                     </Grid>
+                    
+                    
                     <Grid
                       sx={{ pl: 0.5, cursor: "pointer" }}
                       item
                       xs={1}
                       onClick={() => {
                         const data = {
-                          nation: interest.nation,
-                          target: interest.target,
+                          uid : interest.uid,
+                          nation: interest.code,
+                          target: interest.target1,
                         };
                         handleOpen2();
                         detailNotice(data);
@@ -102,15 +105,17 @@ export default function MyInterestItemList({ interests, getInterest }) {
                 <TableCell align="center">
                   <Grid container>
                     <Grid item xs={10}>
-                      {interest.target2}
+                      {interest.target2}원
                     </Grid>
+                    
                     <Grid
                       sx={{ pl: 0.5, cursor: "pointer" }}
                       item
                       xs={1}
                       onClick={() => {
                         const data = {
-                          nation: interest.nation,
+                          uid : interest.uid,
+                          nation: interest.code,
                           target: interest.target2,
                         };
                         handleOpen2();
@@ -124,15 +129,20 @@ export default function MyInterestItemList({ interests, getInterest }) {
                 <TableCell align="center">
                   <Grid container>
                     <Grid item xs={10}>
-                      {interest.target3}
+                      {interest.target3}원
                     </Grid>
+
+                    {/* 타겟2 값이 0이면 수정버튼 안뜸*/}
+
+                    {interest.target2 !==0 &&( 
                     <Grid
                       sx={{ pl: 0.5, cursor: "pointer" }}
                       item
                       xs={1}
                       onClick={() => {
                         const data = {
-                          nation: interest.nation,
+                          uid : interest.uid,
+                          nation: interest.code,
                           target: interest.target3,
                         };
                         handleOpen2();
@@ -141,9 +151,10 @@ export default function MyInterestItemList({ interests, getInterest }) {
                     >
                       🖋
                     </Grid>
+                    )}
                   </Grid>
                 </TableCell>
-                <TableCell align="center">현재 환율 어케 가져와욥?</TableCell>
+                <TableCell align="center">현재 환율 표시</TableCell>
                 {/* <TableCell align="center">UPDATE</TableCell> */}
                 <TableCell
                   align="center"
@@ -160,7 +171,7 @@ export default function MyInterestItemList({ interests, getInterest }) {
 
       <Modal open={open2} onClose={handleClose2}>
         <Box sx={style}>
-          <MyInterestEdit details={details} handleClose2={handleClose2} />
+          <MyInterestEdit details={details} handleClose2={handleClose2} getInterest={getInterest} />
         </Box>
       </Modal>
     </Box>
