@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import axios from "../../../api/user";
 import { baseURL } from "../../../api";
+// import axios from "axios";
 
 //mui
 import Box from "@mui/material/Box";
@@ -76,9 +77,9 @@ export default function BasicModal({ getMyAssetData }) {
   const handleOpen = () => setOpen(true);
   const handleClose = (e) => {
     setOpen(false);
-    setCurrCode(""); //close 후 창 비우기
-    setCurrQuantity("");
-    setCurrPrice("");
+    currQuantity(""); //close 후 창 비우기
+    currCode("");
+    currPrice("");
   };
 
   // 세션에 저장된 데이터가 있으면 가져오기 위한 것
@@ -94,11 +95,11 @@ export default function BasicModal({ getMyAssetData }) {
   const sendMyAsset = () => {
     const body = {
       code: currCode,
-      quantity: parseInt(currQuantity.replaceAll(",", "")),
-      price: parseInt(currPrice.replaceAll(",", "")),
+      price: currPrice,
+      quantity: currQuantity,
       userId: "ssafy10",
     };
-    console.log(body);
+    // console.log(body);
     axios
       .post(baseURL + "/api/v1/holdcurr/", body)
       .then((response) => getMyAssetData());
