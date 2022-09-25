@@ -3,18 +3,25 @@ import TextField from "@mui/material/TextField";
 import { Box } from "@mui/system";
 import { Button } from "@mui/material";
 import { useState } from "react";
-import useWordCloud from "../../components/WordCloud";
+import axios from "../../api/user";
+import { baseURL } from "../../api";
 
 const EditNickname = (props) => {
-  const { setUserNickName, userNickName, cancelClicked2 } = props;
-  const [inputNickName, setInputNickName] = useState(userNickName);
+  const { setTotalData, totalData, cancelClicked2, cancelClicked22 } = props;
+  
 
   const onChange = (e) => {
-    setInputNickName((inputNickName) => e.target.value);
+    setTotalData({...totalData, nickname: e.target.value})
+    
   };
 
   const onClickHandler = () => {
-    setUserNickName(inputNickName);
+    axios
+      .put(baseURL + '/api/v1/user/edit', totalData)
+      .then((response) => {console.log(response)
+      if(response.status ===200 ){
+        sessionStorage.setItem('nickname',totalData.nickname)
+      }})
     cancelClicked2();
   };
 
@@ -23,7 +30,7 @@ const EditNickname = (props) => {
       <TextField
         id="font_test"
         onChange={onChange}
-        defaultValue={userNickName}
+        defaultValue={totalData.nickname}
         placeholder="닉네임을 변경하세요"
       ></TextField>
       <Button
@@ -36,7 +43,7 @@ const EditNickname = (props) => {
       <Button
         id="font_test"
         sx={{ ml: 1, color: "red", background: "#F3F6FA" }}
-        onClick={cancelClicked2}
+        onClick={cancelClicked22}
       >
         취소
       </Button>
