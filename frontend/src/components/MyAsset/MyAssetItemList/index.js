@@ -20,8 +20,9 @@ export default function MyAssetItemList({
   myAssetRemove,
   getMyAssetData,
 }) {
-  console.log(myAsset);
+  // console.log(myAsset);
 
+  // 보유 통화 삭제(delete)
   const deleteMyAsset = (event) => {
     try {
       axios.delete(baseURL + `/api/v1/holdcurr/` + event).then((response) => {
