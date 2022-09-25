@@ -1,4 +1,10 @@
-import { GET_CHART_DATES, GET_CHART_CODE, GET_DATA } from "../_actions/types";
+import {
+  GET_CHART_DATES,
+  GET_CHART_CODE,
+  GET_DATA,
+  GET_KEYWORDS,
+  GET_NEWS,
+} from "../_actions/types";
 
 const today = new Date();
 const dayOfToday = today.getDate();
@@ -23,6 +29,14 @@ export default function (state = INITIAL_STATE, action) {
 
     case GET_DATA:
       return { ...state, data: action.payload };
+      break;
+
+    case GET_KEYWORDS:
+      return { ...state, keywords: action.payload };
+      break;
+
+    case GET_NEWS:
+      return { ...state, news: action.payload };
       break;
 
     default:
