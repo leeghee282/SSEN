@@ -54,7 +54,7 @@ function Chart(props) {
         var chart = root.container.children.push(
           am5xy.XYChart.new(root, {
             panY: false,
-            wheelY: "zoomX",
+            // wheelY: "zoomX",
             layout: root.verticalLayout,
             maxtooltipDistance: 0,
           })
@@ -112,14 +112,79 @@ function Chart(props) {
           );
         series.data.setAll(data);
 
-        // Add cursor
-        chart.set(
+        // // Add cursor
+        // chart.set(
+        //   "cursor",
+        //   am5xy.XYCursor.new(root, {
+        //     behavior: "selectX",
+        //     xAxis: xAxis,
+        //   })
+        // );
+        var cursor = chart.set(
           "cursor",
           am5xy.XYCursor.new(root, {
-            behavior: "zoomXY",
-            xAxis: xAxis,
+            behavior: "selectXY",
           })
         );
+
+        cursor.events.on("selectended", function (ev) {
+          // Get actors
+          var cursor = ev.target;
+
+          // Get selection boundaries
+          var x1 = xAxis
+            .positionToDate(
+              xAxis.toAxisPosition(cursor.getPrivate("downPositionX"))
+            )
+            .getTime();
+          var x2 = xAxis
+            .positionToDate(
+              xAxis.toAxisPosition(cursor.getPrivate("positionX"))
+            )
+            .getTime();
+          var y1 = yAxis.positionToValue(
+            yAxis.toAxisPosition(cursor.getPrivate("downPositionY"))
+          );
+          var y2 = yAxis.positionToValue(
+            yAxis.toAxisPosition(cursor.getPrivate("positionY"))
+          );
+
+          // Account for centering of bullets on a DateAxis
+          var baseInterval = xAxis.getPrivate("baseInterval");
+          var baseDuration =
+            am5.time.getDuration(baseInterval.timeUnit, baseInterval.count) *
+            series.get("locationX");
+          x1 -= baseDuration;
+          x2 -= baseDuration;
+
+          // Assemble bounds
+          var bounds = {
+            left: x1 > x2 ? x2 : x1,
+            right: x1 > x2 ? x1 : x2,
+            top: y1 < y2 ? y1 : y2,
+            bottom: y1 < y2 ? y2 : y1,
+          };
+
+          // Filter data items within boundaries
+          var results = [];
+          am5.array.each(series.dataItems, function (dataItem) {
+            var x = dataItem.get("valueX");
+            var y = dataItem.get("valueY");
+            if (am5.math.inBounds({ x: x, y: y }, bounds)) {
+              results.push(dataItem);
+            }
+          });
+
+          // Results
+          let selectedRange = [];
+          results.map((data) => {
+            var addSelectedData = {
+              date: moment(new Date(data.close.valueX)).format("YYYY-MM-DD"),
+            };
+            return selectedRange.push(addSelectedData);
+          });
+          console.log(selectedRange);
+        });
 
         xAxis.set(
           "tooltip",
@@ -170,7 +235,7 @@ function Chart(props) {
     var chart = root.container.children.push(
       am5xy.XYChart.new(root, {
         panY: false,
-        wheelY: "zoomX",
+        // wheelY: "zoomX",
         layout: root.verticalLayout,
         maxtooltipDistance: 0,
       })
@@ -232,7 +297,7 @@ function Chart(props) {
     chart.set(
       "cursor",
       am5xy.XYCursor.new(root, {
-        behavior: "zoomXY",
+        behavior: "selectX",
         xAxis: xAxis,
       })
     );
