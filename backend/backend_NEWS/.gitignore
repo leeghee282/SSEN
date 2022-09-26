@@ -6,7 +6,7 @@ build/
 !**/src/test/**/build/
 
 
-J7E204T.pem
+#J7E204T.pem
 ssen.log
 ssen.log.*
 
