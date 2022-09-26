@@ -3,7 +3,7 @@ import {
   GET_CHART_CODE,
   GET_DATA,
   GET_KEYWORDS,
-  GET_NEWS,
+  // GET_NEWS,
 } from "../_actions/types";
 
 const today = new Date();
@@ -35,9 +35,9 @@ export default function (state = INITIAL_STATE, action) {
       return { ...state, keywords: action.payload };
       break;
 
-    case GET_NEWS:
-      return { ...state, news: action.payload };
-      break;
+    // case GET_NEWS:
+    //   return { ...state, news: action.payload };
+    //   break;
 
     default:
       return state;

@@ -4,19 +4,12 @@ import {
   GET_CHART_CODE,
   GET_DATA,
   GET_KEYWORDS,
-  GET_NEWS,
+  // GET_NEWS,
 } from "./types";
-import { baseURL, baseNewsURL } from "../api/index";
+import { baseURL } from "../api/index";
 
 const axios = Axios.create({
   baseURL: baseURL,
-  headers: {
-    "Content-type": "application/json",
-  },
-});
-
-const newsAxios = Axios.create({
-  baseURL: baseNewsURL,
   headers: {
     "Content-type": "application/json",
   },
@@ -57,11 +50,9 @@ export function getData(dataToSubmit) {
 }
 
 export function getKeywords(dataToSubmit) {
-  const request = newsAxios
-    .get(
-      `/api/v1/news/${dataToSubmit.startDate}/${dataToSubmit.endDate}/${dataToSubmit.code}`
-    )
-    .then((response) => response.data);
+  const request = Axios.get(
+    `/news/keyword/${dataToSubmit.startDate}/${dataToSubmit.endDate}`
+  ).then((response) => response.data);
 
   return {
     type: GET_KEYWORDS,
@@ -69,15 +60,15 @@ export function getKeywords(dataToSubmit) {
   };
 }
 
-export function getNews(dataToSubmit) {
-  const request = newsAxios
-    .get(
-      `/api/v1/news/news/${dataToSubmit.startDate}/${dataToSubmit.endDate}/${dataToSubmit.code}`
-    )
-    .then((response) => response.data);
+// export function getNews(dataToSubmit) {
+//   const request = Axios
+//     .get(
+//       `/news/${dataToSubmit.startDate}/${dataToSubmit.endDate}/${dataToSubmit.code}`
+//     )
+//     .then((response) => response.data);
 
-  return {
-    type: GET_NEWS,
-    payload: request,
-  };
-}
+//   return {
+//     type: GET_NEWS,
+//     payload: request,
+//   };
+// }
