@@ -1,8 +1,8 @@
 package com.ssafy.api.service;
 
+import com.ssafy.api.response.KeywordOneRes;
 import com.ssafy.api.response.KeywordRes;
 import com.ssafy.db.entity.VarianceKeyword;
-import com.ssafy.db.repository.InterestedCurrencyRepository;
 import com.ssafy.db.repository.VarianceKeywordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,12 @@ public class KeywordServiceImpl implements KeywordService{
         List<KeywordRes> dtoList = new LinkedList<>();
         List<VarianceKeyword> varianceKeywordList = varianceKeywordRepository.findByNameOrderByFrequencyDesc(keyword);
         for (VarianceKeyword v: varianceKeywordList) {
-            dtoList.add(KeywordRes.of(v));
+            List<VarianceKeyword> keywordList = varianceKeywordRepository.findByVarianceDateOrderByFrequencyDesc(v.getVarianceDate());
+            List<KeywordOneRes> keywordOneResList = new LinkedList<>();
+            for (VarianceKeyword k: keywordList) {
+                keywordOneResList.add(KeywordOneRes.of(k));
+            }
+            dtoList.add(KeywordRes.of(v, keywordOneResList));
         }
         return dtoList;
     }
