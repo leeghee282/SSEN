@@ -112,14 +112,6 @@ function Chart(props) {
           );
         series.data.setAll(data);
 
-        // // Add cursor
-        // chart.set(
-        //   "cursor",
-        //   am5xy.XYCursor.new(root, {
-        //     behavior: "selectX",
-        //     xAxis: xAxis,
-        //   })
-        // );
         var cursor = chart.set(
           "cursor",
           am5xy.XYCursor.new(root, {
@@ -183,7 +175,19 @@ function Chart(props) {
             };
             return selectedRange.push(addSelectedData);
           });
-          console.log(selectedRange);
+
+          console.log(
+            selectedRange
+            // selectedRange[0],
+            // selectedRange[selectedRange.length - 1]
+          );
+
+          let newsBody = {
+            startDate: selectedRange[0],
+            endDate: selectedRange[selectedRange.length - 1],
+          };
+
+          console.log(newsBody);
         });
 
         xAxis.set(
