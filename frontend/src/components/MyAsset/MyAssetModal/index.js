@@ -125,16 +125,16 @@ export default function BasicModal({ getMyAssetData }) {
   };
 
   // 천단위별 ',' 자동 입력 되게 하는 함수(price)
-  const amountPrice = (event) => {
-    const isNotNumber = /^[^1-9][^0-9]{0,11}$/g.test(event.target.value)
-      ? true
-      : false;
-    setIsEnteredWrongAmount(isNotNumber);
-    if (isNotNumber) return;
+  // const amountPrice = (event) => {
+  //   const isNotNumber = /^[^1-9][^0-9]{0,11}$/g.test(event.target.value)
+  //     ? true
+  //     : false;
+  //   setIsEnteredWrongAmount(isNotNumber);
+  //   if (isNotNumber) return;
 
-    const amount = addComma(enteredOnlyNumber(event.target.value));
-    setCurrPrice(amount);
-  };
+  //   const amount = addComma(enteredOnlyNumber(event.target.value));
+  //   setCurrPrice(amount);
+  // };
 
   // 소수점 입력
   const inputPrice = (event) => {
