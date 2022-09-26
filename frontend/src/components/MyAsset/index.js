@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import BasicModal from "./MyAssetModal";
 import MyAssetItemList from "./MyAssetItemList";
+import MyAssetTotal from "./MyAssetTotal";
+
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
 import axios from "../../api/user";
-import { baseURL } from "../../api/index";
 
 export default function MySet() {
   const [myAsset, setMyAsset] = useState([]);
@@ -19,7 +20,7 @@ export default function MySet() {
   // 서버에서 보유 통화 받아오기(get방식)1
   const getMyAssetData = () => {
     axios
-      .get(baseURL + "/api/v1/holdcurr/ssafy10")
+      .get(`/api/v1/holdcurr/${sessionStorage.getItem("userId")}`)
       .then((response) => setMyAsset(response.data));
   };
   useEffect(() => {
@@ -55,6 +56,7 @@ export default function MySet() {
       <Typography id="font_test" component="h1" variant="h4">
         보유 외화 목록
       </Typography>
+      <MyAssetTotal myAsset={myAsset} getMyAssetData={getMyAssetData} />
       <br />
       <BasicModal getMyAssetData={getMyAssetData} />
       <br />
