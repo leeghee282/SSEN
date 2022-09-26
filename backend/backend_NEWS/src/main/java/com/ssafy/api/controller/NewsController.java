@@ -72,21 +72,34 @@ public class NewsController {
 
         String response = sshUtil.cmd(jschSession, cmd);
 
-        System.out.println(response);
+//        System.out.println(response);
         StringTokenizer st = new StringTokenizer(response);
 
-        if(!st.hasMoreTokens())
+        if (!st.hasMoreTokens())
             return ResponseEntity.status(400).body(null);
 
+        StringBuilder query = new StringBuilder();
+        query.append("INSERT INTO SSEN.variance_keywords(variance_date_uid, name, frequency) VALUES \n");
+
+        int cnt = 0;
         while (st.hasMoreTokens()) {
+            if (++cnt > 10)
+                break;
+            query.append("((SELECT uid FROM SSEN.variance_date where reference_date = '" + startDate + "'");
+            query.append(") ,'");
             String s = st.nextToken();
             int val = Integer.parseInt(st.nextToken());
             KeywordRes k = new KeywordRes();
             k.setKeyword(s);
+            query.append(s + "' ,");
             k.setCount(val);
+            query.append(val + "), ");
             keywordList.add(k);
-        }
 
+        }
+        query.setLength(query.length()-2);
+        query.append(";");
+        System.out.println(query.toString());
 
         return new ResponseEntity<>(keywordList, HttpStatus.OK);
     }
@@ -104,10 +117,11 @@ public class NewsController {
 
         List<NewsRes> newsResList = new ArrayList<>();
 
+//        System.out.println("확인하기" + endDate);
         if (endDate.equals("undefined")) {
             endDate = startDate;
         }
-
+//        System.out.println("확인하기2" + endDate);
         Session jschSession = sshUtil.sessionConnect();
 
         // 전체 범위 날짜별로 모두 더한 String 만들기
@@ -117,7 +131,7 @@ public class NewsController {
         LocalDate end = LocalDate.parse(endDate).plusDays(1);
         for (LocalDate date = start; date.isBefore(end); date = date.plusDays(1))
             dateRange.append(" " + date);
-        dateRange.append(" "+ keyword);
+        dateRange.append(" " + keyword);
         String cmd = "~/mapreduce/news.sh " + dateRange.toString() + "> /dev/null 2>&1 &&  /home/hadoop/hadoop/bin/hdfs dfs -cat news_out/*";
 //        System.out.println(cmd);
 
@@ -125,7 +139,7 @@ public class NewsController {
 
         StringTokenizer st = new StringTokenizer(response, "\n");
 
-        if(!st.hasMoreTokens())
+        if (!st.hasMoreTokens())
             return ResponseEntity.status(400).body(null);
 
         while (st.hasMoreTokens()) {
@@ -133,7 +147,7 @@ public class NewsController {
             StringTokenizer st2 = new StringTokenizer(news, ",");  // 개별 csv 셀
 
 //            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            while(st2.hasMoreTokens()) {
+            while (st2.hasMoreTokens()) {
 //                String time = LocalDateTime.parse(st2.nextToken(), formatter);
                 String time = st2.nextToken();
                 st2.nextToken(); //언론사, 개선할 여지 있음..
