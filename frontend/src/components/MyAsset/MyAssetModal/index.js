@@ -100,7 +100,7 @@ export default function BasicModal({ getMyAssetData }) {
       userId: sessionStorage.getItem("userId"),
     };
     // console.log(body);
-    axios.post("/api/v1/holdcurr/", body).then((response) => getMyAssetData());
+    axios.post("/api/v1/holdcurr", body).then((response) => getMyAssetData());
   };
 
   const handleSumit = (e) => {
