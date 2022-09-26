@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 
 /**
- * 키워드로 뉴스 검색 API ([GET] /api/v1/news/{start_date}/{end_date}/{keyword}) 요청에 대한 응답값 정의.
+ * 키워드로 뉴스 검색 API ([GET] /news/{start_date}/{end_date}/{keyword}) 요청에 대한 응답값 정의.
  */
 @Getter
 @Setter

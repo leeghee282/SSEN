@@ -8,7 +8,7 @@ import lombok.Setter;
 
 
 /**
- * 뉴스 키워드 분석 API ([GET] /api/v1/news/keyword/{start_date}/{end_date}) 요청에 대한 응답값 정의.
+ * 뉴스 키워드 분석 API ([GET] /news/keyword/{start_date}/{end_date}) 요청에 대한 응답값 정의.
  */
 @Getter
 @Setter
