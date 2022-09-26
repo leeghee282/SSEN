@@ -57,14 +57,14 @@ public class UserController {
     })
     public ResponseEntity<UserRes> idOverlapCheck(
             @ApiParam(value = "아이디 정보", required = true)  @PathVariable("userId") String userId) {
-        System.out.println("중복확인 시작");
+        System.err.println("중복확인 시작 : "+userId);
         User user = userService.getUserByUserId(userId);
         if (user == null) {
             System.out.println("중복이 없습니다. 성공");
             return ResponseEntity.ok(UserRes.of(200, "Success", null));
         } else {
             System.out.println("중복 아이디가 있습니다. 실패");
-            return ResponseEntity.status(401).body(UserRes.of(409, "중복된 아이디가 있습니다.", user));
+            return ResponseEntity.status(200).body(UserRes.of(200, "중복된 아이디가 있습니다.", user));
         }
     }
 
@@ -85,7 +85,7 @@ public class UserController {
             return ResponseEntity.ok(UserRes.of(200, "Success", null));
         } else {
             System.out.println("중복 닉네임이 있습니다. 실패");
-            return ResponseEntity.status(409).body(UserRes.of(401, "중복된 아이디가 있습니다.", user));
+            return ResponseEntity.status(200).body(UserRes.of(200, "중복된 아이디가 있습니다.", user));
         }
     }
 
