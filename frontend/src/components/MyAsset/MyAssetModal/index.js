@@ -93,8 +93,8 @@ export default function BasicModal({ getMyAssetData }) {
   const sendMyAsset = () => {
     const body = {
       code: currCode,
-      // quantity: parseInt(currQuantity.replaceAll(",", "")),
-      quantity: currQuantity,
+      quantity: parseInt(currQuantity.replaceAll(",", "")),
+      // quantity: currQuantity,
       // price: parseInt(currPrice.replaceAll(",", "")),
       price: currPrice,
       userId: sessionStorage.getItem("userId"),
