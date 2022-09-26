@@ -221,8 +221,6 @@ const Calendar = () => {
           <RowRadioButtonsGroup />
         </Grid>
       </Box>
-      <p>{`${startDate}`}</p>
-      <p>{`${endDate}`}</p>
     </div>
   );
 };
