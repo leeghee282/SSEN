@@ -19,6 +19,7 @@ import { baseURL } from "../../api";
 import { getInitColorSchemeScript } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { BorderStyle } from "@mui/icons-material";
 
 const theme = createTheme();
 
@@ -35,14 +36,49 @@ export default function SignUp() {
   };
   const [phoneCheck, setPhoneCheck] = useState("");
   const [idCheck, setIdCheck] = useState(false);
+  const [idCheck2, setIdCheck2] = useState("");
   const [idCheckCount, setIdCheckCount] = useState(0);
   const [nicknameCheck, setNicknameCheck] = useState(false);
+  const [nicknameCheck2, setNicknameCheck2] = useState("")
   const [totalData, setTotalData] = useState(obj);
   const [formErrors, setFormErrors] = useState({});
 
-  useEffect(() => {
-    handleCheckId();
-  }, [formErrors]);
+  const handleLogin = async (userId, password) => {
+    const body = {
+      userId: totalData.userId,
+      password: totalData.password,
+    };
+
+    const response = await axios
+      .post(baseURL + "/api/v1/user/login", body)
+      
+        const resAccessToken = response.data.accessToken;
+        const resEmail = response.data.email;
+        const resName = response.data.name;
+        const resNickname = response.data.nickname;
+        const resPhone = response.data.phone;
+        const resUid = response.data.uid;
+        const resUserId = response.data.userId;
+
+
+
+        console.log(response);
+        sessionStorage.setItem("accessToken", resAccessToken);
+        sessionStorage.setItem("email", resEmail);
+        sessionStorage.setItem("name", resName);
+        sessionStorage.setItem("nickname", resNickname);
+        sessionStorage.setItem("phone", resPhone);
+        sessionStorage.setItem("uid", resUid);
+        sessionStorage.setItem("userId", resUserId);
+
+        if (response.status===200) {
+        navigate("/")
+      }
+      else {
+        return;
+      }
+      
+  };
   
   // 유효성 검사 함수
   
@@ -51,6 +87,7 @@ export default function SignUp() {
     const errors = {};
     let flag = false;
 
+    
     if (!totalData.email || totalData.email.indexOf(" ") >= 0) {
       errors.email = "이메일을 입력해주세요.";
       flag = true;
@@ -82,14 +119,19 @@ export default function SignUp() {
       errors.nickname = "닉네임을 입력해주세요.";
       flag = true;
     }
-    if (!idCheck) {
-      errors.idCheck = "중복체크를 해주세요";
-      flag = true;
-    }
     if (!totalData.userId) {
       errors.userId = "아이디를 입력해주세요.";
       flag = true;
     }
+    if (!idCheck) {
+      errors.idCheck = "중복체크를 해주세요";
+      flag = true;
+    }
+    if (!nicknameCheck) {
+      errors.nicknameCheck = "중복체크를 해주세요";
+      flag = true;
+    }
+    
     console.log(errors);
     setFormErrors(errors);
     if (flag) {
@@ -100,7 +142,14 @@ export default function SignUp() {
 
   //값 변경시 넣는 함수.
   const handleChange = (event) => {
+
+    {/* 빈칸으로만들어주는 setidcheck2*/}
+    
+    setNicknameCheck2('')
+    setIdCheck2('')
     const { name, value } = event.target;
+    
+    setFormErrors({...formErrors,[name]:''})
     setTotalData({ ...totalData, [name]: value });
     console.log(totalData);
   };
@@ -123,7 +172,12 @@ export default function SignUp() {
         .then((response) => {
           // 응답 성공 시
           if (response.status === 200) {
-            navigate("/");
+            console.log('제발')
+            handleLogin();
+            
+            
+
+           
           } else {
             // 응답 실패 시
             console.log("회원가입  실패");
@@ -134,30 +188,68 @@ export default function SignUp() {
   };
 
   // 아이디 중복체크 axios 함수
-  const handleCheckId = () => {
-    
+  const handleCheckId = async ( ) => {
+    if(totalData.userId){ 
     try {
-      axios
+
+      await axios
+        
 
         .get(baseURL + `/api/v1/user/id-info/${totalData.userId}`)
         .then((response) => {
           if (response.status === 200) {
-            setIdCheck(true);
+            if(response.data === '' ){
+              
+              setIdCheck(true);
+              
+            }
+            else {
+              setIdCheck2("중복된 아이디 입니다.")
+            }
+            
+            console.log(response)
+            
           }
+          else {
+            
+            console.log("실패")
+          }
+          
         });
     } catch (e) {
-      console.log(e);
+
+      
     }
-  };
+  }
+else{
+  setIdCheck2('아이디를 입력해주세요.')
+}}
 
   //닉네임 중복체크 axios 함수
-  const handleCheckNickname = () => {
-    axios
+  const handleCheckNickname = async () => {
+
+    if (totalData.nickname) {
+    await axios
       .get(baseURL + `/api/v1/user/nickname-info/${totalData.nickname}`)
       .then((response) => {
-        setNicknameCheck(true);
+
+        if (response.status === 200) {
+          if(response.data === '') {
+
+            setNicknameCheck(true);
+
+          }
+          else {
+            setNicknameCheck2("중복된 닉네임 입니다.")
+            setTotalData({...totalData,nickname:""})
+          }
+        }
+        
       });
-  };
+  }
+else{
+  setNicknameCheck2("닉네임을 입력해주세요.")
+}}
 
   return (
     <ThemeProvider theme={theme}>
@@ -307,6 +399,7 @@ export default function SignUp() {
                   id="userId"
                   onChange={handleChange}
                 />
+                <Typography sx={{ color:"red", pl:2, }}>{idCheck2}</Typography>
 
                 {formErrors.idCheck && (
                   <Typography
@@ -326,6 +419,7 @@ export default function SignUp() {
                     사용가능아이디 입니다.
                   </Typography>
                 )}
+                
                 {!idCheck && (
                   <Button
                     onClick={handleCheckId}
@@ -344,6 +438,7 @@ export default function SignUp() {
                     중복확인
                   </Button>
                 )}
+                
               </Grid>
 
               {/* 비밀번호 입력 */}
@@ -361,7 +456,7 @@ export default function SignUp() {
                 {formErrors.password && (
                   <Typography
                     id="font_test"
-                    sx={{ color: "red", pl: 2, pt: 1 }}
+                    sx={{ color: "red", pl: 1, pt: 1 }}
                   >
                     {formErrors.password}
                   </Typography>
@@ -396,28 +491,30 @@ export default function SignUp() {
                   required
                   fullWidth
                   name="nickname"
+                  value ={totalData.nickname}
                   id="nickname"
                   onChange={handleChange}
                 />
-                {formErrors.nickname && (
+                <Typography sx={{ color:"red", pl:1}}>{nicknameCheck2}</Typography>
+                {formErrors.nicknameCheck && (
                   <Typography
                     id="font_test"
                     sx={{ color: "red", pl: 2, pt: 1 }}
                   >
-                    {formErrors.nickname}
+                    {formErrors.nicknameCheck}
                   </Typography>
                 )}
               </Grid>
               <Grid sx={{ mt: 7 }} item xs={5}>
-                {nicknameCheck && (
+                {nicknameCheck &&  (
                   <Typography
                     id="font_test"
                     sx={{ color: "blue", pl: 2, pt: 1 }}
                   >
-                    사용가능아이디 입니다.
+                    사용가능닉네임 입니다.
                   </Typography>
                 )}
-                {!nicknameCheck && (
+                {!nicknameCheck &&  (
                   <Button
                     onClick={handleCheckNickname}
                     sx={{
