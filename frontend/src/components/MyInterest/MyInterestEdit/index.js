@@ -13,7 +13,8 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
 import Stack from "@mui/material/Stack";
-
+import axios from "../../../api/user";
+import { baseURL } from "../../../api";
 // 모달창 스타일
 
 
@@ -28,7 +29,8 @@ const addComma = (num) => {
 
 // 모달창
 export default function MyInterestEdit(props) {
-  const {details,handleClose2} = props;
+
+  const {details,handleClose2,getInterest} = props;
   
   const [editInterest,setEditInterest] = useState(details.target);
   const [nation, setNation] = useState("");
@@ -38,16 +40,36 @@ export default function MyInterestEdit(props) {
   const handleOpen = () => setOpen(true);
   
 
+  
+
   const handleSumit = (e) => {
     e.preventDefault(); //새로고침 방지
     // 아무것도 입력하지 않았을 때, submit 방지
     if (!interest) return;
     // props.onSubmit(nation, interest);
     const editData = {
+      
+      
       previous : details.target,
-      target : interest
+      target : parseInt(interest.replaceAll(",", "")),
     }
-    console.log(editData)
+    const addData = {
+      previous : details.target,
+      target : parseInt(interest.replaceAll(",", "")),
+      userId : sessionStorage.getItem('userId'),
+      code : details.nation
+    }
+    if (details.target === 0 ) {
+      axios
+        .post(baseURL + "/api/v1/intrcurr/", addData)
+        .then((response) => getInterest());
+    }
+    else {
+      axios
+        .patch(baseURL + `/api/v1/intrcurr/${details.uid}`, editData)
+        .then((response) => getInterest());
+    }
+
     handleClose2(); //submit 후 창 닫기
     
   };
