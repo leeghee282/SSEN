@@ -26,7 +26,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/exchangecalc" element={<Calculator />} />
         <Route path="/chart" element={<Chart />} />
-        <Route path="/apitest" element={<Apitest />} />
+        <Route path="/test" element={<Apitest />} />
       </Routes>
     </Router>
   );
