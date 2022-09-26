@@ -14,7 +14,7 @@ export default function MyInerest() {
 
   const getInterest = () => {
     axios
-      .get(baseURL + "/api/v1/intrcurr/ssafy10")
+      .get(baseURL + `/api/v1/intrcurr/${sessionStorage.getItem('userId')}`)
       .then((response) => setInterests(response.data));
   };
   useEffect(() => {
@@ -22,19 +22,6 @@ export default function MyInerest() {
   }, []);
 
   useEffect(() => {}, [interests]);
-
-  const nextId = useRef(0);
-  const handleSumit = (nation, interestCurrency) => {
-    const interest = {
-      id: nextId.current,
-      nation,
-      target: interestCurrency,
-      target2: 0,
-      target3: 14000,
-    };
-    setInterests(interests.concat(interest));
-    nextId.current += 1;
-  };
 
   // const onUpdate = (nation, interestCurrency) => {
   //   const updateInt = {
@@ -61,10 +48,11 @@ export default function MyInerest() {
         관심 화폐 등록
       </Typography>
       <br />
-      <MyInterestModal onSubmit={handleSumit} />
+      <MyInterestModal getInterest={getInterest} />
       <br />
       <MyInterestItemList
         interests={interests}
+        getInterest={getInterest}
         onRemove={onRemove}
         // onUpdate={onUpdate}
       />
