@@ -1,7 +1,8 @@
 FROM openjdk:8
 VOLUME /tmp
 EXPOSE 8081
-COPY build/libs/ssen-project-1.0-SNAPSHOT.jar app.jar
+ARG JAR_FILE=build/libs/ssafy-web-project-1.0-SNAPSHOT.jar
+COPY ${JAR_FILE} app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Asia/Seoul
