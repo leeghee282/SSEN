@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 
 import axios from "../../../api/user";
-import { baseURL } from "../../../api";
 //mui
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
@@ -20,11 +19,12 @@ export default function MyAssetItemList({
   myAssetRemove,
   getMyAssetData,
 }) {
-  console.log(myAsset);
+  // console.log(myAsset);
 
+  // 보유 통화 삭제(delete)
   const deleteMyAsset = (event) => {
     try {
-      axios.delete(baseURL + `/api/v1/holdcurr/` + event).then((response) => {
+      axios.delete(`/api/v1/holdcurr/` + event).then((response) => {
         if (response.status === 200) {
           getMyAssetData();
         }

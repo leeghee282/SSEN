@@ -2,8 +2,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import axios from "../../../api/user";
-import { baseURL } from "../../../api";
-// import axios from "axios";
 
 //mui
 import Box from "@mui/material/Box";
@@ -77,9 +75,9 @@ export default function BasicModal({ getMyAssetData }) {
   const handleOpen = () => setOpen(true);
   const handleClose = (e) => {
     setOpen(false);
-    currQuantity(""); //close 후 창 비우기
-    currCode("");
-    currPrice("");
+    setCurrCode(""); //close 후 창 비우기
+    setCurrQuantity("");
+    setCurrPrice("");
   };
 
   // 세션에 저장된 데이터가 있으면 가져오기 위한 것
@@ -95,23 +93,23 @@ export default function BasicModal({ getMyAssetData }) {
   const sendMyAsset = () => {
     const body = {
       code: currCode,
-      price: currPrice,
+      // quantity: parseInt(currQuantity.replaceAll(",", "")),
       quantity: currQuantity,
-      userId: "ssafy10",
+      // price: parseInt(currPrice.replaceAll(",", "")),
+      price: currPrice,
+      userId: sessionStorage.getItem("userId"),
     };
     // console.log(body);
-    axios
-      .post(baseURL + "/api/v1/holdcurr/", body)
-      .then((response) => getMyAssetData());
+    axios.post("/api/v1/holdcurr/", body).then((response) => getMyAssetData());
   };
 
   const handleSumit = (e) => {
     e.preventDefault(); //새로고침 방지
     if (!currCode || !currQuantity || !currPrice) return; // 아무것도 입력하지 않았을 때, submit 방지
     setOpen(false); //submit 후 창 닫기
-    setCurrCode("");
+    setCurrCode(""); //submit 창 비우기
     setCurrQuantity("");
-    setCurrPrice(""); //submit 창 비우기
+    setCurrPrice("");
     sendMyAsset();
   };
 
@@ -122,7 +120,6 @@ export default function BasicModal({ getMyAssetData }) {
       : false;
     setIsEnteredWrongAmount(isNotNumber);
     if (isNotNumber) return;
-
     const amount = addComma(enteredOnlyNumber(event.target.value));
     setCurrQuantity(amount);
   };
@@ -138,6 +135,25 @@ export default function BasicModal({ getMyAssetData }) {
     const amount = addComma(enteredOnlyNumber(event.target.value));
     setCurrPrice(amount);
   };
+
+  // 소수점 입력
+  const inputPrice = (event) => {
+    const pattern = /^(\d{0,10}([.]\d{0,2})?)?$/;
+    if (pattern.test(event.target.value)) {
+      setCurrPrice(event.target.value);
+    }
+  };
+
+  // 소수점이랑 , 찍는 함수 합치기... 실패... ㅎ
+  // const inputQuantity = (event) => {
+  //   const isNotNumber = /^[^1-9][^0-9]{0,11}$/g.test(event.target.value)
+  //     ? true
+  //     : false;
+  //   setIsEnteredWrongAmount(isNotNumber);
+
+  //   const amount = addComma(inputPrice(event.target.value));
+  //   setCurrPrice(amount);
+  // };
 
   return (
     <div>
@@ -186,7 +202,7 @@ export default function BasicModal({ getMyAssetData }) {
                     fullWidth
                     type="text"
                     value={currPrice}
-                    onChange={amountPrice}
+                    onChange={inputPrice}
                     placeholder="구매한 금액을 입력하세요."
                     required
                   />
