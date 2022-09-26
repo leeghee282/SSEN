@@ -17,7 +17,7 @@ public class SSHUtil {
         return instance;
     }
 
-    private static final String REMOTE_HOST = "j7e204.p.ssafy.io";
+    private static final String REMOTE_HOST = "localhost";
     private static final String USERNAME = "ubuntu";
     private static final int REMOTE_PORT = 22;
     private static final int SESSION_TIMEOUT = 10000;
@@ -33,7 +33,7 @@ public class SSHUtil {
             jschSession.setConfig("StrictHostKeyChecking", "no");
 
             // authenticate using private key
-            jsch.addIdentity("J7E204T.pem");
+            // jsch.addIdentity("J7E204T.pem");
 
             // 10 seconds session timeout
             jschSession.connect(SESSION_TIMEOUT);
