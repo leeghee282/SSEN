@@ -65,7 +65,7 @@ public class UserController {
             return ResponseEntity.ok(UserRes.of(200, "Success", null));
         } else {
             System.out.println("중복 아이디가 있습니다. 실패");
-            return ResponseEntity.status(401).body(UserRes.of(409, "중복된 아이디가 있습니다.", user));
+            return ResponseEntity.status(200).body(UserRes.of(200, "중복된 아이디가 있습니다.", user));
         }
     }
 
@@ -86,7 +86,7 @@ public class UserController {
             return ResponseEntity.ok(UserRes.of(200, "Success", null));
         } else {
             System.out.println("중복 닉네임이 있습니다. 실패");
-            return ResponseEntity.status(409).body(UserRes.of(401, "중복된 아이디가 있습니다.", user));
+            return ResponseEntity.status(200).body(UserRes.of(200, "중복된 아이디가 있습니다.", user));
         }
     }
 
