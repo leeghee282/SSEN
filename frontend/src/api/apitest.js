@@ -48,7 +48,7 @@ function Apitest() {
 
   const getnews = () => {
     const ans = axios
-      .get("https://j7e204.p.ssafy.io/news/keyword/2022-09-01/2022-09-05")
+      .get("https://j7e204.p.ssafy.io/news/keyword/2022-09-20/2022-09-21")
       .then((res) => res.data);
 
     console.log(ans);
