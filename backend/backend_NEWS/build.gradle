@@ -197,3 +197,12 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+bootJar{
+    mainClassName = 'com.ssafy.SsenNewsApplication'
+}
+
+bootRun {
+    String activeProfile = System.properties['spring.profiles.active']
+    systemProperty "spring.profiles.active", activeProfile
+}
