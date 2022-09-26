@@ -14,10 +14,12 @@ import Paper from "@mui/material/Paper";
 import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
 import MyInterestEdit from "../MyInterestEdit";
 import { useState } from "react";
-import { Modal, TextField } from "@mui/material";
+import { Avatar, Modal, TextField } from "@mui/material";
 import Grid from "@mui/material/Grid";
+import MyInterestModal from "../MyInterestModal";
 
-export default function MyInterestItemList({ interests, getInterest }) {
+export default function MyInterestItemList({ interests, getInterest,handleOpen}) {
+  
   // 수정 모달 오픈관리
   const style = {
     position: "absolute",
@@ -33,6 +35,7 @@ export default function MyInterestItemList({ interests, getInterest }) {
   const [open2, setOpen2] = useState(false);
   const handleOpen2 = () => setOpen2(true);
   const handleClose2 = () => setOpen2(false);
+  const [click1,setClick1] = useState(0)
 
   const detailNotice = (data) => {
     setDetails(data);
@@ -51,9 +54,29 @@ export default function MyInterestItemList({ interests, getInterest }) {
       console.log(error.response);
     }
   };
+  
+  const notInterest = () => {
+    
+    setClick1(1)
+    console.log(click1)
+    
+  }
 
   return (
     <Box>
+      {interests.length === 0 && (
+        <Avatar 
+        sx={{
+          width: 600,
+          height: 200,
+          m: 1,
+          bgcolor: "white",
+          cursor: "pointer",
+          borderRadius: "10px"
+          
+        }} onClick={handleOpen} variant="square" src="/images/Interest3.png">  </Avatar>
+      )}
+      {interests.length !== 0 && (
       <TableContainer  component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -168,12 +191,14 @@ export default function MyInterestItemList({ interests, getInterest }) {
           </TableBody>
         </Table>
       </TableContainer>
+      )}
 
       <Modal open={open2} onClose={handleClose2}>
         <Box sx={style}>
           <MyInterestEdit details={details} handleClose2={handleClose2} getInterest={getInterest} />
         </Box>
       </Modal>
+      
     </Box>
   );
 }

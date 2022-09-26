@@ -65,20 +65,23 @@ const addComma = (num) => {
 };
 
 // 모달창
-export default function MyInterestModal({ getInterest }) {
+export default function MyInterestModal({ getInterest,handleOpen,open,setOpen}) {
   const [nation, setNation] = useState(""); //국가 선택
   const [previous, setPrevious] = useState(""); //이전 값
   const [interest, setInterest] = useState(""); //타겟
   const [isEnteredWrongAmount, setIsEnteredWrongAmount] = useState(false);
 
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
+  
+  
+  
   const handleClose = (e) => {
     setOpen(false);
     setNation("");
     setInterest("");
   };
+  
 
+  
   // 서버에 보유 통화 보내기(post 방식)
   const sendMyInterest = () => {
     const body = {
@@ -118,9 +121,7 @@ export default function MyInterestModal({ getInterest }) {
 
   return (
     <div>
-      <Button id="font_test" variant="contained" onClick={handleOpen}>
-        관심 화폐 등록
-      </Button>
+      
       <Modal
         open={open}
         onClose={handleClose}

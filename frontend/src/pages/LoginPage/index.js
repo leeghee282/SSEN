@@ -23,7 +23,7 @@ const theme = createTheme();
 export default function Login() {
   const navigate = useNavigate();
 
-  const initialValues = { userId: "", password: "" };
+  const initialValues = { userId: "", password: " " };
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
   const [changeState, setChangeState] = useState(false);
