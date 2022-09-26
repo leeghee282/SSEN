@@ -33,7 +33,7 @@ public class SSHUtil {
             jschSession.setConfig("StrictHostKeyChecking", "no");
 
             // authenticate using private key
-             jsch.addIdentity("J7E204T.pem");
+             jsch.addIdentity("/home/ubuntu/J7E204T.pem");
 
             // 10 seconds session timeout
             jschSession.connect(SESSION_TIMEOUT);
