@@ -12,14 +12,23 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+
+const buyPriceList = [];
 
 export default function MyAssetItemList({
   myAsset,
   myAssetRemove,
   getMyAssetData,
+  live,
+  getLiveData,
 }) {
-  // console.log(myAsset);
+  console.log(myAsset);
+  console.log(live);
+  // Object.assign(live, live);
+  // const newObj = { ...live, ...myAsset };
+  // console.log(myAsset, 11);
+  // console.log(live, 22);
+  // console.log(newObj);
 
   // 보유 통화 삭제(delete)
   const deleteMyAsset = (event) => {
@@ -40,12 +49,11 @@ export default function MyAssetItemList({
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell align="center">uid</TableCell>
-              <TableCell align="center">Nation</TableCell>
-              <TableCell align="center">Quantity</TableCell>
-              <TableCell align="center">Price</TableCell>
-              {/* <TableCell align="center">UPDATE</TableCell> */}
-              <TableCell align="center">Multi</TableCell>
+              <TableCell align="center">국가</TableCell>
+              <TableCell align="center">구매 양</TableCell>
+              <TableCell align="center">구매 금액</TableCell>
+              <TableCell align="center">현재 금액</TableCell>
+              <TableCell align="center">구매가</TableCell>
               <TableCell align="center">DELETE</TableCell>
             </TableRow>
           </TableHead>
@@ -56,16 +64,18 @@ export default function MyAssetItemList({
                 myassetremove={myAssetRemove}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell component="th" scope="row">
-                  {asset.uid}
-                </TableCell>
                 <TableCell align="center">{asset.code}</TableCell>
                 <TableCell align="center">
                   {asset.quantity}
                   {/* <EditOutlinedIcon fontSize="small" /> */}
                 </TableCell>
                 <TableCell align="center">{asset.price}</TableCell>
-                {/* <TableCell align="center">수정 아직 안되욥... ㅠ</TableCell> */}
+                {asset.code === "USD" && (
+                  <TableCell align="center">바이</TableCell>
+                )}
+                {asset.code !== "USD" && (
+                  <TableCell align="center">하이</TableCell>
+                )}
                 <TableCell align="center">{asset.multi}</TableCell>
                 <TableCell
                   align="center"

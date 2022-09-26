@@ -1,10 +1,13 @@
 // 보유화폐 총액 보여주는 컴포넌트
 import React, { useEffect, useState } from "react";
+import axios from "../../../api/user";
 
 const MyAssetTotal = (props) => {
   // response.data의 Value값에 접근하는 방법
   // console.log(props);
   const { myAsset } = props;
+  const { live } = props;
+  console.log(live);
 
   const MyAssetForTotal = myAsset.map((asset) => {
     return asset.multi;
