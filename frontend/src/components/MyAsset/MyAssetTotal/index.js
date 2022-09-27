@@ -6,7 +6,6 @@ const MyAssetTotal = (props) => {
   // console.log(props);
   const { myAsset } = props;
   const { live } = props;
-  console.log(live);
 
   const MyAssetForTotal = myAsset.map((asset) => {
     return asset.multi;

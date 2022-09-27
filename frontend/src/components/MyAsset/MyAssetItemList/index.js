@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 
 import axios from "../../../api/user";
+import Filter from "../MyAssetFilter";
 //mui
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
@@ -12,27 +13,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
-import { ContentCutOutlined } from "@mui/icons-material";
 
-const Filter = () => {
-  return (
-    <select
-      className="filter fw-light"
-      id="filter"
-      name="filter"
-      // onChange={filterChangeHandler}
-      title="국가"
-      aria-label="국가를 선택하세요."
-    >
-      <option value="all">전체</option>
-      <option value="USD">USD</option>
-      <option value="EUR">EUR</option>
-      <option value="GBP">GBP</option>
-      <option value="CNY">CNY</option>
-      <option value="JPY">JPY</option>
-    </select>
-  );
-};
 
 export default function MyAssetItemList({
   myAsset,
@@ -40,7 +21,11 @@ export default function MyAssetItemList({
   getMyAssetData,
   live,
   getLiveData,
+  filterBaseCode,
+  onChangeFilter,
+  filteredItems,
 }) {
+
   const chart = { USD: 0, JPY: 1, EUR: 2, GBP: 3, CNY: 4 };
   // 보유 통화 삭제(delete)
   const deleteMyAsset = (event) => {
@@ -55,9 +40,16 @@ export default function MyAssetItemList({
     }
   };
 
+  const filterChangeHandler = (selectedCode) => {
+    onChangeFilter(selectedCode);
+};
+
   return (
     <Box>
-      <Filter />
+      <Filter
+        onChangeFilter={filterChangeHandler}
+        filterBaseCode={filterBaseCode}
+      />
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -71,7 +63,7 @@ export default function MyAssetItemList({
             </TableRow>
           </TableHead>
           <TableBody>
-            {myAsset.map((asset) => (
+            {filteredItems.map((asset) => (
               <TableRow
                 key={asset.uid}
                 myassetremove={myAssetRemove}
@@ -80,7 +72,6 @@ export default function MyAssetItemList({
                 <TableCell align="center">{asset.code}</TableCell>
                 <TableCell align="center">
                   {asset.quantity}
-                  {/* <EditOutlinedIcon fontSize="small" /> */}
                 </TableCell>
                 <TableCell align="center">{asset.price}</TableCell>
                 <TableCell align="center">

@@ -80,15 +80,6 @@ export default function BasicModal({ getMyAssetData }) {
     setCurrPrice("");
   };
 
-  // 세션에 저장된 데이터가 있으면 가져오기 위한 것
-  // const [userId, setUserId] = useState(() => sessionStorage.getItem("userId"));
-  // console.log(userId);
-
-  // 값 변경시 세션 적용을 위한 것
-  // useEffect(() => {
-  //   sessionStorage.setItem("userId", userId);
-  // }, [userId]);
-
   // 서버에서 보유 통화 보내기(post 방식)
   const sendMyAsset = () => {
     const body = {
@@ -144,7 +135,7 @@ export default function BasicModal({ getMyAssetData }) {
     }
   };
 
-  // 소수점이랑 , 찍는 함수 합치기... 실패... ㅎ
+  // 소수점이랑 , 찍는 함수 합치기... 실패... 다시해보기 ㅎ
   // const inputQuantity = (event) => {
   //   const isNotNumber = /^[^1-9][^0-9]{0,11}$/g.test(event.target.value)
   //     ? true
