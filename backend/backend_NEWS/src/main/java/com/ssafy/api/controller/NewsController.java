@@ -20,6 +20,7 @@ import java.util.StringTokenizer;
 @Api(value = "뉴스 및 키워드 API", tags = {"News."})
 @RestController
 @RequestMapping("/news")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class NewsController {
     SSHUtil sshUtil = SSHUtil.getInstance();
 
