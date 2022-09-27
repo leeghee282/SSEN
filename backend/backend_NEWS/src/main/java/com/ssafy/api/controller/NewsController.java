@@ -104,7 +104,7 @@ public class NewsController {
         return new ResponseEntity<>(keywordList, HttpStatus.OK);
     }
 
-    @GetMapping("/{keyword}/{start_date}/{end_date}")
+    @GetMapping("/search/{keyword}/{start_date}/{end_date}")
     @ApiOperation(value = "키워드로 뉴스 검색", notes = "<strong>시작 날짜, 종료 날짜, 키워드</strong>를 입력해서 해당 범위의 키워드를 포함하는 뉴스 목록을 조회한다. (하루만 조회할 경우 start_date만 입력해도 가능)")
     @ApiResponses({@ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 400, message = "조회 결과 없음(날짜, 하둡 등 확인필요)"),
