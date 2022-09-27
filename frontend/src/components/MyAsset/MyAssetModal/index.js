@@ -148,7 +148,7 @@ export default function BasicModal({ getMyAssetData }) {
 
   return (
     <div>
-      <Button id="font_test" variant="contained" onClick={handleOpen}>
+      <Button id="font_test" variant="contained" onClick={handleOpen} style={{background:"#604fdc"}}>
         보유 외화 추가하기
       </Button>
       <Modal
@@ -172,7 +172,7 @@ export default function BasicModal({ getMyAssetData }) {
             <Box sx={{ m: 2 }}>
               <BasicSelect code={currCode} setCode={setCurrCode} />
             </Box>
-            <Box sx={{ my: 3, mx: 2 }}>
+            <Box sx={{ m: 2 }}>
               <Grid container alignItems="center">
                 <Grid item xs>
                   <TextField
@@ -201,7 +201,7 @@ export default function BasicModal({ getMyAssetData }) {
               </Grid>
             </Box>
             <Stack mt={1} spacing={1} direction="row" justifyContent="center">
-              <Button variant="contained" onClick={handleSumit} id="font_test">
+              <Button variant="contained" onClick={handleSumit} id="font_test" style={{background:"#604fdc"}}>
                 등록
               </Button>
               <Button variant="outlined" onClick={handleClose} id="font_test">

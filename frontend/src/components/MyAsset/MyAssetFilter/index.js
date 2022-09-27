@@ -1,5 +1,5 @@
 import React from "react";
-// import "./Filter.css";
+import "./style.css";
 
 const Filter = (props) => {
     const filterChangeHandler = (event) => {
@@ -8,7 +8,7 @@ const Filter = (props) => {
     
     return (
         <select
-            className="filter fw-light"
+            className="filter"
             id="filter"
             name="filter"
             value={props.filterBaseCode}

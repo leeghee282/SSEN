@@ -61,9 +61,10 @@ export default function MySet() {
       }}
     >
       {/* 보유외화목록 title */}
-      <Typography id="font_test" component="h1" variant="h4">
+      {/* <Typography id="font_test" component="h1" variant="h4">
         보유 외화 목록
-      </Typography>
+      </Typography> */}
+
       {/* 보유 외화 목록 전체 금액 */}
       <MyAssetTotal
         myAsset={myAsset}
@@ -72,10 +73,8 @@ export default function MySet() {
         getLiveData={getLiveData}
         filteredItems={filteredItems}
       />
-      <br />
       {/* 보유 외화 목록 입력(모달) */}
       <BasicModal getMyAssetData={getMyAssetData} />
-      <br />
       {/* 보유 외화 목록 리스트 */}
       {filteredItems && myAsset.length >0 ?
       <MyAssetItemList
@@ -90,6 +89,7 @@ export default function MySet() {
         filteredItems={filteredItems}
         />
         : '보유 외화를 입력해주세요 🙅'}
+      
     </Box>
   );
 }

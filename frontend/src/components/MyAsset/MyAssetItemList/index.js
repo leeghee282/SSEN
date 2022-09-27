@@ -25,7 +25,6 @@ export default function MyAssetItemList({
   onChangeFilter,
   filteredItems,
 }) {
-
   const chart = { USD: 0, JPY: 1, EUR: 2, GBP: 3, CNY: 4 };
   // 보유 통화 삭제(delete)
   const deleteMyAsset = (event) => {
@@ -42,7 +41,11 @@ export default function MyAssetItemList({
 
   const filterChangeHandler = (selectedCode) => {
     onChangeFilter(selectedCode);
-};
+  }
+
+  const addComma = (num) => {
+    return num.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
 
   return (
     <Box>
@@ -50,16 +53,16 @@ export default function MyAssetItemList({
         onChangeFilter={filterChangeHandler}
         filterBaseCode={filterBaseCode}
       />
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell align="center">국가</TableCell>
-              <TableCell align="center">구매 양</TableCell>
-              <TableCell align="center">구매 금액</TableCell>
-              <TableCell align="center">현재 금액</TableCell>
-              <TableCell align="center">구매가</TableCell>
-              <TableCell align="center">DELETE</TableCell>
+      <TableContainer component={Paper} sx={{mt:2}}>
+        <Table sx={{ minWidth: 650, width:900 }} aria-label="simple table">
+          <TableHead sx={{ backgroundColor: "#c4c4c4"}}>
+            <TableRow >
+              <TableCell align="right" sx={{ fontSize: "20px" }} id="font_test">국가</TableCell>
+              <TableCell align="right" sx={{ fontSize: "20px" }} id="font_test">구매 양</TableCell>
+              <TableCell align="right" sx={{ fontSize: "20px" }} id="font_test">구매 금액</TableCell>
+              <TableCell align="right" sx={{ fontSize: "20px" }} id="font_test">현재 금액</TableCell>
+              <TableCell align="right" sx={{ fontSize: "20px" }} id="font_test">총 구매가</TableCell>
+              <TableCell align="center" sx={{ fontSize: "20px" }} id="font_test">DELETE</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -69,21 +72,46 @@ export default function MyAssetItemList({
                 myassetremove={myAssetRemove}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell align="center">{asset.code}</TableCell>
-                <TableCell align="center">
-                  {asset.quantity}
-                </TableCell>
-                <TableCell align="center">{asset.price}</TableCell>
-                <TableCell align="center">
+                {/* 국가 이름 */}
+                <TableCell align="right" sx={{ fontSize: "15px" }} id="font_test">{asset.code}</TableCell>
+                {/* 국가별 구매양 단위 */}
+                {asset.code === 'USD' &&
+                  <TableCell align="right" sx={{ fontSize: "15px" }} id="font_test">
+                  {addComma(asset.quantity.toString())}달러
+                </TableCell>}
+                {asset.code === 'EUR' &&
+                  <TableCell align="right" sx={{ fontSize: "15px" }} id="font_test">
+                  {addComma(asset.quantity.toString())}유로
+                </TableCell>}
+                {asset.code === 'GBP' &&
+                  <TableCell align="right" sx={{ fontSize: "15px" }} id="font_test">
+                  {addComma(asset.quantity.toString())}파운드
+                </TableCell>}
+                {asset.code === 'CNY' &&
+                  <TableCell align="right" sx={{ fontSize: "15px" }} id="font_test">
+                  {addComma(asset.quantity.toString())}위안
+                </TableCell>}
+                {asset.code === 'JPY' &&
+                  <TableCell align="right" sx={{ fontSize: "15px" }} id="font_test">
+                  {addComma(asset.quantity.toString())}엔
+                </TableCell>}
+                {/* 구매금액 */}
+                <TableCell align="right" sx={{ fontSize: "15px" }} id="font_test">{addComma(asset.price.toString())}원</TableCell>
+                {/* 국가별 실시간 환율 */}
+                <TableCell align="right" sx={{ fontSize: "15px" }} id="font_test">
                   {live.length === 5
-                    ? live[chart[asset.code]].buyPrice
-                    : "none"}
+                    ? addComma(live[chart[asset.code]].buyPrice.toFixed(2).toString())
+                    : "none"}원
                 </TableCell>
-                <TableCell align="center">{asset.multi}</TableCell>
+                {/* toFixed(2) => 소수점 2째자리까지 자르는 것(반올림 포함?) */}
+                {/* 국가별 총 구매 금액 */}
+                <TableCell align="right" sx={{ fontSize: "15px" }} id="font_test">{addComma(asset.multi.toString())}원</TableCell>
+                {/* 삭제 버튼 */}
                 <TableCell
                   align="center"
                   onClick={() => deleteMyAsset(asset.uid)}
                   style={{ cursor: "pointer" }}
+                  sx={{ fontSize: "15px" }} id="font_test"
                 >
                   <DeleteForeverRoundedIcon />
                 </TableCell>
