@@ -79,27 +79,27 @@ public class NewsController {
             return ResponseEntity.status(400).body(null);
 
         StringBuilder query = new StringBuilder();
-        query.append("INSERT INTO SSEN.variance_keywords(variance_date_uid, name, frequency) VALUES \n");
+//        query.append("INSERT INTO SSEN.variance_keywords(variance_date_uid, name, frequency) VALUES \n");
 
         int cnt = 0;
         while (st.hasMoreTokens()) {
             if (++cnt > 10)
                 break;
-            query.append("((SELECT uid FROM SSEN.variance_date where reference_date = '" + startDate + "'");
-            query.append(") ,'");
+//            query.append("((SELECT uid FROM SSEN.variance_date where reference_date = '" + startDate + "'");
+//            query.append(") ,'");
             String s = st.nextToken();
             int val = Integer.parseInt(st.nextToken());
             KeywordRes k = new KeywordRes();
             k.setKeyword(s);
-            query.append(s + "' ,");
+//            query.append(s + "' ,");
             k.setCount(val);
-            query.append(val + "), ");
+//            query.append(val + "), ");
             keywordList.add(k);
 
         }
-        query.setLength(query.length()-2);
-        query.append(";");
-        System.out.println(query.toString());
+//        query.setLength(query.length()-2);
+//        query.append(";");
+//        System.out.println(query.toString());
 
         return new ResponseEntity<>(keywordList, HttpStatus.OK);
     }
