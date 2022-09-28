@@ -12,12 +12,12 @@ export default function MyInerest() {
   // 임시 데이터
   
   const [interests, setInterests] = useState([]);
+  const [live, setLive] = useState([]);
   const [updateInts, setUpdateInts] = useState([]);
   const [open ,setOpen] = useState(false)
   const handleOpen = () => setOpen(true);
-  
-  
 
+  // 서버에서 관심화폐 받아오기(get방식)
   const getInterest = () => {
     axios
       .get(baseURL + `/api/v1/intrcurr/${sessionStorage.getItem('userId')}`)
@@ -28,6 +28,16 @@ export default function MyInerest() {
   }, []);
 
   useEffect(() => {}, [interests]);
+
+  // 서버에서 실시간 환율 받아오기(get방식)
+  const getLiveData = () => {
+    axios.get(`/api/v1/live/`).then((response) => setLive(response.data));
+  };
+  useEffect(() => {
+    getLiveData();
+  }, []);
+
+  useEffect(() => {}, [live]);
 
   
 
@@ -65,12 +75,11 @@ export default function MyInerest() {
       <MyInterestModal getInterest={getInterest} handleOpen={handleOpen} open={open} setOpen={setOpen} />
       <br />
       <MyInterestItemList
-        
+        live={live}
         handleOpen={handleOpen}
         interests={interests}
         getInterest={getInterest}
         onRemove={onRemove}
-        // onUpdate={onUpdate}
       />
     </Box>
   );
