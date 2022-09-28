@@ -51,7 +51,7 @@ public class NewsController {
             dateRange.append(" " + date);
         dateRange.append(" ");
         String cmd = "~/mapreduce/keyword.sh " + dateRange.toString() + "> /dev/null 2>&1 &&  /home/hadoop/hadoop/bin/hdfs dfs -cat keyword_out2/*";
-
+        System.out.println("확인하기1" + cmd);
         String response = sshUtil.cmd(jschSession, cmd);
 
 //        System.out.println(response);
@@ -99,22 +99,11 @@ public class NewsController {
 
         List<NewsRes> newsResList = new ArrayList<>();
 
-//        System.out.println("확인하기" + endDate);
-        if (endDate.equals("undefined")) {
-            endDate = startDate;
-        }
-//        System.out.println("확인하기2" + endDate);
         Session jschSession = sshUtil.sessionConnect();
 
-        // 전체 범위 날짜별로 모두 더한 String 만들기
-        // (쉘 길이 2097152 정도 까지 가능 -> 십년치도 될듯)
-        StringBuilder dateRange = new StringBuilder();
-        LocalDate start = LocalDate.parse(startDate);
-        LocalDate end = LocalDate.parse(endDate).plusDays(1);
-        for (LocalDate date = start; date.isBefore(end); date = date.plusDays(1))
-            dateRange.append(" " + date);
-        dateRange.append(" " + keyword);
-        String cmd = "~/mapreduce/news.sh " + dateRange.toString() + "> /dev/null 2>&1 &&  /home/hadoop/hadoop/bin/hdfs dfs -cat news_out/*";
+        String cmd = "/home/hadoop/hadoop/bin/hadoop jar ~/mapreduce/ssen.jar news " + keyword + " keyword_in news_out > /dev/null 2>&1 &&  /home/hadoop/hadoop/bin/hdfs dfs -cat news_out/*";
+
+//        System.out.println("확인하기2 " + cmd);
         String response = sshUtil.cmd(jschSession, cmd);
         StringTokenizer st = new StringTokenizer(response, "\n");
 
