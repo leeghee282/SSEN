@@ -5,6 +5,7 @@ import {
   GET_DATA,
   GET_KEYWORDS,
   GET_NEWS,
+  DO_FN,
 } from "./types";
 import { baseURL, baseNewsURL } from "../api/index";
 
@@ -58,9 +59,7 @@ export function getData(dataToSubmit) {
 
 export function getKeywords(dataToSubmit) {
   const request = newsAxios
-    .get(
-      `/api/v1/news/${dataToSubmit.startDate}/${dataToSubmit.endDate}/${dataToSubmit.code}`
-    )
+    .get(`/news/keyword/${dataToSubmit.startDate}/${dataToSubmit.endDate}`)
     .then((response) => response.data);
 
   return {
@@ -72,12 +71,18 @@ export function getKeywords(dataToSubmit) {
 export function getNews(dataToSubmit) {
   const request = newsAxios
     .get(
-      `/api/v1/news/news/${dataToSubmit.startDate}/${dataToSubmit.endDate}/${dataToSubmit.code}`
+      `/news/search/${dataToSubmit.keyword}/${dataToSubmit.startDate}/${dataToSubmit.endDate}`
     )
     .then((response) => response.data);
 
   return {
     type: GET_NEWS,
     payload: request,
+  };
+}
+
+export function doFn() {
+  return {
+    type: DO_FN,
   };
 }
