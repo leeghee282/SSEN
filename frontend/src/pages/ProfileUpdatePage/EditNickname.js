@@ -9,6 +9,7 @@ import { baseURL } from "../../api";
 const EditNickname = (props) => {
   const { setTotalData, totalData, cancelClicked2, cancelClicked22 } = props;
   
+  
 
   const onChange = (e) => {
     setTotalData({...totalData, nickname: e.target.value})
