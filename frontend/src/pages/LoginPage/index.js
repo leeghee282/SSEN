@@ -56,7 +56,7 @@ export default function Login() {
 
     const response = await axios
       .post(baseURL + "/api/v1/user/login", body)
-      
+        const resPassword = response.data.password;
         const resAccessToken = response.data.accessToken;
         const resEmail = response.data.email;
         const resName = response.data.name;
@@ -68,6 +68,7 @@ export default function Login() {
 
 
         console.log(response);
+        sessionStorage.setItem('password',resPassword)
         sessionStorage.setItem("accessToken", resAccessToken);
         sessionStorage.setItem("email", resEmail);
         sessionStorage.setItem("name", resName);
@@ -76,7 +77,7 @@ export default function Login() {
         sessionStorage.setItem("uid", resUid);
         sessionStorage.setItem("userId", resUserId);
 
-        if (response.status===200) {
+        if (response.status===200 ) {
         navigate("/")
       }
       else {
@@ -176,7 +177,7 @@ export default function Login() {
               </Button>
               <Grid container justifyContent="flex-end">
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link href="/signup" variant="body2">
                     {"계정이 없으신가요 ? 회원가입하기"}
                   </Link>
                 </Grid>
