@@ -19,6 +19,8 @@ import { getChartDates, getChartCode } from "../../_actions/chart_action";
 import { Typography } from "@mui/material";
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import ToggleButton from '@mui/material/ToggleButton';
+import CommunityButton from "../Community/CommunityButton";
+
 
 // 나라 선택 라디오 버튼 컴포넌트
 const RowRadioButtonsGroup = () => {
@@ -248,9 +250,9 @@ const Calendar = () => {
             />
             </Grid>
             
-            <Grid item xs={7} sx={{pl:5}}>
+            <Grid item xs={4} sx={{pl:2}}>
             {DateFilterData.map((e, idx) => (
-              <Button sx={{ml:2}}
+              <Button sx={{ml:2.2}}
                 id="font_test"
                 variant="contained"
                 onClick={handleBtnClicked}
@@ -261,9 +263,14 @@ const Calendar = () => {
               </Button>
             ))}
             </Grid>
+            {/* <Grid item xs={3} sx={{ml:7,pl:30}}>
+            
+            <CommunityButton ></CommunityButton>
+            </Grid> */}
             <Grid item xs={12}>
             <RowRadioButtonsGroup />
             </Grid>
+            
             </Grid>
             
           
