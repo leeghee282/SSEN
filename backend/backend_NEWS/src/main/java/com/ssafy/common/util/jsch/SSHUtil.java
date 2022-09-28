@@ -20,7 +20,7 @@ public class SSHUtil {
     private static final String REMOTE_HOST = "localhost";
     private static final String USERNAME = "ubuntu";
     private static final int REMOTE_PORT = 22;
-    private static final int SESSION_TIMEOUT = 10000;
+    private static final int SESSION_TIMEOUT = 300000;
     private static final int CHANNEL_TIMEOUT = 5000;
 
     public static Session sessionConnect() {
