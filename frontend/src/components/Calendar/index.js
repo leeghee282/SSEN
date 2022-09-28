@@ -16,14 +16,20 @@ import FormLabel from "@mui/material/FormLabel";
 
 import { useDispatch } from "react-redux";
 import { getChartDates, getChartCode } from "../../_actions/chart_action";
+import { Typography } from "@mui/material";
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import ToggleButton from '@mui/material/ToggleButton';
 
 // 나라 선택 라디오 버튼 컴포넌트
 const RowRadioButtonsGroup = () => {
+
+  
   const dispatch = useDispatch();
   const [type, setType] = useState("USD");
 
   const selectChange = (event) => {
     setType(event.target.value);
+    console.log(type)
 
     let body = {
       code: event.target.value,
@@ -36,20 +42,33 @@ const RowRadioButtonsGroup = () => {
 
   return (
     <FormControl>
-      <FormLabel id="demo-row-radio-buttons-group-label">Nation</FormLabel>
-      <RadioGroup
+      <FormLabel 
+      id="font_test"
+      sx={{
+                mt:3,
+                color: "rgba(0, 0, 0, 0.6)",
+                height: "50px",
+                fontWeight: "900",
+                fontSize: "30px",
+              }} >국가선택</FormLabel>
+      <ToggleButtonGroup
+      
+        sx={{mt:1,width:"800px",height:"30px"}}
         row
-        aria-labelledby="demo-row-radio-buttons-group-label"
+        size="large"
+        fullWidth="true"
+        
         name="row-radio-buttons-group"
         value={type}
-        onChange={selectChange}
-      >
-        <FormControlLabel value="USD" control={<Radio />} label="달러/원" />
-        <FormControlLabel value="EUR" control={<Radio />} label="유로/원" />
-        <FormControlLabel value="GBP" control={<Radio />} label="파운드/원" />
-        <FormControlLabel value="JPY" control={<Radio />} label="엔/원" />
-        <FormControlLabel value="CNY" control={<Radio />} label="위안/원" />
-      </RadioGroup>
+        onClick={selectChange}
+        
+      > 
+        <ToggleButton id="font_test" value="USD" control={<Radio />} >달러/원</ToggleButton>
+        <ToggleButton id="font_test" value="EUR" control={<Radio />}  >유로/원</ToggleButton>
+        <ToggleButton id="font_test" value="GBP" control={<Radio />}  >파운드/원</ToggleButton>
+        <ToggleButton id="font_test" value="JPY" control={<Radio />}  >엔/원</ToggleButton>
+        <ToggleButton id="font_test" value="CNY" control={<Radio />}  >위안/원</ToggleButton>
+      </ToggleButtonGroup>
     </FormControl>
   );
 };
@@ -184,11 +203,25 @@ const Calendar = () => {
   };
 
   return (
-    <div>
-      <Box sx={{ flexGrow: 1 }}>
+    
+      <Box>
         <Grid container>
-          <Stack spacing={2} direction="row">
-            <DatePicker
+        <Grid item xs={12}>
+        <Typography component="h1"
+              id="font_test"
+              sx={{
+                mt:3,
+                color: "rgba(0, 0, 0, 0.6)",
+                height: "40px",
+                fontWeight: "900",
+                fontSize: "30px",
+              }}>날짜선택</Typography>
+        </Grid>
+        </Grid>
+          <Grid  container  sx={{mt:2}} direction="row">
+            <Grid item xs={1.9}>
+            <DatePicker 
+              id="font_test"
               dateFormat="yyyy년 MM월 dd일"
               locale={ko}
               selected={startDate}
@@ -197,7 +230,13 @@ const Calendar = () => {
               startDate={startDate}
               endDate={endDate}
             />
+            </Grid>
+            <Grid item xs={0.2}>
+            <Typography sx={{fontWeight:900}}>~</Typography>
+            </Grid>
+            <Grid item xs={2}>
             <DatePicker
+              id="font_test"
               dateFormat="yyyy년 MM월 dd일"
               locale={ko}
               selected={endDate}
@@ -207,9 +246,13 @@ const Calendar = () => {
               endDate={endDate}
               minDate={startDate}
             />
+            </Grid>
+            
+            <Grid item xs={7} sx={{pl:5}}>
             {DateFilterData.map((e, idx) => (
-              <Button
-                variant="outlined"
+              <Button sx={{ml:2}}
+                id="font_test"
+                variant="contained"
                 onClick={handleBtnClicked}
                 key={idx}
                 value={e.value}
@@ -217,11 +260,17 @@ const Calendar = () => {
                 {e.value}
               </Button>
             ))}
-          </Stack>
-          <RowRadioButtonsGroup />
-        </Grid>
+            </Grid>
+            <Grid item xs={12}>
+            <RowRadioButtonsGroup />
+            </Grid>
+            </Grid>
+            
+          
+          
+        
       </Box>
-    </div>
+    
   );
 };
 

@@ -6,6 +6,7 @@ import * as am5xy from "@amcharts/amcharts5/xy";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 
 import moment from "moment";
+import { Button } from "@mui/material";
 
 import { getData, doFn } from "../../_actions/chart_action";
 
@@ -448,7 +449,7 @@ function Chart() {
 
   return (
     <div>
-      <button onClick={onMakeChart}>수정</button>
+      <Button id="font_test" sx={{ mt:3,background:"red",color:"black"}}onClick={onMakeChart}>차트 적용하기</Button>
       <div id="chart">
         <div id="chartdiv" style={{ width: "800px", height: "300px" }}></div>
       </div>
