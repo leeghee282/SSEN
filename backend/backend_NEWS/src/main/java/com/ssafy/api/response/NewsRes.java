@@ -5,9 +5,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
-
 /**
  * 키워드로 뉴스 검색 API ([GET] /news/{start_date}/{end_date}/{keyword}) 요청에 대한 응답값 정의.
  */
@@ -26,6 +23,7 @@ public class NewsRes {
     String time;
     @ApiModelProperty(name="url", example = "https://n.news.naver.com/mnews/article/277/0005150629")
     String url;
+
 
     public static NewsRes of(String title, String content, String press, String time, String url) {
         NewsRes res = new NewsRes();

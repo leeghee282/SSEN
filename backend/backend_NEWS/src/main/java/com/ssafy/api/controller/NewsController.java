@@ -24,24 +24,6 @@ import java.util.StringTokenizer;
 public class NewsController {
     SSHUtil sshUtil = SSHUtil.getInstance();
 
-    private class Keyword {
-        String keyword;
-        int count;
-
-        public Keyword(String keyword, int count) {
-            this.keyword = keyword;
-            this.count = count;
-        }
-
-        @Override
-        public String toString() {
-            return "Keyword{" +
-                    "keyword='" + keyword + '\'' +
-                    ", count=" + count +
-                    '}';
-        }
-    }
-
     @GetMapping("/keyword/{start_date}/{end_date}")
     @ApiOperation(value = "뉴스 키워드 분석", notes = "<strong>시작 날짜, 종료 날짜</strong>를 입력해서 해당 범위의 뉴스 키워드 결과를 50개 조회한다. (하루만 조회할 경우 start_date만 입력해도 가능)")
     @ApiResponses({@ApiResponse(code = 200, message = "성공"),
@@ -69,7 +51,6 @@ public class NewsController {
             dateRange.append(" " + date);
         dateRange.append(" ");
         String cmd = "~/mapreduce/keyword.sh " + dateRange.toString() + "> /dev/null 2>&1 &&  /home/hadoop/hadoop/bin/hdfs dfs -cat keyword_out2/*";
-//        System.out.println(cmd);
 
         String response = sshUtil.cmd(jschSession, cmd);
 
@@ -79,7 +60,7 @@ public class NewsController {
         if (!st.hasMoreTokens())
             return ResponseEntity.status(400).body(null);
 
-        StringBuilder query = new StringBuilder();
+//        StringBuilder query = new StringBuilder(); //DB에 넣을 키워드 분석 결과를 위한 쿼리(변동률이 심한 특정 날짜)
 //        query.append("INSERT INTO SSEN.variance_keywords(variance_date_uid, name, frequency) VALUES \n");
 
         int cnt = 0;
@@ -134,10 +115,7 @@ public class NewsController {
             dateRange.append(" " + date);
         dateRange.append(" " + keyword);
         String cmd = "~/mapreduce/news.sh " + dateRange.toString() + "> /dev/null 2>&1 &&  /home/hadoop/hadoop/bin/hdfs dfs -cat news_out/*";
-//        System.out.println(cmd);
-
         String response = sshUtil.cmd(jschSession, cmd);
-
         StringTokenizer st = new StringTokenizer(response, "\n");
 
         if (!st.hasMoreTokens())
@@ -145,25 +123,14 @@ public class NewsController {
 
         while (st.hasMoreTokens()) {
             String news = st.nextToken(); // 개별 기사
-            StringTokenizer st2 = new StringTokenizer(news, ",");  // 개별 csv 셀
-
-//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            StringTokenizer st2 = new StringTokenizer(news, ",");
             while (st2.hasMoreTokens()) {
-//                String time = LocalDateTime.parse(st2.nextToken(), formatter);
                 String time = st2.nextToken();
-                st2.nextToken(); //언론사, 개선할 여지 있음..
                 String press = st2.nextToken().trim();
                 String title = st2.nextToken();
                 String content = st2.nextToken();
                 String url = st2.nextToken();
-                st2.nextToken(); //키워드 분석 결과, 개선할 여지 있음..
-                NewsRes newsRes = new NewsRes();
-                newsRes.setUrl(url);
-                newsRes.setContent(content);
-                newsRes.setTime(time);
-                newsRes.setPress(press);
-                newsRes.setTitle(title);
-
+                NewsRes newsRes = NewsRes.of(title, content, press, time, url);
                 newsResList.add(newsRes);
             }
         }
