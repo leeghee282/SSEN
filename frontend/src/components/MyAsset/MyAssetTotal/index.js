@@ -123,7 +123,7 @@ const MyAssetTotal = (props) => {
   //가진 보유 화폐 구매 총 합계
   const Total = MyAssetForTotal.reduce((a, b) => a + b, 0);
   // 손익(실시간 환율 반영)
-  const Calc = Total-All;
+  const Calc = All - Total;
 
   return (
     <div>
