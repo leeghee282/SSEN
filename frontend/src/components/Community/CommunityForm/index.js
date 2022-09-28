@@ -31,6 +31,7 @@ const CommunityForm = ({ getCommunity }) => {
   return (
     <div>
       <div>
+        {sessionStorage.getItem('userId') &&(
         <input
           className="comment"
           value={content}
@@ -39,6 +40,17 @@ const CommunityForm = ({ getCommunity }) => {
           onChange={handleChange}
           style={{ fontSize:"16px", color:"#333333"}}
         />
+        )}
+        {!sessionStorage.getItem('userId') &&(
+        <input
+          className="comment"
+          value=''
+          name="content"
+          placeholder="로그인시 이용가능합니다. 😊"
+          onChange={handleChange}
+          style={{ fontSize:"16px", color:"#333333"}}
+        />
+        )}
       </div>
       <div className="button" onClick={handleSubmit} style={{ textAlign: "center" }}>
         댓글 작성
