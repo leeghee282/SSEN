@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import BasicModal from "./MyAssetModal";
 import MyAssetItemList from "./MyAssetItemList";
 import MyAssetTotal from "./MyAssetTotal";
-// import MyAssetChart from "./MyAssetChart";
+import MyAssetChart from "./MyAssetChart";
 
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -65,7 +65,9 @@ export default function MySet() {
       {/* <Typography id="font_test" component="h1" variant="h4">
         보유 외화 목록
       </Typography> */}
-      {/* <MyAssetChart/> */}
+      {/* <MyAssetChart
+        myAsset={myAsset}
+        getMyAssetData={getMyAssetData}/> */}
 
       {/* 보유 외화 목록 전체 금액 */}
       <MyAssetTotal

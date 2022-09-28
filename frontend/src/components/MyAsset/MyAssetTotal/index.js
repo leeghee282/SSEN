@@ -143,7 +143,7 @@ const MyAssetTotal = (props) => {
         </div>
         <div className="detail-box">
           <h1 className="fs-normal fc-grey">손익</h1>
-          {Calc >= 0 && <strong className="fs-title fc-red">{addComma(Calc.toFixed(2).toString())}원</strong>}
+          {Calc >= 0 && <strong className="fs-title fc-red">+{addComma(Calc.toFixed(2).toString())}원</strong>}
           {Calc < 0 && <strong className="fs-title fc-purple">{addComma(Calc.toFixed(2).toString())}원</strong>}
         </div>
       </div>

@@ -7,11 +7,12 @@ const CommunityButton = () => {
   return (
     <>
       <button
+        className="button"
         onClick={() => {
           setVisible(!visible);
         }}
       >
-        {visible ? "안보이게" : "보이게"}
+        {visible ? "채팅창 닫기" : "채팅창 열기"}
       </button>
       {visible && <CommunityList />}
     </>
