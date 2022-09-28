@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
 import * as d3 from "d3";
@@ -13,7 +13,6 @@ function Keyword(props) {
   const startDate = moment(chartDates.startDate).format("YYYY-MM-DD");
   const endDate = moment(chartDates.endDate).format("YYYY-MM-DD");
   const keywordList = useSelector((state) => state.chartReducer.keywords);
-  const newsList = useSelector((state) => state.chartReducer.news);
   const doing = useSelector((state) => state.chartReducer.doing);
 
   useEffect(() => {
@@ -48,6 +47,17 @@ function Keyword(props) {
         };
         return wordcloudData.push(addWordcloudData);
       });
+    });
+
+    const firstKeyword = await wordcloudData[0].text;
+    let newsBody = {
+      keyword: firstKeyword,
+      startDate: startDate,
+      endDate: endDate,
+    };
+
+    dispatch(getNews(newsBody)).then((response) => {
+      console.log(response.payload);
     });
   };
 
@@ -99,16 +109,29 @@ function Keyword(props) {
         .text(function (d) {
           return d.text;
         })
+        .style("cursor", "pointer")
         .on("click", function (d) {
           console.log(d.target.__data__.text);
+          onSetNews(d.target.__data__.text);
         });
       console.log(JSON.stringify(words));
     }
+
+    const onSetNews = (txt) => {
+      let newsBody = {
+        keyword: txt,
+        startDate: startDate,
+        endDate: endDate,
+      };
+
+      dispatch(getNews(newsBody)).then((response) => {
+        console.log(response.payload);
+      });
+    };
   };
 
   return (
     <div>
-      <button onClick={wordcloudHandler}>하하</button>
       <div id="word-cloud"></div>
     </div>
   );
