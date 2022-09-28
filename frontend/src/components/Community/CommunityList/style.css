@@ -1,10 +1,10 @@
 .timeLineWrap{
   position: absolute;
-  top: 60%;
+  top: 65%;
   left: 88%;
-  transform: translate(-50%, -50%);
-  width: 300px;
-  height: 500px;
+  transform: translate(-53%, -44%);
+  width: 350px;
+  height: 750px;
   overflow-y: scroll;
   border: 1px solid #bbbbbb;
   border-radius: 30px;
