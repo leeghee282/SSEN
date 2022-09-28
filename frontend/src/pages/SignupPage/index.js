@@ -312,6 +312,7 @@ else{
                   fullWidth
                   id="name"
                   label="이름"
+                  placeholder="이름을 입력하세요"
                   name="name"
                   autoComplete="name"
                   autoFocus
@@ -335,6 +336,7 @@ else{
                   required
                   className="inputRounded"
                   fullWidth
+                  placeholder="전화번호를 입력하세요"
                   name="phone"
                   label="전화번호"
                   id="phone"
@@ -350,7 +352,7 @@ else{
                 )}
               </Grid>
               {/* 이메일 입력 */}
-              <Grid item xs={7}>
+              <Grid item xs={12}>
                 <TextField
                   className="inputRounded"
                   required
@@ -369,7 +371,7 @@ else{
                   </Typography>
                 )}
               </Grid>
-              <Grid item xs={5}>
+              {/* <Grid item xs={5}>
                 <Button
                   sx={{
                     background: "#DDF2FD",
@@ -385,20 +387,27 @@ else{
                 >
                   본인인증
                 </Button>
-              </Grid>
+              </Grid> */}
 
               {/* 아이디 입력 */}
 
               <Grid sx={{ mt: 10 }} item xs={7}>
+                {idCheck && (
+                  <TextField fullWidth className="inputRounded" value={totalData.userId} sx={{ fontWeight:700,color:"blue", }} >  </TextField>
+                )}
+                {!idCheck && (
                 <TextField
                   className="inputRounded"
                   required
                   fullWidth
+                  
                   name="userId"
                   label="아이디"
+                  placeholder="아이디를 입력하세요"
                   id="userId"
                   onChange={handleChange}
                 />
+                )}
                 <Typography sx={{ color:"red", pl:2, }}>{idCheck2}</Typography>
 
                 {formErrors.idCheck && (
@@ -485,6 +494,10 @@ else{
               </Grid>
               {/* 닉네임 설정 */}
               <Grid sx={{ mt: 7 }} item xs={7}>
+                {nicknameCheck && (
+                <TextField fullWidth className="inputRounded" value = {totalData.nickname}></TextField>
+                )}
+                {!nicknameCheck && (
                 <TextField
                   placeholder="사용할 닉네임을 입력해 주세요"
                   className="inputRounded"
@@ -495,6 +508,7 @@ else{
                   id="nickname"
                   onChange={handleChange}
                 />
+                )}
                 <Typography sx={{ color:"red", pl:1}}>{nicknameCheck2}</Typography>
                 {formErrors.nicknameCheck && (
                   <Typography
