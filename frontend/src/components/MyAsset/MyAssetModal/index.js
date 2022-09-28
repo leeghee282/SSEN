@@ -80,21 +80,12 @@ export default function BasicModal({ getMyAssetData }) {
     setCurrPrice("");
   };
 
-  // 세션에 저장된 데이터가 있으면 가져오기 위한 것
-  // const [userId, setUserId] = useState(() => sessionStorage.getItem("userId"));
-  // console.log(userId);
-
-  // 값 변경시 세션 적용을 위한 것
-  // useEffect(() => {
-  //   sessionStorage.setItem("userId", userId);
-  // }, [userId]);
-
   // 서버에서 보유 통화 보내기(post 방식)
   const sendMyAsset = () => {
     const body = {
       code: currCode,
-      // quantity: parseInt(currQuantity.replaceAll(",", "")),
-      quantity: currQuantity,
+      quantity: parseInt(currQuantity.replaceAll(",", "")),
+      // quantity: currQuantity,
       // price: parseInt(currPrice.replaceAll(",", "")),
       price: currPrice,
       userId: sessionStorage.getItem("userId"),
@@ -144,7 +135,7 @@ export default function BasicModal({ getMyAssetData }) {
     }
   };
 
-  // 소수점이랑 , 찍는 함수 합치기... 실패... ㅎ
+  // 소수점이랑 , 찍는 함수 합치기... 실패... 다시해보기 ㅎ
   // const inputQuantity = (event) => {
   //   const isNotNumber = /^[^1-9][^0-9]{0,11}$/g.test(event.target.value)
   //     ? true
@@ -157,7 +148,7 @@ export default function BasicModal({ getMyAssetData }) {
 
   return (
     <div>
-      <Button id="font_test" variant="contained" onClick={handleOpen}>
+      <Button id="font_test" variant="contained" onClick={handleOpen} style={{background:"#604fdc"}}>
         보유 외화 추가하기
       </Button>
       <Modal
@@ -181,7 +172,7 @@ export default function BasicModal({ getMyAssetData }) {
             <Box sx={{ m: 2 }}>
               <BasicSelect code={currCode} setCode={setCurrCode} />
             </Box>
-            <Box sx={{ my: 3, mx: 2 }}>
+            <Box sx={{ m: 2 }}>
               <Grid container alignItems="center">
                 <Grid item xs>
                   <TextField
@@ -210,7 +201,7 @@ export default function BasicModal({ getMyAssetData }) {
               </Grid>
             </Box>
             <Stack mt={1} spacing={1} direction="row" justifyContent="center">
-              <Button variant="contained" onClick={handleSumit} id="font_test">
+              <Button variant="contained" onClick={handleSumit} id="font_test" style={{background:"#604fdc"}}>
                 등록
               </Button>
               <Button variant="outlined" onClick={handleClose} id="font_test">
