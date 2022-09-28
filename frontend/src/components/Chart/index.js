@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import * as am5 from "@amcharts/amcharts5";
@@ -7,9 +7,9 @@ import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 
 import moment from "moment";
 
-import { getData } from "../../_actions/chart_action";
+import { getData, doFn } from "../../_actions/chart_action";
 
-function Chart(props) {
+function Chart() {
   const dispatch = useDispatch();
 
   const currencyCode = useSelector((state) => state.chartReducer.chartCode);
@@ -441,6 +441,9 @@ function Chart(props) {
   const onMakeChart = () => {
     onDeleteChart("chartdiv");
     onSetChart();
+    dispatch(doFn()).then((response) => {
+      console.log("doFn");
+    });
   };
 
   return (
