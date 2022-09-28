@@ -449,7 +449,7 @@ function Chart() {
 
   return (
     <div>
-      <Button id="font_test" sx={{ mt:3,background:"red",color:"black"}}onClick={onMakeChart}>차트 적용하기</Button>
+      <Button id="font_test" sx={{ mt:5,background:"red",color:"black",mb:5}}onClick={onMakeChart}>차트 적용하기</Button>
       <div id="chart">
         <div id="chartdiv" style={{ width: "800px", height: "300px" }}></div>
       </div>
