@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import * as am5 from "@amcharts/amcharts5";
@@ -7,9 +7,9 @@ import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 
 import moment from "moment";
 
-import { getData } from "../../_actions/chart_action";
+import { getData, doFn } from "../../_actions/chart_action";
 
-function Chart(props) {
+function Chart() {
   const dispatch = useDispatch();
 
   const currencyCode = useSelector((state) => state.chartReducer.chartCode);
@@ -54,7 +54,7 @@ function Chart(props) {
         var chart = root.container.children.push(
           am5xy.XYChart.new(root, {
             panY: false,
-            // wheelY: "zoomX",
+            wheelY: "zoomX",
             layout: root.verticalLayout,
             maxtooltipDistance: 0,
           })
@@ -108,18 +108,10 @@ function Chart(props) {
           .get("tooltip")
           .label.set(
             "text",
-            "[bold]{valueX.formatDate()}[/]\nOpen: {openValueY}\nHigh: {highValueY}\nLow: {lowValueY}\nClose: {valueY}"
+            "[bold]{valueX.formatDate()}[/]\n시가: {openValueY}\n고가: {highValueY}\n저가: {lowValueY}\n종가: {valueY}"
           );
         series.data.setAll(data);
 
-        // // Add cursor
-        // chart.set(
-        //   "cursor",
-        //   am5xy.XYCursor.new(root, {
-        //     behavior: "selectX",
-        //     xAxis: xAxis,
-        //   })
-        // );
         var cursor = chart.set(
           "cursor",
           am5xy.XYCursor.new(root, {
@@ -183,7 +175,19 @@ function Chart(props) {
             };
             return selectedRange.push(addSelectedData);
           });
-          console.log(selectedRange);
+
+          console.log(
+            selectedRange
+            // selectedRange[0],
+            // selectedRange[selectedRange.length - 1]
+          );
+
+          let newsBody = {
+            startDate: selectedRange[0],
+            endDate: selectedRange[selectedRange.length - 1],
+          };
+
+          console.log(newsBody);
         });
 
         xAxis.set(
@@ -235,7 +239,7 @@ function Chart(props) {
     var chart = root.container.children.push(
       am5xy.XYChart.new(root, {
         panY: false,
-        // wheelY: "zoomX",
+        wheelY: "zoomX",
         layout: root.verticalLayout,
         maxtooltipDistance: 0,
       })
@@ -250,16 +254,53 @@ function Chart(props) {
         renderer: am5xy.AxisRendererY.new(root, {}),
       })
     );
-
-    // Create X-Axis
-    var xAxis = chart.xAxes.push(
-      am5xy.GaplessDateAxis.new(root, {
-        baseInterval: { timeUnit: "day", count: 1 },
-        renderer: am5xy.AxisRendererX.new(root, {
-          minGridDistance: 20,
-        }),
-      })
-    );
+    if (data.length < 14) {
+      // Create X-Axis
+      var xAxis = chart.xAxes.push(
+        am5xy.GaplessDateAxis.new(root, {
+          baseInterval: { timeUnit: "day", count: 1 },
+          renderer: am5xy.AxisRendererX.new(root, {
+            minGridDistance: 10,
+          }),
+        })
+      );
+    } else if (data.length < 19) {
+      // Create X-Axis
+      var xAxis = chart.xAxes.push(
+        am5xy.GaplessDateAxis.new(root, {
+          groupData: true,
+          groupInterval: { timeUnit: "day", count: 3 },
+          baseInterval: { timeUnit: "day", count: 1 },
+          renderer: am5xy.AxisRendererX.new(root, {
+            minGridDistance: 10,
+          }),
+        })
+      );
+    } else if (data.length < 30) {
+      // Create X-Axis
+      var xAxis = chart.xAxes.push(
+        am5xy.GaplessDateAxis.new(root, {
+          groupData: true,
+          groupInterval: { timeUnit: "day", count: 4 },
+          baseInterval: { timeUnit: "day", count: 1 },
+          renderer: am5xy.AxisRendererX.new(root, {
+            minGridDistance: 10,
+          }),
+        })
+      );
+    } else {
+      // Create X-Axis
+      var xAxis = chart.xAxes.push(
+        am5xy.GaplessDateAxis.new(root, {
+          groupData: true,
+          groupInterval: { timeUnit: "day", count: 7 },
+          baseInterval: { timeUnit: "day", count: 1 },
+          renderer: am5xy.AxisRendererX.new(root, {
+            minGridDistance: 10,
+          }),
+        })
+      );
+    }
 
     // Create series
     var series = chart.series.push(
@@ -289,18 +330,85 @@ function Chart(props) {
       .get("tooltip")
       .label.set(
         "text",
-        "[bold]{valueX.formatDate()}[/]\nOpen: {openValueY}\nHigh: {highValueY}\nLow: {lowValueY}\nClose: {valueY}"
+        "[bold]{valueX.formatDate()}[/]\n시가: {openValueY}\n고가: {highValueY}\n저가: {lowValueY}\n종가: {valueY}"
       );
     series.data.setAll(data);
 
-    // Add cursor
-    chart.set(
+    var cursor = chart.set(
       "cursor",
       am5xy.XYCursor.new(root, {
-        behavior: "selectX",
-        xAxis: xAxis,
+        behavior: "selectXY",
       })
     );
+
+    cursor.events.on("selectended", function (ev) {
+      // Get actors
+      var cursor = ev.target;
+
+      // Get selection boundaries
+      var x1 = xAxis
+        .positionToDate(
+          xAxis.toAxisPosition(cursor.getPrivate("downPositionX"))
+        )
+        .getTime();
+      var x2 = xAxis
+        .positionToDate(xAxis.toAxisPosition(cursor.getPrivate("positionX")))
+        .getTime();
+      var y1 = yAxis.positionToValue(
+        yAxis.toAxisPosition(cursor.getPrivate("downPositionY"))
+      );
+      var y2 = yAxis.positionToValue(
+        yAxis.toAxisPosition(cursor.getPrivate("positionY"))
+      );
+
+      // Account for centering of bullets on a DateAxis
+      var baseInterval = xAxis.getPrivate("baseInterval");
+      var baseDuration =
+        am5.time.getDuration(baseInterval.timeUnit, baseInterval.count) *
+        series.get("locationX");
+      x1 -= baseDuration;
+      x2 -= baseDuration;
+
+      // Assemble bounds
+      var bounds = {
+        left: x1 > x2 ? x2 : x1,
+        right: x1 > x2 ? x1 : x2,
+        top: y1 < y2 ? y1 : y2,
+        bottom: y1 < y2 ? y2 : y1,
+      };
+
+      // Filter data items within boundaries
+      var results = [];
+      am5.array.each(series.dataItems, function (dataItem) {
+        var x = dataItem.get("valueX");
+        var y = dataItem.get("valueY");
+        if (am5.math.inBounds({ x: x, y: y }, bounds)) {
+          results.push(dataItem);
+        }
+      });
+
+      // Results
+      let selectedRange = [];
+      results.map((data) => {
+        var addSelectedData = {
+          date: moment(new Date(data.close.valueX)).format("YYYY-MM-DD"),
+        };
+        return selectedRange.push(addSelectedData);
+      });
+
+      console.log(
+        selectedRange
+        // selectedRange[0],
+        // selectedRange[selectedRange.length - 1]
+      );
+
+      let newsBody = {
+        startDate: selectedRange[0],
+        endDate: selectedRange[selectedRange.length - 1],
+      };
+
+      console.log(newsBody);
+    });
 
     xAxis.set(
       "tooltip",
@@ -333,13 +441,16 @@ function Chart(props) {
   const onMakeChart = () => {
     onDeleteChart("chartdiv");
     onSetChart();
+    dispatch(doFn()).then((response) => {
+      console.log("doFn");
+    });
   };
 
   return (
     <div>
       <button onClick={onMakeChart}>수정</button>
       <div id="chart">
-        <div id="chartdiv" style={{ width: "100%", height: "500px" }}></div>
+        <div id="chartdiv" style={{ width: "800px", height: "300px" }}></div>
       </div>
     </div>
   );

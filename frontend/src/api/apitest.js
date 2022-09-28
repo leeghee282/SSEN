@@ -46,19 +46,10 @@ function Apitest() {
     console.log(ans);
   };
 
-  const getnews = () => {
-    const ans = axios
-      .get("https://j7e204.p.ssafy.io/news/keyword/2022-09-20/2022-09-21")
-      .then((res) => res.data);
-
-    console.log(ans);
-  };
-
   return (
     <div>
       <button onClick={getchat}>ddd</button>
       <button onClick={getcurr}>ddd</button>
-      <button onClick={getnews}>ddd</button>
     </div>
   );
 }
