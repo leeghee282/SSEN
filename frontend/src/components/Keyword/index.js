@@ -5,6 +5,7 @@ import * as d3 from "d3";
 import cloud from "d3-cloud";
 
 import { getKeywords, getNews } from "../../_actions/chart_action";
+import { List, Pagination } from "@mui/material";
 
 function Keyword(props) {
   const dispatch = useDispatch();
@@ -13,6 +14,7 @@ function Keyword(props) {
   const startDate = moment(chartDates.startDate).format("YYYY-MM-DD");
   const endDate = moment(chartDates.endDate).format("YYYY-MM-DD");
   const keywordList = useSelector((state) => state.chartReducer.keywords);
+  const newsList = useSelector((state) => state.chartReducer.news);
   const doing = useSelector((state) => state.chartReducer.doing);
 
   useEffect(() => {
@@ -29,7 +31,7 @@ function Keyword(props) {
     await onSetKeywordsNews();
     setTimeout(function () {
       onSetWordcloud();
-    }, 5000);
+    }, 3000);
   };
 
   const onSetKeywordsNews = async () => {
