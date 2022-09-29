@@ -54,35 +54,31 @@ export default function Login() {
       password: password,
     };
 
-    const response = await axios
-      .post(baseURL + "/api/v1/user/login", body)
-      
-        const resAccessToken = response.data.accessToken;
-        const resEmail = response.data.email;
-        const resName = response.data.name;
-        const resNickname = response.data.nickname;
-        const resPhone = response.data.phone;
-        const resUid = response.data.uid;
-        const resUserId = response.data.userId;
+    const response = await axios.post(baseURL + "/api/v1/user/login", body);
+    const resPassword = response.data.password;
+    const resAccessToken = response.data.accessToken;
+    const resEmail = response.data.email;
+    const resName = response.data.name;
+    const resNickname = response.data.nickname;
+    const resPhone = response.data.phone;
+    const resUid = response.data.uid;
+    const resUserId = response.data.userId;
 
+    console.log(response);
+    sessionStorage.setItem("password", resPassword);
+    sessionStorage.setItem("accessToken", resAccessToken);
+    sessionStorage.setItem("email", resEmail);
+    sessionStorage.setItem("name", resName);
+    sessionStorage.setItem("nickname", resNickname);
+    sessionStorage.setItem("phone", resPhone);
+    sessionStorage.setItem("uid", resUid);
+    sessionStorage.setItem("userId", resUserId);
 
-
-        console.log(response);
-        sessionStorage.setItem("accessToken", resAccessToken);
-        sessionStorage.setItem("email", resEmail);
-        sessionStorage.setItem("name", resName);
-        sessionStorage.setItem("nickname", resNickname);
-        sessionStorage.setItem("phone", resPhone);
-        sessionStorage.setItem("uid", resUid);
-        sessionStorage.setItem("userId", resUserId);
-
-        if (response.status===200) {
-        navigate("/")
-      }
-      else {
-        return;
-      }
-      
+    if (response.status === 200) {
+      navigate("/");
+    } else {
+      return;
+    }
   };
 
   //제출 함수
@@ -128,18 +124,20 @@ export default function Login() {
               alignItems: "center",
             }}
           >
-            <Avatar
-              sx={{
-                width: 300,
-                height: 200,
-                m: 1,
-                bgcolor: "white",
-                cursor: "pointer",
-              }}
-              src="/images/SsenLogo.png"
-            >
-              <LockOutlinedIcon />
-            </Avatar>
+            <Link href="/">
+              <Avatar
+                sx={{
+                  width: 300,
+                  height: 200,
+                  m: 1,
+                  bgcolor: "white",
+                  cursor: "pointer",
+                }}
+                src="/images/SsenLogo.png"
+              >
+                <LockOutlinedIcon />
+              </Avatar>
+            </Link>
             <Typography component="h1" variant="h5"></Typography>
             <Box component="form" noValidate sx={{ mt: 1 }}>
               <TextField
@@ -176,7 +174,7 @@ export default function Login() {
               </Button>
               <Grid container justifyContent="flex-end">
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link href="/signup" variant="body2">
                     {"계정이 없으신가요 ? 회원가입하기"}
                   </Link>
                 </Grid>
