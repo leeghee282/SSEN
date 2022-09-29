@@ -1,8 +1,10 @@
 package com.ssafy.api.controller;
 
 import com.jcraft.jsch.Session;
+import com.ssafy.api.request.KeywordReq;
 import com.ssafy.api.response.KeywordRes;
 import com.ssafy.api.response.NewsRes;
+import com.ssafy.api.response.PastRes;
 import com.ssafy.common.util.jsch.SSHUtil;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
@@ -77,7 +79,6 @@ public class NewsController {
             k.setCount(val);
 //            query.append(val + "), ");
             keywordList.add(k);
-
         }
 //        query.setLength(query.length()-2);
 //        query.append(";");
@@ -126,4 +127,39 @@ public class NewsController {
         return new ResponseEntity<>(newsResList, HttpStatus.OK);
     }
 
+    @PostMapping("/past")
+    @ApiOperation(value = "비슷한 키워드 분포를 가지는 날짜 조회", notes = "<strong>현재 선택한 날짜의 키워드 분포</strong>를 통해서 비슷한 키워드 분포를 가진 날짜-유사도 목록을 조회한다.")
+    @ApiResponses({@ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 400, message = "조회 결과 없음(하둡 맵리듀스 로그, EC2 등 확인필요)"),
+            @ApiResponse(code = 500, message = "서버 오류")})
+    public ResponseEntity<List<PastRes>> getDatesByKeyword(
+            @RequestBody@ApiParam(value = "키워드 분포", required = true) List<KeywordReq> keywordList)  {
+
+        StringBuilder args = new StringBuilder();
+        for (KeywordReq keyword:keywordList) {
+            args.append(keyword.toString()+":");
+        }
+        args.setLength(args.length()-1);
+//        System.out.println(args.toString());
+
+        List<PastRes> pastResList = new ArrayList<>();
+
+        Session jschSession = sshUtil.sessionConnect();
+
+        String cmd = "~/mapreduce/keyword.sh " + args + " past_in past_out > /dev/null 2>&1 &&  /home/hadoop/hadoop/bin/hdfs dfs -cat past_out/*";
+
+        System.out.println("확인하기3 " + cmd);
+//        String response = sshUtil.cmd(jschSession, cmd);
+//        StringTokenizer st = new StringTokenizer(response, "\n");
+//
+//        if (!st.hasMoreTokens())
+//            return ResponseEntity.status(400).body(null);
+//
+//        while (st.hasMoreTokens()) {
+//            String date = st.nextToken(); // 날짜
+//            double value = Double.parseDouble(st.nextToken()); // 유사도
+//            pastResList.add(PastRes.of(date, value);
+//        }
+        return new ResponseEntity<>(pastResList, HttpStatus.OK);
+    }
 }
