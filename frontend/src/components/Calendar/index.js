@@ -221,7 +221,7 @@ const Calendar = () => {
         </Grid>
         </Grid>
           <Grid  container  sx={{mt:2}} direction="row">
-            <Grid item xs={1.9}>
+            <Grid item xs={2.5}>
             <DatePicker 
               id="font_test"
               dateFormat="yyyy년 MM월 dd일"
@@ -233,8 +233,8 @@ const Calendar = () => {
               endDate={endDate}
             />
             </Grid>
-            <Grid item xs={0.2}>
-            <Typography sx={{fontWeight:900}}>~</Typography>
+            <Grid item xs={0.5}>
+            <Typography sx={{fontWeight:900,}}>~</Typography>
             </Grid>
             <Grid item xs={2}>
             <DatePicker
@@ -250,7 +250,7 @@ const Calendar = () => {
             />
             </Grid>
             
-            <Grid item xs={4} sx={{pl:2}}>
+            <Grid item xs={5} sx={{pl:2}}>
             {DateFilterData.map((e, idx) => (
               <Button sx={{ml:2.2}}
                 id="font_test"

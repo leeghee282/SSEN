@@ -5,6 +5,7 @@ import { Box } from "@mui/system";
 import { Avatar, Button, Typography,Link } from "@mui/material";
 import "./style.css";
 
+
 const CommunityButton = () => {
   const [visible, setVisible] = useState(true);
   return (
@@ -40,14 +41,15 @@ const CommunityButton = () => {
         </Box>
       )}
       {visible && (
-        <Box sx={{ background: "#ABADB0", height: "1000px", width: "460px" }}>
+        <Box sx={{ background: "#ABADB0", height: "1000px", width: "460px"}}>
           <Avatar
             className="chat_title"
             src="images/ssenchat2.png"
-            sx={{ width: "300px", height: "300px" }}
+            sx={{ width: "300px", height: "130px" }}
           >
             {" "}
           </Avatar>
+          <CommunityList></CommunityList>
           <button
             position="absolute"
             className="button_main"
@@ -58,7 +60,7 @@ const CommunityButton = () => {
             {visible ? "채팅창 닫기" : "채팅창 열기"}
           </button>
 
-          {visible && <CommunityList />}
+          
         </Box>
       )}
     </>
