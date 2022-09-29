@@ -8,11 +8,12 @@ import { Grid } from "@mui/material";
 import CommunityButton from "../../components/Community/CommunityButton";
 
 
+
 const MainCalendar = () => {
   return (
     <>
-      <Grid container={2} >
-      <Grid item xs={11}>
+      <Grid container={2} sx={{width:"fit-content"}} >
+      <Grid item xs={9}>
       <Calendar />
       
       <Chart />
@@ -21,7 +22,7 @@ const MainCalendar = () => {
       <Keyword />
       <News />
       </Grid>
-      <Grid item xs={1}>
+      <Grid item xs={3}>
         <CommunityButton></CommunityButton>
       </Grid>
       </Grid>
