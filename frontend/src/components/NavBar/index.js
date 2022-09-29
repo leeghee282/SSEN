@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
+import { useState, useEffect } from "react";
 //mui
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -9,12 +10,50 @@ import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
-
+import { Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
 import IconButton from "@mui/material/IconButton";
-import { useState, useEffect } from "react";
-import { Typography } from "@mui/material";
+import Popover from '@mui/material/Popover';
+import Divider from '@mui/material/Divider';
+
+// 회원정보 popover
+const BasicPopover = () => {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
+
+  return (
+    <div>
+      <Button size="small" id="font_test" aria-describedby={id} variant="contained" onClick={handleClick}>
+        회원정보
+      </Button>
+      <Popover
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+      >
+        <Button sx={{ p: 2 }} href="/profile" id="font_test">프로필 보기</Button>
+        <Divider />
+        <Button sx={{ p: 2 }} href="/profileupdate" id="font_test">회원정보 수정</Button>
+      </Popover>
+    </div>
+  );
+}
 
 const Header = () => {
   const navigate = useNavigate();
@@ -27,14 +66,10 @@ const Header = () => {
     sessionStorage.getItem("userId")
   );
 
-  console.log(loginFlag);
-
   //로그아웃 버튼 함수
-
   const handleLogout = () => {
     sessionStorage.clear();
     setLogoutCount(logoutCount + 1);
-
     navigate("/");
   };
 
@@ -73,18 +108,20 @@ const Header = () => {
             <SearchIcon />
           </IconButton>
         </Stack>
+        {/* 로그인을 안했을 경우 */}
         <Stack spacing={1} direction="row">
-          <Button
-            id="font_test"
-            variant="outlined"
-            size="small"
-            href="/exchangecalc"
-          >
-            환율계산기
-          </Button>
           {loginFlag === null && (
             <Box>
               <Button
+                id="font_test"
+                variant="outlined"
+                size="small"
+                href="/exchangecalc"
+                >
+              환율계산기
+              </Button>
+              <Button
+                sx={{ ml: 1 }}
                 id="font_test"
                 variant="contained"
                 size="small"
@@ -103,23 +140,33 @@ const Header = () => {
               </Button>
             </Box>
           )}
+          {/* 로그인한 경우 */}
           {loginFlag !== null && (
             <Box sx={{display:"flex",flexDirection:"row"}}>
-              <Box>
-                <Typography id="font_test"sx={{pl:2,mr:3}}>{sessionStorage.getItem("name")}님</Typography>
-              </Box>
+              <Typography id="font_test"sx={{pl:2,mr:3}}>'{sessionStorage.getItem("name")}' 님</Typography>
               <Button
+                sx={{ mr: 1}}
                 id="font_test"
-                variant="contained"
+                variant="outlined"
                 size="small"
-                href="/profile"
-              >
-                프로필보기
+                href="/exchangecalc"
+                >
+                환율계산기
               </Button>
-              <Button
+              <BasicPopover />
+              {/* <Button
                 sx={{ ml: 1, background: "red" }}
                 id="font_test"
                 variant="contained"
+                size="small"
+                href="/profileupdate"
+              >
+                프로필 수정
+              </Button> */}
+              <Button
+                sx={{ ml: 1 }}
+                id="font_test"
+                variant="outlined"
                 size="small"
                 href="/"
                 onClick={handleLogout}
