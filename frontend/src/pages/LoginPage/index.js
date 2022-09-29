@@ -34,11 +34,13 @@ export default function Login() {
   const validate = () => {
     const errors = {};
     if (!formValues.userId) {
-      errors.userId = "아이디를 입력하세요";
+      errors.password = "로그인 정보를 확인하세요.";
     }
     if (!formValues.password) {
       errors.password = "비밀번호를 입력해주세요.";
     }
+
+    
 
     setFormErrors(errors);
     if (!(errors.userId + errors.password)) {
@@ -53,36 +55,37 @@ export default function Login() {
       userId: userId,
       password: password,
     };
+    try{
+    const response = await axios.post(baseURL + "/api/v1/user/login", body);
+    const resPassword = response.data.password;
+    const resAccessToken = response.data.accessToken;
+    const resEmail = response.data.email;
+    const resName = response.data.name;
+    const resNickname = response.data.nickname;
+    const resPhone = response.data.phone;
+    const resUid = response.data.uid;
+    const resUserId = response.data.userId;
 
-    const response = await axios
-      .post(baseURL + "/api/v1/user/login", body)
-      
-        const resAccessToken = response.data.accessToken;
-        const resEmail = response.data.email;
-        const resName = response.data.name;
-        const resNickname = response.data.nickname;
-        const resPhone = response.data.phone;
-        const resUid = response.data.uid;
-        const resUserId = response.data.userId;
+    console.log(response);
+    sessionStorage.setItem("password", resPassword);
+    sessionStorage.setItem("accessToken", resAccessToken);
+    sessionStorage.setItem("email", resEmail);
+    sessionStorage.setItem("name", resName);
+    sessionStorage.setItem("nickname", resNickname);
+    sessionStorage.setItem("phone", resPhone);
+    sessionStorage.setItem("uid", resUid);
+    sessionStorage.setItem("userId", resUserId);
 
-
-
-        console.log(response);
-        sessionStorage.setItem("accessToken", resAccessToken);
-        sessionStorage.setItem("email", resEmail);
-        sessionStorage.setItem("name", resName);
-        sessionStorage.setItem("nickname", resNickname);
-        sessionStorage.setItem("phone", resPhone);
-        sessionStorage.setItem("uid", resUid);
-        sessionStorage.setItem("userId", resUserId);
-
-        if (response.status===200) {
-        navigate("/")
-      }
-      else {
-        return;
-      }
-      
+    if (response.status === 200) {
+      navigate("/");
+    } else {
+      return;
+    }
+  }
+  catch(e) {
+    setFormErrors({...formErrors,password:"로그인 정보를 확인하세요."})
+    console.log(formErrors,33)
+  }
   };
 
   //제출 함수
@@ -118,7 +121,7 @@ export default function Login() {
             backgroundPosition: "center",
           }}
         />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Grid item xs={12} sm={8} md={5} component={Paper}  square>
           <Box
             sx={{
               my: 8,
@@ -128,18 +131,20 @@ export default function Login() {
               alignItems: "center",
             }}
           >
-            <Avatar
-              sx={{
-                width: 300,
-                height: 200,
-                m: 1,
-                bgcolor: "white",
-                cursor: "pointer",
-              }}
-              src="/images/SsenLogo.png"
-            >
-              <LockOutlinedIcon />
-            </Avatar>
+            <Link href="/">
+              <Avatar
+                sx={{
+                  width: 300,
+                  height: 200,
+                  m: 1,
+                  bgcolor: "white",
+                  cursor: "pointer",
+                }}
+                src="/images/SsenLogo.png"
+              >
+                <LockOutlinedIcon />
+              </Avatar>
+            </Link>
             <Typography component="h1" variant="h5"></Typography>
             <Box component="form" noValidate sx={{ mt: 1 }}>
               <TextField
@@ -152,6 +157,7 @@ export default function Login() {
                 name="userId"
                 autoFocus
               />
+              
               <TextField
                 onChange={handleChange}
                 margin="normal"
@@ -163,6 +169,7 @@ export default function Login() {
                 id="password"
                 autoComplete="current-password"
               />
+              <Typography id="font_test" color="red">{formErrors.password}</Typography>
 
               <Button
                 onClick={handleSubmit}
@@ -176,7 +183,7 @@ export default function Login() {
               </Button>
               <Grid container justifyContent="flex-end">
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link href="/signup" variant="body2">
                     {"계정이 없으신가요 ? 회원가입하기"}
                   </Link>
                 </Grid>

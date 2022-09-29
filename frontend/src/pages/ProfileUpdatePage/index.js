@@ -24,33 +24,25 @@ const ProfileUpdate = () => {
   const [insertFlag3, setInsertFlag3] = useState(false);
   const [insertFlag4, setInsertFlag4] = useState(true);
   const [insertFlag5, setInsertFlag5] = useState(false);
-  const [totalData,setTotalData] = useState({});
+  const [totalData, setTotalData] = useState({});
   const [userName, setUserName] = useState("배지우");
   const [userNickName, setUserNickName] = useState("환율짱짱");
   const [userPhoneNumber, setUserPhoneNumber] = useState("010-4791-5385");
-  
-  
 
   const insertClicked1 = () => {
     // 이름 변경
-    
+
     insertComponentToggle1();
   };
 
   function insertComponentToggle1() {
-    
     setInsertFlag1((insertFlag1) => !insertFlag1);
-    
-    
   }
-  // 취소했을때, 값 변경 안되게 하기 위한함수 
+  // 취소했을때, 값 변경 안되게 하기 위한함수
   function insertComponentToggle11() {
     getProfile();
     setInsertFlag1((insertFlag1) => !insertFlag1);
-    
-    
   }
-
 
   const insertClicked2 = () => {
     // 닉네임 변경
@@ -62,7 +54,7 @@ const ProfileUpdate = () => {
     setInsertFlag2((insertFlag2) => !insertFlag2);
   }
 
-  function insertComponentToggle22 () {
+  function insertComponentToggle22() {
     getProfile();
     setInsertFlag2((insertFlag2) => !insertFlag2);
   }
@@ -71,7 +63,6 @@ const ProfileUpdate = () => {
     // 전화번호 변경
 
     insertComponentToggle3();
-    
   };
 
   function insertComponentToggle3() {
@@ -94,26 +85,20 @@ const ProfileUpdate = () => {
     setInsertFlag4((insertFlag4) => !insertFlag4);
   }
 
-  
-  
-
-  const getProfile =() => {
-
+  const getProfile = () => {
     axios
-      .get(baseURL + `/api/v1/user/mypage/${sessionStorage.getItem('userId')}`)
-      .then((response)=> {setTotalData(response.data)
-      console.log(123123)})
-
-      
-    
-  }
+      .get(baseURL + `/api/v1/user/mypage/${sessionStorage.getItem("userId")}`)
+      .then((response) => {
+        setTotalData(response.data);
+        console.log(123123);
+      });
+  };
   useEffect(() => {
     getProfile();
   }, []);
 
   return (
     <ThemeProvider theme={theme}>
-      
       <CssBaseline />
       <Box
         id="font_test"
@@ -122,7 +107,6 @@ const ProfileUpdate = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          
         }}
       >
         <Box sx={{ mt: 15, width: 1000, height: 1100, background: "white" }}>
@@ -182,7 +166,7 @@ const ProfileUpdate = () => {
             }}
           >
             <Grid item xs={4}>
-              <Box sx={{ pl: 2  }}>이름</Box>
+              <Box sx={{ pl: 2 }}>이름</Box>
             </Grid>
             <Grid item xs={5}>
               {!insertFlag1 && <Box sx={{ pl: 2 }}>{totalData.name}</Box>}
@@ -200,7 +184,6 @@ const ProfileUpdate = () => {
                     cancelClicked11={insertComponentToggle11}
                     totalData={totalData}
                     setTotalData={setTotalData}
-                    
                   />
                 </Box>
               )}
@@ -371,6 +354,8 @@ const ProfileUpdate = () => {
               insertFlag4={insertFlag4}
               setInsertFlag4={setInsertFlag4}
               cancelClicked4={insertComponentToggle4}
+              totalData={totalData}
+              setTotalData={setTotalData}
             ></EditPassword>
           )}
           {insertFlag4 && (
