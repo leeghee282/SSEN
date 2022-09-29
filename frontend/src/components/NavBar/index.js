@@ -2,6 +2,8 @@ import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
+import axios from "axios";
+import { baseNewsURL } from "../../api";
 //mui
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -14,8 +16,8 @@ import { Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
 import IconButton from "@mui/material/IconButton";
-import Popover from '@mui/material/Popover';
-import Divider from '@mui/material/Divider';
+import Popover from "@mui/material/Popover";
+import Divider from "@mui/material/Divider";
 
 // 회원정보 popover
 const BasicPopover = () => {
@@ -30,11 +32,17 @@ const BasicPopover = () => {
   };
 
   const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
+  const id = open ? "simple-popover" : undefined;
 
   return (
     <div>
-      <Button size="small" id="font_test" aria-describedby={id} variant="contained" onClick={handleClick}>
+      <Button
+        size="small"
+        id="font_test"
+        aria-describedby={id}
+        variant="contained"
+        onClick={handleClick}
+      >
         회원정보
       </Button>
       <Popover
@@ -43,20 +51,43 @@ const BasicPopover = () => {
         anchorEl={anchorEl}
         onClose={handleClose}
         anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
+          vertical: "bottom",
+          horizontal: "center",
         }}
       >
-        <Button sx={{ p: 2 }} href="/profile" id="font_test">프로필 보기</Button>
+        <Button sx={{ p: 2 }} href="/profile" id="font_test">
+          프로필 보기
+        </Button>
         <Divider />
-        <Button sx={{ p: 2 }} href="/profileupdate" id="font_test">회원정보 수정</Button>
+        <Button sx={{ p: 2 }} href="/profileupdate" id="font_test">
+          회원정보 수정
+        </Button>
       </Popover>
     </div>
   );
-}
+};
 
 const Header = () => {
   const navigate = useNavigate();
+  const [word, setWord] = useState("");
+
+  const onSubmit = async (e) => {
+    console.log(word, 124123);
+    e.preventDefault();
+
+    try {
+      await axios
+        .get(baseNewsURL + `:8081/api/v1/search/${word}/2022-09-28/`)
+        .then((response) => setWord(response));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const onChange = (e) => {
+    setWord(e.target.value);
+    console.log(word, "네브바 검색어");
+  };
 
   const logoClickHandler = () => {
     navigate("/");
@@ -76,7 +107,6 @@ const Header = () => {
   return (
     <Box
       style={{
-        
         background: "#F5F5F5",
         height: "fit-content",
         minHeight: "100vh",
@@ -104,8 +134,14 @@ const Header = () => {
             type="search"
             variant="standard"
             placeholder="검색어를 입력해주세요"
+            onChange={onChange}
           />
-          <IconButton type="submit" sx={{ p: "10px" }} aria-label="search">
+          <IconButton
+            type="submit"
+            sx={{ p: "10px" }}
+            aria-label="search"
+            onClick={onSubmit}
+          >
             <SearchIcon />
           </IconButton>
         </Stack>
@@ -118,8 +154,8 @@ const Header = () => {
                 variant="outlined"
                 size="small"
                 href="/exchangecalc"
-                >
-              환율계산기
+              >
+                환율계산기
               </Button>
               <Button
                 sx={{ ml: 1 }}
@@ -143,15 +179,17 @@ const Header = () => {
           )}
           {/* 로그인한 경우 */}
           {loginFlag !== null && (
-            <Box sx={{display:"flex",flexDirection:"row"}}>
-              <Typography id="font_test"sx={{pl:2,mr:3}}>'{sessionStorage.getItem("name")}' 님</Typography>
+            <Box sx={{ display: "flex", flexDirection: "row" }}>
+              <Typography id="font_test" sx={{ pl: 2, mr: 3 }}>
+                '{sessionStorage.getItem("name")}' 님
+              </Typography>
               <Button
-                sx={{ mr: 1}}
+                sx={{ mr: 1 }}
                 id="font_test"
                 variant="outlined"
                 size="small"
                 href="/exchangecalc"
-                >
+              >
                 환율계산기
               </Button>
               <BasicPopover />

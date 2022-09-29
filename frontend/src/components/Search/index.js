@@ -37,12 +37,13 @@
 
 // export default Search;
 import axios from "axios";
+import { useParams } from "react-router";
 import { baseNewsURL } from "../../api/index";
 import { useState, useEffect } from "react";
 import Pagination from "./SearchPagination";
-import './style.css'
-import { Typography,Box } from "@mui/material";
-
+import "./style.css";
+import { Typography, Box } from "@mui/material";
+import { PanoramaSharp } from "@mui/icons-material";
 
 function Search() {
   const [posts, setPosts] = useState([]);
@@ -52,39 +53,49 @@ function Search() {
 
   const [search, setSearch] = useState(""); //검색어
   const [lists, setLists] = useState([]); //검색한 리스트 저장할 곳
-  
-    //값 받기
-  
-    const handleChange = (e) => {
-      setSearch(e.target.value);
-    };
-  
-    const handleSubmit = async (e) => {
-      console.log(search, 124123);
-      e.preventDefault();
-  
-      try{await axios
-        .get(baseNewsURL + `/api/v1/search/${search}`)
-        .then((response) => setLists(response));}
-        catch(e) {
-          console.log(e)
-        }
-    };
-  
+
+  //값 받기
+
+  const handleChange = (e) => {
+    setSearch(e.target.value);
+  };
+
+  const handleSubmit = async (e) => {
+    console.log(search, 124123);
+    e.preventDefault();
+
+    try {
+      await axios
+        .get(baseNewsURL + `:8081/api/v1/search/${search}/2022-09-28/`)
+        .then((response) => setLists(response));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    async function fetchData() {
+      const result = await axios.get(
+        baseNewsURL + `:8081/api/v1/search/${search}/2022-09-28/`
+      );
+      console.log(result.data.result);
+      setSearch(result.data.result);
+    }
+    fetchData();
+  }, []);
 
   // useEffect(() => {
   //   fetch("https://jsonplaceholder.typicode.com/posts")
   //     .then((res) => res.json())
   //     .then((data) => {
-        
-        
+
   //       setPosts(data)
   //     });
   // }, []);
 
   return (
     <div>
-       <form>
+      <form>
         <input
           type="text"
           onChange={handleChange}
@@ -95,7 +106,6 @@ function Search() {
       <header>
         <h1>게시물 목록</h1>
       </header>
-      
 
       <label>
         페이지 당 표시할 게시물 수:&nbsp;
@@ -114,14 +124,13 @@ function Search() {
 
       <main>
         {lists.slice(offset, offset + limit).map(({ id, title, body }) => (
-          
           <Box className="card" key={id}>
-            <Typography fontSize="30px" sx={{height:"60px"}}> 
-              {title.length >=40 ? title.substr(0,40)+"..." : title
-          }
-            </Typography >
-            <Typography >{body.length >=50 ? body.substr(0,50)+"..." : body
-          }</Typography>
+            <Typography fontSize="30px" sx={{ height: "60px" }}>
+              {title.length >= 40 ? title.substr(0, 40) + "..." : title}
+            </Typography>
+            <Typography>
+              {body.length >= 50 ? body.substr(0, 50) + "..." : body}
+            </Typography>
           </Box>
         ))}
       </main>
@@ -134,11 +143,8 @@ function Search() {
           setPage={setPage}
         />
       </footer>
-      </div>
+    </div>
   );
 }
 
-
-
 export default Search;
-
