@@ -34,11 +34,13 @@ export default function Login() {
   const validate = () => {
     const errors = {};
     if (!formValues.userId) {
-      errors.userId = "아이디를 입력하세요";
+      errors.password = "로그인 정보를 확인하세요.";
     }
     if (!formValues.password) {
       errors.password = "비밀번호를 입력해주세요.";
     }
+
+    
 
     setFormErrors(errors);
     if (!(errors.userId + errors.password)) {
@@ -53,7 +55,7 @@ export default function Login() {
       userId: userId,
       password: password,
     };
-
+    try{
     const response = await axios.post(baseURL + "/api/v1/user/login", body);
     const resPassword = response.data.password;
     const resAccessToken = response.data.accessToken;
@@ -79,6 +81,11 @@ export default function Login() {
     } else {
       return;
     }
+  }
+  catch(e) {
+    setFormErrors({...formErrors,password:"로그인 정보를 확인하세요."})
+    console.log(formErrors,33)
+  }
   };
 
   //제출 함수
@@ -114,7 +121,7 @@ export default function Login() {
             backgroundPosition: "center",
           }}
         />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Grid item xs={12} sm={8} md={5} component={Paper}  square>
           <Box
             sx={{
               my: 8,
@@ -150,6 +157,7 @@ export default function Login() {
                 name="userId"
                 autoFocus
               />
+              
               <TextField
                 onChange={handleChange}
                 margin="normal"
@@ -161,6 +169,7 @@ export default function Login() {
                 id="password"
                 autoComplete="current-password"
               />
+              <Typography id="font_test" color="red">{formErrors.password}</Typography>
 
               <Button
                 onClick={handleSubmit}
