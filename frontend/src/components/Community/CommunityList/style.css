@@ -1,14 +1,15 @@
 .timeLineWrap{
-  position: absolute;
+  /* position: absolute;
   top: 65%;
-  left: 88%;
-  transform: translate(-53%, -44%);
+  left: 88%; */
+  /* transform: translate(-53%, -44%); */
   width: 350px;
   height: 750px;
   overflow-y: scroll;
   border: 1px solid #bbbbbb;
   border-radius: 30px;
-  padding-top: 20px;
+  padding-top: 30px;
+  margin-left:60px;
   background-color: #edf1f5;
 }
 .timeLineWrap::-webkit-scrollbar {

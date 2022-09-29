@@ -76,6 +76,7 @@ const Header = () => {
   return (
     <Box
       style={{
+        
         background: "#F5F5F5",
         height: "fit-content",
         minHeight: "100vh",
