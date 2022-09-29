@@ -11,10 +11,8 @@
   font-weight: 600;
   color: #fff;
   cursor: pointer;
-  position: absolute;
-  top: 113%;
-  left: 83.5%;
-  transform: translate(-50%, -50%);
+
+  /* transform: translate(-50%, -50%); */
 }
 
 
@@ -25,7 +23,7 @@
   cursor: pointer;
   position: fixed;
   top: 90%;
-  left: 90%;
+  left: 85%;
   transform: translate(-50%, -50%);
 }
 
@@ -36,7 +34,7 @@
   cursor: pointer;
   position: fixed;
   top: 88%;
-  left: 97%;
+  left: 95%;
   transform: translate(-50%, -50%);
 }
 
