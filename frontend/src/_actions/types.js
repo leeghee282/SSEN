@@ -1,3 +1,5 @@
+export const GET_CURRENCY_CODE = "get_currency_code";
+export const GET_DATE = "get_date";
 export const GET_EXCHANGE_RATE = "get_exchange_rate";
 export const GET_BANKS_INFO = "get_banks_info";
 

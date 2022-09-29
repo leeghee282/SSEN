@@ -441,9 +441,6 @@ function Chart() {
   const onMakeChart = () => {
     onDeleteChart("chartdiv");
     onSetChart();
-    dispatch(doFn()).then((response) => {
-      console.log("doFn");
-    });
   };
 
   return (
