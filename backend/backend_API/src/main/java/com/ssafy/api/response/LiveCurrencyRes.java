@@ -1,6 +1,5 @@
 package com.ssafy.api.response;
 
-import com.ssafy.db.entity.InterestRate;
 import com.ssafy.db.entity.LiveCurrency;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -8,7 +7,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
