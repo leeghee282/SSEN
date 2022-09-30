@@ -3,11 +3,11 @@ import axios from "axios";
 import "./style.css";
 import { baseNewsURL } from "../../api/index";
 import Pagination from "./SearchPagination";
-import { Typography, Box } from "@mui/material";
+import { Typography, Box, Link, Grid, Container } from "@mui/material";
 import { useLocation } from "react-router-dom";
 
 function Search() {
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(5);
   const [page, setPage] = useState(1);
   const offset = (page - 1) * limit;
 
@@ -18,23 +18,6 @@ function Search() {
   console.log(location);
 
   //값 받기
-
-  const handleChange = (e) => {
-    setSearch(e.target.value);
-  };
-
-  const handleSubmit = async (e) => {
-    console.log(search, "서치페이지 검색");
-    e.preventDefault();
-
-    try {
-      await axios
-        .get(baseNewsURL + `/news/search/${search}/2022-09-11/2022-09-15`)
-        .then((response) => setLists(response.data));
-    } catch (e) {
-      console.log(e);
-    }
-  };
 
   useEffect(() => {
     async function fetchData() {
@@ -60,14 +43,6 @@ function Search() {
 
   return (
     <div>
-      <form>
-        <input
-          type="text"
-          onChange={handleChange}
-          placeholder="검색어를 입력해주세요"
-        />
-        <button onClick={handleSubmit}></button>
-      </form>
       <header>
         <h1>게시물 목록</h1>
       </header>
@@ -79,7 +54,7 @@ function Search() {
           value={limit}
           onChange={({ target: { value } }) => setLimit(Number(value))}
         >
-          <option value="10">10</option>
+          <option value="5">5</option>
           <option value="12">12</option>
           <option value="20">20</option>
           <option value="50">50</option>
@@ -88,16 +63,55 @@ function Search() {
       </label>
 
       <main>
-        {lists.slice(offset, offset + limit).map(({ title, content, time }) => (
-          <Box className="card" key={time}>
-            <Typography fontSize="30px" sx={{ height: "60px" }}>
-              {title.length >= 40 ? title.substr(0, 40) + "..." : title}
-            </Typography>
-            <Typography>
-              {content.length >= 50 ? content.substr(0, 50) + "..." : content}
-            </Typography>
-          </Box>
-        ))}
+        {lists
+          .slice(offset, offset + limit)
+          .map(({ title, content, time, url, press }) => (
+            <Grid container>
+              <Grid item xs={12}>
+                <Link
+                  href={url}
+                  target="_blank"
+                  sx={{ textDecoration: "none", color: "black" }}
+                >
+                  <Box className="card" key={time}>
+                    <Grid sx={{ borderBottom: "1px dashed black" }} container>
+                      <Grid item xs={10}>
+                        <Typography
+                          id="font_test"
+                          fontSize="30px"
+                          sx={{
+                            height: "60px",
+                          }}
+                        >
+                          {title.length >= 30
+                            ? title.replace("...", " ").substr(0, 30) + "..."
+                            : title}
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={2}>
+                        <Grid container direction="column">
+                          <Grid id="font_test" item xs={2}>
+                            {press}
+                          </Grid>
+                          <Grid id="font_test" sx={{ mt: 1 }} item xs={10}>
+                            {time}
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+
+                    <Grid sx={{ pl: 1 }} item xs={11}>
+                      <Typography id="font_Gmarket">
+                        {content.length >= 150
+                          ? content.substr(0, 150) + "..."
+                          : content}
+                      </Typography>
+                    </Grid>
+                  </Box>
+                </Link>
+              </Grid>
+            </Grid>
+          ))}
       </main>
 
       <footer>
