@@ -5,14 +5,20 @@ import com.ssafy.api.request.KeywordReq;
 import com.ssafy.api.response.KeywordRes;
 import com.ssafy.api.response.NewsRes;
 import com.ssafy.api.response.PastRes;
+import com.ssafy.api.service.KeywordService;
 import com.ssafy.common.util.jsch.SSHUtil;
+import com.ssafy.db.entity.VarianceTop;
 import io.swagger.annotations.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -21,10 +27,14 @@ import java.util.StringTokenizer;
  */
 @Api(value = "뉴스 및 키워드 API", tags = {"News."})
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/news")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class NewsController {
+
+    private final KeywordService keywordService;
     SSHUtil sshUtil = SSHUtil.getInstance();
+
 
     @GetMapping("/keyword/{start_date}/{end_date}")
     @ApiOperation(value = "뉴스 키워드 분석", notes = "<strong>시작 날짜, 종료 날짜</strong>를 입력해서 해당 범위의 뉴스 키워드 결과를 50개 조회한다. (하루만 조회할 경우 start_date만 입력해도 가능)")
@@ -80,7 +90,7 @@ public class NewsController {
             query.append(val + "), ");
             keywordList.add(k);
         }
-        query.setLength(query.length()-2);
+        query.setLength(query.length() - 2);
         query.append(";");
         System.out.println(query.toString());
 
@@ -131,13 +141,13 @@ public class NewsController {
             @ApiResponse(code = 400, message = "조회 결과 없음(하둡 맵리듀스 로그, EC2 등 확인필요)"),
             @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<List<PastRes>> getDatesByKeyword(
-            @RequestBody@ApiParam(value = "키워드 분포", required = true) List<KeywordReq> keywordList)  {
+            @RequestBody @ApiParam(value = "키워드 분포", required = true) List<KeywordReq> keywordList) throws ParseException {
 
         StringBuilder query = new StringBuilder();
-        for (KeywordReq keyword:keywordList) {
-            query.append(keyword.toString()+":");
+        for (KeywordReq keyword : keywordList) {
+            query.append(keyword.toString() + ":");
         }
-        query.setLength(query.length()-1);
+        query.setLength(query.length() - 1);
 //        System.out.println(args.toString());
 
         List<PastRes> pastResList = new ArrayList<>();
@@ -146,26 +156,24 @@ public class NewsController {
 
         String cmd = "/home/hadoop/hadoop/bin/hadoop jar ~/mapreduce/ssen.jar topksearch 4 " + query + " 10 topksearch topksearch_out1 topksearch_out2 > /dev/null 2>&1 &&  /home/hadoop/hadoop/bin/hdfs dfs -cat topksearch_out2/*";
 
-        System.out.println("확인하기3 " + cmd);
+//        System.out.println("확인하기3 " + cmd);
         String response = sshUtil.cmd(jschSession, cmd);
         StringTokenizer st = new StringTokenizer(response);
 
-//        if (!st.hasMoreTokens())
-//            return ResponseEntity.status(400).body(null);
-//
+        // PostResList 만들기 ===========================================
+        
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd"); // 날짜 포맷
+
         while (st.hasMoreTokens()) {
-            String uid = st.nextToken(); // 날짜
-            // uid로 currency_code와 variance 찾는 부분
-
-
-
-            /////
-            String currency_code = "123";
-            double variance = 3.45;
-            String date = st.nextToken(); // 날짜
-            double value = Double.parseDouble(st.nextToken()); // 유사도
-            System.out.println(uid +" " + date +" " + value);
-            pastResList.add(PastRes.of(date, value, currency_code, variance));
+            st.nextToken();
+            String dateStr = st.nextToken(); // 날짜 String
+            Date vDate = formatter.parse(dateStr); // 검색할 Date
+            VarianceTop info = keywordService.getVarianceTopByDate(vDate);
+            String currency_code = info.getCountry(); // 통화코드
+            double variance = info.getVariance(); // 변화율
+            double similarity = Double.parseDouble(st.nextToken()); // 유사도
+            Date date = info.getVarianceDate().getReferenceDate(); // 날짜(출력용)
+            pastResList.add(PastRes.of(date, similarity, currency_code, variance)); // List에 추가
         }
         return new ResponseEntity<>(pastResList, HttpStatus.OK);
     }
