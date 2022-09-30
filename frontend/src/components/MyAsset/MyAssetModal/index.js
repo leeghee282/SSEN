@@ -37,7 +37,7 @@ const BasicSelect = ({ code, setCode }) => {
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">code Code</InputLabel>
+        <InputLabel id="demo-simple-select-label">화폐 선택</InputLabel>
         <Select
           id="code_code"
           value={code}
@@ -148,7 +148,7 @@ export default function BasicModal({ getMyAssetData }) {
 
   return (
     <div>
-      <Button id="font_test" variant="contained" onClick={handleOpen} style={{background:"#604fdc"}}>
+      <Button id="font_test" variant="contained" onClick={handleOpen}>
         보유 외화 추가하기
       </Button>
       <Modal
@@ -201,7 +201,7 @@ export default function BasicModal({ getMyAssetData }) {
               </Grid>
             </Box>
             <Stack mt={1} spacing={1} direction="row" justifyContent="center">
-              <Button variant="contained" onClick={handleSumit} id="font_test" style={{background:"#604fdc"}}>
+              <Button variant="contained" onClick={handleSumit} id="font_test">
                 등록
               </Button>
               <Button variant="outlined" onClick={handleClose} id="font_test">

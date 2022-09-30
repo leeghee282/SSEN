@@ -180,7 +180,7 @@ export default function MyAssetItemList({
                 sx={{ fontSize: "20px" }}
                 id="font_test"
               >
-                DELETE
+                삭제
               </TableCell>
             </TableRow>
           </TableHead>
