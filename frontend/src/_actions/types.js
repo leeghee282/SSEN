@@ -9,3 +9,5 @@ export const GET_DATA = "get_data";
 export const GET_KEYWORDS = "get_keywords";
 export const GET_NEWS = "get_news";
 export const DO_FN = "do_fn";
+export const GET_CHART_DETAIL_DATE = "get_chart_detail_date";
+export const DO_DETAIL_FN = "do_detail_fn";

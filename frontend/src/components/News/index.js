@@ -3,38 +3,38 @@ import { useSelector } from "react-redux";
 
 import { Stack, Pagination } from "@mui/material";
 import { Link } from "react-router-dom";
-import { NewsDetail } from "./NewsDetail";
+import NewsDetail from "./NewsDetail";
 
 function News() {
-  const newsList = useSelector((state) => state.chartReducer.news);
+  // const newsList = useSelector((state) => state.chartReducer.news);
 
-  const [page, setPage] = useState(1);
-  const [data, setData] = useState([]);
-  const [lastPage, setLastPage] = useState();
+  // const [page, setPage] = useState(1);
+  // const [data, setData] = useState([]);
+  // const [lastPage, setLastPage] = useState();
 
-  useEffect(() => {
-    const getLastPage =
-      newsList.length % 5 === 0
-        ? parseInt(newsList.length / 5)
-        : parseInt(newsList.length / 5) + 1;
+  // useEffect(() => {
+  //   const getLastPage =
+  //     newsList.length % 5 === 0
+  //       ? parseInt(newsList.length / 5)
+  //       : parseInt(newsList.length / 5) + 1;
 
-    setLastPage(getLastPage);
+  //   setLastPage(getLastPage);
 
-    if (page === getLastPage) {
-      setData(newsList.slice(5 * (page - 1)));
-    } else {
-      setData(newsList.slice(5 * (page - 1), 5 * (page - 1) + 5));
-    }
-  }, [page]);
+  //   if (page === getLastPage) {
+  //     setData(newsList.slice(5 * (page - 1)));
+  //   } else {
+  //     setData(newsList.slice(5 * (page - 1), 5 * (page - 1) + 5));
+  //   }
+  // }, [page]);
 
-  const handlePage = (event) => {
-    const nowPageInt = parseInt(event.target.outerText);
-    setPage(nowPageInt);
-  };
+  // const handlePage = (event) => {
+  //   const nowPageInt = parseInt(event.target.outerText);
+  //   setPage(nowPageInt);
+  // };
 
   return (
     <div>
-      <Stack alignItems="center">
+      {/* <Stack alignItems="center">
         <Stack
           direction="row"
           justifyContent="center"
@@ -82,7 +82,7 @@ function News() {
           sx={{ margin: 2 }}
           onChange={(e) => handlePage(e)}
         />
-      </Stack>
+      </Stack> */}
     </div>
   );
 }

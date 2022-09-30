@@ -2,6 +2,7 @@ import Select from "react-select";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
+import { Grid } from "@mui/material";
 
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,15 +24,24 @@ function ExchangeCalc() {
   // );
   const banksInfo = useSelector((state) => state.exchangecalcReducer.banksInfo);
 
-  const [selectDate, setSelectDate] = useState("");
+  const [selectDate, setSelectDate] = useState(new Date());
   const [banklist, setBanklist] = useState([]);
   const [bankInfo, setBankInfo] = useState("");
   const [codeValue, setCodeValue] = useState("");
   const [exchangePrice, setExchangePrice] = useState(0);
 
+  const [fromCurrencyName, setFromCurrencyName] = useState("");
+  const [fromCurrency, setFromCurrency] = useState("");
+  const [toCurrencyName, setToCurrencyName] = useState("");
+  const [toCurrency, setToCurrency] = useState("");
+
   useEffect(() => {
     onSetBankinfos();
   }, []);
+
+  useEffect(() => {
+    onSetExchangeRate(selectDate, codeValue);
+  }, [codeValue]);
 
   const onSetBankinfos = async () => {
     let body = {
@@ -45,17 +55,6 @@ function ExchangeCalc() {
         };
         return setBanklist((prevList) => [...prevList, addBankinfo]);
       });
-    });
-  };
-
-  const onSetExchangeRate = (date, code) => {
-    let body = {
-      date: date,
-      code: code,
-    };
-    dispatch(getExchangeRate(body)).then((response) => {
-      console.log(response.payload);
-      setExchangePrice(response.payload.closePrice);
     });
   };
 
@@ -80,7 +79,35 @@ function ExchangeCalc() {
 
   const onSelectCurrencyHandler = (selectedOption) => {
     setCodeValue(selectedOption.value);
-    // getCurrencyCodeHandler(selectedOption.value);
+    setFromCurrencyName(selectedOption.label.substr(0, 3));
+    setToCurrencyName(selectedOption.label.substr(-3));
+  };
+
+  const onSetExchangeRate = (date, code) => {
+    let body = {
+      date: moment(date).format("YYYY-MM-DD"),
+      code: code,
+    };
+    dispatch(getExchangeRate(body)).then((response) => {
+      console.log(response.payload);
+      setExchangePrice(response.payload.closePrice);
+    });
+  };
+
+  const onExchangeCalculation = (event) => {
+    setFromCurrency(event.currentTarget.value);
+    setToCurrency(event.currentTarget.value * exchangePrice);
+  };
+
+  const onChangeCalculation = () => {
+    const temp = fromCurrencyName;
+    setFromCurrencyName(toCurrencyName);
+    setToCurrencyName(temp);
+
+    setExchangePrice((1 / exchangePrice).toFixed(5));
+    console.log(exchangePrice);
+    setFromCurrency(toCurrency);
+    setToCurrency(fromCurrency);
   };
 
   const getCurrencyCodeHandler = (code) => {
@@ -91,16 +118,30 @@ function ExchangeCalc() {
 
   return (
     <div>
-      <DatePicker
-        dateFormat="yyyy-MM-dd"
-        selected={selectDate}
-        onChange={(date) => setSelectDate(date)}
-      />
-      <Select options={banklist} onChange={onSelectBankHandler} />
-      <p>은행: {`${bankInfo.bank}`}</p>
-      <p>수수료: {`${bankInfo.commission}`}</p>
-      <p>기본 우대율: {`${bankInfo.basicRate}`}</p>
-      <Select options={currencylist} onChange={onSelectCurrencyHandler} />
+      <Grid container spacing={2}>
+        <Grid item xs={4}>
+          <DatePicker
+            dateFormat="yyyy-MM-dd"
+            selected={selectDate}
+            onChange={(date) => setSelectDate(date)}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <Select options={banklist} onChange={onSelectBankHandler} />
+        </Grid>
+
+        <p>은행: {`${bankInfo.bank}`}</p>
+        <p>수수료: {`${bankInfo.commission}`}</p>
+        <p>기본 우대율: {`${bankInfo.basicRate}`}</p>
+
+        <Select options={currencylist} onChange={onSelectCurrencyHandler} />
+
+        <label>{`${fromCurrencyName}`}</label>
+        <input onChange={onExchangeCalculation} value={fromCurrency} />
+        <p>{`${toCurrencyName} : ${toCurrency}`}</p>
+        <button onClick={onChangeCalculation}>change</button>
+      </Grid>
+
       {/* <div>
         <DatePicker
           dateFormat="yyyy-MM-dd"

@@ -6,6 +6,8 @@ import {
   GET_KEYWORDS,
   GET_NEWS,
   DO_FN,
+  GET_CHART_DETAIL_DATE,
+  DO_DETAIL_FN,
 } from "./types";
 import { baseURL, baseNewsURL } from "../api/index";
 
@@ -84,5 +86,23 @@ export function getNews(dataToSubmit) {
 export function doFn() {
   return {
     type: DO_FN,
+  };
+}
+
+export function getChartDetailDate(dataToSubmit) {
+  const request = {
+    startDate: dataToSubmit.startDate,
+    endDate: dataToSubmit.endDate,
+  };
+
+  return {
+    type: GET_CHART_DETAIL_DATE,
+    payload: request,
+  };
+}
+
+export function doDetailFn() {
+  return {
+    type: DO_DETAIL_FN,
   };
 }
