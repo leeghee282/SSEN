@@ -1,4 +1,4 @@
-package com.ssafy.api.response;
+package com.ssafy.api.request;
 
 import com.ssafy.common.model.response.BaseResponseBody;
 import io.swagger.annotations.ApiModel;
@@ -8,24 +8,24 @@ import lombok.Setter;
 
 
 /**
- * 뉴스 키워드 분석 API ([GET] /news/keyword/{start_date}/{end_date}) 요청에 대한 응답값 정의.
+ * 비슷한 키워드 분포를 가지는 날짜 조회 API ([POST] /news/past) 요청에 필요한 리퀘스트 바디 정의.
  */
 @Getter
 @Setter
-@ApiModel("KeywordResponse")
-public class KeywordRes {
+@ApiModel("KewyordRequest")
+public class KeywordReq{
 
     @ApiModelProperty(name="키워드", example = "은행")
     String keyword;
     @ApiModelProperty(name="등장 건수", example = "26")
     int count;
 
-    public static KeywordRes of(String keyword, int count) {
-        KeywordRes res = new KeywordRes();
-        res.setKeyword(keyword);
-        res.setCount(count);
-        return res;
-    }
+//    public static KeywordReq of(String keyword, int count) {
+//        KeywordReq res = new KeywordReq();
+//        res.KeywordReq(keyword);
+//        res.KeywordReq(count);
+//        KeywordReq res;
+//    }
 
     @Override
     public String toString() {

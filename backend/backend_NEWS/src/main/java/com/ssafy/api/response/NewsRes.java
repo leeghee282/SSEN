@@ -34,4 +34,15 @@ public class NewsRes {
         res.setUrl(url);
         return res;
     }
+
+    @Override
+    public String toString() {
+        return "NewsRes{" +
+                "title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", press='" + press + '\'' +
+                ", time='" + time + '\'' +
+                ", url='" + url + '\'' +
+                '}';
+    }
 }
