@@ -5,6 +5,8 @@ import {
   GET_KEYWORDS,
   GET_NEWS,
   DO_FN,
+  GET_CHART_DETAIL_DATE,
+  DO_DETAIL_FN,
 } from "../_actions/types";
 
 const today = new Date();
@@ -17,6 +19,8 @@ const INITIAL_STATE = {
   chartDates: { startDate: startDate, endDate: endDate },
   chartCode: "USD",
   doing: 0,
+  chartDetailDate: { startDate: startDate, endDate: endDate },
+  doDetail: 0,
 };
 
 export default function (state = INITIAL_STATE, action) {
@@ -43,6 +47,14 @@ export default function (state = INITIAL_STATE, action) {
 
     case DO_FN:
       return { ...state, doing: state.doing + 1 };
+      break;
+
+    case GET_CHART_DETAIL_DATE:
+      return { ...state, chartDetailDate: action.payload };
+      break;
+
+    case DO_DETAIL_FN:
+      return { ...state, doDetail: state.doDetail + 1 };
       break;
 
     default:

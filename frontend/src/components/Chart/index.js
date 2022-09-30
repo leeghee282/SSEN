@@ -8,7 +8,12 @@ import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import moment from "moment";
 import { Button } from "@mui/material";
 
-import { getData, doFn } from "../../_actions/chart_action";
+import {
+  getData,
+  doFn,
+  getChartDetailDate,
+  doDetailFn,
+} from "../../_actions/chart_action";
 
 function Chart() {
   const dispatch = useDispatch();
@@ -177,18 +182,18 @@ function Chart() {
             return selectedRange.push(addSelectedData);
           });
 
-          console.log(
-            selectedRange
-            // selectedRange[0],
-            // selectedRange[selectedRange.length - 1]
-          );
-
           let newsBody = {
             startDate: selectedRange[0],
             endDate: selectedRange[selectedRange.length - 1],
           };
 
-          console.log(newsBody);
+          // dispatch(getChartDetailDate(newsBody)).then((response) => {
+          //   console.log(response.payload);
+          // });
+
+          // dispatch(doDetailFn()).then((response) => {
+          //   console.log("change");
+          // });
         });
 
         xAxis.set(
@@ -409,6 +414,14 @@ function Chart() {
       };
 
       console.log(newsBody);
+
+      dispatch(getChartDetailDate(newsBody)).then((response) => {
+        console.log(response.payload);
+      });
+
+      // dispatch(doDetailFn()).then((response) => {
+      //   console.log("change");
+      // });
     });
 
     xAxis.set(
@@ -443,13 +456,19 @@ function Chart() {
     onDeleteChart("chartdiv");
     onSetChart();
     dispatch(doFn()).then((response) => {
-      console.log("doFn");
+      console.log("change");
     });
   };
 
   return (
     <div>
-      <Button id="font_test" sx={{ mt:5,background:"red",color:"black",mb:5}}onClick={onMakeChart}>차트 적용하기</Button>
+      <Button
+        id="font_test"
+        sx={{ mt: 5, background: "red", color: "black", mb: 5 }}
+        onClick={onMakeChart}
+      >
+        차트 적용하기
+      </Button>
       <div id="chart">
         <div id="chartdiv" style={{ width: "800px", height: "300px" }}></div>
       </div>

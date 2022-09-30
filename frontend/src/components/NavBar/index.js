@@ -128,6 +128,11 @@ const Header = () => {
     navigate("/");
   };
 
+  //환율계산기
+  const newExchangeCalc = () => {
+    window.open("/exchangecalc", "_blank", "height=700, width= 600");
+  };
+
   return (
     <Box
       style={{

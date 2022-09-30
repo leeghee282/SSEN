@@ -2,39 +2,71 @@ import Select from "react-select";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
+import { Grid } from "@mui/material";
 
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { getExchangeRate, getBanksInfo } from "../../_actions/exchange_action";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getCurrencyCode,
+  getDate,
+  getExchangeRate,
+  getBanksInfo,
+} from "../../_actions/exchange_action";
 
 function ExchangeCalc() {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log("실행");
-    onSetBanklist();
-  }, []);
-
-  const [banksInfo, setBanksInfo] = useState([]);
-  //   const bankInfos = [
-  //     { bank: "신한", commission: 0.05, basic_rate: 0.1 },
-  //     { bank: "국민", commission: 0.05, basic_rate: 0.2 },
-  //     { bank: "농협", commission: 0.1, basic_rate: 0.25 },
-  //   ];
-
-  const [banklist, setBanklist] = useState([]);
-  const [selectBank, setSelectBank] = useState("");
-  const [bankInfo, setBankInfo] = useState({
-    bank: "",
-    commission: "",
-    basic_rate: "",
-  });
+  const currencyCode = useSelector(
+    (state) => state.exchangecalcReducer.currencyCode
+  );
+  // const exchangeDate = useSelector((state) =>
+  //   moment(state.exchangecalcReducer.exchangeDate).format("YYYY-MM-DD")
+  // );
+  const banksInfo = useSelector((state) => state.exchangecalcReducer.banksInfo);
 
   const [selectDate, setSelectDate] = useState(new Date());
+  const [banklist, setBanklist] = useState([]);
+  const [bankInfo, setBankInfo] = useState("");
+  const [codeValue, setCodeValue] = useState("");
+  const [exchangePrice, setExchangePrice] = useState(0);
 
-  const onSelectDateHandler = (date) => {
-    const renewDate = moment(date).format("YYYY-MM-DD");
-    return renewDate;
+  const [fromCurrencyName, setFromCurrencyName] = useState("");
+  const [fromCurrency, setFromCurrency] = useState("");
+  const [toCurrencyName, setToCurrencyName] = useState("");
+  const [toCurrency, setToCurrency] = useState("");
+
+  useEffect(() => {
+    onSetBankinfos();
+  }, []);
+
+  useEffect(() => {
+    onSetExchangeRate(selectDate, codeValue);
+  }, [codeValue]);
+
+  const onSetBankinfos = async () => {
+    let body = {
+      code: currencyCode,
+    };
+    await dispatch(getBanksInfo(body)).then((response) => {
+      response.payload.map((bank) => {
+        var addBankinfo = {
+          value: bank.bank,
+          label: bank.bank,
+        };
+        return setBanklist((prevList) => [...prevList, addBankinfo]);
+      });
+    });
+  };
+
+  const onSelectBankHandler = (selectedOption) => {
+    const bankinfo = banksInfo.filter(
+      (info) => info.bank === selectedOption.value
+    );
+    setBankInfo({
+      bank: bankinfo[0].bank,
+      commission: bankinfo[0].commission,
+      basicRate: bankinfo[0].basicRate,
+    });
   };
 
   const currencylist = [
@@ -44,71 +76,27 @@ function ExchangeCalc() {
     { value: "JPY", label: "JPY/KRW" },
     { value: "CNY", label: "CNY/KRW" },
   ];
-  const [currencyCode, setCurrencyCode] = useState("");
-  const [exchangeRate, setExchangeRate] = useState("");
-  const [fromCurrencyName, setFromCurrencyName] = useState("");
-  const [fromCurrency, setFromCurrency] = useState("");
-  const [toCurrency, setToCurrency] = useState("");
-  const [toCurrencyName, setToCurrencyName] = useState("");
-
-  const onSetBanklist = () => {
-    banksInfo.map((info) => {
-      var addBanklist = {
-        value: info.bank,
-        label: info.bank,
-      };
-      return setBanklist((prevList) => [...prevList, addBanklist]);
-    });
-  };
-
-  const onSelectBankHandler = (selectedOption) => {
-    setExchangeRate(1400);
-
-    setSelectBank(selectedOption.value);
-    const bankinfo = banksInfo.filter(
-      (info) => info.bank === selectedOption.value
-    );
-    setBankInfo({
-      bank: bankinfo[0].bank,
-      commission: bankinfo[0].commission,
-      basic_rate: bankinfo[0].basic_rate,
-    });
-  };
 
   const onSelectCurrencyHandler = (selectedOption) => {
-    setCurrencyCode(selectedOption.value);
-    setFromCurrencyName(selectedOption.value.substr(0, 3));
-    setToCurrencyName(selectedOption.value.substr(-3));
-    onGetBankInfosHandler();
+    setCodeValue(selectedOption.value);
+    setFromCurrencyName(selectedOption.label.substr(0, 3));
+    setToCurrencyName(selectedOption.label.substr(-3));
   };
 
-  const onExchangeRateHandler = (event) => {
-    event.preventDefault();
-
-    const body = {
-      date: onSelectDateHandler(selectDate),
-      code: currencyCode,
+  const onSetExchangeRate = (date, code) => {
+    let body = {
+      date: moment(date).format("YYYY-MM-DD"),
+      code: code,
     };
-
     dispatch(getExchangeRate(body)).then((response) => {
       console.log(response.payload);
-      //   setExchangeRate(response.payload.exchangeRate.closePrice);
-    });
-  };
-
-  const onGetBankInfosHandler = () => {
-    let body = {
-      code: currencyCode,
-    };
-
-    dispatch(getBanksInfo(body)).then((response) => {
-      setBanksInfo(response.body);
+      setExchangePrice(response.payload.closePrice);
     });
   };
 
   const onExchangeCalculation = (event) => {
     setFromCurrency(event.currentTarget.value);
-    setToCurrency(event.currentTarget.value * exchangeRate);
+    setToCurrency(event.currentTarget.value * exchangePrice);
   };
 
   const onChangeCalculation = () => {
@@ -116,15 +104,45 @@ function ExchangeCalc() {
     setFromCurrencyName(toCurrencyName);
     setToCurrencyName(temp);
 
-    setExchangeRate((1 / exchangeRate).toFixed(5));
-    console.log(exchangeRate);
+    setExchangePrice((1 / exchangePrice).toFixed(5));
+    console.log(exchangePrice);
     setFromCurrency(toCurrency);
     setToCurrency(fromCurrency);
   };
 
+  const getCurrencyCodeHandler = (code) => {
+    dispatch(getCurrencyCode(code)).then((reponse) => {
+      console.log(reponse.payload);
+    });
+  };
+
   return (
     <div>
-      <div>
+      <Grid container spacing={2}>
+        <Grid item xs={4}>
+          <DatePicker
+            dateFormat="yyyy-MM-dd"
+            selected={selectDate}
+            onChange={(date) => setSelectDate(date)}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <Select options={banklist} onChange={onSelectBankHandler} />
+        </Grid>
+
+        <p>은행: {`${bankInfo.bank}`}</p>
+        <p>수수료: {`${bankInfo.commission}`}</p>
+        <p>기본 우대율: {`${bankInfo.basicRate}`}</p>
+
+        <Select options={currencylist} onChange={onSelectCurrencyHandler} />
+
+        <label>{`${fromCurrencyName}`}</label>
+        <input onChange={onExchangeCalculation} value={fromCurrency} />
+        <p>{`${toCurrencyName} : ${toCurrency}`}</p>
+        <button onClick={onChangeCalculation}>change</button>
+      </Grid>
+
+      {/* <div>
         <DatePicker
           dateFormat="yyyy-MM-dd"
           selected={selectDate}
@@ -137,7 +155,7 @@ function ExchangeCalc() {
         <p>기본 우대율: {`${bankInfo.basic_rate}`}</p>
       </div>
       <div>
-        <Select options={currencylist} onChange={onSelectCurrencyHandler} />
+        
         <p>currency: {`${currencyCode}`}</p>
       </div>
       <div>
@@ -147,7 +165,7 @@ function ExchangeCalc() {
         <p>{`${toCurrencyName} : ${toCurrency}`}</p>
         <button onClick={onChangeCalculation}>change</button>
       </div>
-      <button onClick={onExchangeRateHandler}>테스트</button>
+      <button onClick={onExchangeRateHandler}>테스트</button> */}
     </div>
   );
 }
