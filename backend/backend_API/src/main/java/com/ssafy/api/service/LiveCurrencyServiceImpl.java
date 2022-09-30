@@ -30,15 +30,12 @@ public class LiveCurrencyServiceImpl implements LiveCurrencyService {
 
     @Override
     public LiveCurrencyRes findLiveCurrencyByCCUid(String currencyCode) {
-        System.err.println("여기: " + currencyCode);
         long ccUid = currencyCategoryService.getCurrencyCategorybyCode(currencyCode).getUid();
-        System.err.println("uid: " + ccUid);
         LiveCurrency lc = liveCurrencyRepositorySupport.findLiveCurrencyByCCUid(ccUid);
         if (lc == null) {
             return null;
         }
         LiveCurrencyRes lcs = LiveCurrencyRes.of(lc);
-        System.err.println("lcs : " + lcs);
         return lcs;
     }
 
