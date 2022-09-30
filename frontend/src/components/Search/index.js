@@ -83,8 +83,8 @@ function Search() {
                             height: "60px",
                           }}
                         >
-                          {title.length >= 30
-                            ? title.replace("...", " ").substr(0, 30) + "..."
+                          {title.length >= 1
+                            ? title.replaceAll("…", " ").substr(0, 30) + "..."
                             : title}
                         </Typography>
                       </Grid>
@@ -94,7 +94,7 @@ function Search() {
                             {press}
                           </Grid>
                           <Grid id="font_test" sx={{ mt: 1 }} item xs={10}>
-                            {time}
+                            {time.replaceAll("\u0000", "")}
                           </Grid>
                         </Grid>
                       </Grid>

@@ -1,11 +1,11 @@
 // chat form, list 컴포넌트 보여주는 곳
+
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "../../../api/user";
 import CommunityForm from "../CommunityForm";
 import Community from "..";
-import "./style.css"
-
+import "./style.css";
 
 function CommunityList() {
   const currencyCode = useSelector((state) => state.chartReducer.chartCode);
@@ -31,6 +31,11 @@ function CommunityList() {
   return (
     <>
       <div className="timeLineWrap">
+        {currencyCode === "USD" && <p className="chatCodeTitle">달러/원</p>}
+        {currencyCode === "EUR" && <p className="chatCodeTitle">유로/원</p>}
+        {currencyCode === "GBP" && <p className="chatCodeTitle">파운드/원</p>}
+        {currencyCode === "JPY" && <p className="chatCodeTitle">엔/원</p>}
+        {currencyCode === "CNY" && <p className="chatCodeTitle">위안/원</p>}
         <CommunityForm getCommunity={getCommunity} />
         <Community
           community={community}
@@ -43,4 +48,4 @@ function CommunityList() {
   );
 }
 
-export default CommunityList ;
+export default CommunityList;
