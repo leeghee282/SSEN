@@ -62,27 +62,27 @@ public class NewsController {
         if (!st.hasMoreTokens())
             return ResponseEntity.status(400).body(null);
 
-//        StringBuilder query = new StringBuilder(); //DB에 넣을 키워드 분석 결과를 위한 쿼리(변동률이 심한 특정 날짜)
-//        query.append("INSERT INTO SSEN.variance_keywords(variance_date_uid, name, frequency) VALUES \n");
+        StringBuilder query = new StringBuilder(); //DB에 넣을 키워드 분석 결과를 위한 쿼리(변동률이 심한 특정 날짜)
+        query.append("INSERT INTO SSEN.variance_keywords(variance_date_uid, name, frequency) VALUES \n");
 
         int cnt = 0;
         while (st.hasMoreTokens()) {
             if (++cnt > 10)
                 break;
-//            query.append("((SELECT uid FROM SSEN.variance_date where reference_date = '" + startDate + "'");
-//            query.append(") ,'");
+            query.append("((SELECT uid FROM SSEN.variance_date where reference_date = '" + startDate + "'");
+            query.append(") ,'");
             String s = st.nextToken();
             int val = Integer.parseInt(st.nextToken());
             KeywordRes k = new KeywordRes();
             k.setKeyword(s);
-//            query.append(s + "' ,");
+            query.append(s + "' ,");
             k.setCount(val);
-//            query.append(val + "), ");
+            query.append(val + "), ");
             keywordList.add(k);
         }
-//        query.setLength(query.length()-2);
-//        query.append(";");
-//        System.out.println(query.toString());
+        query.setLength(query.length()-2);
+        query.append(";");
+        System.out.println(query.toString());
 
         return new ResponseEntity<>(keywordList, HttpStatus.OK);
     }
@@ -133,31 +133,40 @@ public class NewsController {
     public ResponseEntity<List<PastRes>> getDatesByKeyword(
             @RequestBody@ApiParam(value = "키워드 분포", required = true) List<KeywordReq> keywordList)  {
 
-        StringBuilder args = new StringBuilder();
+        StringBuilder query = new StringBuilder();
         for (KeywordReq keyword:keywordList) {
-            args.append(keyword.toString()+":");
+            query.append(keyword.toString()+":");
         }
-        args.setLength(args.length()-1);
+        query.setLength(query.length()-1);
 //        System.out.println(args.toString());
 
         List<PastRes> pastResList = new ArrayList<>();
 
         Session jschSession = sshUtil.sessionConnect();
 
-        String cmd = "~/mapreduce/keyword.sh " + args + " past_in past_out > /dev/null 2>&1 &&  /home/hadoop/hadoop/bin/hdfs dfs -cat past_out/*";
+        String cmd = "/home/hadoop/hadoop/bin/hadoop jar ~/mapreduce/ssen.jar topksearch 4 " + query + " 10 topksearch topksearch_out1 topksearch_out2 > /dev/null 2>&1 &&  /home/hadoop/hadoop/bin/hdfs dfs -cat topksearch_out2/*";
 
         System.out.println("확인하기3 " + cmd);
-//        String response = sshUtil.cmd(jschSession, cmd);
-//        StringTokenizer st = new StringTokenizer(response, "\n");
-//
+        String response = sshUtil.cmd(jschSession, cmd);
+        StringTokenizer st = new StringTokenizer(response);
+
 //        if (!st.hasMoreTokens())
 //            return ResponseEntity.status(400).body(null);
 //
-//        while (st.hasMoreTokens()) {
-//            String date = st.nextToken(); // 날짜
-//            double value = Double.parseDouble(st.nextToken()); // 유사도
-//            pastResList.add(PastRes.of(date, value);
-//        }
+        while (st.hasMoreTokens()) {
+            String uid = st.nextToken(); // 날짜
+            // uid로 currency_code와 variance 찾는 부분
+
+
+
+            /////
+            String currency_code = "123";
+            double variance = 3.45;
+            String date = st.nextToken(); // 날짜
+            double value = Double.parseDouble(st.nextToken()); // 유사도
+            System.out.println(uid +" " + date +" " + value);
+            pastResList.add(PastRes.of(date, value, currency_code, variance));
+        }
         return new ResponseEntity<>(pastResList, HttpStatus.OK);
     }
 }
