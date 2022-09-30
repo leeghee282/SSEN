@@ -107,6 +107,15 @@ const Header = () => {
     console.log(word, "네브바 검색어");
   };
 
+  const keyDownHandler =(e) => {
+    if (e.key === "Enter") {
+      console.log(word,333)
+      setWord(word)
+      onSubmit(e);
+      
+    }
+  }
+
   // const onSubmit = () => {
   //   navigate(`/search`);
   //   setWord("");
@@ -164,17 +173,19 @@ const Header = () => {
             variant="standard"
             placeholder="검색어를 입력해주세요"
             onChange={onChange}
+            onKeyDown={keyDownHandler}
             value={word}
           />
-          <IconButton
+          <Avatar
             type="submit"
-            sx={{ p: "10px" }}
+            sx={{ p: "10px",height:"15px",width:"15px",cursor:"pointer" }}
             aria-label="search"
             onClick={onSubmit}
-            // href="/search"
+            
+            src ="/images/search.png"
           >
-            <SearchIcon />
-          </IconButton>
+            
+          </Avatar>
         </Stack>
         {/* 로그인을 안했을 경우 */}
         <Stack spacing={1} direction="row">
