@@ -2,6 +2,9 @@ import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
+import axios from "axios";
+import { baseNewsURL } from "../../api";
+
 //mui
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -67,10 +70,52 @@ const BasicPopover = () => {
 
 const Header = () => {
   const navigate = useNavigate();
+  // 키워드 저장
+  const [word, setWord] = useState("");
+
+  // 기본 날짜주기(일주일)
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth() + 1;
+  const dayOfToday = today.getDate();
+  const lastWeek = today.getDate() - 6;
+  const endDate = year + "-" + month + "-" + dayOfToday;
+  const startDate = year + "-" + month + "-" + lastWeek;
+
+  const onSubmit = async (e) => {
+    console.log(word, "네브바 검색창");
+    e.preventDefault();
+    navigate("/search", {
+      state: {
+        startDate: startDate,
+        endDate: endDate,
+        search: word,
+      },
+    });
+    setWord(""); //submit 후 창 비우기
+    // try {
+    //   await axios
+    //     .get(baseNewsURL + `/news/search/${word}/${startDate}/${endDate}`)
+    //     .then((response) => console.log(response, 123));
+    // } catch (e) {
+    //   console.log(e);
+    // }
+  };
+
+  const onChange = (e) => {
+    setWord(e.target.value);
+    console.log(word, "네브바 검색어");
+  };
+
+  // const onSubmit = () => {
+  //   navigate(`/search`);
+  //   setWord("");
+  // };
 
   const logoClickHandler = () => {
     navigate("/");
   };
+
   const [logoutCount, setLogoutCount] = useState(0);
   const [loginFlag, setLoginFlag] = useState(() =>
     sessionStorage.getItem("userId")
@@ -118,8 +163,16 @@ const Header = () => {
             type="search"
             variant="standard"
             placeholder="검색어를 입력해주세요"
+            onChange={onChange}
+            value={word}
           />
-          <IconButton type="submit" sx={{ p: "10px" }} aria-label="search">
+          <IconButton
+            type="submit"
+            sx={{ p: "10px" }}
+            aria-label="search"
+            onClick={onSubmit}
+            // href="/search"
+          >
             <SearchIcon />
           </IconButton>
         </Stack>
@@ -131,8 +184,7 @@ const Header = () => {
                 id="font_test"
                 variant="outlined"
                 size="small"
-                // href="/exchangecalc"
-                onClick={newExchangeCalc}
+                href="/exchangecalc"
               >
                 환율계산기
               </Button>
@@ -167,8 +219,7 @@ const Header = () => {
                 id="font_test"
                 variant="outlined"
                 size="small"
-                // href="/exchangecalc"
-                onClick={newExchangeCalc}
+                href="/exchangecalc"
               >
                 환율계산기
               </Button>
