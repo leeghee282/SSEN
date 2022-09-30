@@ -8,6 +8,7 @@ import {
   DO_FN,
   GET_CHART_DETAIL_DATE,
   DO_DETAIL_FN,
+  SET_WORDCLOUD_DATA,
 } from "./types";
 import { baseURL, baseNewsURL } from "../api/index";
 
@@ -72,9 +73,7 @@ export function getKeywords(dataToSubmit) {
 
 export function getNews(dataToSubmit) {
   const request = newsAxios
-    .get(
-      `/news/search/${dataToSubmit.keyword}/${dataToSubmit.startDate}/${dataToSubmit.endDate}`
-    )
+    .get(`/news/search/${dataToSubmit.keyword}`)
     .then((response) => response.data);
 
   return {
@@ -91,8 +90,8 @@ export function doFn() {
 
 export function getChartDetailDate(dataToSubmit) {
   const request = {
-    startDate: dataToSubmit.startDate,
-    endDate: dataToSubmit.endDate,
+    starDetailtDate: dataToSubmit.startDetailDate,
+    endDetailDate: dataToSubmit.endDetailDate,
   };
 
   return {
@@ -104,5 +103,14 @@ export function getChartDetailDate(dataToSubmit) {
 export function doDetailFn() {
   return {
     type: DO_DETAIL_FN,
+  };
+}
+
+export function setWordcloudData(dataToSubmit) {
+  const request = dataToSubmit;
+
+  return {
+    type: SET_WORDCLOUD_DATA,
+    payload: request,
   };
 }

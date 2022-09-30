@@ -15,6 +15,8 @@ import {
   doDetailFn,
 } from "../../_actions/chart_action";
 
+import useDidMountEffect from "./useDidMountEffect";
+
 function Chart() {
   const dispatch = useDispatch();
 
@@ -23,6 +25,9 @@ function Chart() {
   const startDate = moment(chartDates.startDate).format("YYYY-MM-DD");
   const endDate = moment(chartDates.endDate).format("YYYY-MM-DD");
   const rawChartData = useSelector((state) => state.chartReducer.data);
+  const chartDetailDate = useSelector(
+    (state) => state.chartReducer.chartDetailDate
+  );
 
   useEffect(() => {
     onInitialSet();
@@ -31,6 +36,12 @@ function Chart() {
   useEffect(() => {
     onSetData();
   }, [startDate, endDate, currencyCode]);
+
+  // useDidMountEffect(() => {
+  //   dispatch(doDetailFn()).then((response) => {
+  //     console.log("change");
+  //   });
+  // }, [chartDetailDate]);
 
   const onInitialSet = () => {
     let body = {
@@ -183,17 +194,15 @@ function Chart() {
           });
 
           let newsBody = {
-            startDate: selectedRange[0],
-            endDate: selectedRange[selectedRange.length - 1],
+            startDetailDate: selectedRange[0].date,
+            endDetailDate: selectedRange[selectedRange.length - 1].date,
           };
 
-          // dispatch(getChartDetailDate(newsBody)).then((response) => {
-          //   console.log(response.payload);
-          // });
+          console.log(newsBody);
 
-          // dispatch(doDetailFn()).then((response) => {
-          //   console.log("change");
-          // });
+          dispatch(getChartDetailDate(newsBody)).then((response) => {
+            console.log(response.payload);
+          });
         });
 
         xAxis.set(
@@ -402,15 +411,9 @@ function Chart() {
         return selectedRange.push(addSelectedData);
       });
 
-      console.log(
-        selectedRange
-        // selectedRange[0],
-        // selectedRange[selectedRange.length - 1]
-      );
-
       let newsBody = {
-        startDate: selectedRange[0],
-        endDate: selectedRange[selectedRange.length - 1],
+        startDetailDate: selectedRange[0].date,
+        endDetailDate: selectedRange[selectedRange.length - 1].date,
       };
 
       console.log(newsBody);
@@ -418,10 +421,6 @@ function Chart() {
       dispatch(getChartDetailDate(newsBody)).then((response) => {
         console.log(response.payload);
       });
-
-      // dispatch(doDetailFn()).then((response) => {
-      //   console.log("change");
-      // });
     });
 
     xAxis.set(
