@@ -4,6 +4,7 @@ import { Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { baseNewsURL } from "../../api";
+
 //mui
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -69,19 +70,36 @@ const BasicPopover = () => {
 
 const Header = () => {
   const navigate = useNavigate();
+  // 키워드 저장
   const [word, setWord] = useState("");
 
-  const onSubmit = async (e) => {
-    console.log(word, 124123);
-    e.preventDefault();
+  // 기본 날짜주기(일주일)
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth() + 1;
+  const dayOfToday = today.getDate();
+  const lastWeek = today.getDate() - 6;
+  const endDate = year + "-" + month + "-" + dayOfToday;
+  const startDate = year + "-" + month + "-" + lastWeek;
 
-    try {
-      await axios
-        .get(baseNewsURL + `:8081/api/v1/search/${word}/2022-09-28/`)
-        .then((response) => setWord(response));
-    } catch (e) {
-      console.log(e);
-    }
+  const onSubmit = async (e) => {
+    console.log(word, "네브바 검색창");
+    e.preventDefault();
+    navigate("/search", {
+      state: {
+        startDate: startDate,
+        endDate: endDate,
+        search: word,
+      },
+    });
+    setWord(""); //submit 후 창 비우기
+    // try {
+    //   await axios
+    //     .get(baseNewsURL + `/news/search/${word}/${startDate}/${endDate}`)
+    //     .then((response) => console.log(response, 123));
+    // } catch (e) {
+    //   console.log(e);
+    // }
   };
 
   const onChange = (e) => {
@@ -89,9 +107,15 @@ const Header = () => {
     console.log(word, "네브바 검색어");
   };
 
+  // const onSubmit = () => {
+  //   navigate(`/search`);
+  //   setWord("");
+  // };
+
   const logoClickHandler = () => {
     navigate("/");
   };
+
   const [logoutCount, setLogoutCount] = useState(0);
   const [loginFlag, setLoginFlag] = useState(() =>
     sessionStorage.getItem("userId")
@@ -135,12 +159,14 @@ const Header = () => {
             variant="standard"
             placeholder="검색어를 입력해주세요"
             onChange={onChange}
+            value={word}
           />
           <IconButton
             type="submit"
             sx={{ p: "10px" }}
             aria-label="search"
             onClick={onSubmit}
+            // href="/search"
           >
             <SearchIcon />
           </IconButton>
