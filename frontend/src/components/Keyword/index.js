@@ -49,9 +49,9 @@ function Keyword(props) {
     wordcloudHandler();
   }, [doing]);
 
-  useEffect(() => {
-    wordcloudDetailHandler();
-  }, [doDetail]);
+  // useEffect(() => {
+  //   wordcloudDetailHandler();
+  // }, [doDetail]);
 
   const wordcloudData = [];
 
