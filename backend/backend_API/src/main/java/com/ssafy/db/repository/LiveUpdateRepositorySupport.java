@@ -34,9 +34,9 @@ public class LiveUpdateRepositorySupport {
         double price = liveCurrencyRes.getBuyPrice();
         List<User> users = jpaQueryFactory.select(qUser).from(qInterestedCurrency)
                 .where(qInterestedCurrency.currencyCategory.uid.eq(ccUid)
-                        .and((qInterestedCurrency.target1.between(price * 0.95, price * 1.05))
-                                .or(qInterestedCurrency.target2.between(price * 0.95, price * 1.05))
-                                .or(qInterestedCurrency.target3.between(price * 0.95, price * 1.05))))
+                        .and((qInterestedCurrency.target1.between(price * 0.99, price * 1.01))
+                                .or(qInterestedCurrency.target2.between(price * 0.99, price * 1.01))
+                                .or(qInterestedCurrency.target3.between(price * 0.99, price * 1.01))))
                 .fetch();
         return users;
     }
@@ -46,9 +46,9 @@ public class LiveUpdateRepositorySupport {
         List<Double> targets = new LinkedList<>();
         List<User> users = jpaQueryFactory.select(qUser).from(qInterestedCurrency)
                 .where(qInterestedCurrency.currencyCategory.uid.eq(ccUid)
-                        .and((qInterestedCurrency.target1.between(price * 0.95, price * 1.05))
-                                .or(qInterestedCurrency.target2.between(price * 0.95, price * 1.05))
-                                .or(qInterestedCurrency.target3.between(price * 0.95, price * 1.05))))
+                        .and((qInterestedCurrency.target1.between(price * 0.99, price * 1.01))
+                                .or(qInterestedCurrency.target2.between(price * 0.99, price * 1.01))
+                                .or(qInterestedCurrency.target3.between(price * 0.99, price * 1.01))))
                 .fetch();
         if (users != null) {
             for (int i = 0; i < users.size(); i++) {
