@@ -25,9 +25,7 @@ const ProfileUpdate = () => {
   const [insertFlag4, setInsertFlag4] = useState(true);
   const [insertFlag5, setInsertFlag5] = useState(false);
   const [totalData, setTotalData] = useState({});
-  const [userName, setUserName] = useState("배지우");
-  const [userNickName, setUserNickName] = useState("환율짱짱");
-  const [userPhoneNumber, setUserPhoneNumber] = useState("010-4791-5385");
+  const [checkNicknameMessage,setCheckNicknameMessage] =useState('');
 
   const insertClicked1 = () => {
     // 이름 변경
@@ -52,9 +50,11 @@ const ProfileUpdate = () => {
 
   function insertComponentToggle2() {
     setInsertFlag2((insertFlag2) => !insertFlag2);
+    setCheckNicknameMessage('')
   }
 
   function insertComponentToggle22() {
+    setCheckNicknameMessage('')
     getProfile();
     setInsertFlag2((insertFlag2) => !insertFlag2);
   }
@@ -237,7 +237,10 @@ const ProfileUpdate = () => {
                     cancelClicked22={insertComponentToggle22}
                     totalData={totalData}
                     setTotalData={setTotalData}
+                    checkNicknameMessage={checkNicknameMessage}
+                    setCheckNicknameMessage = {setCheckNicknameMessage}
                   />
+                  <Typography id="font_test" sx={{color:"red",pl:1,fontSize:"13px"}}>{checkNicknameMessage}</Typography>
                 </Box>
               )}
             </Grid>
