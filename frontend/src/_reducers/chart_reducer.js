@@ -7,6 +7,7 @@ import {
   DO_FN,
   GET_CHART_DETAIL_DATE,
   DO_DETAIL_FN,
+  SET_WORDCLOUD_DATA,
 } from "../_actions/types";
 
 const today = new Date();
@@ -55,6 +56,10 @@ export default function (state = INITIAL_STATE, action) {
 
     case DO_DETAIL_FN:
       return { ...state, doDetail: state.doDetail + 1 };
+      break;
+
+    case SET_WORDCLOUD_DATA:
+      return { ...state, wordcloudData: action.payload };
       break;
 
     default:

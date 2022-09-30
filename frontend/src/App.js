@@ -13,6 +13,8 @@ import Apitest from "./api/apitest";
 
 // test 위한 것
 import Search from "./components/Search";
+import PastSearch from "./components/Past/PastSearch";
+import PastDetail from "./components/Past/PastDetail";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/profileupdate" element={<ProfileUpdate />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/pastsearch" element={<PastSearch />} />
+          <Route path="/pastdetail" element={<PastDetail />} />
         </Route>
         {/* Header 없는 페이지 */}
         <Route path="/signup" element={<Signup />} />

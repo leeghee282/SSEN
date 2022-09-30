@@ -5,7 +5,14 @@ import * as d3 from "d3";
 import cloud from "d3-cloud";
 import "./index.css";
 
-import { getKeywords, getNews } from "../../_actions/chart_action";
+import {
+  getKeywords,
+  getNews,
+  setWordcloudData,
+} from "../../_actions/chart_action";
+import { getPastDatalist } from "../../_actions/past_action";
+
+import useDidMountEffect from "./useDidMountEffect";
 
 import Post from "./Post";
 import Pagination from "./Pagination";
@@ -25,10 +32,10 @@ function Keyword(props) {
   const chartDetailDate = useSelector(
     (state) => state.chartReducer.chartDetailDate
   );
-  const startDetailDate = moment(chartDetailDate.startDate).format(
-    "YYYY-MM-DD"
+
+  const wordcloudData = useSelector(
+    (state) => state.chartReducer.wordcloudData
   );
-  const endDetailDate = moment(chartDetailDate.endDate).format("YYYY-MM-DD");
 
   const doDetail = useSelector((state) => state.chartReducer.doDetail);
 
@@ -37,88 +44,76 @@ function Keyword(props) {
   const [currentPage, setCurrentPage] = useState(1);
   const [postPerPage] = useState(5);
 
+  // const [wordcloudData, setWordcloudData] = useState([]);
+
   let indexOfLastPost = currentPage * postPerPage;
   let indexOfFirstPost = indexOfLastPost - postPerPage;
   let currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
-  useEffect(() => {
-    wordcloudHandler();
-  }, []);
+  // useEffect(() => {
+  //   wordcloudHandler();
+  // }, []);
 
   useEffect(() => {
-    wordcloudHandler();
+    onSetKeywordNews();
   }, [doing]);
 
-  useEffect(() => {
-    wordcloudDetailHandler();
+  useDidMountEffect(() => {
+    onSetDetailKeywordsNews();
   }, [doDetail]);
 
-  const wordcloudData = [];
-
-  const wordcloudHandler = async () => {
-    await onSetKeywordsNews();
-    setTimeout(function () {
-      onSetWordcloud();
-    }, 1000);
-  };
-
-  // const wordcloudDetailHandler = async () => {
-  //   await onSetDetailKeywordsNews();
-  //   setTimeout(function () {
-  //     onSetWordcloud();
-  //   }, 1000);
-  // };
-
-  const onSetKeywordsNews = async () => {
+  const onSetKeywordNews = async () => {
     let keywordBody = {
       startDate: startDate,
       endDate: endDate,
     };
 
     await dispatch(getKeywords(keywordBody)).then((response) => {
+      const data = [];
       console.log(response.payload);
       response.payload.map((res) => {
         var addWordcloudData = {
           text: res.keyword,
           size: res.count,
         };
-        return wordcloudData.push(addWordcloudData);
+        return data.push(addWordcloudData);
+      });
+
+      onSetWordcloud(data);
+
+      const maxNum = data.length - 1;
+      const firstKeyword = data[maxNum].text;
+
+      console.log(firstKeyword);
+
+      let newsBody = {
+        keyword: firstKeyword,
+        // startDate: startDate,
+        // endDate: endDate,
+      };
+
+      dispatch(getNews(newsBody)).then((res) => {
+        console.log(res.payload);
+        setPosts(res.payload);
+        setCurrentPage(1);
+        indexOfLastPost = currentPage * postPerPage;
+        indexOfFirstPost = indexOfLastPost - postPerPage;
+        currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
       });
     });
-
-    const firstKeyword = await wordcloudData[0].text;
-    let newsBody = {
-      keyword: firstKeyword,
-      startDate: startDate,
-      endDate: endDate,
-    };
-    setLoading(true);
-    await dispatch(getNews(newsBody)).then((response) => {
-      console.log(response.payload);
-      setPosts(response.payload);
-      setCurrentPage(1);
-      indexOfLastPost = currentPage * postPerPage;
-      indexOfFirstPost = indexOfLastPost - postPerPage;
-      currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
-    });
-    setLoading(false);
   };
 
   const paginate = (pageNum) => setCurrentPage(pageNum);
 
-  const onSetWordcloud = () => {
+  const onSetWordcloud = async (d) => {
     var fill = d3.scaleOrdinal(d3.schemeCategory10);
-    if (wordcloudData[0].size <= 100) {
-      var wordScale = d3.scaleLinear().domain([0, 100]).range([0, 150]);
-    } else if (wordcloudData[0].size <= 200) {
-      var wordScale = d3.scaleLinear().domain([0, 200]).range([0, 150]);
-    } else if (wordcloudData[0].size <= 300) {
-      var wordScale = d3.scaleLinear().domain([0, 300]).range([0, 150]);
-    } else if (wordcloudData[0].size <= 400) {
-      var wordScale = d3.scaleLinear().domain([0, 400]).range([0, 150]);
-    } else {
-      var wordScale = d3.scaleLinear().domain([0, 500]).range([0, 150]);
-    }
+
+    var maxWordcloudNum = d.length - 1;
+
+    var maxScaleNum = (parseInt(d[maxWordcloudNum].size / 100) + 2.8) * 100;
+    console.log(maxScaleNum);
+    var wordScale = d3.scaleLinear().domain([0, maxScaleNum]).range([0, 150]);
+
     var width = 300;
     var height = 300;
 
@@ -126,13 +121,13 @@ function Keyword(props) {
 
     cloud()
       .size([width, height])
-      .words(wordcloudData)
+      .words(d)
       .padding(5)
       // .rotate(0)
       .rotate(function () {
         return ~~(Math.random() * 2) * 90;
       })
-      .font("Impact")
+      .font("MICEGothic Bold")
       .fontSize(function (d) {
         return wordScale(d.size);
       })
@@ -153,7 +148,7 @@ function Keyword(props) {
         .style("font-size", function (d) {
           return d.size + "px";
         })
-        .style("font-family", "Impact")
+        .style("font-family", "MICEGothic Bold")
         .style("fill", function (d, i) {
           return fill(i);
         })
@@ -175,8 +170,8 @@ function Keyword(props) {
     const onSetNews = (txt) => {
       let newsBody = {
         keyword: txt,
-        startDate: startDate,
-        endDate: endDate,
+        // startDate: startDate,
+        // endDate: endDate,
       };
 
       dispatch(getNews(newsBody)).then((response) => {
@@ -192,38 +187,50 @@ function Keyword(props) {
 
   const onSetDetailKeywordsNews = async () => {
     let keywordBody = {
-      startDate: startDetailDate,
-      endDate: endDetailDate,
+      startDetailDate: chartDetailDate.startDetailDate,
+      endDetailDate: chartDetailDate.endDetailDate,
     };
 
     await dispatch(getKeywords(keywordBody)).then((response) => {
+      const data = [];
       console.log(response.payload);
       response.payload.map((res) => {
         var addWordcloudData = {
           text: res.keyword,
           size: res.count,
         };
-        return wordcloudData.push(addWordcloudData);
+        return data.push(addWordcloudData);
+      });
+
+      onSetWordcloud(data);
+
+      const maxNum = data.length - 1;
+      const firstKeyword = data[maxNum].text;
+
+      console.log(firstKeyword);
+
+      let newsBody = {
+        keyword: firstKeyword,
+        // startDate: startDate,
+        // endDate: endDate,
+      };
+
+      dispatch(getNews(newsBody)).then((res) => {
+        console.log(res.payload);
+        setPosts(res.payload);
+        setCurrentPage(1);
+        indexOfLastPost = currentPage * postPerPage;
+        indexOfFirstPost = indexOfLastPost - postPerPage;
+        currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
       });
     });
-
-    const firstKeyword = await wordcloudData[0].text;
-    let newsBody = {
-      keyword: firstKeyword,
-      startDate: startDate,
-      endDate: endDate,
-    };
-    setLoading(true);
-    await dispatch(getNews(newsBody)).then((response) => {
-      console.log(response.payload);
-      setPosts(response.payload);
-      setCurrentPage(1);
-      indexOfLastPost = currentPage * postPerPage;
-      indexOfFirstPost = indexOfLastPost - postPerPage;
-      currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
-    });
-    setLoading(false);
   };
+
+  // const onSetPastSearchResult = async () => {
+  //   await dispatch(getPastDatalist(keywordList)).then((response) => {
+  //     console.log(response.payload);
+  //   });
+  // };
 
   return (
     <div>
