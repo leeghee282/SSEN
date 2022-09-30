@@ -1,0 +1,16 @@
+.card {
+    background-color: white;
+    border-radius: 15px;
+    padding-left: 20px;
+    padding-right: 10px;
+    height:150px;
+    margin-top: 15px;
+    
+    
+}
+
+.card_body {
+    margin-top: 30px;
+}
+
+#div:hover{color: #ff2255;}

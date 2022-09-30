@@ -1,0 +1,28 @@
+.button {
+  border: none;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 105px;
+  background: #6b8eb3;
+  border-radius: 15px;
+  padding: 7px;
+  width: 120px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+}
+
+.comment {
+  border: none;
+  margin-left: 40px;
+  background: #fff;
+  border-radius: 15px;
+  padding: 10px;
+  
+  padding-left: 15px;
+  width: 240px;
+  height: 30px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+}
