@@ -1,16 +1,18 @@
 import ReactApexChart from "react-apexcharts";
 
 export default function MyAssetChart({
-  myUSDTotal,
-  myEURTotal,
-  myGBPTotal,
-  myCNYTotal,
-  myJPYTotal,
+  USDTotal,
+  EURTotal,
+  GBPTotal,
+  CNYTotal,
+  JPYTotal,
 }) {
-  console.log(myUSDTotal, myEURTotal, "내 돈...");
+  const a1 = USDTotal.toFixed(2).toString() + "달러";
+  console.log(a1);
   //도넛 차트 데이터 및 옵션
   const donutData = {
-    series: [myUSDTotal, myEURTotal, myGBPTotal, myCNYTotal, myJPYTotal],
+    series: [USDTotal, EURTotal, GBPTotal, CNYTotal, JPYTotal],
+
     options: {
       chart: {
         type: "donut",
@@ -18,11 +20,23 @@ export default function MyAssetChart({
       legend: {
         position: "bottom",
       },
-      responsive: [
-        {
-          breakpoint: 400,
-        },
-      ],
+      // responsive: [
+      //   {
+      //     breakpoint: 400,
+      //   },
+      // ],
+      // tooltip: {
+      //   custom: function ({ series, seriesIndex, dataPointIndex, w }) {
+      //     return (
+      //       '<div class="arrow_box">' +
+      //       "<span>" +
+      //       w.series.toFixed(2)[seriesIndex][dataPointIndex] +
+      //       "</span>" +
+      //       "</div>"
+      //     );
+      //   },
+      // },
+
       plotOptions: {
         // pie: {
         //   donut: {
