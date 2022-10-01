@@ -20,6 +20,11 @@ import IconButton from "@mui/material/IconButton";
 import Popover from "@mui/material/Popover";
 import Divider from "@mui/material/Divider";
 
+//유정추가
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+// import '../../../node_modules/react-notifications/lib/notifications.css';
+import './style.css';
+
 // 회원정보 popover
 const BasicPopover = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -69,6 +74,8 @@ const BasicPopover = () => {
 };
 
 const Header = () => {
+
+
   const navigate = useNavigate();
   // 키워드 저장
   const [word, setWord] = useState("");
@@ -81,6 +88,56 @@ const Header = () => {
   const lastWeek = today.getDate() - 6;
   const endDate = year + "-" + month + "-" + dayOfToday;
   const startDate = year + "-" + month + "-" + lastWeek;
+
+
+  // 유정 추가
+   // 웹소켓 연결
+   const webSocket = new WebSocket("ws://j7e204.p.ssafy.io:8080/ssen"); 
+
+    useEffect(()=> {
+        webSocket.onopen = function(){
+            console.log("서버와 웹소켓 연결 성공");
+        };
+    }, []);
+
+    webSocket.onmessage = function(message) {
+      console.log(message.data);
+      var str =  message.data.split(",");
+      var str1 = str[0].split("환율")[0]
+      var str2 = str1.substring(str1.length-5);
+      console.log(str2);
+      var msgUserId = str[1].split("님")[0].trim();
+      //목표환율 설정한 유저와 목표 환율 유저가 같으면 
+      if(loginFlag===msgUserId){
+        console.log(str2,"확인해야해")
+
+        if (str2 === ' EUR ') {
+          console.log("성공유럽")
+          NotificationManager.success(str[1],str[0]);
+        }
+
+        if (str2 === ' JPY ') {
+          console.log("성공일본")
+          NotificationManager.warning(str[1],str[0]);
+        }
+
+        if (str2 === ' GBP ') {
+          console.log("성공영국")
+          NotificationManager.info(str[1],str[0]);
+        }
+
+        if (str2 === ' USD ') {
+          console.log("성공미국")
+          NotificationManager.error(str[1],str[0]);
+        }
+
+  }
+
+}
+
+  
+
+  //유정 추가 끝
 
   const onSubmit = async (e) => {
     console.log(word, "네브바 검색창");
@@ -122,7 +179,10 @@ const Header = () => {
   // };
 
   const logoClickHandler = () => {
+    webSocket.close();
+    console.log("서버와 웹소켓 연결 끊기");
     navigate("/");
+    
   };
 
   const [logoutCount, setLogoutCount] = useState(0);
@@ -258,6 +318,8 @@ const Header = () => {
           )}
         </Stack>
       </Toolbar>
+
+      <NotificationContainer sx={{background:"red"}}/>
       {/* 각 페이지 별로 받아오는 container */}
       <Container maxwidth="fluid" style={{ marginTop: 10 }}>
         <Grid container spacing={1}>
