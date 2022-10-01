@@ -83,7 +83,7 @@
 }
 /*유럽 EUR */
 .notification-success {
-  background-color: #51a351;
+  background-color: #5260b4;
 }
 
 .notification-success:before {
@@ -93,7 +93,7 @@
 }
 /*일본 JPY */
 .notification-warning {
-  background-color: #f89406;
+  background-color: #d34e5b;
 }
 
 .notification-warning:before {

@@ -13,41 +13,63 @@ function Search() {
   const offset = (page - 1) * limit;
   const [noneDataFlag, setNoneDataFlag] = useState(false); // 데이터가 있는지 없는지 확인하는 곳
   const [search, setSearch] = useState(""); //검색어
-  const [lists, setLists] = useState([]); //검색한 리스트 저장할 곳
-  const [loading, setLoading] = useState(true);
-  
-  const location = useLocation();
-  
+  const [lists, setLists] = useState([
+    {
+      title: "제목은 어쩌구저쩌구",
+      content:
+        "내용은 어쩌구저쩌구sssssssssssㄴㅇㄻㄴㅇㄻㅈㄷㄱㅈㄷㄱㅈㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㅈㄷㄱㅈㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㅈㄷㄱㄴㅇㄹㄴㅇㄹㄴㅇㅈㄷㄱㅈㄹㄴㄹㄴssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssdㄴㅇㄻㅇㄴㄹㅈㄷㄱㅈㄷㄱㅈㄷㄴㅇㄹㄴㅇㅁㄻㄴㅇㄹㄴㄹㄴㅁㄻㄴㅇss",
+      time: "2022-09-01",
+      url: "www.naver.com",
+      press: "한국일보",
+    },
+    {
+      title: "제목은 어쩌구저쩌구",
+      content: "내용은 어쩌구저쩌구",
+      time: "2022-09-01",
+      url: "www.naver.com",
+      press: "한국일보",
+    },
+  ]); //검색한 리스트 저장할 곳
+  const [loading, setLoading] = useState(false);
 
-  const data = ["한국", "미국", "중국", "일본","경제","뉴스","국민","뉴욕","코로나"];
+  const location = useLocation();
+
+  const data = [
+    "한국",
+    "미국",
+    "중국",
+    "일본",
+    "경제",
+    "뉴스",
+    "국민",
+    "뉴욕",
+    "코로나",
+  ];
   const pick = Math.floor(Math.random() * data.length);
 
-  //값 받기
-  
+  // useEffect(() => {
+  //   async function fetchData() {
 
-  useEffect(() => {
-    async function fetchData() {
-      
-      console.log(location.state,"확인용")
-      setLoading(true);
-      try {
-        const result = await axios.get(
-          baseNewsURL +
-            `/news/search/${location.state.search}/${location.state.startDate}/${location.state.endDate}/`
-        );
-        
-        setLists(result.data);
-        setNoneDataFlag(false);
-        setLoading(false);
-      } catch (e) {
-        setNoneDataFlag(true);
-        setLoading(false);
-      }
-    }
-    fetchData();
-  }, [location]);
+  //     console.log(location.state,"확인용")
+  //     setLoading(true);
+  //     try {
+  //       const result = await axios.get(
+  //         baseNewsURL +
+  //           `/news/search/${location.state.search}`
+  //       );
 
-  // 추천검색어 눌렀을때 하려했으나 안됨 
+  //       setLists(result.data);
+  //       setNoneDataFlag(false);
+  //       setLoading(false);
+  //     } catch (e) {
+  //       setNoneDataFlag(true);
+  //       setLoading(false);
+  //     }
+  //   }
+  //   fetchData();
+  // }, [location]);
+
+  // 추천검색어 눌렀을때 하려했으나 안됨
   // const clickRC = async () => {
   //   setLoading(true);
   //   console.log(data[pick],1111)
@@ -66,18 +88,6 @@ function Search() {
   //   }
   // };
 
-  // useEffect(()=>{
-
-  // },[clickRC])
-  // useEffect(() => {
-  //   fetch("https://jsonplaceholder.typicode.com/posts")
-  //     .then((res) => res.json())
-  //     .then((data) => {
-
-  //       setPosts(data)
-  //     });
-  // }, []);
-
   return (
     <div>
       {loading ? (
@@ -95,20 +105,19 @@ function Search() {
                   height: "30%",
                 }}
               ></Avatar>
-              <Typography >
-                추천 검색어 : {data[pick]}
-              </Typography>
+              <Typography>추천 검색어 : {data[pick]}</Typography>
             </Box>
           )}
           {!noneDataFlag && (
             <div>
-              <header>
-                <h1>{location.state.search} 검색 결과</h1>
-              </header>
+              <Typography sx={{mt:4,mb:3,display:"flex",justifyContent:"center",fontSize:"35px",fontWeight:600}}>
+                {location.state.search} 검색 결과
+              </Typography>
 
-              <label>
-                페이지 당 표시할 게시물 수:&nbsp;
+              <Typography sx={{ml:3}} id="font_test">
+                페이지 당 표시할 게시물 수 : &nbsp;
                 <select
+                  id="font_test"
                   type="number"
                   value={limit}
                   onChange={({ target: { value } }) => setLimit(Number(value))}
@@ -119,20 +128,29 @@ function Search() {
                   <option value="50">50</option>
                   <option value="100">100</option>
                 </select>
-              </label>
+              </Typography>
 
               <main>
                 {lists
                   .slice(offset, offset + limit)
-                  .map(({ title, content, time, url, press }) => (
-                    <Grid container>
+                  .map(({ title, content, time, url, press }, index) => (
+                    <Grid key={index} container>
                       <Grid item xs={12}>
                         <Link
                           href={url}
                           target="_blank"
                           sx={{ textDecoration: "none", color: "black" }}
                         >
-                          <Box className="card" key={time}>
+                          <Box
+                            sx={{
+                              
+                              pt: 2,
+                              "&:hover": {
+                                background: "#DEE0E4",
+                              },
+                            }}
+                            className="card"
+                          >
                             <Grid
                               sx={{ borderBottom: "1px dashed black" }}
                               container
@@ -141,7 +159,7 @@ function Search() {
                                 <Typography
                                   id="font_test"
                                   fontSize="30px"
-                                  sx={{
+                                  sx={{ml:1,
                                     height: "60px",
                                   }}
                                 >
@@ -168,10 +186,10 @@ function Search() {
                               </Grid>
                             </Grid>
 
-                            <Grid sx={{ pl: 1 }} item xs={11}>
-                              <Typography id="font_Gmarket">
-                                {content.length >= 150
-                                  ? content.substr(0, 150) + "..."
+                            <Grid sx={{ pl: 1 }} item xs={11.5}>
+                              <Typography sx={{ pt: 3 }} id="font_Gmarket">
+                                {content.length >= 170
+                                  ? content.substr(0, 170) + "..."
                                   : content}
                               </Typography>
                             </Grid>
