@@ -13,6 +13,43 @@ const MyAssetTotal = (props) => {
     return asset.multi;
   });
 
+  // 국가별 총 합계 새로 고침 없이 계산하기 위한 것 => 그래프
+  const [USDTotal, setUSDTotal] = useState(0);
+  const [EURTotal, setEURTotal] = useState(0);
+  const [GBPTotal, setGBPTotal] = useState(0);
+  const [CNYTotal, setCNYTotal] = useState(0);
+  const [JPYTotal, setJPYTotal] = useState(0);
+
+  useEffect(() => {
+    const totalForGraph = {
+      eachUSD: 0,
+      eachEUR: 0,
+      eachGBP: 0,
+      eachCNY: 0,
+      eachJPY: 0,
+    };
+    if (props.filteredItems.length > 0) {
+      props.filteredItems.forEach((asset) => {
+        if (asset.code === "USD") {
+          totalForGraph.eachUSD += +asset.multi;
+        } else if (asset.code === "EUR") {
+          totalForGraph.eachEUR += +asset.multi;
+        } else if (asset.code === "GBP") {
+          totalForGraph.eachGBP += +asset.multi;
+        } else if (asset.code === "CNY") {
+          totalForGraph.eachCNY += +asset.multi;
+        } else if (asset.code === "JPY") {
+          totalForGraph.eachJPY += +asset.multi;
+        }
+      });
+    }
+    setUSDTotal(totalForGraph.eachUSD);
+    setEURTotal(totalForGraph.eachEUR);
+    setGBPTotal(totalForGraph.eachGBP);
+    setCNYTotal(totalForGraph.eachCNY);
+    setJPYTotal(totalForGraph.eachJPY);
+  }, [props.filteredItems]);
+
   // 국가별 총 합계 새로 고침 없이 계산하기 위한 것
   const [nationTotal, setNationTotal] = useState(0);
 
@@ -118,6 +155,8 @@ const MyAssetTotal = (props) => {
 
   const All = liveUSD + liveJPY + liveEUR + liveGBP + liveCNY;
 
+  //
+
   //가진 보유 화폐 구매 총 합계
   const Total = MyAssetForTotal.reduce((a, b) => a + b, 0);
   // 손익(실시간 환율 반영)
@@ -173,11 +212,11 @@ const MyAssetTotal = (props) => {
       </div>
 
       <MyAssetChart
-        myUSDTotal={myUSDTotal}
-        myEURTotal={myEURTotal}
-        myGBPTotal={myGBPTotal}
-        myCNYTotal={myCNYTotal}
-        myJPYTotal={myJPYTotal}
+        USDTotal={USDTotal}
+        EURTotal={EURTotal}
+        GBPTotal={GBPTotal}
+        CNYTotal={CNYTotal}
+        JPYTotal={JPYTotal}
       />
     </div>
   );
