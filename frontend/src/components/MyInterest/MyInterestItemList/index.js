@@ -18,7 +18,12 @@ import { Avatar, Modal, TextField } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import MyInterestModal from "../MyInterestModal";
 
-export default function MyInterestItemList({ live, interests, getInterest,handleOpen}) {
+export default function MyInterestItemList({
+  live,
+  interests,
+  getInterest,
+  handleOpen,
+}) {
   // 수정 모달 오픈관리
   const style = {
     position: "absolute",
@@ -56,137 +61,242 @@ export default function MyInterestItemList({ live, interests, getInterest,handle
   };
 
   const addComma = (num) => {
-    return num.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  }
-  
+    return num.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+
   return (
     <Box>
       {interests.length === 0 && (
-        <Avatar 
-        sx={{
-          width: 600,
-          height: 200,
-          m: 1,
-          bgcolor: "white",
-          cursor: "pointer",
-          borderRadius: "10px"
-          
-        }} onClick={handleOpen} variant="square" src="/images/Interest3.png">  </Avatar>
+        <Avatar
+          sx={{
+            width: 600,
+            height: 200,
+            m: 1,
+            bgcolor: "white",
+            cursor: "pointer",
+            borderRadius: "10px",
+          }}
+          onClick={handleOpen}
+          variant="square"
+          src="/images/Interest3.png"
+        >
+          {" "}
+        </Avatar>
       )}
       {interests.length !== 0 && (
-      <TableContainer  component={Paper}>
-        <Table sx={{ minWidth: 650, width:900 }} aria-label="simple table">
-          <TableHead sx={{ backgroundColor: "#c4c4c4"}}>
-            <TableRow>
-              {/* <TableCell id="font_test" >번호</TableCell> */}
-              <TableCell id="font_test" align="center" sx={{ fontSize: "20px" }}>국가</TableCell>
-              <TableCell id="font_test" align="center" sx={{ fontSize: "20px" }}>목표금액 1</TableCell>
-              <TableCell id="font_test" align="center" sx={{ fontSize: "20px" }}>목표금액 2</TableCell>
-              <TableCell id="font_test" align="center" sx={{ fontSize: "20px" }}>목표금액 3</TableCell>
-              <TableCell id="font_test" align="center" sx={{ fontSize: "20px" }}>현재 환율</TableCell>
-              <TableCell id="font_test" align="center" sx={{ fontSize: "20px" }}>삭제</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {interests.map((interest) => (
-              <TableRow
-                key={interest.uid}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                {/* <TableCell component="th" scope="row">
-                  {interest.uid}
-                </TableCell> */}
-                <TableCell id="font_test" align="center" sx={{ fontSize: "15px" }}>{interest.code}</TableCell>
-                <TableCell id="font_test" align="center" sx={{ fontSize: "15px" }}>
-                  <Grid container>
-                    <Grid item xs={10}>
-                      {addComma(interest.target1.toString())}원
-                    </Grid>
-                    <Grid
-                      sx={{ pl: 0.5, cursor: "pointer" }}
-                      item
-                      xs={1}
-                      onClick={() => {
-                        const data = {
-                          uid : interest.uid,
-                          nation: interest.code,
-                          target: interest.target1,
-                        };
-                        handleOpen2();
-                        detailNotice(data);
-                      }}
-                    >
-                      🖋
-                    </Grid>
-                  </Grid>
-                </TableCell>
-                <TableCell id="font_test" align="center" sx={{ fontSize: "15px" }}>
-                  <Grid container>
-                    <Grid item xs={10}>
-                      {addComma(interest.target2.toString())}원
-                    </Grid>
-                    <Grid
-                      sx={{ pl: 0.5, cursor: "pointer" }}
-                      item
-                      xs={1}
-                      onClick={() => {
-                        const data = {
-                          uid : interest.uid,
-                          nation: interest.code,
-                          target: interest.target2,
-                        };
-                        handleOpen2();
-                        detailNotice(data);
-                      }}
-                    >
-                      🖋
-                    </Grid>
-                  </Grid>
-                </TableCell>
-                <TableCell id="font_test" align="center" sx={{ fontSize: "15px" }}>
-                  <Grid container>
-                    <Grid item xs={10}>
-                      {addComma(interest.target3.toString())}원
-                    </Grid>
-                    {/* 타겟2 값이 0이면 수정버튼 안뜸*/}
-                    {interest.target2 !==0 &&( 
-                    <Grid
-                      sx={{ pl: 0.5, cursor: "pointer" }}
-                      item
-                      xs={1}
-                      onClick={() => {
-                        const data = {
-                          uid : interest.uid,
-                          nation: interest.code,
-                          target: interest.target3,
-                        };
-                        handleOpen2();
-                        detailNotice(data);
-                      }}
-                    >
-                      🖋
-                    </Grid>
-                    )}
-                  </Grid>
-                </TableCell>
-                <TableCell id="font_test" align="center" sx={{ fontSize: "15px" }}>
-                  {live.length === 5 ? addComma(live[chart[interest.code]].buyPrice.toFixed(2).toString()):"none"}원</TableCell>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650, width: 900 }} aria-label="simple table">
+            <TableHead sx={{ backgroundColor: "#c4c4c4" }}>
+              <TableRow>
+                {/* <TableCell id="font_test" >번호</TableCell> */}
                 <TableCell
+                  id="font_test"
                   align="center"
-                  onClick={() => deleteMyAsset(interest.uid)}
-                  sx={{ cursor: "pointer", fontSize: "15px" }}
+                  sx={{ fontSize: "20px" }}
                 >
-                  <DeleteForeverRoundedIcon />
+                  국가
+                </TableCell>
+                <TableCell
+                  id="font_test"
+                  align="center"
+                  sx={{ fontSize: "20px" }}
+                >
+                  화폐
+                </TableCell>
+                <TableCell
+                  id="font_test"
+                  align="center"
+                  sx={{ fontSize: "20px" }}
+                >
+                  목표금액 1
+                </TableCell>
+                <TableCell
+                  id="font_test"
+                  align="center"
+                  sx={{ fontSize: "20px" }}
+                >
+                  목표금액 2
+                </TableCell>
+                <TableCell
+                  id="font_test"
+                  align="center"
+                  sx={{ fontSize: "20px" }}
+                >
+                  목표금액 3
+                </TableCell>
+                <TableCell
+                  id="font_test"
+                  align="center"
+                  sx={{ fontSize: "20px" }}
+                >
+                  현재 환율
+                </TableCell>
+                <TableCell
+                  id="font_test"
+                  align="center"
+                  sx={{ fontSize: "20px" }}
+                >
+                  삭제
                 </TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            <TableBody>
+              {interests.map((interest) => (
+                <TableRow
+                  key={interest.uid}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  {/* 국가별 사진 */}
+                  {interest.code === "USD" && (
+                    <TableCell align="center">
+                      <img src="/images/USD.png" width={39} height={26}></img>
+                    </TableCell>
+                  )}
+                  {interest.code === "EUR" && (
+                    <TableCell align="center">
+                      <img src="/images/EUR.png" width={39} height={26}></img>
+                    </TableCell>
+                  )}
+                  {interest.code === "GBP" && (
+                    <TableCell align="center">
+                      <img src="/images/GBP.png" width={39} height={26}></img>
+                    </TableCell>
+                  )}
+                  {interest.code === "CNY" && (
+                    <TableCell align="center">
+                      <img src="/images/CNY.png" width={39} height={26}></img>
+                    </TableCell>
+                  )}
+                  {interest.code === "JPY" && (
+                    <TableCell align="center">
+                      <img src="/images/JPY.png" width={39} height={26}></img>
+                    </TableCell>
+                  )}
+                  <TableCell
+                    id="font_test"
+                    align="center"
+                    sx={{ fontSize: "15px" }}
+                  >
+                    {interest.code}
+                  </TableCell>
+                  <TableCell
+                    id="font_test"
+                    align="center"
+                    sx={{ fontSize: "15px" }}
+                  >
+                    <Grid container>
+                      <Grid item xs={10}>
+                        {addComma(interest.target1.toString())}원
+                      </Grid>
+                      <Grid
+                        sx={{ pl: 0.5, cursor: "pointer" }}
+                        item
+                        xs={1}
+                        onClick={() => {
+                          const data = {
+                            uid: interest.uid,
+                            nation: interest.code,
+                            target: interest.target1,
+                          };
+                          handleOpen2();
+                          detailNotice(data);
+                        }}
+                      >
+                        🖋
+                      </Grid>
+                    </Grid>
+                  </TableCell>
+                  <TableCell
+                    id="font_test"
+                    align="center"
+                    sx={{ fontSize: "15px" }}
+                  >
+                    <Grid container>
+                      <Grid item xs={10}>
+                        {addComma(interest.target2.toString())}원
+                      </Grid>
+                      <Grid
+                        sx={{ pl: 0.5, cursor: "pointer" }}
+                        item
+                        xs={1}
+                        onClick={() => {
+                          const data = {
+                            uid: interest.uid,
+                            nation: interest.code,
+                            target: interest.target2,
+                          };
+                          handleOpen2();
+                          detailNotice(data);
+                        }}
+                      >
+                        🖋
+                      </Grid>
+                    </Grid>
+                  </TableCell>
+                  <TableCell
+                    id="font_test"
+                    align="center"
+                    sx={{ fontSize: "15px" }}
+                  >
+                    <Grid container>
+                      <Grid item xs={10}>
+                        {addComma(interest.target3.toString())}원
+                      </Grid>
+                      {/* 타겟2 값이 0이면 수정버튼 안뜸*/}
+                      {interest.target2 !== 0 && (
+                        <Grid
+                          sx={{ pl: 0.5, cursor: "pointer" }}
+                          item
+                          xs={1}
+                          onClick={() => {
+                            const data = {
+                              uid: interest.uid,
+                              nation: interest.code,
+                              target: interest.target3,
+                            };
+                            handleOpen2();
+                            detailNotice(data);
+                          }}
+                        >
+                          🖋
+                        </Grid>
+                      )}
+                    </Grid>
+                  </TableCell>
+                  <TableCell
+                    id="font_test"
+                    align="center"
+                    sx={{ fontSize: "15px" }}
+                  >
+                    {live.length === 5
+                      ? addComma(
+                          live[chart[interest.code]].buyPrice
+                            .toFixed(2)
+                            .toString()
+                        )
+                      : "none"}
+                    원
+                  </TableCell>
+                  <TableCell
+                    align="center"
+                    onClick={() => deleteMyAsset(interest.uid)}
+                    sx={{ cursor: "pointer", fontSize: "15px" }}
+                  >
+                    <DeleteForeverRoundedIcon />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       )}
       <Modal open={open2} onClose={handleClose2}>
         <Box sx={style}>
-          <MyInterestEdit details={details} handleClose2={handleClose2} getInterest={getInterest} />
+          <MyInterestEdit
+            details={details}
+            handleClose2={handleClose2}
+            getInterest={getInterest}
+          />
         </Box>
       </Modal>
     </Box>
