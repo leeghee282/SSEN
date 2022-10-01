@@ -3,19 +3,20 @@ import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
 import * as d3 from "d3";
 import cloud from "d3-cloud";
-import "./index.css";
+import "./style.css";
+import Spinner from "../Loading/Spinner";
 
 import {
   getKeywords,
   getNews,
   setWordcloudData,
 } from "../../_actions/chart_action";
-import { getPastDatalist } from "../../_actions/past_action";
+import { getPastDetailist } from "../../_actions/past_action";
 
 import useDidMountEffect from "./useDidMountEffect";
 
 import Post from "./Post";
-import Pagination from "./Pagination";
+import Paging from "./Paging";
 
 import { Grid } from "@mui/material";
 
@@ -40,15 +41,17 @@ function Keyword(props) {
   const doDetail = useSelector((state) => state.chartReducer.doDetail);
 
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
   const [postPerPage] = useState(5);
-
-  // const [wordcloudData, setWordcloudData] = useState([]);
-
   let indexOfLastPost = currentPage * postPerPage;
   let indexOfFirstPost = indexOfLastPost - postPerPage;
   let currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+
+  const [keywordLoading, setKeywordLoading] = useState(false);
+  const [newsLoading, setNewsLoading] = useState(false);
 
   // useEffect(() => {
   //   wordcloudHandler();
@@ -67,6 +70,10 @@ function Keyword(props) {
       startDate: startDate,
       endDate: endDate,
     };
+    d3.selectAll("svg").remove();
+
+    setKeywordLoading(true);
+    setNewsLoading(true);
 
     await dispatch(getKeywords(keywordBody)).then((response) => {
       const data = [];
@@ -78,6 +85,7 @@ function Keyword(props) {
         };
         return data.push(addWordcloudData);
       });
+      setKeywordLoading(false);
 
       onSetWordcloud(data);
 
@@ -100,10 +108,10 @@ function Keyword(props) {
         indexOfFirstPost = indexOfLastPost - postPerPage;
         currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
       });
+
+      setNewsLoading(false);
     });
   };
-
-  const paginate = (pageNum) => setCurrentPage(pageNum);
 
   const onSetWordcloud = async (d) => {
     var fill = d3.scaleOrdinal(d3.schemeCategory10);
@@ -116,8 +124,6 @@ function Keyword(props) {
 
     var width = 300;
     var height = 300;
-
-    d3.selectAll("svg").remove();
 
     cloud()
       .size([width, height])
@@ -161,20 +167,20 @@ function Keyword(props) {
         })
         .style("cursor", "pointer")
         .on("click", function (d) {
-          console.log(d.target.__data__.text);
+          newsLoadingChange();
           onSetNews(d.target.__data__.text);
         });
       console.log(JSON.stringify(words));
     }
 
-    const onSetNews = (txt) => {
+    const onSetNews = async (txt) => {
       let newsBody = {
         keyword: txt,
         // startDate: startDate,
         // endDate: endDate,
       };
 
-      dispatch(getNews(newsBody)).then((response) => {
+      await dispatch(getNews(newsBody)).then((response) => {
         console.log(response.payload);
         setPosts(response.payload);
         setCurrentPage(1);
@@ -182,6 +188,12 @@ function Keyword(props) {
         indexOfFirstPost = indexOfLastPost - postPerPage;
         currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
       });
+
+      newsLoadingChange();
+    };
+
+    const newsLoadingChange = () => {
+      setNewsLoading((current) => !current);
     };
   };
 
@@ -236,15 +248,19 @@ function Keyword(props) {
     <div>
       <Grid container spacing={2}>
         <Grid item xs={5}>
+          {keywordLoading ? <Spinner /> : null}
           <div id="word-cloud"></div>
         </Grid>
         <Grid item xs={7}>
-          <div className="container">
-            <Post posts={currentPosts} />
-            <Pagination
+          <div className="newscontainer">
+            <Post posts={currentPosts} loading={newsLoading} />
+            <Paging
+              totalCount={posts.length}
               postPerPage={postPerPage}
-              totalPosts={posts.length}
-              paginate={paginate}
+              postRangeDisplayed={5}
+              handlePageChange={handlePageChange}
+              page={currentPage}
+              loading={newsLoading}
             />
           </div>
         </Grid>

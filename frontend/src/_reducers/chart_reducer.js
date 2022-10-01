@@ -22,6 +22,7 @@ const INITIAL_STATE = {
   doing: 0,
   chartDetailDate: { startDate: startDate, endDate: endDate },
   doDetail: 0,
+  news: [],
 };
 
 export default function (state = INITIAL_STATE, action) {
