@@ -12,7 +12,6 @@ const MainCalendar = () => {
       <Grid container={2} sx={{ width: "fit-content" }}>
         <Grid item xs={9}>
           <Calendar />
-
           <Chart />
           <Keyword />
         </Grid>
