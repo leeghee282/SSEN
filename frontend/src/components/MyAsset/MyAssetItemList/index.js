@@ -305,7 +305,7 @@ export default function MyAssetItemList({
                   sx={{ fontSize: "15px" }}
                   id="font_test"
                 >
-                  {addComma(asset.multi.toString())}원
+                  {addComma(asset.multi.toFixed(2).toString())}원
                 </TableCell>
                 {/* 삭제 버튼 */}
                 <TableCell
