@@ -17,21 +17,20 @@ import FormLabel from "@mui/material/FormLabel";
 import { useDispatch } from "react-redux";
 import { getChartDates, getChartCode } from "../../_actions/chart_action";
 import { Typography } from "@mui/material";
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import ToggleButton from "@mui/material/ToggleButton";
 import CommunityButton from "../Community/CommunityButton";
 
+import "./style.css";
 
 // 나라 선택 라디오 버튼 컴포넌트
 const RowRadioButtonsGroup = () => {
-
-  
   const dispatch = useDispatch();
   const [type, setType] = useState("USD");
 
   const selectChange = (event) => {
     setType(event.target.value);
-    console.log(type)
+    console.log(type);
 
     let body = {
       code: event.target.value,
@@ -44,32 +43,42 @@ const RowRadioButtonsGroup = () => {
 
   return (
     <FormControl>
-      <FormLabel 
-      id="font_test"
-      sx={{
-                mt:3,
-                color: "rgba(0, 0, 0, 0.6)",
-                height: "50px",
-                fontWeight: "900",
-                fontSize: "30px",
-              }} >국가선택</FormLabel>
+      <FormLabel
+        id="font_test"
+        sx={{
+          mt: 3,
+          color: "rgba(0, 0, 0, 0.6)",
+          height: "50px",
+          fontWeight: "900",
+          fontSize: "30px",
+        }}
+      >
+        국가선택
+      </FormLabel>
       <ToggleButtonGroup
-      
-        sx={{mt:1,width:"800px",height:"30px"}}
+        sx={{ mt: 1, width: "800px", height: "30px" }}
         row
         size="large"
         fullWidth="true"
-        
         name="row-radio-buttons-group"
         value={type}
         onClick={selectChange}
-        
-      > 
-        <ToggleButton id="font_test" value="USD" control={<Radio />} >달러/원</ToggleButton>
-        <ToggleButton id="font_test" value="EUR" control={<Radio />}  >유로/원</ToggleButton>
-        <ToggleButton id="font_test" value="GBP" control={<Radio />}  >파운드/원</ToggleButton>
-        <ToggleButton id="font_test" value="JPY" control={<Radio />}  >엔/원</ToggleButton>
-        <ToggleButton id="font_test" value="CNY" control={<Radio />}  >위안/원</ToggleButton>
+      >
+        <ToggleButton id="font_test" value="USD" control={<Radio />}>
+          달러/원
+        </ToggleButton>
+        <ToggleButton id="font_test" value="EUR" control={<Radio />}>
+          유로/원
+        </ToggleButton>
+        <ToggleButton id="font_test" value="GBP" control={<Radio />}>
+          파운드/원
+        </ToggleButton>
+        <ToggleButton id="font_test" value="JPY" control={<Radio />}>
+          엔/원
+        </ToggleButton>
+        <ToggleButton id="font_test" value="CNY" control={<Radio />}>
+          위안/원
+        </ToggleButton>
       </ToggleButtonGroup>
     </FormControl>
   );
@@ -205,24 +214,27 @@ const Calendar = () => {
   };
 
   return (
-    
-      <Box>
-        <Grid container>
+    <Box>
+      <Grid container id="calendar">
         <Grid item xs={12}>
-        <Typography component="h1"
-              id="font_test"
-              sx={{
-                mt:3,
-                color: "rgba(0, 0, 0, 0.6)",
-                height: "40px",
-                fontWeight: "900",
-                fontSize: "30px",
-              }}>날짜선택</Typography>
+          <Typography
+            component="h1"
+            id="font_test"
+            sx={{
+              mt: 3,
+              color: "rgba(0, 0, 0, 0.6)",
+              height: "40px",
+              fontWeight: "900",
+              fontSize: "30px",
+            }}
+          >
+            날짜선택
+          </Typography>
         </Grid>
-        </Grid>
-          <Grid  container  sx={{mt:2}} direction="row">
-            <Grid item xs={2.5}>
-            <DatePicker 
+
+        <Grid container sx={{ mt: 2 }} direction="row">
+          <Grid item xs={2}>
+            <DatePicker
               id="font_test"
               dateFormat="yyyy년 MM월 dd일"
               locale={ko}
@@ -232,11 +244,11 @@ const Calendar = () => {
               startDate={startDate}
               endDate={endDate}
             />
-            </Grid>
-            <Grid item xs={0.5}>
-            <Typography sx={{fontWeight:900,}}>~</Typography>
-            </Grid>
-            <Grid item xs={2}>
+          </Grid>
+          <Grid item xs={0.5}>
+            <Typography sx={{ fontWeight: 500 }}>~</Typography>
+          </Grid>
+          <Grid item xs={2}>
             <DatePicker
               id="font_test"
               dateFormat="yyyy년 MM월 dd일"
@@ -248,11 +260,12 @@ const Calendar = () => {
               endDate={endDate}
               minDate={startDate}
             />
-            </Grid>
-            
-            <Grid item xs={5} sx={{pl:2}}>
+          </Grid>
+
+          <Grid item xs={5.5} sx={{ pl: 2 }}>
             {DateFilterData.map((e, idx) => (
-              <Button sx={{ml:2.2}}
+              <Button
+                sx={{ ml: 2.2 }}
                 id="font_test"
                 variant="contained"
                 onClick={handleBtnClicked}
@@ -262,22 +275,19 @@ const Calendar = () => {
                 {e.value}
               </Button>
             ))}
-            </Grid>
-            {/* <Grid item xs={3} sx={{ml:7,pl:30}}>
+          </Grid>
+        </Grid>
+      </Grid>
+      {/* <Grid item xs={3} sx={{ml:7,pl:30}}>
             
             <CommunityButton ></CommunityButton>
             </Grid> */}
-            <Grid item xs={12}>
-            <RowRadioButtonsGroup />
-            </Grid>
-            
-            </Grid>
-            
-          
-          
-        
-      </Box>
-    
+      <Grid container id="nation">
+        <Grid item xs={12}>
+          <RowRadioButtonsGroup />
+        </Grid>
+      </Grid>
+    </Box>
   );
 };
 
