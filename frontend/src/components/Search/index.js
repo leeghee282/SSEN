@@ -14,23 +14,23 @@ function Search() {
   const [noneDataFlag, setNoneDataFlag] = useState(false); // 데이터가 있는지 없는지 확인하는 곳
   const [search, setSearch] = useState(""); //검색어
   const [lists, setLists] = useState([
-    {
-      title: "제목은 어쩌구저쩌구",
-      content:
-        "내용은 어쩌구저쩌구sssssssssssㄴㅇㄻㄴㅇㄻㅈㄷㄱㅈㄷㄱㅈㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㅈㄷㄱㅈㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㅈㄷㄱㄴㅇㄹㄴㅇㄹㄴㅇㅈㄷㄱㅈㄹㄴㄹㄴssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssdㄴㅇㄻㅇㄴㄹㅈㄷㄱㅈㄷㄱㅈㄷㄴㅇㄹㄴㅇㅁㄻㄴㅇㄹㄴㄹㄴㅁㄻㄴㅇss",
-      time: "2022-09-01",
-      url: "www.naver.com",
-      press: "한국일보",
-    },
-    {
-      title: "제목은 어쩌구저쩌구",
-      content: "내용은 어쩌구저쩌구",
-      time: "2022-09-01",
-      url: "www.naver.com",
-      press: "한국일보",
-    },
+    // {
+    //   title: "제목은 어쩌구저쩌구",
+    //   content:
+    //     "내용은 어쩌구저쩌구sssssssssssㄴㅇㄻㄴㅇㄻㅈㄷㄱㅈㄷㄱㅈㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㅈㄷㄱㅈㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㅈㄷㄱㄴㅇㄹㄴㅇㄹㄴㅇㅈㄷㄱㅈㄹㄴㄹㄴssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssdㄴㅇㄻㅇㄴㄹㅈㄷㄱㅈㄷㄱㅈㄷㄴㅇㄹㄴㅇㅁㄻㄴㅇㄹㄴㄹㄴㅁㄻㄴㅇss",
+    //   time: "2022-09-01",
+    //   url: "www.naver.com",
+    //   press: "한국일보",
+    // },
+    // {
+    //   title: "제목은 어쩌구저쩌구",
+    //   content: "내용은 어쩌구저쩌구",
+    //   time: "2022-09-01",
+    //   url: "www.naver.com",
+    //   press: "한국일보",
+    // },
   ]); //검색한 리스트 저장할 곳
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const location = useLocation();
 
@@ -47,27 +47,25 @@ function Search() {
   ];
   const pick = Math.floor(Math.random() * data.length);
 
-  // useEffect(() => {
-  //   async function fetchData() {
+  useEffect(() => {
+    async function fetchData() {
+      console.log(location.state, "확인용");
+      setLoading(true);
+      try {
+        const result = await axios.get(
+          baseNewsURL + `/news/search/${location.state.search}`
+        );
 
-  //     console.log(location.state,"확인용")
-  //     setLoading(true);
-  //     try {
-  //       const result = await axios.get(
-  //         baseNewsURL +
-  //           `/news/search/${location.state.search}`
-  //       );
-
-  //       setLists(result.data);
-  //       setNoneDataFlag(false);
-  //       setLoading(false);
-  //     } catch (e) {
-  //       setNoneDataFlag(true);
-  //       setLoading(false);
-  //     }
-  //   }
-  //   fetchData();
-  // }, [location]);
+        setLists(result.data);
+        setNoneDataFlag(false);
+        setLoading(false);
+      } catch (e) {
+        setNoneDataFlag(true);
+        setLoading(false);
+      }
+    }
+    fetchData();
+  }, [location]);
 
   // 추천검색어 눌렀을때 하려했으나 안됨
   // const clickRC = async () => {
@@ -110,11 +108,20 @@ function Search() {
           )}
           {!noneDataFlag && (
             <div>
-              <Typography sx={{mt:4,mb:3,display:"flex",justifyContent:"center",fontSize:"35px",fontWeight:600}}>
+              <Typography
+                sx={{
+                  mt: 4,
+                  mb: 3,
+                  display: "flex",
+                  justifyContent: "center",
+                  fontSize: "35px",
+                  fontWeight: 600,
+                }}
+              >
                 {location.state.search} 검색 결과
               </Typography>
 
-              <Typography sx={{ml:3}} id="font_test">
+              <Typography sx={{ ml: 3 }} id="font_test">
                 페이지 당 표시할 게시물 수 : &nbsp;
                 <select
                   id="font_test"
@@ -143,7 +150,6 @@ function Search() {
                         >
                           <Box
                             sx={{
-                              
                               pt: 2,
                               "&:hover": {
                                 background: "#DEE0E4",
@@ -159,9 +165,7 @@ function Search() {
                                 <Typography
                                   id="font_test"
                                   fontSize="30px"
-                                  sx={{ml:1,
-                                    height: "60px",
-                                  }}
+                                  sx={{ ml: 1, height: "60px" }}
                                 >
                                   {title.length >= 1
                                     ? title.replaceAll("…", " ").substr(0, 30) +
