@@ -101,11 +101,12 @@
 }
 /*미국 USD */
 .notification-error {
-  content: "";
-  background-image: url(../../../public/images/USD.png);
-  background-size: cover;
+  background-color: darkred;
+ 
 }
 
 .notification-error:before {
-  content: "🎈";
+  content: "";
+  background-image: url(../../../public/images/USD.png);
+  background-size: cover;
 }
