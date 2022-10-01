@@ -87,8 +87,9 @@ const Header = () => {
   const month = today.getMonth() + 1;
   const dayOfToday = today.getDate();
   const lastWeek = today.getDate() - 6;
-  const endDate = year + "-" + month + "-" + dayOfToday;
-  const startDate = year + "-" + month + "-" + lastWeek;
+  const endDate = year + "-" + month + "-" + "01";
+  const startDate =
+    year + "-" + month + "-" + (lastWeek - dayOfToday <= 0 ? "25" : lastWeek);
 
   // 유정 추가
   // 웹소켓 연결
@@ -98,29 +99,68 @@ const Header = () => {
     webSocket.onopen = function () {};
   }, []);
 
+  // webSocket.onmessage = function (message) {
+  //   var str = message.data.split(",");
+  //   var str1 = str[0].split("환율")[0];
+  //   var str2 = str1.substring(str1.length - 5);
+
+  //   var msgUserId = str[1].split("님")[0].trim();
+  //   //목표환율 설정한 유저와 목표 환율 유저가 같으면
+
+  //   if (loginFlag === msgUserId) {
+  //     if (str2 === " EUR ") {
+  //       NotificationManager.success(str[1], str[0]);
+  //     }
+
+  //     if (str2 === " JPY ") {
+  //       NotificationManager.warning(str[1], str[0]);
+  //     }
+
+  //     if (str2 === " GBP ") {
+  //       NotificationManager.info(str[1], str[0]);
+  //     }
+
+  //     if (str2 === " USD ") {
+  //       NotificationManager.error(str[1], str[0]);
+  //     }
+  //   }
+  // };
   webSocket.onmessage = function (message) {
-    var str = message.data.split(",");
-    var str1 = str[0].split("환율")[0];
-    var str2 = str1.substring(str1.length - 5);
+    //======push알림용 시작==============
+    if (message.data.includes("targetPrice")) {
+      //console.log(JSON.parse(message.data));
 
-    var msgUserId = str[1].split("님")[0].trim();
-    //목표환율 설정한 유저와 목표 환율 유저가 같으면
-    if (loginFlag === msgUserId) {
-      if (str2 === " EUR ") {
-        NotificationManager.success(str[1], str[0]);
-      }
+      // 목표환율 설정한 유저와 목표 환율 유저가 같으면
+      if (loginFlag === JSON.parse(message.data).userId) {
+        //const date = JSON.parse(message.data).regdate.getHours();
 
-      if (str2 === " JPY ") {
-        NotificationManager.warning(str[1], str[0]);
-      }
+        //---push 알림 내용 시작
+        NotificationManager.info(
+          // 볼드 처리 안된 부분에 쓸 내용
+          JSON.parse(message.data).name +
+            "님의 목표 환율 " +
+            JSON.parse(message.data).targetPrice +
+            "에 도달했습니다." +
+            "\n" +
+            JSON.parse(message.data).regdate,
 
-      if (str2 === " GBP ") {
-        NotificationManager.info(str[1], str[0]);
-      }
+          // 볼드 처리 된 부분에 쓸 내용
+          JSON.parse(message.data).currencyCode +
+            " 현재 환율 : " +
+            JSON.parse(message.data).buyPrice,
 
-      if (str2 === " USD ") {
-        NotificationManager.error(str[1], str[0]);
+          // 자동으로 사라지기까지 걸리는 시간 (단위는 ms인거같음)
+          5000
+        );
+        //-----push 알림 내용 끝
       }
+    } //=======push알림 끝============
+    //========실시간 환율 용 시작
+    else {
+      //json형식으로 변환
+      console.log(JSON.parse(message.data));
+      //아래처럼 쓰면 해당 데이터만 잘 나오는데 변수에 저장해서 쓰는건 몰겟음ㅇㅂㅇ....ㅠ
+      console.log(JSON.parse(message.data).regdate);
     }
   };
 
@@ -128,6 +168,7 @@ const Header = () => {
 
   const onSubmit = async (e) => {
     console.log(word, "네브바 검색창");
+    webSocket.close();
     e.preventDefault();
     navigate("/search", {
       state: {
@@ -148,6 +189,7 @@ const Header = () => {
 
   const onChange = (e) => {
     setWord(e.target.value);
+    webSocket.close();
     console.log(word, "네브바 검색어");
   };
 
