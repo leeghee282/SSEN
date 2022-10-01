@@ -1,6 +1,9 @@
 package com.ssafy.common.exception.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.ssafy.api.response.LiveCurrencyRes;
+import com.ssafy.api.response.LiveUserRes;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
@@ -17,9 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class WebSocketHandler extends TextWebSocketHandler {
 
     private static final ConcurrentHashMap<String, WebSocketSession> CLIENTS = new ConcurrentHashMap<String, WebSocketSession>();
-
-    ObjectMapper json = new ObjectMapper();
-
+    Gson gson = new Gson();
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         CLIENTS.put(session.getId(), session);
@@ -34,11 +35,23 @@ public class WebSocketHandler extends TextWebSocketHandler {
         CLIENTS.remove(session.getId());
     }
 
-    public void handleTextMessage(String message) {
+    public void handleTextMessage(LiveUserRes lurList) {
 
         CLIENTS.entrySet().forEach(arg -> {
             try {
-                arg.getValue().sendMessage(new TextMessage(message));
+                arg.getValue().sendMessage(new TextMessage(gson.toJson(lurList)));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    public void handleTextMessage2(LiveCurrencyRes liveCurrencyRes) {
+        Gson gson = new Gson();
+
+        CLIENTS.entrySet().forEach(arg -> {
+            try {
+                arg.getValue().sendMessage(new TextMessage(gson.toJson(liveCurrencyRes)));
             } catch (IOException e) {
                 e.printStackTrace();
             }
