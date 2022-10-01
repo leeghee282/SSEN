@@ -75,7 +75,9 @@
 }
 
 .notification-info:before {
+  background-position: center;
   content: "";
+  height:25px;
   background-image: url(../../../public/images/GBP.png);
   background-size: cover;
 }
@@ -87,7 +89,7 @@
 .notification-success:before {
   content: "";
   background-image: url(../../../public/images/EUR.png);
-  background-size: cover;
+  background-size: contain;
 }
 /*일본 JPY */
 .notification-warning {
