@@ -1,10 +1,10 @@
-.container {
+.newscontainer {
   text-align: center;
   max-width: 700px;
   margin: 0 auto;
 }
 
-.container li {
+.newscontainer li {
   list-style: none;
   border: 1px solid #828282;
 }
