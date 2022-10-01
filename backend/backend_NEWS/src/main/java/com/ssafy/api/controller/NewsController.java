@@ -17,10 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
 
 /**
  * 뉴스 관련 API 요청 처리를 위한 컨트롤러 정의.
@@ -58,8 +55,8 @@ public class NewsController {
         // (쉘 길이 2097152 정도 까지 가능 -> 십년치도 될듯)
         StringBuilder dateRange = new StringBuilder();
         LocalDate start = LocalDate.parse(startDate);
-        LocalDate end = LocalDate.parse(endDate).plusDays(1);
-        for (LocalDate date = start; date.isBefore(end); date = date.plusDays(1))
+        LocalDate end = LocalDate.parse(endDate);
+        for (LocalDate date = end; date.isAfter(start.minusDays(1)); date = date.minusDays(1))
             dateRange.append(" " + date);
         dateRange.append(" ");
         String cmd = "~/mapreduce/keyword.sh " + dateRange.toString() + "> /dev/null 2>&1 &&  /home/hadoop/hadoop/bin/hdfs dfs -cat keyword_out2/*";
@@ -75,10 +72,7 @@ public class NewsController {
         StringBuilder query = new StringBuilder(); //DB에 넣을 키워드 분석 결과를 위한 쿼리(변동률이 심한 특정 날짜)
         query.append("INSERT INTO SSEN.variance_keywords(variance_date_uid, name, frequency) VALUES \n");
 
-        int cnt = 0;
         while (st.hasMoreTokens()) {
-            if (++cnt > 10)
-                break;
             query.append("((SELECT uid FROM SSEN.variance_date where reference_date = '" + startDate + "'");
             query.append(") ,'");
             String s = st.nextToken();
@@ -132,6 +126,7 @@ public class NewsController {
                 newsResList.add(newsRes);
             }
         }
+        Collections.reverse(newsResList);
         return new ResponseEntity<>(newsResList, HttpStatus.OK);
     }
 
