@@ -19,9 +19,7 @@ const MyAssetTotal = (props) => {
   const [CNYChartTotal, setCNYChartTotal] = useState(0);
   const [JPYChartTotal, setJPYChartTotal] = useState(0);
 
-  
-
-    useEffect(() =>{
+  useEffect(() => {
     const ChartTotal = {
       usdchart: 0,
       eurchart: 0,
@@ -29,32 +27,32 @@ const MyAssetTotal = (props) => {
       cnychart: 0,
       jpychart: 0,
     };
-    if(props.myAsset.length>0){
-      props.myAsset.forEach((bsset)=>{
+    if (props.myAsset.length > 0) {
+      props.myAsset.forEach((bsset) => {
         if (bsset.code === "USD") {
-          ChartTotal.usdchart += bsset.quantity * bsset.price
+          ChartTotal.usdchart += bsset.quantity * bsset.price;
         }
         if (bsset.code === "CNY") {
-          ChartTotal.cnychart += bsset.quantity * bsset.price
+          ChartTotal.cnychart += bsset.quantity * bsset.price;
         }
         if (bsset.code === "EUR") {
-          ChartTotal.eurchart += bsset.quantity * bsset.price
+          ChartTotal.eurchart += bsset.quantity * bsset.price;
         }
         if (bsset.code === "GBP") {
-          ChartTotal.gbpchart += bsset.quantity * bsset.price
+          ChartTotal.gbpchart += bsset.quantity * bsset.price;
         }
         if (bsset.code === "JPY") {
-          ChartTotal.jpychart += bsset.quantity * bsset.price
+          ChartTotal.jpychart += bsset.quantity * bsset.price;
         }
-      })
+      });
     }
-    
+
     console.log(ChartTotal);
-    setUSDChartTotal(ChartTotal.usdchart)
-    setCNYChartTotal(ChartTotal.cnychart)
-    setEURChartTotal(ChartTotal.eurchart)
-    setGBPChartTotal(ChartTotal.gbpchart)
-    setJPYChartTotal(ChartTotal.jpychart)
+    setUSDChartTotal(ChartTotal.usdchart);
+    setCNYChartTotal(ChartTotal.cnychart);
+    setEURChartTotal(ChartTotal.eurchart);
+    setGBPChartTotal(ChartTotal.gbpchart);
+    setJPYChartTotal(ChartTotal.jpychart);
   });
 
   // 국가별 총 합계 새로 고침 없이 계산하기 위한 것 => 그래프
@@ -64,10 +62,6 @@ const MyAssetTotal = (props) => {
   const [CNYTotal, setCNYTotal] = useState(0);
   const [JPYTotal, setJPYTotal] = useState(0);
 
-
-
-  
-
   useEffect(() => {
     const totalForGraph = {
       eachUSD: 0,
@@ -76,7 +70,7 @@ const MyAssetTotal = (props) => {
       eachCNY: 0,
       eachJPY: 0,
     };
-    
+
     if (props.filteredItems.length > 0) {
       props.filteredItems.forEach((asset) => {
         if (asset.code === "USD") {
@@ -124,6 +118,30 @@ const MyAssetTotal = (props) => {
     setNationTotal(total.eachTotal);
   }, [props.filteredItems]);
 
+  // 국가별 총 합계 새로 고침 없이 계산하기 위한 것(등록 양) => 일단 보류
+  const [quantityTotal, setQuantityTotal] = useState(0);
+
+  useEffect(() => {
+    const total = { eachTotal: 0 };
+    if (props.filteredItems.length > 0) {
+      props.filteredItems.forEach((asset) => {
+        if (asset.code === "USD") {
+          total.eachTotal += +asset.quantity;
+        } else if (asset.code === "EUR") {
+          total.eachTotal += +asset.quantity;
+        } else if (asset.code === "GBP") {
+          total.eachTotal += +asset.quantity;
+        } else if (asset.code === "CNY") {
+          total.eachTotal += +asset.quantity;
+        } else if (asset.code === "JPY") {
+          total.eachTotal += +asset.quantity;
+        }
+      });
+    }
+
+    setQuantityTotal(total.eachTotal);
+  }, [props.filteredItems]);
+
   // 내 자산 국가별 총 합계 새로 고침 없이 계산하기 위한 것(구매양)
   const [myUSDTotal, setMyUSDTotal] = useState(0);
   const [myEURTotal, setMyEURTotal] = useState(0);
@@ -144,8 +162,8 @@ const MyAssetTotal = (props) => {
       props.myAsset.forEach((asset) => {
         if (asset.code === "USD") {
           total.USDTotal += +asset.quantity;
-        } else if (asset.code === "GBP") {
-          total.GBPTotal += +asset.quantity;
+        } else if (asset.code === "EUR") {
+          total.EURTotal += +asset.quantity;
         } else if (asset.code === "GBP") {
           total.GBPTotal += +asset.quantity;
         } else if (asset.code === "CNY") {
@@ -184,73 +202,76 @@ const MyAssetTotal = (props) => {
   const Calc = All - Total;
 
   return (
-    <div>
-      <Grid container spacing={2} sx={{ alignItems: "center" }}>
-        <Grid item xs={12}></Grid>
-        <Grid item xs={6}>
-          <div className="title">
-            <h1 className="fs-normal fc-dark-grey">
-              '{sessionStorage.getItem("name")}'님의 보유 외화 목록
-            </h1>
-            <strong className="fs-title fc-dark-grey">
-              자산 현황 : {addComma(Total.toString())}원
+    <Grid
+      container
+      spacing={2}
+      sx={{
+        alignItems: "center",
+      }}
+    >
+      <Grid item xs={6}>
+        <div className="title">
+          <h1 className="fs-normal fc-dark-grey">
+            '{sessionStorage.getItem("name")}'님의 보유 외화 목록
+          </h1>
+          <strong className="fs-title fc-dark-grey">
+            자산 현황 : {addComma(Total.toString())}원
+          </strong>
+        </div>
+        <div className="detail">
+          <div className="detail-box">
+            {props.filterBaseCode === "All" && (
+              <h1 className="fs-normal fc-grey">구매 금액</h1>
+            )}
+            {props.filterBaseCode === "USD" && (
+              <h1 className="fs-normal fc-grey">구매 금액 (USD)</h1>
+            )}
+            {props.filterBaseCode === "EUR" && (
+              <h1 className="fs-normal fc-grey">구매 금액 (EUR)</h1>
+            )}
+            {props.filterBaseCode === "GBP" && (
+              <h1 className="fs-normal fc-grey">구매 금액 (GBP)</h1>
+            )}
+            {props.filterBaseCode === "CNY" && (
+              <h1 className="fs-normal fc-grey">구매 금액 (CNY)</h1>
+            )}
+            {props.filterBaseCode === "JPY" && (
+              <h1 className="fs-normal fc-grey">구매 금액 (JPY)</h1>
+            )}
+            <strong className="fs-title fc-green">
+              {addComma(nationTotal.toString())}원
             </strong>
           </div>
-          <div className="detail">
-            <div className="detail-box">
-              {props.filterBaseCode === "All" && (
-                <h1 className="fs-normal fc-grey">구매 금액</h1>
-              )}
-              {props.filterBaseCode === "USD" && (
-                <h1 className="fs-normal fc-grey">구매 금액 (USD)</h1>
-              )}
-              {props.filterBaseCode === "EUR" && (
-                <h1 className="fs-normal fc-grey">구매 금액 (EUR)</h1>
-              )}
-              {props.filterBaseCode === "GBP" && (
-                <h1 className="fs-normal fc-grey">구매 금액 (GBP)</h1>
-              )}
-              {props.filterBaseCode === "CNY" && (
-                <h1 className="fs-normal fc-grey">구매 금액 (CNY)</h1>
-              )}
-              {props.filterBaseCode === "JPY" && (
-                <h1 className="fs-normal fc-grey">구매 금액 (JPY)</h1>
-              )}
-              <strong className="fs-title fc-green">
-                {addComma(nationTotal.toString())}원
+          <div className="detail-box">
+            <h1 className="fs-normal fc-grey">전체 손익</h1>
+            {Calc >= 0 && (
+              <strong className="fs-title fc-red">
+                +{addComma(Calc.toFixed(2).toString())}원
               </strong>
-            </div>
-            <div className="detail-box">
-              <h1 className="fs-normal fc-grey">전체 손익</h1>
-              {Calc >= 0 && (
-                <strong className="fs-title fc-red">
-                  +{addComma(Calc.toFixed(2).toString())}원
-                </strong>
-              )}
-              {Calc < 0 && (
-                <strong className="fs-title fc-purple">
-                  {addComma(Calc.toFixed(2).toString())}원
-                </strong>
-              )}
-            </div>
+            )}
+            {Calc < 0 && (
+              <strong className="fs-title fc-purple">
+                {addComma(Calc.toFixed(2).toString())}원
+              </strong>
+            )}
           </div>
-        </Grid>
-        <Grid item xs={6}>
-          <MyAssetChart
-            USDTotal={USDChartTotal}
-            EURTotal={EURChartTotal}
-            GBPTotal={GBPChartTotal}
-            CNYTotal={CNYChartTotal}
-            JPYTotal={JPYChartTotal}
-            renderusd={USDTotal}
-            rendereur={EURTotal}
-            rendergbp={GBPTotal}
-            rendercny={CNYTotal}
-            renderjpy={JPYTotal}
-          />
-        </Grid>
+        </div>
       </Grid>
-    </div>
+      <Grid item xs={6}>
+        <MyAssetChart
+          USDTotal={USDChartTotal}
+          EURTotal={EURChartTotal}
+          GBPTotal={GBPChartTotal}
+          CNYTotal={CNYChartTotal}
+          JPYTotal={JPYChartTotal}
+          renderusd={USDTotal}
+          rendereur={EURTotal}
+          rendergbp={GBPTotal}
+          rendercny={CNYTotal}
+          renderjpy={JPYTotal}
+        />
+      </Grid>
+    </Grid>
   );
 };
 

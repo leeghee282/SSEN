@@ -3,6 +3,7 @@ import BasicModal from "./MyAssetModal";
 import MyAssetItemList from "./MyAssetItemList";
 import MyAssetTotal from "./MyAssetTotal";
 import MyAssetChart from "./MyAssetChart";
+import "./style.css";
 
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -59,9 +60,10 @@ export default function MySet() {
       sx={{
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
+        // alignItems: "center",
       }}
     >
+      <h1 className="myAsset-title fs-myAsset-title fc-dark-grey">보유 외화</h1>
       {/* 보유 외화 목록 입력(모달) */}
       <BasicModal getMyAssetData={getMyAssetData} />
       {/* 보유 외화 목록 전체 금액 */}
@@ -73,6 +75,7 @@ export default function MySet() {
         filteredItems={filteredItems}
         filterBaseCode={filterBaseCode}
       />
+      <br />
       {/* 보유 외화 목록 리스트 */}
       {filteredItems && myAsset.length > 0 ? (
         <MyAssetItemList

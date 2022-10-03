@@ -85,7 +85,7 @@ export default function MyInterestItemList({
       )}
       {interests.length !== 0 && (
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650, width: 900 }} aria-label="simple table">
+          <Table sx={{ minWidth: 650, width: 1152 }} aria-label="simple table">
             <TableHead sx={{ backgroundColor: "#c4c4c4" }}>
               <TableRow>
                 {/* <TableCell id="font_test" >번호</TableCell> */}
