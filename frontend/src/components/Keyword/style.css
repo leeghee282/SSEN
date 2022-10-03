@@ -11,7 +11,7 @@
 
 .pagination li {
   display: inline-block;
-  background: #dedede;
+  background: white;
   overflow: hidden;
 }
 
@@ -22,6 +22,4 @@
   padding: 10px;
 }
 
-.pagination li a:focus {
-  background-color: yellow;
-}
+
