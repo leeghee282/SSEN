@@ -2,6 +2,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import axios from "../../../api/user";
+import "./style.css";
 
 //mui
 import Box from "@mui/material/Box";
@@ -85,12 +86,9 @@ export default function BasicModal({ getMyAssetData }) {
     const body = {
       code: currCode,
       quantity: parseInt(currQuantity.replaceAll(",", "")),
-      // quantity: currQuantity,
-      // price: parseInt(currPrice.replaceAll(",", "")),
       price: currPrice,
       userId: sessionStorage.getItem("userId"),
     };
-    // console.log(body);
     axios.post("/api/v1/holdcurr", body).then((response) => getMyAssetData());
   };
 
@@ -115,18 +113,6 @@ export default function BasicModal({ getMyAssetData }) {
     setCurrQuantity(amount);
   };
 
-  // 천단위별 ',' 자동 입력 되게 하는 함수(price)
-  // const amountPrice = (event) => {
-  //   const isNotNumber = /^[^1-9][^0-9]{0,11}$/g.test(event.target.value)
-  //     ? true
-  //     : false;
-  //   setIsEnteredWrongAmount(isNotNumber);
-  //   if (isNotNumber) return;
-
-  //   const amount = addComma(enteredOnlyNumber(event.target.value));
-  //   setCurrPrice(amount);
-  // };
-
   // 소수점 입력
   const inputPrice = (event) => {
     const pattern = /^(\d{0,10}([.]\d{0,2})?)?$/;
@@ -135,22 +121,11 @@ export default function BasicModal({ getMyAssetData }) {
     }
   };
 
-  // 소수점이랑 , 찍는 함수 합치기... 실패... 다시해보기 ㅎ
-  // const inputQuantity = (event) => {
-  //   const isNotNumber = /^[^1-9][^0-9]{0,11}$/g.test(event.target.value)
-  //     ? true
-  //     : false;
-  //   setIsEnteredWrongAmount(isNotNumber);
-
-  //   const amount = addComma(inputPrice(event.target.value));
-  //   setCurrPrice(amount);
-  // };
-
   return (
     <div>
-      <Button id="font_test" variant="contained" onClick={handleOpen}>
-        보유 외화 추가하기
-      </Button>
+      <button id="font_test" class="custom-btn btn-3" onClick={handleOpen}>
+        <span>+ 보유 외화 등록</span>
+      </button>
       <Modal
         open={open}
         onClose={handleClose}

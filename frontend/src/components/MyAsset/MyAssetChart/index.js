@@ -7,8 +7,6 @@ export default function MyAssetChart({
   CNYTotal,
   JPYTotal,
 }) {
-  const a1 = USDTotal.toFixed(2).toString() + "달러";
-  console.log(a1);
   //도넛 차트 데이터 및 옵션
   const donutData = {
     series: [USDTotal, EURTotal, GBPTotal, CNYTotal, JPYTotal],

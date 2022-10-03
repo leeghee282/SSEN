@@ -12,7 +12,7 @@ import axios from "../../api/user";
 export default function MySet() {
   const [myAsset, setMyAsset] = useState([]);
   const [live, setLive] = useState([]);
-  const [filterBaseCode, setFilterBaseCode] = useState('All');
+  const [filterBaseCode, setFilterBaseCode] = useState("All");
 
   // 삭제 기능
   const myAssetRemove = (uid) => {
@@ -42,16 +42,17 @@ export default function MySet() {
   useEffect(() => {}, [live]);
 
   // 국가별로 필터 기능
-  const filteredItems = myAsset.filter(asset => {
-    if (filterBaseCode === 'All') {
+  const filteredItems = myAsset.filter((asset) => {
+    if (filterBaseCode === "All") {
       return true;
     }
-    return asset.code === filterBaseCode} )
-  
+    return asset.code === filterBaseCode;
+  });
+
   // 국가별 필터 선택 함수
   const filterChangeHandler = (selectedCode) => {
     setFilterBaseCode(selectedCode);
-};
+  };
 
   return (
     <Box
@@ -61,14 +62,8 @@ export default function MySet() {
         alignItems: "center",
       }}
     >
-      {/* 보유외화목록 title */}
-      {/* <Typography id="font_test" component="h1" variant="h4">
-        보유 외화 목록
-      </Typography> */}
-      {/* <MyAssetChart
-        myAsset={myAsset}
-        getMyAssetData={getMyAssetData}/> */}
-
+      {/* 보유 외화 목록 입력(모달) */}
+      <BasicModal getMyAssetData={getMyAssetData} />
       {/* 보유 외화 목록 전체 금액 */}
       <MyAssetTotal
         myAsset={myAsset}
@@ -78,23 +73,22 @@ export default function MySet() {
         filteredItems={filteredItems}
         filterBaseCode={filterBaseCode}
       />
-      {/* 보유 외화 목록 입력(모달) */}
-      <BasicModal getMyAssetData={getMyAssetData} />
       {/* 보유 외화 목록 리스트 */}
-      {filteredItems && myAsset.length >0 ?
-      <MyAssetItemList
-        myAsset={myAsset}
-        live={live}
-        key={myAsset.uid}
-        myassetremove={myAssetRemove}
-        getMyAssetData={getMyAssetData}
-        getLiveData={getLiveData}
-        onChangeFilter={filterChangeHandler}
-        filterBaseCode={filterBaseCode}
-        filteredItems={filteredItems}
+      {filteredItems && myAsset.length > 0 ? (
+        <MyAssetItemList
+          myAsset={myAsset}
+          live={live}
+          key={myAsset.uid}
+          myassetremove={myAssetRemove}
+          getMyAssetData={getMyAssetData}
+          getLiveData={getLiveData}
+          onChangeFilter={filterChangeHandler}
+          filterBaseCode={filterBaseCode}
+          filteredItems={filteredItems}
         />
-        : '보유 외화를 입력해주세요 🙅'}
-      
+      ) : (
+        "보유 외화를 입력해주세요 🙅"
+      )}
     </Box>
   );
 }
