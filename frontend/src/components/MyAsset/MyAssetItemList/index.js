@@ -150,7 +150,7 @@ export default function MyAssetItemList({
         filterBaseCode={filterBaseCode}
       />
       <TableContainer component={Paper} sx={{ mt: 2 }}>
-        <Table sx={{ minWidth: 650, width: 1100 }} aria-label="simple table">
+        <Table sx={{ minWidth: 650, width: 1152 }} aria-label="simple table">
           <TableHead sx={{ backgroundColor: "#c4c4c4" }}>
             <TableRow>
               <TableCell
@@ -160,19 +160,39 @@ export default function MyAssetItemList({
               >
                 국가
               </TableCell>
-              <TableCell align="right" sx={{ fontSize: "20px" }} id="font_test">
+              <TableCell
+                align="center"
+                sx={{ fontSize: "20px" }}
+                id="font_test"
+              >
                 화폐
               </TableCell>
-              <TableCell align="right" sx={{ fontSize: "20px" }} id="font_test">
+              <TableCell
+                align="center"
+                sx={{ fontSize: "20px" }}
+                id="font_test"
+              >
                 구매 양
               </TableCell>
-              <TableCell align="right" sx={{ fontSize: "20px" }} id="font_test">
+              <TableCell
+                align="center"
+                sx={{ fontSize: "20px" }}
+                id="font_test"
+              >
                 구매 금액
               </TableCell>
-              <TableCell align="right" sx={{ fontSize: "20px" }} id="font_test">
+              <TableCell
+                align="center"
+                sx={{ fontSize: "20px" }}
+                id="font_test"
+              >
                 현재 금액
               </TableCell>
-              <TableCell align="right" sx={{ fontSize: "20px" }} id="font_test">
+              <TableCell
+                align="center"
+                sx={{ fontSize: "20px" }}
+                id="font_test"
+              >
                 총 구매가
               </TableCell>
               <TableCell
@@ -225,7 +245,7 @@ export default function MyAssetItemList({
                 )}
                 {/* 화폐 단위 */}
                 <TableCell
-                  align="right"
+                  align="center"
                   sx={{ fontSize: "15px" }}
                   id="font_test"
                 >
@@ -234,7 +254,7 @@ export default function MyAssetItemList({
                 {/* 국가별 구매양 단위 */}
                 {asset.code === "USD" && (
                   <TableCell
-                    align="right"
+                    align="center"
                     sx={{ fontSize: "15px" }}
                     id="font_test"
                   >
@@ -243,7 +263,7 @@ export default function MyAssetItemList({
                 )}
                 {asset.code === "EUR" && (
                   <TableCell
-                    align="right"
+                    align="center"
                     sx={{ fontSize: "15px" }}
                     id="font_test"
                   >
@@ -252,7 +272,7 @@ export default function MyAssetItemList({
                 )}
                 {asset.code === "GBP" && (
                   <TableCell
-                    align="right"
+                    align="center"
                     sx={{ fontSize: "15px" }}
                     id="font_test"
                   >
@@ -261,7 +281,7 @@ export default function MyAssetItemList({
                 )}
                 {asset.code === "CNY" && (
                   <TableCell
-                    align="right"
+                    align="center"
                     sx={{ fontSize: "15px" }}
                     id="font_test"
                   >
@@ -270,7 +290,7 @@ export default function MyAssetItemList({
                 )}
                 {asset.code === "JPY" && (
                   <TableCell
-                    align="right"
+                    align="center"
                     sx={{ fontSize: "15px" }}
                     id="font_test"
                   >
@@ -279,7 +299,7 @@ export default function MyAssetItemList({
                 )}
                 {/* 구매금액 */}
                 <TableCell
-                  align="right"
+                  align="center"
                   sx={{ fontSize: "15px" }}
                   id="font_test"
                 >
@@ -287,7 +307,7 @@ export default function MyAssetItemList({
                 </TableCell>
                 {/* 국가별 실시간 환율 */}
                 <TableCell
-                  align="right"
+                  align="center"
                   sx={{ fontSize: "15px" }}
                   id="font_test"
                 >
@@ -301,7 +321,7 @@ export default function MyAssetItemList({
                 {/* toFixed(2) => 소수점 2째자리까지 자르는 것(반올림 포함?) */}
                 {/* 국가별 총 구매 금액 */}
                 <TableCell
-                  align="right"
+                  align="center"
                   sx={{ fontSize: "15px" }}
                   id="font_test"
                 >
@@ -324,7 +344,7 @@ export default function MyAssetItemList({
             <TableRow>
               <TablePagination
                 rowsPerPageOptions=""
-                colSpan={4} //중앙정렬하고시퍼여...흑...
+                colSpan={4}
                 labelDisplayedRows={LabelDisplayedRows}
                 count={filteredItems.length}
                 rowsPerPage={rowsPerPage}
