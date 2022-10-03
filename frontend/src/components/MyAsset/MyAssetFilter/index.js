@@ -3,7 +3,9 @@ import "./style.css";
 
 const Filter = (props) => {
     const filterChangeHandler = (event) => {
+        
         props.onChangeFilter(event.target.value);
+        
     }
     
     return (
