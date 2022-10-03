@@ -93,7 +93,7 @@ const Header = () => {
 
   // 유정 추가
   // 웹소켓 연결
-  const webSocket = new WebSocket("wss://j7e204.p.ssafy.io/ssen");
+  const webSocket = new WebSocket("wss://localhost:8080/ssen");
 
   useEffect(() => {
     webSocket.onopen = function () {};
