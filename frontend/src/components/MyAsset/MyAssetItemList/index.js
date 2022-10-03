@@ -150,7 +150,7 @@ export default function MyAssetItemList({
         filterBaseCode={filterBaseCode}
       />
       <TableContainer component={Paper} sx={{ mt: 2 }}>
-        <Table sx={{ minWidth: 650, width: 900 }} aria-label="simple table">
+        <Table sx={{ minWidth: 650, width: 1100 }} aria-label="simple table">
           <TableHead sx={{ backgroundColor: "#c4c4c4" }}>
             <TableRow>
               <TableCell
