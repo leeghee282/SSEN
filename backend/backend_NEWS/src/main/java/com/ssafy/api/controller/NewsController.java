@@ -97,11 +97,11 @@ public class NewsController {
     @ApiResponses({@ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 400, message = "조회 결과 없음(날짜, 하둡 등 확인필요)"),
             @ApiResponse(code = 500, message = "서버 오류(로그 확인 바람)")})
-    public ResponseEntity<List<NewsRes2>> getNewsByKeywordAndDates(
+    public ResponseEntity<List<NewsRes>> getNewsByKeywordAndDates(
             @ApiParam(value = "키워드", required = true) @PathVariable("keyword") String keyword
     ) {
 
-        List<NewsRes2> newsResList = new ArrayList<>();
+        List<NewsRes> newsResList = new ArrayList<>();
 
         Session jschSession = sshUtil.sessionConnect();
 
@@ -121,8 +121,9 @@ public class NewsController {
                 String time = st2.nextToken();
                 String press = st2.nextToken().trim();
                 String title = st2.nextToken();
+                String content = st2.nextToken();
                 String url = st2.nextToken();
-                NewsRes2 newsRes = NewsRes2.of(title, press, time, url);
+                NewsRes newsRes = NewsRes.of(title, content, press, time, url);
                 newsResList.add(newsRes);
             }
         }
@@ -135,11 +136,11 @@ public class NewsController {
     @ApiResponses({@ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 400, message = "조회 결과 없음(날짜, 하둡 등 확인필요)"),
             @ApiResponse(code = 500, message = "서버 오류(로그 확인 바람)")})
-    public ResponseEntity<List<NewsRes2>> getNewsByKeywordAndDates2(
+    public ResponseEntity<List<NewsRes>> getNewsByKeywordAndDates2(
             @ApiParam(value = "키워드", required = true) @PathVariable("keyword") String keyword
     ) {
 
-        List<NewsRes2> newsResList = new ArrayList<>();
+        List<NewsRes> newsResList = new ArrayList<>();
 
         Session jschSession = sshUtil.sessionConnect();
 
@@ -159,8 +160,9 @@ public class NewsController {
                 String time = st2.nextToken();
                 String press = st2.nextToken().trim();
                 String title = st2.nextToken();
+                String content = st2.nextToken();
                 String url = st2.nextToken();
-                NewsRes2 newsRes = NewsRes2.of(title, press, time, url);
+                NewsRes newsRes = NewsRes.of(title, content, press, time, url);
                 newsResList.add(newsRes);
             }
         }
