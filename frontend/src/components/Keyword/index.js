@@ -257,7 +257,7 @@ function Keyword(props) {
         </Grid>
         <Grid item xs={7}>
           <div className="newscontainer">
-            <Post posts={currentPosts} loading={newsLoading} />
+            <Post  posts={currentPosts} loading={newsLoading} />
             <Paging
               totalCount={posts.length}
               postPerPage={postPerPage}
