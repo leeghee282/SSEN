@@ -1,7 +1,7 @@
 .title{
     display: flex;
     flex-flow: column;
-    justify-content: center;
+    justify-content: right;
     margin-bottom: 40px;
 }
 
@@ -19,7 +19,7 @@
 .detail::before {
     content: "";
     position: absolute;
-    left: 50%;
+    left: 33%;
     transform: translateX(-50%);
     width: 0;
     height: 80px;
