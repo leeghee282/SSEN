@@ -77,16 +77,18 @@ function Keyword(props) {
 
     await dispatch(getKeywords(keywordBody)).then((response) => {
       const data = [];
+      let sum = 0;
       console.log(response.payload);
       response.payload.map((res) => {
         var addWordcloudData = {
           text: res.keyword,
           size: res.count,
         };
+        sum += res.count;
         return data.push(addWordcloudData);
       });
       setKeywordLoading(false);
-
+      data.push(sum);
       onSetWordcloud(data);
 
       const maxNum = data.length - 1;
@@ -115,12 +117,14 @@ function Keyword(props) {
 
   const onSetWordcloud = async (d) => {
     var fill = d3.scaleOrdinal(d3.schemeCategory10);
+    var sum = d[10];
+    var wordScale = d3.scaleLinear().domain([0, sum]).range([0, 300*0.9]); //전체 사이즈 대비 차지하는 비율로 wordScale
 
-    var maxWordcloudNum = d.length - 1;
+    // var maxWordcloudNum = d.length - 2;
+    // console.log("d", d);
+    // var maxScaleNum = (parseInt(d[maxWordcloudNum].size / 100) + 2.8) * 100;
+    // console.log(maxScaleNum);
 
-    var maxScaleNum = (parseInt(d[maxWordcloudNum].size / 100) + 2.8) * 100;
-    console.log(maxScaleNum);
-    var wordScale = d3.scaleLinear().domain([0, maxScaleNum]).range([0, 150]);
 
     var width = 300;
     var height = 300;
