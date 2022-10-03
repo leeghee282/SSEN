@@ -118,6 +118,30 @@ const MyAssetTotal = (props) => {
     setNationTotal(total.eachTotal);
   }, [props.filteredItems]);
 
+  // 국가별 총 합계 새로 고침 없이 계산하기 위한 것(등록 양) => 일단 보류
+  const [quantityTotal, setQuantityTotal] = useState(0);
+
+  useEffect(() => {
+    const total = { eachTotal: 0 };
+    if (props.filteredItems.length > 0) {
+      props.filteredItems.forEach((asset) => {
+        if (asset.code === "USD") {
+          total.eachTotal += +asset.quantity;
+        } else if (asset.code === "EUR") {
+          total.eachTotal += +asset.quantity;
+        } else if (asset.code === "GBP") {
+          total.eachTotal += +asset.quantity;
+        } else if (asset.code === "CNY") {
+          total.eachTotal += +asset.quantity;
+        } else if (asset.code === "JPY") {
+          total.eachTotal += +asset.quantity;
+        }
+      });
+    }
+
+    setQuantityTotal(total.eachTotal);
+  }, [props.filteredItems]);
+
   // 내 자산 국가별 총 합계 새로 고침 없이 계산하기 위한 것(구매양)
   const [myUSDTotal, setMyUSDTotal] = useState(0);
   const [myEURTotal, setMyEURTotal] = useState(0);
@@ -138,8 +162,8 @@ const MyAssetTotal = (props) => {
       props.myAsset.forEach((asset) => {
         if (asset.code === "USD") {
           total.USDTotal += +asset.quantity;
-        } else if (asset.code === "GBP") {
-          total.GBPTotal += +asset.quantity;
+        } else if (asset.code === "EUR") {
+          total.EURTotal += +asset.quantity;
         } else if (asset.code === "GBP") {
           total.GBPTotal += +asset.quantity;
         } else if (asset.code === "CNY") {
@@ -183,9 +207,6 @@ const MyAssetTotal = (props) => {
       spacing={2}
       sx={{
         alignItems: "center",
-        // border: 1,
-        // borderColor: "grey.500",
-        // borderRadius: 2,
       }}
     >
       <Grid item xs={6}>

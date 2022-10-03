@@ -62,7 +62,7 @@ export default function MyInerest() {
       }}
     >
       <h1 className="myInterest-titls, fs-myInterest-title fc-dark-grey">
-        관심 화폐 등록
+        관심 화폐
       </h1>
       {interests.length !== 0 && (
         <button
@@ -70,7 +70,7 @@ export default function MyInerest() {
           className="custom-btn btn-3"
           onClick={handleOpen}
         >
-          <span>관심 화폐 등록</span>
+          <span>+ 관심 화폐 등록</span>
         </button>
       )}
       <MyInterestModal
