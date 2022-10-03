@@ -123,7 +123,7 @@ export default function BasicModal({ getMyAssetData }) {
 
   return (
     <div>
-      <button id="font_test" class="custom-btn btn-3" onClick={handleOpen}>
+      <button id="font_test" className="custom-btn btn-3" onClick={handleOpen}>
         <span>+ 보유 외화 등록</span>
       </button>
       <Modal

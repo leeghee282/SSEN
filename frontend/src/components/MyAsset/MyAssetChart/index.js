@@ -1,4 +1,5 @@
 import ReactApexChart from "react-apexcharts";
+import { useEffect } from "react";
 
 export default function MyAssetChart({
   USDTotal,
@@ -6,6 +7,11 @@ export default function MyAssetChart({
   GBPTotal,
   CNYTotal,
   JPYTotal,
+  renderusd,
+            rendereur,
+            rendergbp,
+            rendercny,
+            renderjpy,
 }) {
   //도넛 차트 데이터 및 옵션
   const donutData = {
@@ -63,6 +69,11 @@ export default function MyAssetChart({
       },
     },
   };
+  useEffect (()=>{
+
+  },[rendercny,rendereur,rendergbp,renderusd,renderjpy]);
+
+  
   return (
     <div>
       <div id="chart">

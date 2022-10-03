@@ -13,12 +13,60 @@ const MyAssetTotal = (props) => {
     return asset.multi;
   });
 
+  const [USDChartTotal, setUSDChartTotal] = useState(0);
+  const [EURChartTotal, setEURChartTotal] = useState(0);
+  const [GBPChartTotal, setGBPChartTotal] = useState(0);
+  const [CNYChartTotal, setCNYChartTotal] = useState(0);
+  const [JPYChartTotal, setJPYChartTotal] = useState(0);
+
+  
+
+    useEffect(() =>{
+    const ChartTotal = {
+      usdchart: 0,
+      eurchart: 0,
+      gbpchart: 0,
+      cnychart: 0,
+      jpychart: 0,
+    };
+    if(props.myAsset.length>0){
+      props.myAsset.forEach((bsset)=>{
+        if (bsset.code === "USD") {
+          ChartTotal.usdchart += bsset.quantity * bsset.price
+        }
+        if (bsset.code === "CNY") {
+          ChartTotal.cnychart += bsset.quantity * bsset.price
+        }
+        if (bsset.code === "EUR") {
+          ChartTotal.eurchart += bsset.quantity * bsset.price
+        }
+        if (bsset.code === "GBP") {
+          ChartTotal.gbpchart += bsset.quantity * bsset.price
+        }
+        if (bsset.code === "JPY") {
+          ChartTotal.jpychart += bsset.quantity * bsset.price
+        }
+      })
+    }
+    
+    console.log(ChartTotal);
+    setUSDChartTotal(ChartTotal.usdchart)
+    setCNYChartTotal(ChartTotal.cnychart)
+    setEURChartTotal(ChartTotal.eurchart)
+    setGBPChartTotal(ChartTotal.gbpchart)
+    setJPYChartTotal(ChartTotal.jpychart)
+  });
+
   // 국가별 총 합계 새로 고침 없이 계산하기 위한 것 => 그래프
   const [USDTotal, setUSDTotal] = useState(0);
   const [EURTotal, setEURTotal] = useState(0);
   const [GBPTotal, setGBPTotal] = useState(0);
   const [CNYTotal, setCNYTotal] = useState(0);
   const [JPYTotal, setJPYTotal] = useState(0);
+
+
+
+  
 
   useEffect(() => {
     const totalForGraph = {
@@ -28,6 +76,7 @@ const MyAssetTotal = (props) => {
       eachCNY: 0,
       eachJPY: 0,
     };
+    
     if (props.filteredItems.length > 0) {
       props.filteredItems.forEach((asset) => {
         if (asset.code === "USD") {
@@ -43,6 +92,7 @@ const MyAssetTotal = (props) => {
         }
       });
     }
+
     setUSDTotal(totalForGraph.eachUSD);
     setEURTotal(totalForGraph.eachEUR);
     setGBPTotal(totalForGraph.eachGBP);
@@ -70,6 +120,7 @@ const MyAssetTotal = (props) => {
         }
       });
     }
+
     setNationTotal(total.eachTotal);
   }, [props.filteredItems]);
 
@@ -88,6 +139,7 @@ const MyAssetTotal = (props) => {
       CNYTotal: 0,
       JPYTotal: 0,
     };
+    console.log(props.myAsset, 33341);
     if (props.myAsset.length > 0) {
       props.myAsset.forEach((asset) => {
         if (asset.code === "USD") {
@@ -103,6 +155,7 @@ const MyAssetTotal = (props) => {
         }
       });
     }
+
     setMyUSDTotal(total.USDTotal);
     setMyEURTotal(total.EURTotal);
     setMyGBPTotal(total.GBPTotal);
@@ -184,11 +237,16 @@ const MyAssetTotal = (props) => {
         </Grid>
         <Grid item xs={6}>
           <MyAssetChart
-            USDTotal={USDTotal}
-            EURTotal={EURTotal}
-            GBPTotal={GBPTotal}
-            CNYTotal={CNYTotal}
-            JPYTotal={JPYTotal}
+            USDTotal={USDChartTotal}
+            EURTotal={EURChartTotal}
+            GBPTotal={GBPChartTotal}
+            CNYTotal={CNYChartTotal}
+            JPYTotal={JPYChartTotal}
+            renderusd={USDTotal}
+            rendereur={EURTotal}
+            rendergbp={GBPTotal}
+            rendercny={CNYTotal}
+            renderjpy={JPYTotal}
           />
         </Grid>
       </Grid>
