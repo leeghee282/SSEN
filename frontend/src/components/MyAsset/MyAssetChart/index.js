@@ -8,10 +8,10 @@ export default function MyAssetChart({
   CNYTotal,
   JPYTotal,
   renderusd,
-            rendereur,
-            rendergbp,
-            rendercny,
-            renderjpy,
+  rendereur,
+  rendergbp,
+  rendercny,
+  renderjpy,
 }) {
   //도넛 차트 데이터 및 옵션
   const donutData = {
@@ -69,21 +69,17 @@ export default function MyAssetChart({
       },
     },
   };
-  useEffect (()=>{
+  useEffect(() => {}, [rendercny, rendereur, rendergbp, renderusd, renderjpy]);
 
-  },[rendercny,rendereur,rendergbp,renderusd,renderjpy]);
-
-  
   return (
-    <div>
-      <div id="chart">
-        <ReactApexChart
-          options={donutData.options}
-          series={donutData.series}
-          type="donut"
-          width="500"
-        />
-      </div>
+    <div id="chart" style={{ margin: 0, padding: 0, marginLeft: 150 }}>
+      <ReactApexChart
+        options={donutData.options}
+        series={donutData.series}
+        type="donut"
+        width={350}
+        height={350}
+      />
     </div>
   );
 }
