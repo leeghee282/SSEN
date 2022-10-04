@@ -6,10 +6,11 @@ import {
 } from "../_actions/types";
 
 const today = new Date();
+const yesterday = new Date(today.setDate(today.getDate) - 1);
 
 const INITIAL_STATE = {
   currencyCode: "USD",
-  exchangeDate: today,
+  exchangeDate: yesterday,
 };
 
 export default function (state = INITIAL_STATE, action) {

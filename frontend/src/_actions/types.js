@@ -12,6 +12,8 @@ export const DO_FN = "do_fn";
 export const GET_CHART_DETAIL_DATE = "get_chart_detail_date";
 export const DO_DETAIL_FN = "do_detail_fn";
 export const SET_WORDCLOUD_DATA = "set_wordcloud_data";
+export const GET_LIVE_CURR = " get_live_curr";
+export const GET_CURR_DATE = "get_curr_date";
 
 export const GET_PAST_DATALIST = "get_past_datalist";
 export const GET_PAST_DATA = "get_past_data";

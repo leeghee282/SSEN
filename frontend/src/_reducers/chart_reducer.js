@@ -8,6 +8,8 @@ import {
   GET_CHART_DETAIL_DATE,
   DO_DETAIL_FN,
   SET_WORDCLOUD_DATA,
+  GET_LIVE_CURR,
+  GET_CURR_DATE,
 } from "../_actions/types";
 
 const today = new Date();
@@ -61,6 +63,14 @@ export default function (state = INITIAL_STATE, action) {
 
     case SET_WORDCLOUD_DATA:
       return { ...state, wordcloudData: action.payload };
+      break;
+
+    case GET_LIVE_CURR:
+      return { ...state, liveCurr: action.payload };
+      break;
+
+    case GET_CURR_DATE:
+      return { ...state, chartCurrDate: action.payload };
       break;
 
     default:

@@ -141,6 +141,8 @@ function Keyword(props) {
     // var maxScaleNum = (parseInt(d[maxWordcloudNum].size / 100) + 2.8) * 100;
     // console.log(maxScaleNum);
 
+    d.pop();
+
     var width = 300;
     var height = 300;
 

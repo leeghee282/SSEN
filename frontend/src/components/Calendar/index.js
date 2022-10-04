@@ -40,7 +40,7 @@ const RowRadioButtonsGroup = () => {
     setType(currencyCode);
   }, [location]);
 
-  const selectChange = (event) => {
+  const selectChange = async (event) => {
     setType(event.target.value);
     console.log(type);
 
@@ -48,7 +48,7 @@ const RowRadioButtonsGroup = () => {
       code: event.target.value,
     };
 
-    dispatch(getChartCode(body)).then((response) => {
+    await dispatch(getChartCode(body)).then((response) => {
       setType(response.payload);
     });
   };
@@ -138,7 +138,7 @@ const Calendar = () => {
   }, [location]);
 
   // 날짜 버튼 클릭, 기간 변경 기능
-  const handleBtnClicked = (e) => {
+  const handleBtnClicked = async (e) => {
     const { value } = e.target;
     setBtnClicked(value);
 
@@ -156,7 +156,7 @@ const Calendar = () => {
         endDate: endDate,
       };
 
-      dispatch(getChartDates(body)).then((response) => {
+      await dispatch(getChartDates(body)).then((response) => {
         console.log(response.payload);
       });
     } else if (value === "3개월") {
@@ -172,7 +172,7 @@ const Calendar = () => {
         endDate: endDate,
       };
 
-      dispatch(getChartDates(body)).then((response) => {
+      await dispatch(getChartDates(body)).then((response) => {
         console.log(response.payload);
       });
     } else if (value === "6개월") {
@@ -188,7 +188,7 @@ const Calendar = () => {
         endDate: endDate,
       };
 
-      dispatch(getChartDates(body)).then((response) => {
+      await dispatch(getChartDates(body)).then((response) => {
         console.log(response.payload);
       });
     } else if (value === "1년") {
@@ -204,13 +204,13 @@ const Calendar = () => {
         endDate: endDate,
       };
 
-      dispatch(getChartDates(body)).then((response) => {
+      await dispatch(getChartDates(body)).then((response) => {
         console.log(response.payload);
       });
     }
   };
 
-  const onSetStartDate = (date) => {
+  const onSetStartDate = async (date) => {
     setStartDate(date);
 
     let body = {
@@ -218,12 +218,12 @@ const Calendar = () => {
       endDate: endDate,
     };
 
-    dispatch(getChartDates(body)).then((response) => {
+    await dispatch(getChartDates(body)).then((response) => {
       console.log(response.payload);
     });
   };
 
-  const onSetEndDate = (date) => {
+  const onSetEndDate = async (date) => {
     setEndDate(date);
 
     let body = {
@@ -231,7 +231,7 @@ const Calendar = () => {
       endDate: date,
     };
 
-    dispatch(getChartDates(body)).then((response) => {
+    await dispatch(getChartDates(body)).then((response) => {
       console.log(response.payload);
     });
   };
