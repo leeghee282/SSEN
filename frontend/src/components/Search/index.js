@@ -213,6 +213,7 @@ function Search() {
                   limit={limit}
                   page={page}
                   setPage={setPage}
+                  
                 />
               </footer>
             </div>
