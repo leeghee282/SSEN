@@ -1,10 +1,12 @@
 import React from "react";
 import Spinner from "../Loading/Spinner";
+import PostLoading from "../Loading/PostLoading";
 import { Typography, Box, Link, Grid, Container } from "@mui/material";
+import './style.css'
 
 const Posts = ({ posts, loading }) => {
   if (loading) {
-    return <Spinner />;
+    return <PostLoading />;
   }
   console.log(posts, 123123);
   return (
@@ -25,15 +27,17 @@ const Posts = ({ posts, loading }) => {
       >
         관련 뉴스 정보
       </Typography>
-      {posts.map((post) => (
+      {posts.map((post,index) => (
         <Link
+          key={index}
           href={post.url}
           target="_blank"
           sx={{ textDecoration: "none", color: "black" }}
         >
           <Box
+            className="card"
             sx={{
-              width:"480px",
+              width:"400px",
               display: "flex",
               
               height: "100px",
@@ -47,15 +51,15 @@ const Posts = ({ posts, loading }) => {
             }}
           >
             <Grid container>
-              <Grid sx={{borderBottom:"1px dashed black"}}  item xs={10}>
+              <Grid sx={{borderBottom:"1px dashed black", mt:1}}  item xs={10}>
                 <Typography sx={{ pl: 1,fontSize:"18px", fontWeight:600, }}>
                   {post.title.length >= 1
-                    ? post.title.replaceAll("…", " ").substr(0, 22) + "..."
+                    ? post.title.replaceAll("…", " ").substr(0, 19) + "..."
                     : post.title}
                 </Typography>
               </Grid>
 
-              <Grid sx={{borderBottom:"1px dashed black"}}  item xs={2}>
+              <Grid sx={{borderBottom:"1px dashed black", mt:1}}  item xs={2}>
                 <Grid container direction="column">
                   <Grid fontSize="10px" item xs={6}>{post.press}</Grid>
                   <Grid fontSize="10px" item xs={6}>{post.time.slice(0,10).replaceAll("\u0000","")}</Grid>
@@ -63,8 +67,8 @@ const Posts = ({ posts, loading }) => {
                 
               </Grid>
               <Grid item xs={12}>
-                <Typography sx={{fontSize:"13px",pl:1}}>{post.content.length >= 100
-                                  ? post.content.substr(0, 100) + "..."
+                <Typography sx={{fontSize:"13px",pl:1}}>{post.content.length >= 70
+                                  ? post.content.substr(0, 70) + "..."
                                   : post.content}</Typography>
               </Grid>
             </Grid>

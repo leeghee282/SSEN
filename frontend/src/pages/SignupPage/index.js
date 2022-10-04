@@ -24,7 +24,7 @@ import { BorderStyle } from "@mui/icons-material";
 const theme = createTheme();
 
 export default function SignUp() {
-  const navigate= useNavigate();
+  const navigate = useNavigate();
   const obj = {
     email: "",
     name: "",
@@ -51,53 +51,53 @@ export default function SignUp() {
 
     const response = await axios
       .post(baseURL + "/api/v1/user/login", body)
-      
-        const resAccessToken = response.data.accessToken;
-        const resEmail = response.data.email;
-        const resName = response.data.name;
-        const resNickname = response.data.nickname;
-        const resPhone = response.data.phone;
-        const resUid = response.data.uid;
-        const resUserId = response.data.userId;
+
+    const resAccessToken = response.data.accessToken;
+    const resEmail = response.data.email;
+    const resName = response.data.name;
+    const resNickname = response.data.nickname;
+    const resPhone = response.data.phone;
+    const resUid = response.data.uid;
+    const resUserId = response.data.userId;
 
 
 
-        console.log(response);
-        sessionStorage.setItem("accessToken", resAccessToken);
-        sessionStorage.setItem("email", resEmail);
-        sessionStorage.setItem("name", resName);
-        sessionStorage.setItem("nickname", resNickname);
-        sessionStorage.setItem("phone", resPhone);
-        sessionStorage.setItem("uid", resUid);
-        sessionStorage.setItem("userId", resUserId);
+    console.log(response);
+    sessionStorage.setItem("accessToken", resAccessToken);
+    sessionStorage.setItem("email", resEmail);
+    sessionStorage.setItem("name", resName);
+    sessionStorage.setItem("nickname", resNickname);
+    sessionStorage.setItem("phone", resPhone);
+    sessionStorage.setItem("uid", resUid);
+    sessionStorage.setItem("userId", resUserId);
 
-        if (response.status===200) {
-        navigate("/")
-      }
-      else {
-        return;
-      }
-      
+    if (response.status === 200) {
+      navigate("/")
+    }
+    else {
+      return;
+    }
+
   };
-  
+
   // 유효성 검사 함수
-  
+
 
   const validate = () => {
     const errors = {};
     let flag = false;
 
-    
+
     if (!totalData.email || totalData.email.indexOf(" ") >= 0) {
-      errors.email = "이메일을 입력해주세요.";
+      errors.email = "이메일을 입력해 주세요.";
       flag = true;
     }
     if (!totalData.name) {
-      errors.name = "이름을 입력해주세요.";
+      errors.name = "이름을 입력해 주세요.";
       flag = true;
     }
     if (totalData.password.length < 6) {
-      errors.password = "6자리 이상 입력해주세요.";
+      errors.password = "6자리 이상 입력해 주세요.";
       flag = true;
     }
     if (totalData.password !== totalData.check_password) {
@@ -106,32 +106,32 @@ export default function SignUp() {
     }
 
     if (!totalData.phone) {
-      errors.phone = "전화번호를 입력해주세요.";
+      errors.phone = "전화번호를 입력해 주세요.";
       flag = true;
     }
-    if (isNaN(totalData.phone.replaceAll("-","")) ) {
-      errors.phone ="숫자로 전화번호를 입력해주세요"
-      flag= true;
+    if (isNaN(totalData.phone.replaceAll("-", ""))) {
+      errors.phone = "숫자로 전화번호를 입력해 주세요."
+      flag = true;
     }
-    
+
 
     if (!totalData.nickname) {
-      errors.nickname = "닉네임을 입력해주세요.";
+      errors.nickname = "닉네임을 입력해 주세요.";
       flag = true;
     }
     if (!totalData.userId) {
-      errors.userId = "아이디를 입력해주세요.";
+      errors.userId = "아이디를 입력해 주세요.";
       flag = true;
     }
     if (!idCheck) {
-      errors.idCheck = "중복체크를 해주세요";
+      errors.idCheck = "중복체크를 해주세요.";
       flag = true;
     }
     if (!nicknameCheck) {
-      errors.nicknameCheck = "중복체크를 해주세요";
+      errors.nicknameCheck = "중복체크를 해주세요.";
       flag = true;
     }
-    
+
     console.log(errors);
     setFormErrors(errors);
     if (flag) {
@@ -143,13 +143,13 @@ export default function SignUp() {
   //값 변경시 넣는 함수.
   const handleChange = (event) => {
 
-    {/* 빈칸으로만들어주는 setidcheck2*/}
-    
+    {/* 빈칸으로만들어주는 setidcheck2*/ }
+
     setNicknameCheck2('')
     setIdCheck2('')
     const { name, value } = event.target;
-    
-    setFormErrors({...formErrors,[name]:''})
+
+    setFormErrors({ ...formErrors, [name]: '' })
     setTotalData({ ...totalData, [name]: value });
     console.log(totalData);
   };
@@ -162,7 +162,7 @@ export default function SignUp() {
       name: totalData.name,
       nickname: totalData.nickname,
       password: totalData.password,
-      phone: totalData.phone.replaceAll("-",""),
+      phone: totalData.phone.replaceAll("-", ""),
       userId: totalData.userId,
     };
     console.log(sendData);
@@ -174,82 +174,82 @@ export default function SignUp() {
           if (response.status === 200) {
             console.log('제발')
             handleLogin();
-            
-            
 
-           
           } else {
             // 응답 실패 시
             console.log("회원가입  실패");
           }
         });
     }
-    
+
   };
 
   // 아이디 중복체크 axios 함수
-  const handleCheckId = async ( ) => {
-    if(totalData.userId){ 
-    try {
+  const handleCheckId = async () => {
+    if (totalData.userId) {
+      try {
 
-      await axios
-        
+        await axios
 
-        .get(baseURL + `/api/v1/user/id-info/${totalData.userId}`)
-        .then((response) => {
-          if (response.status === 200) {
-            if(response.data === '' ){
-              
-              setIdCheck(true);
-              
+
+          .get(baseURL + `/api/v1/user/id-info/${totalData.userId}`)
+          .then((response) => {
+            if (response.status === 200) {
+              if (response.data === '') {
+
+                setIdCheck(true);
+
+              }
+              else {
+                setIdCheck2("이미 존재하는 아이디입니다.")
+              }
+
+              console.log(response)
+
             }
             else {
-              setIdCheck2("중복된 아이디 입니다.")
-            }
-            
-            console.log(response)
-            
-          }
-          else {
-            
-            console.log("실패")
-          }
-          
-        });
-    } catch (e) {
 
-      
+              console.log("실패")
+            }
+
+          });
+      } catch (e) {
+
+
+      }
+    }
+    else {
+      setIdCheck2('아이디를 입력해 주세요.')
     }
   }
-else{
-  setIdCheck2('아이디를 입력해주세요.')
-}}
 
   //닉네임 중복체크 axios 함수
   const handleCheckNickname = async () => {
 
     if (totalData.nickname) {
-    await axios
-      .get(baseURL + `/api/v1/user/nickname-info/${totalData.nickname}`)
-      .then((response) => {
+      await axios
+        .get(baseURL + `/api/v1/user/nickname-info/${totalData.nickname}`)
+        .then((response) => {
 
-        if (response.status === 200) {
-          if(response.data === '') {
+          if (response.status === 200) {
+            if (response.data === '') {
 
-            setNicknameCheck(true);
+              setNicknameCheck(true);
 
+            }
+            else {
+              setNicknameCheck2("이미 존재하는 닉네임입니다.")
+              setTotalData({ ...totalData, nickname: "" })
+            }
           }
-          else {
-            setNicknameCheck2("중복된 닉네임 입니다.")
-            setTotalData({...totalData,nickname:""})
-          }
-        }
-        
-      });
+
+        });
+    }
+    else {
+      setNicknameCheck2("닉네임을 입력해 주세요.")
+    }
   }
-else{
-  setNicknameCheck2("닉네임을 입력해주세요.")
-}}
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -268,7 +268,7 @@ else{
             <Avatar
               sx={{ width: 350, height: 350 }}
               alt="Academy"
-              src="/images/Ssenlogo.png"
+              src="/images/SsenLogo_last.png"
             ></Avatar>
           </Link>
           <Grid
@@ -297,8 +297,7 @@ else{
               id="font_test"
               sx={{ pl: 1, color: "rgba(0, 0, 0, 0.6)", fontSize: "14px" }}
             >
-              본인의 이름과 휴대전화번호 및 이메일을 모두 정확하게 입력해
-              주세요.
+              본인의 이름과 전화번호 및 이메일을 모두 정확하게 입력해 주세요.
             </Typography>
           </Grid>
           {/* 회원가입 form */}
@@ -318,6 +317,9 @@ else{
                   autoFocus
                   onChange={handleChange}
                   sx={{ mt: 2.2 }}
+                  InputProps={{
+                    style: { fontFamily: 'Pretendard Variable' }
+                  }}
                 />
                 {formErrors.name && (
                   <Typography
@@ -332,7 +334,6 @@ else{
               {/* 전화번호 */}
               <Grid item xs={12} sm={12}>
                 <TextField
-                  
                   required
                   className="inputRounded"
                   fullWidth
@@ -341,6 +342,9 @@ else{
                   label="전화번호"
                   id="phone"
                   onChange={handleChange}
+                  InputProps={{
+                    style: { fontFamily: 'Pretendard Variable' }
+                  }}
                 />
                 {formErrors.phone && (
                   <Typography
@@ -361,6 +365,9 @@ else{
                   label="이메일"
                   id="email"
                   onChange={handleChange}
+                  InputProps={{
+                    style: { fontFamily: 'Pretendard Variable' }
+                  }}
                 />
                 {formErrors.email && (
                   <Typography
@@ -393,22 +400,31 @@ else{
 
               <Grid sx={{ mt: 10 }} item xs={7}>
                 {idCheck && (
-                  <TextField fullWidth className="inputRounded" value={totalData.userId} sx={{ fontWeight:700,color:"blue", }} >  </TextField>
+                  <TextField
+                    fullWidth
+                    className="inputRounded"
+                    value={totalData.userId}
+                    sx={{ fontWeight: 700, color: "blue", }}
+                  >
+                  </TextField>
                 )}
                 {!idCheck && (
-                <TextField
-                  className="inputRounded"
-                  required
-                  fullWidth
-                  
-                  name="userId"
-                  label="아이디"
-                  placeholder="아이디를 입력하세요"
-                  id="userId"
-                  onChange={handleChange}
-                />
+                  <TextField
+                    className="inputRounded"
+                    required
+                    fullWidth
+
+                    name="userId"
+                    label="아이디"
+                    placeholder="아이디를 입력하세요"
+                    id="userId"
+                    onChange={handleChange}
+                    InputProps={{
+                      style: { fontFamily: 'Pretendard Variable' }
+                    }}
+                  />
                 )}
-                <Typography sx={{ color:"red", pl:2, }}>{idCheck2}</Typography>
+                <Typography sx={{ color: "red", pl: 2, }}>{idCheck2}</Typography>
 
                 {formErrors.idCheck && (
                   <Typography
@@ -425,29 +441,30 @@ else{
                     id="font_test"
                     sx={{ color: "blue", pl: 2, pt: 1 }}
                   >
-                    사용가능아이디 입니다.
+                    사용할 수 있는 아이디입니다.
                   </Typography>
                 )}
-                
+
                 {!idCheck && (
                   <Button
                     onClick={handleCheckId}
                     sx={{
-                      background: "#DDF2FD",
+                      background: "#bfdcfd",
                       height: "40px",
                       display: "flex",
                       mt: 1,
                       ml: 1,
                       width: "90px",
                       color: "black",
-                      fontWeight: 700,
+
                       borderRadius: 3,
+                      fontFamily: 'MICEGothic Bold'
                     }}
                   >
                     중복확인
                   </Button>
                 )}
-                
+
               </Grid>
 
               {/* 비밀번호 입력 */}
@@ -458,14 +475,19 @@ else{
                   fullWidth
                   name="password"
                   label="비밀번호"
+                  placeholder="6자리 이상 입력하세요"
                   id="password"
                   type="password"
                   onChange={handleChange}
+                  InputProps={{
+                    style: { fontFamily: 'Pretendard Variable' }
+                  }}
+
                 />
                 {formErrors.password && (
                   <Typography
                     id="font_test"
-                    sx={{ color: "red", pl: 1, pt: 1 }}
+                    sx={{ color: "red", pl: 2, pt: 1 }}
                   >
                     {formErrors.password}
                   </Typography>
@@ -479,7 +501,7 @@ else{
                   fullWidth
                   name="check_password"
                   onChange={handleChange}
-                  label="비밀번호확인"
+                  label="비밀번호 확인"
                   id="check_password"
                   type="password"
                 />
@@ -495,21 +517,25 @@ else{
               {/* 닉네임 설정 */}
               <Grid sx={{ mt: 7 }} item xs={7}>
                 {nicknameCheck && (
-                <TextField fullWidth className="inputRounded" value = {totalData.nickname}></TextField>
+                  <TextField fullWidth className="inputRounded" value={totalData.nickname}></TextField>
                 )}
                 {!nicknameCheck && (
-                <TextField
-                  placeholder="사용할 닉네임을 입력해 주세요"
-                  className="inputRounded"
-                  required
-                  fullWidth
-                  name="nickname"
-                  value ={totalData.nickname}
-                  id="nickname"
-                  onChange={handleChange}
-                />
+                  <TextField
+                    placeholder="사용할 닉네임을 입력하세요"
+                    className="inputRounded"
+                    required
+                    fullWidth
+                    label="닉네임"
+                    name="nickname"
+                    value={totalData.nickname}
+                    id="nickname"
+                    onChange={handleChange}
+                    InputProps={{
+                      style: { fontFamily: 'Pretendard Variable' }
+                    }}
+                  />
                 )}
-                <Typography sx={{ color:"red", pl:1}}>{nicknameCheck2}</Typography>
+                <Typography sx={{ color: "red", pl: 1 }}>{nicknameCheck2}</Typography>
                 {formErrors.nicknameCheck && (
                   <Typography
                     id="font_test"
@@ -520,27 +546,27 @@ else{
                 )}
               </Grid>
               <Grid sx={{ mt: 7 }} item xs={5}>
-                {nicknameCheck &&  (
+                {nicknameCheck && (
                   <Typography
                     id="font_test"
                     sx={{ color: "blue", pl: 2, pt: 1 }}
                   >
-                    사용가능닉네임 입니다.
+                    사용할 수 있는 닉네임입니다.
                   </Typography>
                 )}
-                {!nicknameCheck &&  (
+                {!nicknameCheck && (
                   <Button
                     onClick={handleCheckNickname}
                     sx={{
-                      background: "#DDF2FD",
+                      background: "#bfdcfd",
                       height: "40px",
                       display: "flex",
                       mt: 1,
                       ml: 1,
                       color: "black",
-                      fontWeight: 700,
                       width: "90px",
                       borderRadius: 3,
+                      fontFamily: 'MICEGothic Bold'
                     }}
                   >
                     중복확인
@@ -562,14 +588,21 @@ else{
             <Grid container justifyContent="flex-end">
               {/* 로그인 페이지로 연결 */}
               <Grid item>
-                <Link
-                  href="/login"
-                  variant="body2"
-                  id="font_test"
-                  style={{ color: "#808080", textDecoration: "none" }}
-                >
-                  아이디가 있으신가요? 로그인하기
-                </Link>
+                <Typography
+                  sx={{ pl: 1, fontSize: "14px" }}
+                  style={{ color: "#808080", fontFamily: 'MICEGothic Bold' }}>
+                  이미 계정이 있으신가요?&nbsp;
+                  <Link
+                    href="/login"
+                    variant="body2"
+                    id="font_test"
+                    style={{ color: "rgb(21 120 219)", textDecoration: "none" }}
+                  >
+                    로그인
+                  </Link>
+                  하기
+                </Typography>
+
               </Grid>
             </Grid>
           </Box>

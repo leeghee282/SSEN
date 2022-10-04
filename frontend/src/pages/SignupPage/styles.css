@@ -14,4 +14,16 @@
   background-color : #F8FBFF
 }
 
+/* .inputRounded ::placeholder {
+  background-color : #ffffff
+} */
 
+/* .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+  font-size : 45px !important;
+} */
+
+.MuiFormLabel-root {
+  font-family: 'Pretendard Variable' !important;
+  font-weight: bold !important;
+  color: rgba(0, 0, 0, 0.6);
+}

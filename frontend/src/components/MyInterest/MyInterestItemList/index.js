@@ -186,7 +186,7 @@ export default function MyInterestItemList({
                   >
                     <Grid container>
                       <Grid item xs={10}>
-                        {addComma(interest.target1.toString())}원
+                        {addComma(interest.target1.toFixed(2).toString())}원
                       </Grid>
                       <Grid
                         sx={{ pl: 0.5, cursor: "pointer" }}
@@ -213,7 +213,7 @@ export default function MyInterestItemList({
                   >
                     <Grid container>
                       <Grid item xs={10}>
-                        {addComma(interest.target2.toString())}원
+                        {addComma(interest.target2.toFixed(2).toString())}원
                       </Grid>
                       <Grid
                         sx={{ pl: 0.5, cursor: "pointer" }}
@@ -240,7 +240,7 @@ export default function MyInterestItemList({
                   >
                     <Grid container>
                       <Grid item xs={10}>
-                        {addComma(interest.target3.toString())}원
+                        {addComma(interest.target3.toFixed(2).toString())}원
                       </Grid>
                       {/* 타겟2 값이 0이면 수정버튼 안뜸*/}
                       {interest.target2 !== 0 && (

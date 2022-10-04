@@ -51,11 +51,11 @@ export default function MyInterestEdit(props) {
       
       
       previous : details.target,
-      target : parseInt(interest.replaceAll(",", "")),
+      target : interest,
     }
     const addData = {
       previous : details.target,
-      target : parseInt(interest.replaceAll(",", "")),
+      target : interest,
       userId : sessionStorage.getItem('userId'),
       code : details.nation
     }
@@ -84,6 +84,14 @@ export default function MyInterestEdit(props) {
 
     const amount = addComma(enteredOnlyNumber(event.target.value));
     setInterest(amount);
+  };
+
+  // 소수점 입력
+  const inputInterest = (event) => {
+    const pattern = /^(\d{0,10}([.]\d{0,2})?)?$/;
+    if (pattern.test(event.target.value)) {
+      setInterest(event.target.value);
+    }
   };
   
 
@@ -115,7 +123,7 @@ export default function MyInterestEdit(props) {
                     fullWidth
                     type="text"
                     value={interest}
-                    onChange={amountInterest}
+                    onChange={inputInterest}
                     placeholder="목표 금액을 입력하세요."
                     required
                   />

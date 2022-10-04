@@ -7,6 +7,7 @@ import * as d3 from "d3";
 import cloud from "d3-cloud";
 import "./style.css";
 import Spinner from "../Loading/Spinner";
+import KeywordLoading from "../Loading/KeywordLoding";
 
 import {
   getKeywords,
@@ -294,7 +295,7 @@ function Keyword(props) {
           )}`}</h1>
         </Grid>
         <Grid item xs={5}>
-          {keywordLoading ? <Spinner /> : null}
+          {keywordLoading ? <KeywordLoading /> : null}
           <div id="word-cloud"></div>
         </Grid>
         <Grid item xs={7}>

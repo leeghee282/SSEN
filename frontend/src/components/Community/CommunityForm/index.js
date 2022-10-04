@@ -28,6 +28,12 @@ const CommunityForm = ({ getCommunity }) => {
     sendCommunity();
   };
 
+  const handleOnKeyPress = (e)=> {
+    if (e.key === 'Enter') {
+      handleSubmit(e); // Enter 입력이 되면 클릭 이벤트 실행
+    }
+  };
+
   return (
     <div>
       <div>
@@ -38,6 +44,7 @@ const CommunityForm = ({ getCommunity }) => {
           name="content"
           placeholder="댓글을 작성해주세요 😊"
           onChange={handleChange}
+          onKeyPress={handleOnKeyPress}
           style={{ fontSize:"16px", color:"#333333"}}
         />
         )}

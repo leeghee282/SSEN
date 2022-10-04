@@ -64,6 +64,7 @@ const addComma = (num) => {
   return num.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
+
 // 모달창
 export default function MyInterestModal({ getInterest,handleOpen,open,setOpen}) {
   const [nation, setNation] = useState(""); //국가 선택
@@ -87,10 +88,10 @@ export default function MyInterestModal({ getInterest,handleOpen,open,setOpen}) 
     const body = {
       code: nation,
       previous: previous,
-      target: parseInt(interest.replaceAll(",", "")),
+      target: interest,
       userId: sessionStorage.getItem('userId'),
     };
-    console.log(body);
+    console.log(body, '왜!');
     axios
       .post(baseURL + "/api/v1/intrcurr/", body)
       .then((response) => getInterest());
@@ -118,6 +119,15 @@ export default function MyInterestModal({ getInterest,handleOpen,open,setOpen}) 
     const amount = addComma(enteredOnlyNumber(event.target.value));
     setInterest(amount);
   };
+
+  // 소수점 입력
+  const inputInterest = (event) => {
+    const pattern = /^(\d{0,10}([.]\d{0,2})?)?$/;
+    if (pattern.test(event.target.value)) {
+      setInterest(event.target.value);
+    }
+  };
+
 
   return (
     <div>
@@ -153,7 +163,7 @@ export default function MyInterestModal({ getInterest,handleOpen,open,setOpen}) 
                     fullWidth
                     type="text"
                     value={interest}
-                    onChange={amountInterest}
+                    onChange={inputInterest}
                     placeholder="목표 금액을 입력하세요."
                     required
                   />

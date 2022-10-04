@@ -15,6 +15,15 @@ function Search() {
   const offset = (page - 1) * limit;
   const [noneDataFlag, setNoneDataFlag] = useState(false); // 데이터가 있는지 없는지 확인하는 곳
   const [search, setSearch] = useState(""); //검색어
+  const [posts, setPosts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+  const [postPerPage] = useState(10);
+  const indexOfLastPost = currentPage * postPerPage;
+  const indexOfFirstPost = indexOfLastPost - postPerPage;
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
   const [lists, setLists] = useState([
     // {
     //   title: "제목은 어쩌구저쩌구",
@@ -51,7 +60,7 @@ function Search() {
 
   useEffect(() => {
     async function fetchData() {
-      console.log(location.state, "확인용");
+      console.log(location.state.search, "확인용");
       setLoading(true);
       try {
         const result = await axios.get(
@@ -68,16 +77,6 @@ function Search() {
     }
     fetchData();
   }, [location]);
-
-  const [posts, setPosts] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
-  const [postPerPage] = useState(10);
-  const indexOfLastPost = currentPage * postPerPage;
-  const indexOfFirstPost = indexOfLastPost - postPerPage;
-  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
   return (
     <div>
@@ -100,8 +99,8 @@ function Search() {
             </Box>
           )}
           {!noneDataFlag && (
-            <div className="newscontainer">
-              <Post posts={currentPosts} loading={loading} />
+            <div >
+              <Post posts={currentPosts} loading={loading} search={location.state.search}/>
               <Paging
                 totalCount={posts.length}
                 postPerPage={postPerPage}
