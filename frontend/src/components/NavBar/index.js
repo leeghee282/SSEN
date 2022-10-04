@@ -27,7 +27,7 @@ import {
   NotificationManager,
 } from 'react-notifications';
 // import '../../../node_modules/react-notifications/lib/notifications.css';
-
+const webSocket = new WebSocket('wss://j7e204.p.ssafy.io:8080/ssen');
 // 회원정보 popover
 const BasicPopover = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -76,7 +76,7 @@ const BasicPopover = () => {
   );
 };
 
-const Header = () => {
+const Header = ({getWeb}) => {
   const navigate = useNavigate();
   // 키워드 저장
   const [word, setWord] = useState('');
@@ -93,13 +93,15 @@ const Header = () => {
 
   // 유정 추가
   // 웹소켓 연결
-  const webSocket = new WebSocket('wss://j7e204.p.ssafy.io:8080/ssen');
+  
   // const webSocket = new WebSocket("wss://loclhost:8080/ssen");
-
+  
   useEffect(() => {
+    
     webSocket.onopen = function () {};
+    
   }, []);
-
+  
   webSocket.onmessage = function (message) {
     // console.log(JSON.parse(message.data),123123)
     //======push알림용 시작==============
@@ -196,16 +198,18 @@ const Header = () => {
     } //=======push알림 끝============
     //========실시간 환율 시작
     else {
+      
       //json형식으로 변환
       //아래처럼 쓰면 해당 데이터만 잘 나오는데 변수에 저장해서 쓰는건 몰겟음ㅇㅂㅇ....ㅠ
-      // console.log(JSON.parse(message.data).regdate);
+      getWeb(JSON.parse(message.data));
+      
     }
   };
 
   //유정 추가 끝
 
   const onSubmit = async (e) => {
-    webSocket.close();
+    
     e.preventDefault();
     navigate('/search', {
       state: {
@@ -225,7 +229,7 @@ const Header = () => {
   };
 
   const onLinkSubmit = async (e) => {
-    webSocket.close();
+    
     e.preventDefault();
     navigate('/search', {
       state: {
@@ -238,7 +242,7 @@ const Header = () => {
 
   const onChange = (e) => {
     setWord(e.target.value);
-    webSocket.close();
+    
   };
 
   const keyDownHandler = (e) => {
@@ -254,7 +258,7 @@ const Header = () => {
   // };
 
   const logoClickHandler = () => {
-    webSocket.close();
+    
 
     navigate('/');
   };
