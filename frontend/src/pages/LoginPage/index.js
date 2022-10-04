@@ -140,7 +140,7 @@ export default function Login() {
                   bgcolor: "white",
                   cursor: "pointer",
                 }}
-                src="/images/SsenLogo.png"
+                src="/images/SsenLogo_last.png"
               >
                 <LockOutlinedIcon />
               </Avatar>

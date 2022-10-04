@@ -268,7 +268,7 @@ else{
             <Avatar
               sx={{ width: 350, height: 350 }}
               alt="Academy"
-              src="/images/Ssenlogo.png"
+              src="/images/SsenLogo_last.png"
             ></Avatar>
           </Link>
           <Grid
