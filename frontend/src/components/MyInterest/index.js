@@ -27,7 +27,7 @@ export default function MyInerest() {
     getInterest();
   }, []);
 
-  useEffect(() => {}, [interests]);
+  useEffect(() => { }, [interests]);
 
   // 서버에서 실시간 환율 받아오기(get방식)
   const getLiveData = () => {
@@ -37,7 +37,7 @@ export default function MyInerest() {
     getLiveData();
   }, []);
 
-  useEffect(() => {}, [live]);
+  useEffect(() => { }, [live]);
 
   // const onUpdate = (nation, interestCurrency) => {
   //   const updateInt = {
@@ -61,7 +61,7 @@ export default function MyInerest() {
         // alignItems: "center",
       }}
     >
-      <h1 className="myInterest-titls, fs-myInterest-title fc-dark-grey">
+      <h1 className="myInterest-titls, ff-b fs-myInterest-title fc-dark-grey">
         관심 화폐
       </h1>
       {interests.length !== 0 && (

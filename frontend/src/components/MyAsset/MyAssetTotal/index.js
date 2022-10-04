@@ -211,46 +211,46 @@ const MyAssetTotal = (props) => {
     >
       <Grid item xs={6}>
         <div className="title">
-          <h1 className="fs-normal fc-dark-grey">
+          <h1 className="ff-b fls fs-normal fc-dark-grey">
             '{sessionStorage.getItem("name")}'님의 보유 외화 목록
           </h1>
-          <strong className="fs-title fc-dark-grey">
+          <strong className="ff-b fs-title fc-dark-grey">
             자산 현황 : {addComma(Total.toString())}원
           </strong>
         </div>
         <div className="detail">
           <div className="detail-box">
             {props.filterBaseCode === "All" && (
-              <h1 className="fs-normal fc-grey">구매 금액</h1>
+              <h1 className="ff-b fs-normal fc-grey">구매 금액</h1>
             )}
             {props.filterBaseCode === "USD" && (
-              <h1 className="fs-normal fc-grey">구매 금액 (USD)</h1>
+              <h1 className="ff-b fs-normal fc-grey">구매 금액 (USD)</h1>
             )}
             {props.filterBaseCode === "EUR" && (
-              <h1 className="fs-normal fc-grey">구매 금액 (EUR)</h1>
+              <h1 className="ff-b fs-normal fc-grey">구매 금액 (EUR)</h1>
             )}
             {props.filterBaseCode === "GBP" && (
-              <h1 className="fs-normal fc-grey">구매 금액 (GBP)</h1>
+              <h1 className="ff-b fs-normal fc-grey">구매 금액 (GBP)</h1>
             )}
             {props.filterBaseCode === "CNY" && (
-              <h1 className="fs-normal fc-grey">구매 금액 (CNY)</h1>
+              <h1 className="ff-b fs-normal fc-grey">구매 금액 (CNY)</h1>
             )}
             {props.filterBaseCode === "JPY" && (
-              <h1 className="fs-normal fc-grey">구매 금액 (JPY)</h1>
+              <h1 className="ff-b fs-normal fc-grey">구매 금액 (JPY)</h1>
             )}
-            <strong className="fs-title fc-green">
+            <strong className="ff-b fs-title fc-green">
               {addComma(nationTotal.toString())}원
             </strong>
           </div>
           <div className="detail-box">
-            <h1 className="fs-normal fc-grey">전체 손익</h1>
+            <h1 className="ff-b fs-normal fc-grey">전체 손익</h1>
             {Calc >= 0 && (
-              <strong className="fs-title fc-red">
+              <strong className="ff-b fs-title fc-red">
                 +{addComma(Calc.toFixed(2).toString())}원
               </strong>
             )}
             {Calc < 0 && (
-              <strong className="fs-title fc-purple">
+              <strong className="ff-b fs-title fc-purple">
                 {addComma(Calc.toFixed(2).toString())}원
               </strong>
             )}

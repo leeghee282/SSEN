@@ -86,7 +86,7 @@ export default function MyInterestItemList({
       {interests.length !== 0 && (
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650, width: 1152 }} aria-label="simple table">
-            <TableHead sx={{ backgroundColor: "#c4c4c4" }}>
+            <TableHead sx={{ backgroundColor: "#b2d4f1" }}>
               <TableRow>
                 {/* <TableCell id="font_test" >번호</TableCell> */}
                 <TableCell
@@ -270,10 +270,10 @@ export default function MyInterestItemList({
                   >
                     {live.length === 5
                       ? addComma(
-                          live[chart[interest.code]].buyPrice
-                            .toFixed(2)
-                            .toString()
-                        )
+                        live[chart[interest.code]].buyPrice
+                          .toFixed(2)
+                          .toString()
+                      )
                       : "none"}
                     원
                   </TableCell>

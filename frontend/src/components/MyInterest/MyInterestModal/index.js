@@ -37,7 +37,7 @@ const BasicSelect = ({ nation, setNation }) => {
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Currency Code</InputLabel>
+        <InputLabel id="demo-simple-select-label">화폐</InputLabel>
         <Select
           id="currency_code"
           value={nation}
@@ -66,23 +66,23 @@ const addComma = (num) => {
 
 
 // 모달창
-export default function MyInterestModal({ getInterest,handleOpen,open,setOpen}) {
+export default function MyInterestModal({ getInterest, handleOpen, open, setOpen }) {
   const [nation, setNation] = useState(""); //국가 선택
   const [previous, setPrevious] = useState(""); //이전 값
   const [interest, setInterest] = useState(""); //타겟
   const [isEnteredWrongAmount, setIsEnteredWrongAmount] = useState(false);
 
-  
-  
-  
+
+
+
   const handleClose = (e) => {
     setOpen(false);
     setNation("");
     setInterest("");
   };
-  
 
-  
+
+
   // 서버에 보유 통화 보내기(post 방식)
   const sendMyInterest = () => {
     const body = {
@@ -131,7 +131,7 @@ export default function MyInterestModal({ getInterest,handleOpen,open,setOpen}) 
 
   return (
     <div>
-      
+
       <Modal
         open={open}
         onClose={handleClose}

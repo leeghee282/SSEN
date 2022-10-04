@@ -3,14 +3,14 @@ import "./style.css";
 
 const Filter = (props) => {
     const filterChangeHandler = (event) => {
-        
+
         props.onChangeFilter(event.target.value);
-        
+
     }
-    
+
     return (
         <select
-            className="filter"
+            className="filter ff-b"
             id="filter"
             name="filter"
             value={props.filterBaseCode}
