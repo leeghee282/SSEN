@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import * as am5 from "@amcharts/amcharts5";
@@ -86,16 +86,53 @@ function Chart() {
             renderer: am5xy.AxisRendererY.new(root, {}),
           })
         );
-
-        // Create X-Axis
-        var xAxis = chart.xAxes.push(
-          am5xy.GaplessDateAxis.new(root, {
-            baseInterval: { timeUnit: "day", count: 1 },
-            renderer: am5xy.AxisRendererX.new(root, {
-              minGridDistance: 20,
-            }),
-          })
-        );
+        if (data.length < 14) {
+          // Create X-Axis
+          var xAxis = chart.xAxes.push(
+            am5xy.GaplessDateAxis.new(root, {
+              baseInterval: { timeUnit: "day", count: 1 },
+              renderer: am5xy.AxisRendererX.new(root, {
+                minGridDistance: 10,
+              }),
+            })
+          );
+        } else if (data.length < 19) {
+          // Create X-Axis
+          var xAxis = chart.xAxes.push(
+            am5xy.GaplessDateAxis.new(root, {
+              groupData: true,
+              groupInterval: { timeUnit: "day", count: 3 },
+              baseInterval: { timeUnit: "day", count: 1 },
+              renderer: am5xy.AxisRendererX.new(root, {
+                minGridDistance: 10,
+              }),
+            })
+          );
+        } else if (data.length < 30) {
+          // Create X-Axis
+          var xAxis = chart.xAxes.push(
+            am5xy.GaplessDateAxis.new(root, {
+              groupData: true,
+              groupInterval: { timeUnit: "day", count: 4 },
+              baseInterval: { timeUnit: "day", count: 1 },
+              renderer: am5xy.AxisRendererX.new(root, {
+                minGridDistance: 10,
+              }),
+            })
+          );
+        } else {
+          // Create X-Axis
+          var xAxis = chart.xAxes.push(
+            am5xy.GaplessDateAxis.new(root, {
+              groupData: true,
+              groupInterval: { timeUnit: "day", count: 7 },
+              baseInterval: { timeUnit: "day", count: 1 },
+              renderer: am5xy.AxisRendererX.new(root, {
+                minGridDistance: 10,
+              }),
+            })
+          );
+        }
 
         // Create series
         var series = chart.series.push(
