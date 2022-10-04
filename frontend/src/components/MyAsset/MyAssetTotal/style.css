@@ -1,0 +1,87 @@
+.title{
+    display: flex;
+    flex-flow: column;
+    justify-content: right;
+    margin-bottom: 40px;
+}
+
+/* 디테일 박스 */
+.detail{
+    display: flex;
+    padding: 15px 0;
+    margin-bottom: 60px;
+    width: 550px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    background-color: white;
+}
+
+/* 박스 가운데 bar */
+.detail::before {
+    content: "";
+    position: absolute;
+    left: 30%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 80px;
+    opacity: 0.5;
+    border: 1px solid #DEDEDE;
+}
+
+/* 국가별 합계, 손익 들어가는 부분 */
+.detail-box {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    width: 50%;
+}
+
+/* 폰트 */
+.fs-title {
+    font-size: 28px;
+    letter-spacing: -2.5px;
+    line-height: 0.9375;
+    margin-bottom: 10px;
+}
+
+.fs-normal {
+    font-size: 16px;
+    letter-spacing: -1.5px;
+    line-height: 1.25;
+}
+
+.fs-emphasis {
+    font-size: 18px;
+    letter-spacing: -2px;
+    line-height: 1.5;
+}
+
+.fw-light {
+    font-weight: 300;
+}
+
+/* 폰트 컬러 색상 */
+.fc-green {
+    color: #5ADB5A;
+}
+
+.fc-red {
+    color: #FF5B5B;
+}
+
+.fc-grey {
+    color: #9A9A9A;
+}
+
+.fc-purple {
+    color: #5D5FEF;
+}
+
+.fc-blue {
+    color: #604fdc;
+}
+
+.fc-dark-grey {
+    color: #333333;
+}
