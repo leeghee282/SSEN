@@ -311,7 +311,7 @@ const Header = () => {
             Home
           </Button>
           <Button
-            href="/exchangecalc"
+            onClick={newExchangeCalc}
             id="font_test"
             sx={{ fontSize: '12px', fontWeight: '700', color: 'black' }}
           >
