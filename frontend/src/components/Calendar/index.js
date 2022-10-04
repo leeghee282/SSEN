@@ -15,7 +15,11 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 
 import { useDispatch } from "react-redux";
-import { getChartDates, getChartCode } from "../../_actions/chart_action";
+import {
+  getChartDates,
+  getChartCode,
+  getChartDetailDate,
+} from "../../_actions/chart_action";
 import { Typography } from "@mui/material";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ToggleButton from "@mui/material/ToggleButton";
