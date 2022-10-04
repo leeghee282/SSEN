@@ -90,7 +90,7 @@ export function doFn() {
 
 export function getChartDetailDate(dataToSubmit) {
   const request = {
-    starDetailtDate: dataToSubmit.startDetailDate,
+    startDetailDate: dataToSubmit.startDetailDate,
     endDetailDate: dataToSubmit.endDetailDate,
   };
 

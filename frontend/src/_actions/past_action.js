@@ -23,14 +23,14 @@ const newsAxios = Axios.create({
 });
 
 export function getPastDatalist(dataToSubmit) {
-  //   const pastData = [];
-  //   dataToSubmit.map((data) => {
-  //     var addPastData = {
-  //       keyword: data.keyword,
-  //       count: data.count,
-  //     };
-  //     return pastData.push(addPastData);
-  //   });
+  // const pastData = [];
+  // dataToSubmit.map((data) => {
+  //   var addPastData = {
+  //     keyword: data.keyword,
+  //     count: data.count,
+  //   };
+  //   return pastData.push(addPastData);
+  // });
 
   const request = newsAxios
     .post("/news/past", dataToSubmit)
@@ -64,9 +64,7 @@ export function getPastKeywords(dataToSubmit) {
 
 export function getPastNews(dataToSubmit) {
   const request = newsAxios
-    .get(
-      `/news/search/${dataToSubmit.keyword}/${dataToSubmit.startDate}/${dataToSubmit.endDate}`
-    )
+    .get(`/news/search/${dataToSubmit.keyword}`)
     .then((response) => response.data);
 
   return {
