@@ -19,6 +19,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import IconButton from "@mui/material/IconButton";
 import Popover from "@mui/material/Popover";
 import Divider from "@mui/material/Divider";
+import "./style.css";
 
 //유정추가
 import {
@@ -26,7 +27,7 @@ import {
   NotificationManager,
 } from "react-notifications";
 // import '../../../node_modules/react-notifications/lib/notifications.css';
-import "./style.css";
+
 
 // 회원정보 popover
 const BasicPopover = () => {
@@ -79,7 +80,7 @@ const BasicPopover = () => {
 const Header = () => {
   const navigate = useNavigate();
   // 키워드 저장
-  const [word, setWord] = useState("한국");
+  const [word, setWord] = useState("");
 
   // 기본 날짜주기(일주일)
   const today = new Date();
@@ -99,67 +100,108 @@ const Header = () => {
     webSocket.onopen = function () {};
   }, []);
 
-  // webSocket.onmessage = function (message) {
-  //   var str = message.data.split(",");
-  //   var str1 = str[0].split("환율")[0];
-  //   var str2 = str1.substring(str1.length - 5);
-
-  //   var msgUserId = str[1].split("님")[0].trim();
-  //   //목표환율 설정한 유저와 목표 환율 유저가 같으면
-
-  //   if (loginFlag === msgUserId) {
-  //     if (str2 === " EUR ") {
-  //       NotificationManager.success(str[1], str[0]);
-  //     }
-
-  //     if (str2 === " JPY ") {
-  //       NotificationManager.warning(str[1], str[0]);
-  //     }
-
-  //     if (str2 === " GBP ") {
-  //       NotificationManager.info(str[1], str[0]);
-  //     }
-
-  //     if (str2 === " USD ") {
-  //       NotificationManager.error(str[1], str[0]);
-  //     }
-  //   }
-  // };
+  
   webSocket.onmessage = function (message) {
-    
-    //======push알림용 시작==============
+    //======push 알림 시작==============
     if (message.data.includes("targetPrice")) {
-      //console.log(JSON.parse(message.data));
 
       // 목표환율 설정한 유저와 목표 환율 유저가 같으면
       if (loginFlag === JSON.parse(message.data).userId) {
-        //const date = JSON.parse(message.data).regdate.getHours();
+    
+        const currencyCode = JSON.parse(message.data).currencyCode;
+        if (currencyCode === "USD") {
+          NotificationManager.error(
+            // 볼드 처리 안된 부분에 쓸 내용
+            JSON.parse(message.data).name +
+              "님의 목표 환율 " +
+              JSON.parse(message.data).targetPrice +
+              "에 도달했습니다." +
+              +JSON.parse(message.data).regdate.time.hour
+              +":"
+              +JSON.parse(message.data).regdate.time.minute
+              +":"
+              +JSON.parse(message.data).regdate.time.second,
 
-        //---push 알림 내용 시작
-        NotificationManager.info(
-          // 볼드 처리 안된 부분에 쓸 내용
-          JSON.parse(message.data).name +
-            "님의 목표 환율 " +
-            JSON.parse(message.data).targetPrice +
-            "에 도달했습니다." +
-            "\n" +
-            JSON.parse(message.data).regdate,
+            // 볼드 처리 된 부분에 쓸 내용
+            JSON.parse(message.data).currencyCode +
+              " 현재 환율 : " +
+              JSON.parse(message.data).buyPrice,
 
-          // 볼드 처리 된 부분에 쓸 내용
-          JSON.parse(message.data).currencyCode +
-            " 현재 환율 : " +
-            JSON.parse(message.data).buyPrice,
+            // 자동으로 사라지기까지 걸리는 시간 (단위는 ms인거같음)
+            5000
+          );
+        } else if (currencyCode === "EUR") {
+          NotificationManager.success(
+            // 볼드 처리 안된 부분에 쓸 내용
+            JSON.parse(message.data).name +
+              "님의 목표 환율 " +
+              JSON.parse(message.data).targetPrice +
+              "에 도달했습니다." +
+              +JSON.parse(message.data).regdate.time.hour
+              +":"
+              +JSON.parse(message.data).regdate.time.minute
+              +":"
+              +JSON.parse(message.data).regdate.time.second,
 
-          // 자동으로 사라지기까지 걸리는 시간 (단위는 ms인거같음)
-          5000
-        );
-        //-----push 알림 내용 끝
+            // 볼드 처리 된 부분에 쓸 내용
+            JSON.parse(message.data).currencyCode +
+              " 현재 환율 : " +
+              JSON.parse(message.data).buyPrice,
+
+            // 자동으로 사라지기까지 걸리는 시간 (단위는 ms인거같음)
+            5000
+          );
+        } else if (currencyCode === "GBP") {
+          NotificationManager.info(
+            // 볼드 처리 안된 부분에 쓸 내용
+            JSON.parse(message.data).name +
+              "님의 목표 환율 " +
+              JSON.parse(message.data).targetPrice +
+              "에 도달했습니다.\n" +
+              
+              +JSON.parse(message.data).regdate.time.hour
+              +":"
+              +JSON.parse(message.data).regdate.time.minute
+              +":"
+              +JSON.parse(message.data).regdate.time.second,
+            // 볼드 처리 된 부분에 쓸 내용
+            JSON.parse(message.data).currencyCode +
+              " 현재 환율 : " +
+              JSON.parse(message.data).buyPrice,
+
+            // 자동으로 사라지기까지 걸리는 시간 (단위는 ms인거같음)
+            5000
+          );
+        } else if (currencyCode === "JPY") {
+          NotificationManager.warning(
+            // 볼드 처리 안된 부분에 쓸 내용
+            JSON.parse(message.data).name +
+              "님의 목표 환율 " +
+              JSON.parse(message.data).targetPrice +
+              "에 도달했습니다." +
+              +JSON.parse(message.data).regdate.time.hour
+              +":"
+              +JSON.parse(message.data).regdate.time.minute
+              +":"
+              +JSON.parse(message.data).regdate.time.second,
+
+            // 볼드 처리 된 부분에 쓸 내용
+            JSON.parse(message.data).currencyCode +
+              " 현재 환율 : " +
+              JSON.parse(message.data).buyPrice,
+
+            // 자동으로 사라지기까지 걸리는 시간 (단위는 ms인거같음)
+            5000
+          );
+        }
       }
     } //=======push알림 끝============
-    //========실시간 환율 용 시작
+    //========실시간 환율 시작
     else {
       //json형식으로 변환
+      
       //아래처럼 쓰면 해당 데이터만 잘 나오는데 변수에 저장해서 쓰는건 몰겟음ㅇㅂㅇ....ㅠ
+      // console.log(JSON.parse(message.data).regdate);
     }
   };
 
@@ -185,7 +227,7 @@ const Header = () => {
     // }
   };
 
-  const onLinkSubmit = (e) =>{
+  const onLinkSubmit = async (e) =>{
     webSocket.close();
     e.preventDefault();
     navigate("/search", {
@@ -248,38 +290,65 @@ const Header = () => {
     >
       <Toolbar
         sx={{
-          
-          display:"flex",justifyContent:"space-between",
+          display: "flex",
+          justifyContent: "space-between",
           overflowX: "auto",
           background: "#ffffff",
         }}
       >
         {/* LOGO IMAGE */}
-        <Box sx={{display:"flex",}}>
-        <Avatar
-          sx={{ width: 100, height: 100, cursor: "pointer" }}
-          alt="Academy"
-          src="/images/SsenLogo.png"
-          onClick={logoClickHandler}
-          style={{ alignItems: "center" }}
-        />
-        <Button href="/" id="font_test" sx={{fontSize:"13px",fontWeight:"700",color:"black",ml:2 }} >Home</Button>
-        <Button id="font_test" sx={{fontSize:"13px",fontWeight:"700",color:"black"}}>계산기</Button>
-        <Button onClick={onSubmit}   id="font_test" sx={{fontSize:"13px",fontWeight:"700",color:"black"}}>뉴스검색</Button>
-        <Button href="/profile" id="font_test" sx={{fontSize:"13px",fontWeight:"700",color:"black"}}>보유 및 관심화폐</Button>
-        <Button href="/profileupdate" id="font_test" sx={{fontSize:"13px",fontWeight:"700",color:"black"}} >Settings</Button>
+        <Box sx={{ display: "flex" }}>
+          <Avatar
+            sx={{ width: 100, height: 100, cursor: "pointer" }}
+            alt="Academy"
+            src="/images/SsenLogo.png"
+            onClick={logoClickHandler}
+            style={{ alignItems: "center" }}
+          />
+          <Button
+            href="/"
+            id="font_test"
+            sx={{ fontSize: "13px", fontWeight: "700", color: "black", ml: 2 }}
+          >
+            Home
+          </Button>
+          <Button
+            href="/exchangecalc"
+            id="font_test"
+            sx={{ fontSize: "13px", fontWeight: "700", color: "black" }}
+          >
+            계산기
+          </Button>
+          <Button
+            onClick={onLinkSubmit}
+            id="font_test"
+            sx={{ fontSize: "13px", fontWeight: "700", color: "black" }}
+          >
+            뉴스검색
+          </Button>
+          <Button
+            href="/profile"
+            id="font_test"
+            sx={{ fontSize: "13px", fontWeight: "700", color: "black" }}
+          >
+            보유 및 관심화폐
+          </Button>
+          <Button
+            href="/profileupdate"
+            id="font_test"
+            sx={{ fontSize: "13px", fontWeight: "700", color: "black" }}
+          >
+            Settings
+          </Button>
         </Box>
-        <Box sx={{width:500}}></Box>
-        
-        <Box sx={{width:150}} ></Box>
-        <Box></Box>
-        <Box></Box>
-        
-        
+        <Box sx={{ width: 500 }}></Box>
 
-        <Stack spacing={1} direction="row" sx={{ width: "250px"}}>
+        <Box sx={{ width: 150 }}></Box>
+        <Box></Box>
+        <Box></Box>
+
+        <Stack spacing={1} direction="row" sx={{ width: "250px" }}>
           <TextField
-            
             id="font_Sans"
             fullWidth
             type="search"
@@ -291,22 +360,25 @@ const Header = () => {
           />
           <Avatar
             type="submit"
-            sx={{ p: "10px", height: "15px", width: "15px", cursor: "pointer",mr:"100px" }}
+            sx={{
+              p: "10px",
+              height: "15px",
+              width: "15px",
+              cursor: "pointer",
+              mr: "100px",
+            }}
             aria-label="search"
             onClick={onSubmit}
             src="/images/search.png"
           ></Avatar>
-          
         </Stack>
         {/* 로그인을 안했을 경우 */}
-        
-          {loginFlag === null && (
-            <Stack spacing={1} direction="row" >
-            <Box >
-              
+
+        {loginFlag === null && (
+          <Stack spacing={1} direction="row">
+            <Box>
               <Button
-                sx={{ ml: 1 ,fontSize:"12px"}}
-                
+                sx={{ ml: 1, fontSize: "12px" }}
                 id="font_test"
                 variant="contained"
                 size="small"
@@ -315,7 +387,7 @@ const Header = () => {
                 로그인
               </Button>
               <Button
-                sx={{ ml: 1 ,fontSize:"12px"}}
+                sx={{ ml: 1, fontSize: "12px" }}
                 id="font_test"
                 variant="contained"
                 size="small"
@@ -324,16 +396,16 @@ const Header = () => {
                 회원가입
               </Button>
             </Box>
-            </Stack>
-          )}
-          {/* 로그인한 경우 */}
-          {loginFlag !== null && (
-            <Stack spacing={1} direction="row" >
+          </Stack>
+        )}
+        {/* 로그인한 경우 */}
+        {loginFlag !== null && (
+          <Stack spacing={1} direction="row">
             <Box sx={{ display: "flex", flexDirection: "row" }}>
-              <Typography id="font_test" sx={{  mr: 2 }}>
+              <Typography id="font_test" sx={{ mr: 2 }}>
                 '{sessionStorage.getItem("name")}' 님
               </Typography>
-              
+
               <BasicPopover />
               {/* <Button
                 sx={{ ml: 1, background: "red" }}
@@ -355,9 +427,8 @@ const Header = () => {
                 로그아웃
               </Button>
             </Box>
-            </Stack>
-          )}
-        
+          </Stack>
+        )}
       </Toolbar>
 
       <NotificationContainer sx={{ background: "red" }} />
