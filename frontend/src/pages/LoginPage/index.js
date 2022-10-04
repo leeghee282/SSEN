@@ -40,7 +40,7 @@ export default function Login() {
       errors.password = "비밀번호를 입력해주세요.";
     }
 
-    
+
 
     setFormErrors(errors);
     if (!(errors.userId + errors.password)) {
@@ -55,37 +55,37 @@ export default function Login() {
       userId: userId,
       password: password,
     };
-    try{
-    const response = await axios.post(baseURL + "/api/v1/user/login", body);
-    const resPassword = response.data.password;
-    const resAccessToken = response.data.accessToken;
-    const resEmail = response.data.email;
-    const resName = response.data.name;
-    const resNickname = response.data.nickname;
-    const resPhone = response.data.phone;
-    const resUid = response.data.uid;
-    const resUserId = response.data.userId;
+    try {
+      const response = await axios.post(baseURL + "/api/v1/user/login", body);
+      const resPassword = response.data.password;
+      const resAccessToken = response.data.accessToken;
+      const resEmail = response.data.email;
+      const resName = response.data.name;
+      const resNickname = response.data.nickname;
+      const resPhone = response.data.phone;
+      const resUid = response.data.uid;
+      const resUserId = response.data.userId;
 
-    console.log(response);
-    sessionStorage.setItem("password", resPassword);
-    sessionStorage.setItem("accessToken", resAccessToken);
-    sessionStorage.setItem("email", resEmail);
-    sessionStorage.setItem("name", resName);
-    sessionStorage.setItem("nickname", resNickname);
-    sessionStorage.setItem("phone", resPhone);
-    sessionStorage.setItem("uid", resUid);
-    sessionStorage.setItem("userId", resUserId);
+      console.log(response);
+      sessionStorage.setItem("password", resPassword);
+      sessionStorage.setItem("accessToken", resAccessToken);
+      sessionStorage.setItem("email", resEmail);
+      sessionStorage.setItem("name", resName);
+      sessionStorage.setItem("nickname", resNickname);
+      sessionStorage.setItem("phone", resPhone);
+      sessionStorage.setItem("uid", resUid);
+      sessionStorage.setItem("userId", resUserId);
 
-    if (response.status === 200) {
-      navigate("/");
-    } else {
-      return;
+      if (response.status === 200) {
+        navigate("/");
+      } else {
+        return;
+      }
     }
-  }
-  catch(e) {
-    setFormErrors({...formErrors,password:"로그인 정보를 확인하세요."})
-    console.log(formErrors,33)
-  }
+    catch (e) {
+      setFormErrors({ ...formErrors, password: "로그인 정보를 확인하세요." })
+      console.log(formErrors, 33)
+    }
   };
 
   //제출 함수
@@ -121,7 +121,7 @@ export default function Login() {
             backgroundPosition: "center",
           }}
         />
-        <Grid item xs={12} sm={8} md={5} component={Paper}  square>
+        <Grid item xs={12} sm={8} md={5} component={Paper} square>
           <Box
             sx={{
               my: 8,
@@ -156,8 +156,11 @@ export default function Login() {
                 label="아이디"
                 name="userId"
                 autoFocus
+                InputProps={{
+                  style: { fontFamily: 'Pretendard Variable' }
+                }}
               />
-              
+
               <TextField
                 onChange={handleChange}
                 margin="normal"
@@ -183,9 +186,17 @@ export default function Login() {
               </Button>
               <Grid container justifyContent="flex-end">
                 <Grid item>
-                  <Link href="/signup" variant="body2">
-                    {"계정이 없으신가요 ? 회원가입하기"}
-                  </Link>
+                  <Typography
+                    sx={{ pl: 1, fontSize: "14px" }}
+                    style={{ color: "#808080", fontFamily: 'MICEGothic Bold' }}>
+                    계정이 없으신가요?&nbsp;
+                    <Link href="/signup" variant="body2"
+                      style={{ color: "rgb(21 120 219)", fontFamily: 'MICEGothic Bold', textDecoration: "none" }}>
+                      {"회원가입"}
+                    </Link>
+                    하기
+                  </Typography>
+
                 </Grid>
               </Grid>
             </Box>
