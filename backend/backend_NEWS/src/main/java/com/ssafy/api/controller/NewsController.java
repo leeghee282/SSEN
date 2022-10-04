@@ -105,7 +105,7 @@ public class NewsController {
 
         Session jschSession = sshUtil.sessionConnect();
 
-        String cmd = "/home/hadoop/hadoop/bin/hadoop jar ~/mapreduce/ssen.jar news " + keyword + " keyword_in news_out > /dev/null 2>&1 &&  /home/hadoop/hadoop/bin/hdfs dfs -cat news_out/*";
+        String cmd = "/home/hadoop/hadoop/bin/hadoop jar /home/ubuntu/mapreduce/ssen.jar news " + keyword + " keyword_in news_out > /dev/null 2>&1 &&  /home/hadoop/hadoop/bin/hdfs dfs -cat news_out/*";
 
         System.out.println("확인하기2 " + cmd);
         String response = sshUtil.cmd(jschSession, cmd);
