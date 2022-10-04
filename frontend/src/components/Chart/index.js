@@ -454,8 +454,18 @@ function Chart() {
   const onMakeChart = () => {
     onDeleteChart("chartdiv");
     onSetChart();
-    dispatch(doFn()).then((response) => {
-      console.log("change");
+    // dispatch(doFn()).then((response) => {
+    //   console.log("change");
+    // });
+
+    var body = {
+      startDetailDate: moment(chartDates.startDate).format("YYYY-MM-DD"),
+      endDetailDate: moment(chartDates.endDate).format("YYYY-MM-DD"),
+    };
+    console.log(body);
+
+    dispatch(getChartDetailDate(body)).then((response) => {
+      console.log(response.payload);
     });
   };
 
