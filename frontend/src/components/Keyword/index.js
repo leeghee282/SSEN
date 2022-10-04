@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 import moment from "moment";
 import * as d3 from "d3";
 import cloud from "d3-cloud";
@@ -11,8 +13,9 @@ import {
   getKeywords,
   getNews,
   setWordcloudData,
+  getChartDetailDate,
 } from "../../_actions/chart_action";
-import { getPastDetailist } from "../../_actions/past_action";
+import { getPastDatalist } from "../../_actions/past_action";
 
 import useDidMountEffect from "./useDidMountEffect";
 
@@ -23,6 +26,7 @@ import { Grid } from "@mui/material";
 
 function Keyword(props) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const chartDates = useSelector((state) => state.chartReducer.chartDates);
   const startDate = moment(chartDates.startDate).format("YYYY-MM-DD");
@@ -30,6 +34,8 @@ function Keyword(props) {
   const keywordList = useSelector((state) => state.chartReducer.keywords);
   const newsList = useSelector((state) => state.chartReducer.news);
   const doing = useSelector((state) => state.chartReducer.doing);
+
+  const [showKeyword, setShowKeyword] = useState("");
 
   const chartDetailDate = useSelector(
     (state) => state.chartReducer.chartDetailDate
@@ -64,7 +70,7 @@ function Keyword(props) {
 
   useDidMountEffect(() => {
     onSetDetailKeywordsNews();
-  }, [doDetail]);
+  }, [chartDetailDate]);
 
   const onSetKeywordNews = async () => {
     let keywordBody = {
@@ -80,6 +86,7 @@ function Keyword(props) {
       const data = [];
       let sum = 0;
       console.log(response.payload);
+
       response.payload.map((res) => {
         var addWordcloudData = {
           text: res.keyword,
@@ -88,13 +95,14 @@ function Keyword(props) {
         sum += res.count;
         return data.push(addWordcloudData);
       });
+
       setKeywordLoading(false);
       data.push(sum);
       onSetWordcloud(data);
 
-      const maxNum = data.length - 1;
+      const maxNum = data.length - 2;
       const firstKeyword = data[maxNum].text;
-
+      setShowKeyword(firstKeyword);
       console.log(firstKeyword);
 
       let newsBody = {
@@ -113,19 +121,25 @@ function Keyword(props) {
       });
 
       setNewsLoading(false);
+
+      // dispatch(getPastDatalist(keywordList)).then((res) => {
+      //   console.log(res.payload);
+      // });
     });
   };
 
   const onSetWordcloud = async (d) => {
     var fill = d3.scaleOrdinal(d3.schemeCategory10);
     var sum = d[10];
-    var wordScale = d3.scaleLinear().domain([0, sum]).range([0, 300*0.9]); //전체 사이즈 대비 차지하는 비율로 wordScale
+    var wordScale = d3
+      .scaleLinear()
+      .domain([0, sum])
+      .range([0, 300 * 0.9]); //전체 사이즈 대비 차지하는 비율로 wordScale
 
     // var maxWordcloudNum = d.length - 2;
     // console.log("d", d);
     // var maxScaleNum = (parseInt(d[maxWordcloudNum].size / 100) + 2.8) * 100;
     // console.log(maxScaleNum);
-
 
     var width = 300;
     var height = 300;
@@ -179,6 +193,8 @@ function Keyword(props) {
     }
 
     const onSetNews = async (txt) => {
+      setShowKeyword(txt);
+
       let newsBody = {
         keyword: txt,
         // startDate: startDate,
@@ -204,25 +220,38 @@ function Keyword(props) {
 
   const onSetDetailKeywordsNews = async () => {
     let keywordBody = {
-      startDetailDate: chartDetailDate.startDetailDate,
-      endDetailDate: chartDetailDate.endDetailDate,
+      startDate: chartDetailDate.startDetailDate,
+      endDate: chartDetailDate.endDetailDate,
     };
+
+    console.log(keywordBody);
+
+    d3.selectAll("svg").remove();
+
+    setKeywordLoading(true);
+    setNewsLoading(true);
 
     await dispatch(getKeywords(keywordBody)).then((response) => {
       const data = [];
+      let sum = 0;
       console.log(response.payload);
+
       response.payload.map((res) => {
         var addWordcloudData = {
           text: res.keyword,
           size: res.count,
         };
+        sum += res.count;
         return data.push(addWordcloudData);
       });
 
+      setKeywordLoading(false);
+      data.push(sum);
       onSetWordcloud(data);
 
-      const maxNum = data.length - 1;
+      const maxNum = data.length - 2;
       const firstKeyword = data[maxNum].text;
+      setShowKeyword(firstKeyword);
 
       console.log(firstKeyword);
 
@@ -240,25 +269,38 @@ function Keyword(props) {
         indexOfFirstPost = indexOfLastPost - postPerPage;
         currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
       });
+
+      setNewsLoading(false);
+
+      // dispatch(getPastDatalist(keywordList)).then((res) => {
+      //   console.log(res.payload);
+      // });
     });
   };
 
-  // const onSetPastSearchResult = async () => {
-  //   await dispatch(getPastDatalist(keywordList)).then((response) => {
-  //     console.log(response.payload);
-  //   });
-  // };
+  const pastSearchClickHandler = () => {
+    navigate("/pastsearch");
+  };
 
   return (
     <div>
       <Grid container spacing={2}>
-        <Grid item xs={6}>
+        <Grid item xs={12}>
+          <h1>{`${moment(chartDetailDate.startDetailDate).format(
+            "YYYY.MM.DD"
+          )} ~ ${moment(chartDetailDate.endDetailDate).format(
+            "YYYY.MM.DD"
+          )}`}</h1>
+        </Grid>
+        <Grid item xs={5}>
           {keywordLoading ? <KeywordLoading /> : null}
           <div id="word-cloud"></div>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={7}>
+          {keywordLoading ? null : <h1>{`${showKeyword}`}</h1>}
+
           <div className="newscontainer">
-            <Post  posts={currentPosts} loading={newsLoading} />
+            <Post posts={currentPosts} loading={newsLoading} />
             <Paging
               totalCount={posts.length}
               postPerPage={postPerPage}
@@ -270,6 +312,7 @@ function Keyword(props) {
           </div>
         </Grid>
       </Grid>
+      <button onClick={pastSearchClickHandler}>과거</button>
     </div>
   );
 }

@@ -10,7 +10,7 @@ const CommunityButton = () => {
   return (
     <>
       {!visible && (
-        <Box sx={{ background: "#F5F5F5", height: "1000px", width: "450px" }}>
+        <Box sx={{  height: "1000px", width: "450px" }}>
           <Link href="/exchangecalc">
             <Avatar
               sx={{ width: "150px", height: "150px", position: "fixed" }}

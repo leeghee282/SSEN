@@ -20,7 +20,7 @@ const INITIAL_STATE = {
   chartDates: { startDate: startDate, endDate: endDate },
   chartCode: "USD",
   doing: 0,
-  chartDetailDate: { startDate: startDate, endDate: endDate },
+  chartDetailDate: { startDetailDate: startDate, endDetailDate: endDate },
   doDetail: 0,
   news: [],
 };

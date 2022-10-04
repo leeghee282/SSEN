@@ -79,7 +79,7 @@ const BasicPopover = () => {
 const Header = () => {
   const navigate = useNavigate();
   // 키워드 저장
-  const [word, setWord] = useState("");
+  const [word, setWord] = useState("한국");
 
   // 기본 날짜주기(일주일)
   const today = new Date();
@@ -93,7 +93,7 @@ const Header = () => {
 
   // 유정 추가
   // 웹소켓 연결
-  const webSocket = new WebSocket("ws://j7e204.p.ssafy.io:8080/ssen");
+  const webSocket = new WebSocket("wss://j7e204.p.ssafy.io:8080/ssen");
 
   useEffect(() => {
     webSocket.onopen = function () {};
@@ -126,6 +126,7 @@ const Header = () => {
   //   }
   // };
   webSocket.onmessage = function (message) {
+    
     //======push알림용 시작==============
     if (message.data.includes("targetPrice")) {
       //console.log(JSON.parse(message.data));
@@ -158,16 +159,13 @@ const Header = () => {
     //========실시간 환율 용 시작
     else {
       //json형식으로 변환
-      console.log(JSON.parse(message.data));
       //아래처럼 쓰면 해당 데이터만 잘 나오는데 변수에 저장해서 쓰는건 몰겟음ㅇㅂㅇ....ㅠ
-      console.log(JSON.parse(message.data).regdate);
     }
   };
 
   //유정 추가 끝
 
   const onSubmit = async (e) => {
-    console.log(word, "네브바 검색창");
     webSocket.close();
     e.preventDefault();
     navigate("/search", {
@@ -187,15 +185,26 @@ const Header = () => {
     // }
   };
 
+  const onLinkSubmit = (e) =>{
+    webSocket.close();
+    e.preventDefault();
+    navigate("/search", {
+      state: {
+        startDate: startDate,
+        endDate: endDate,
+        search: "한국",
+      },
+    });
+
+  }
+
   const onChange = (e) => {
     setWord(e.target.value);
     webSocket.close();
-    console.log(word, "네브바 검색어");
   };
 
   const keyDownHandler = (e) => {
     if (e.key === "Enter") {
-      console.log(word, 333);
       setWord(word);
       onSubmit(e);
     }
@@ -208,7 +217,7 @@ const Header = () => {
 
   const logoClickHandler = () => {
     webSocket.close();
-    console.log("서버와 웹소켓 연결 끊기");
+
     navigate("/");
   };
 
@@ -232,19 +241,21 @@ const Header = () => {
   return (
     <Box
       style={{
-        background: "#F5F5F5",
+        // background: "#F5F5F5",
         height: "fit-content",
         minHeight: "100vh",
       }}
     >
       <Toolbar
         sx={{
-          justifyContent: "space-between",
+          
+          display:"flex",justifyContent:"space-between",
           overflowX: "auto",
           background: "#ffffff",
         }}
       >
         {/* LOGO IMAGE */}
+        <Box sx={{display:"flex",}}>
         <Avatar
           sx={{ width: 100, height: 100, cursor: "pointer" }}
           alt="Academy"
@@ -252,8 +263,23 @@ const Header = () => {
           onClick={logoClickHandler}
           style={{ alignItems: "center" }}
         />
-        <Stack spacing={1} direction="row" sx={{ width: "500px" }}>
+        <Button href="/" id="font_test" sx={{fontSize:"13px",fontWeight:"700",color:"black",ml:2 }} >Home</Button>
+        <Button id="font_test" sx={{fontSize:"13px",fontWeight:"700",color:"black"}}>계산기</Button>
+        <Button onClick={onSubmit}   id="font_test" sx={{fontSize:"13px",fontWeight:"700",color:"black"}}>뉴스검색</Button>
+        <Button href="/profile" id="font_test" sx={{fontSize:"13px",fontWeight:"700",color:"black"}}>보유 및 관심화폐</Button>
+        <Button href="/profileupdate" id="font_test" sx={{fontSize:"13px",fontWeight:"700",color:"black"}} >Settings</Button>
+        </Box>
+        <Box sx={{width:500}}></Box>
+        
+        <Box sx={{width:150}} ></Box>
+        <Box></Box>
+        <Box></Box>
+        
+        
+
+        <Stack spacing={1} direction="row" sx={{ width: "250px"}}>
           <TextField
+            
             id="font_Sans"
             fullWidth
             type="search"
@@ -265,26 +291,22 @@ const Header = () => {
           />
           <Avatar
             type="submit"
-            sx={{ p: "10px", height: "15px", width: "15px", cursor: "pointer" }}
+            sx={{ p: "10px", height: "15px", width: "15px", cursor: "pointer",mr:"100px" }}
             aria-label="search"
             onClick={onSubmit}
             src="/images/search.png"
           ></Avatar>
+          
         </Stack>
         {/* 로그인을 안했을 경우 */}
-        <Stack spacing={1} direction="row">
+        
           {loginFlag === null && (
-            <Box>
+            <Stack spacing={1} direction="row" >
+            <Box >
+              
               <Button
-                id="font_test"
-                variant="outlined"
-                size="small"
-                href="/exchangecalc"
-              >
-                환율계산기
-              </Button>
-              <Button
-                sx={{ ml: 1 }}
+                sx={{ ml: 1 ,fontSize:"12px"}}
+                
                 id="font_test"
                 variant="contained"
                 size="small"
@@ -293,7 +315,7 @@ const Header = () => {
                 로그인
               </Button>
               <Button
-                sx={{ ml: 1 }}
+                sx={{ ml: 1 ,fontSize:"12px"}}
                 id="font_test"
                 variant="contained"
                 size="small"
@@ -302,22 +324,16 @@ const Header = () => {
                 회원가입
               </Button>
             </Box>
+            </Stack>
           )}
           {/* 로그인한 경우 */}
           {loginFlag !== null && (
+            <Stack spacing={1} direction="row" >
             <Box sx={{ display: "flex", flexDirection: "row" }}>
-              <Typography id="font_test" sx={{ pl: 2, mr: 3 }}>
+              <Typography id="font_test" sx={{  mr: 2 }}>
                 '{sessionStorage.getItem("name")}' 님
               </Typography>
-              <Button
-                sx={{ mr: 1 }}
-                id="font_test"
-                variant="outlined"
-                size="small"
-                href="/exchangecalc"
-              >
-                환율계산기
-              </Button>
+              
               <BasicPopover />
               {/* <Button
                 sx={{ ml: 1, background: "red" }}
@@ -339,8 +355,9 @@ const Header = () => {
                 로그아웃
               </Button>
             </Box>
+            </Stack>
           )}
-        </Stack>
+        
       </Toolbar>
 
       <NotificationContainer sx={{ background: "red" }} />
