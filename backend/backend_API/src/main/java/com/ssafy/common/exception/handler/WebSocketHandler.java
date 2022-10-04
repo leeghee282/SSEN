@@ -34,9 +34,8 @@ public class WebSocketHandler extends TextWebSocketHandler {
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         CLIENTS.remove(session.getId());
     }
-
+    //push 알림용
     public void handleTextMessage(LiveUserRes lurList) {
-
         CLIENTS.entrySet().forEach(arg -> {
             try {
                 arg.getValue().sendMessage(new TextMessage(gson.toJson(lurList)));
@@ -45,10 +44,8 @@ public class WebSocketHandler extends TextWebSocketHandler {
             }
         });
     }
-
+    //실시간 알림용
     public void handleTextMessage2(LiveCurrencyRes liveCurrencyRes) {
-        Gson gson = new Gson();
-
         CLIENTS.entrySet().forEach(arg -> {
             try {
                 arg.getValue().sendMessage(new TextMessage(gson.toJson(liveCurrencyRes)));
