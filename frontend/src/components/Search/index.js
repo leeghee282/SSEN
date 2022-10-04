@@ -35,6 +35,7 @@ function Search() {
   const [loading, setLoading] = useState(true);
 
   const location = useLocation();
+  
 
   const data = [
     "한국",
@@ -50,7 +51,9 @@ function Search() {
   const pick = Math.floor(Math.random() * data.length);
 
   useEffect(() => {
+    
     async function fetchData() {
+      
       console.log(location.state, "확인용");
       setLoading(true);
       try {

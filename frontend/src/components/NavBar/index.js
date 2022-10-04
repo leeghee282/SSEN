@@ -79,7 +79,7 @@ const BasicPopover = () => {
 const Header = () => {
   const navigate = useNavigate();
   // 키워드 저장
-  const [word, setWord] = useState("");
+  const [word, setWord] = useState("한국");
 
   // 기본 날짜주기(일주일)
   const today = new Date();
@@ -126,7 +126,7 @@ const Header = () => {
   //   }
   // };
   webSocket.onmessage = function (message) {
-    console.log(JSON.parse(message.data),123123)
+    
     //======push알림용 시작==============
     if (message.data.includes("targetPrice")) {
       //console.log(JSON.parse(message.data));
@@ -184,6 +184,19 @@ const Header = () => {
     //   console.log(e);
     // }
   };
+
+  const onLinkSubmit = (e) =>{
+    webSocket.close();
+    e.preventDefault();
+    navigate("/search", {
+      state: {
+        startDate: startDate,
+        endDate: endDate,
+        search: "한국",
+      },
+    });
+
+  }
 
   const onChange = (e) => {
     setWord(e.target.value);
@@ -250,11 +263,11 @@ const Header = () => {
           onClick={logoClickHandler}
           style={{ alignItems: "center" }}
         />
-        <Button id="font_test" sx={{fontSize:"13px",fontWeight:"700",color:"black",ml:2 }} >Home</Button>
+        <Button href="/" id="font_test" sx={{fontSize:"13px",fontWeight:"700",color:"black",ml:2 }} >Home</Button>
         <Button id="font_test" sx={{fontSize:"13px",fontWeight:"700",color:"black"}}>계산기</Button>
-        <Button id="font_test" sx={{fontSize:"13px",fontWeight:"700",color:"black"}}>뉴스검색</Button>
-        <Button id="font_test" sx={{fontSize:"13px",fontWeight:"700",color:"black"}}>보유 및 관심화폐</Button>
-        <Button id="font_test" sx={{fontSize:"13px",fontWeight:"700",color:"black"}} >Settings</Button>
+        <Button onClick={onSubmit}   id="font_test" sx={{fontSize:"13px",fontWeight:"700",color:"black"}}>뉴스검색</Button>
+        <Button href="/profile" id="font_test" sx={{fontSize:"13px",fontWeight:"700",color:"black"}}>보유 및 관심화폐</Button>
+        <Button href="/profileupdate" id="font_test" sx={{fontSize:"13px",fontWeight:"700",color:"black"}} >Settings</Button>
         </Box>
         <Box sx={{width:500}}></Box>
         
