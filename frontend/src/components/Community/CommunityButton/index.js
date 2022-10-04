@@ -42,11 +42,10 @@ const CommunityButton = () => {
         <Box sx={{ height: "1000px", width: "460px" }}>
           <Avatar
             className="chat_title"
-            src="images/ssenchat2.png"
-            sx={{ width: "300px", height: "130px" }}
-          >
-            {" "}
-          </Avatar>
+            src="images/ssenchat3.png"
+            sx={{ mt:10, width: "350px", height: "110px" }}
+            variant="square"
+          />
           <CommunityList></CommunityList>
           <button
             position="absolute"
