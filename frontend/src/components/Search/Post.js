@@ -37,9 +37,11 @@ const Posts = ({ posts,search }) => {
         </Typography> */}
 
         <main>
+          <ul>
           {posts
             
             .map((post,index) => (
+              <li>
               <Grid key={index} container>
                 <Grid item xs={12}>
                   <Link
@@ -101,7 +103,9 @@ const Posts = ({ posts,search }) => {
                   </Link>
                 </Grid>
               </Grid>
+              </li>
             ))}
+            </ul>
         </main>
         <br></br>
         <br></br>
