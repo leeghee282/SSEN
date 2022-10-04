@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-import * as am5 from "@amcharts/amcharts5";
-import * as am5xy from "@amcharts/amcharts5/xy";
-import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
+import * as am5 from '@amcharts/amcharts5';
+import * as am5xy from '@amcharts/amcharts5/xy';
+import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 
-import moment from "moment";
-import { Button } from "@mui/material";
+import moment from 'moment';
+import { Button } from '@mui/material';
 
 import {
   getData,
@@ -14,23 +14,23 @@ import {
   getChartDetailDate,
   doDetailFn,
   getCurrDate,
-} from "../../_actions/chart_action";
+} from '../../_actions/chart_action';
 
-import useDidMountEffect from "./useDidMountEffect";
+import useDidMountEffect from './useDidMountEffect';
 
 function Chart() {
   const dispatch = useDispatch();
 
   const currencyCode = useSelector((state) => state.chartReducer.chartCode);
   const chartDates = useSelector((state) => state.chartReducer.chartDates);
-  const startDate = moment(chartDates.startDate).format("YYYY-MM-DD");
-  const endDate = moment(chartDates.endDate).format("YYYY-MM-DD");
+  const startDate = moment(chartDates.startDate).format('YYYY-MM-DD');
+  const endDate = moment(chartDates.endDate).format('YYYY-MM-DD');
   const rawChartData = useSelector((state) => state.chartReducer.data);
   const chartDetailDate = useSelector(
-    (state) => state.chartReducer.chartDetailDate
+    (state) => state.chartReducer.chartDetailDate,
   );
   const chartCurrDate = useSelector(
-    (state) => state.chartReducer.chartCurrDate
+    (state) => state.chartReducer.chartCurrDate,
   );
 
   useEffect(() => {
@@ -39,17 +39,34 @@ function Chart() {
 
   useEffect(() => {
     onSetData();
+    // chartCurrDateHandler();
   }, [startDate, endDate, currencyCode]);
 
   useDidMountEffect(async () => {
-    onDeleteChart("chartdiv");
+    onDeleteChart('chartdiv');
+
+    // let currBody = {
+    //   startCurrDate: moment(chartDates.startDate).format('YYYY-MM-DD'),
+    //   endCurrDate: moment(chartDates.endDate).format('YYYY-MM-DD'),
+    // };
+
+    // console.log(currBody);
+
+    // dispatch(getCurrDate(currBody)).then((response) => {
+    //   console.log(response.payload);
+    // });
 
     let body = {
-      startDate: moment(chartCurrDate.startCurrDate).format("YYYY-MM-DD"),
-      endDate: moment(chartCurrDate.endCurrDate).format("YYYY-MM-DD"),
+      startDate: moment(chartDates.startDate).format('YYYY-MM-DD'),
+      endDate: moment(chartDates.endDate).format('YYYY-MM-DD'),
       code: currencyCode,
     };
 
+    // let body = {
+    //   startDate: moment(chartCurrDate.startCurrDate).format('YYYY-MM-DD'),
+    //   endDate: moment(chartCurrDate.endCurrDate).format('YYYY-MM-DD'),
+    //   code: currencyCode,
+    // };
     console.log(body);
 
     await dispatch(getData(body)).then((response) => {
@@ -66,17 +83,17 @@ function Chart() {
           return chartData.push(addChartData);
         });
 
-        var root = am5.Root.new("chartdiv");
+        var root = am5.Root.new('chartdiv');
 
         root.setThemes([am5themes_Animated.new(root)]);
 
         var chart = root.container.children.push(
           am5xy.XYChart.new(root, {
             panY: false,
-            wheelY: "zoomX",
+            wheelY: 'zoomX',
             layout: root.verticalLayout,
             maxtooltipDistance: 0,
-          })
+          }),
         );
 
         // Define data
@@ -86,122 +103,122 @@ function Chart() {
         var yAxis = chart.yAxes.push(
           am5xy.ValueAxis.new(root, {
             renderer: am5xy.AxisRendererY.new(root, {}),
-          })
+          }),
         );
         if (data.length < 14) {
           // Create X-Axis
           var xAxis = chart.xAxes.push(
             am5xy.GaplessDateAxis.new(root, {
-              baseInterval: { timeUnit: "day", count: 1 },
+              baseInterval: { timeUnit: 'day', count: 1 },
               renderer: am5xy.AxisRendererX.new(root, {
                 minGridDistance: 10,
               }),
-            })
+            }),
           );
         } else if (data.length < 19) {
           // Create X-Axis
           var xAxis = chart.xAxes.push(
             am5xy.GaplessDateAxis.new(root, {
               groupData: true,
-              groupInterval: { timeUnit: "day", count: 3 },
-              baseInterval: { timeUnit: "day", count: 1 },
+              groupInterval: { timeUnit: 'day', count: 3 },
+              baseInterval: { timeUnit: 'day', count: 1 },
               renderer: am5xy.AxisRendererX.new(root, {
                 minGridDistance: 10,
               }),
-            })
+            }),
           );
         } else if (data.length < 30) {
           // Create X-Axis
           var xAxis = chart.xAxes.push(
             am5xy.GaplessDateAxis.new(root, {
               groupData: true,
-              groupInterval: { timeUnit: "day", count: 4 },
-              baseInterval: { timeUnit: "day", count: 1 },
+              groupInterval: { timeUnit: 'day', count: 4 },
+              baseInterval: { timeUnit: 'day', count: 1 },
               renderer: am5xy.AxisRendererX.new(root, {
                 minGridDistance: 10,
               }),
-            })
+            }),
           );
         } else {
           // Create X-Axis
           var xAxis = chart.xAxes.push(
             am5xy.GaplessDateAxis.new(root, {
               groupData: true,
-              groupInterval: { timeUnit: "day", count: 7 },
-              baseInterval: { timeUnit: "day", count: 1 },
+              groupInterval: { timeUnit: 'day', count: 7 },
+              baseInterval: { timeUnit: 'day', count: 1 },
               renderer: am5xy.AxisRendererX.new(root, {
                 minGridDistance: 10,
               }),
-            })
+            }),
           );
         }
 
         // Create series
         var series = chart.series.push(
           am5xy.CandlestickSeries.new(root, {
-            name: "Series",
+            name: 'Series',
             xAxis: xAxis,
             yAxis: yAxis,
-            openValueYField: "open",
-            highValueYField: "high",
-            lowValueYField: "low",
-            valueYField: "close",
-            valueXField: "date",
+            openValueYField: 'open',
+            highValueYField: 'high',
+            lowValueYField: 'low',
+            valueYField: 'close',
+            valueXField: 'date',
             tooltip: am5.Tooltip.new(root, {}),
-          })
+          }),
         );
 
-        series.columns.template.states.create("riseFromOpen", {
+        series.columns.template.states.create('riseFromOpen', {
           fill: am5.color(0x76b041),
           stroke: am5.color(0x76b041),
         });
-        series.columns.template.states.create("dropFromOpen", {
+        series.columns.template.states.create('dropFromOpen', {
           fill: am5.color(0xe4572e),
           stroke: am5.color(0xe4572e),
         });
 
         series
-          .get("tooltip")
+          .get('tooltip')
           .label.set(
-            "text",
-            "[bold]{valueX.formatDate()}[/]\n시가: {openValueY}\n고가: {highValueY}\n저가: {lowValueY}\n종가: {valueY}"
+            'text',
+            '[bold]{valueX.formatDate()}[/]\n시가: {openValueY}\n고가: {highValueY}\n저가: {lowValueY}\n종가: {valueY}',
           );
         series.data.setAll(data);
 
         var cursor = chart.set(
-          "cursor",
+          'cursor',
           am5xy.XYCursor.new(root, {
-            behavior: "selectXY",
-          })
+            behavior: 'selectXY',
+          }),
         );
 
-        cursor.events.on("selectended", function (ev) {
+        cursor.events.on('selectended', function (ev) {
           // Get actors
           var cursor = ev.target;
 
           // Get selection boundaries
           var x1 = xAxis
             .positionToDate(
-              xAxis.toAxisPosition(cursor.getPrivate("downPositionX"))
+              xAxis.toAxisPosition(cursor.getPrivate('downPositionX')),
             )
             .getTime();
           var x2 = xAxis
             .positionToDate(
-              xAxis.toAxisPosition(cursor.getPrivate("positionX"))
+              xAxis.toAxisPosition(cursor.getPrivate('positionX')),
             )
             .getTime();
           var y1 = yAxis.positionToValue(
-            yAxis.toAxisPosition(cursor.getPrivate("downPositionY"))
+            yAxis.toAxisPosition(cursor.getPrivate('downPositionY')),
           );
           var y2 = yAxis.positionToValue(
-            yAxis.toAxisPosition(cursor.getPrivate("positionY"))
+            yAxis.toAxisPosition(cursor.getPrivate('positionY')),
           );
 
           // Account for centering of bullets on a DateAxis
-          var baseInterval = xAxis.getPrivate("baseInterval");
+          var baseInterval = xAxis.getPrivate('baseInterval');
           var baseDuration =
             am5.time.getDuration(baseInterval.timeUnit, baseInterval.count) *
-            series.get("locationX");
+            series.get('locationX');
           x1 -= baseDuration;
           x2 -= baseDuration;
 
@@ -216,8 +233,8 @@ function Chart() {
           // Filter data items within boundaries
           var results = [];
           am5.array.each(series.dataItems, function (dataItem) {
-            var x = dataItem.get("valueX");
-            var y = dataItem.get("valueY");
+            var x = dataItem.get('valueX');
+            var y = dataItem.get('valueY');
             if (am5.math.inBounds({ x: x, y: y }, bounds)) {
               results.push(dataItem);
             }
@@ -227,7 +244,7 @@ function Chart() {
           let selectedRange = [];
           results.map((data) => {
             var addSelectedData = {
-              date: moment(new Date(data.close.valueX)).format("YYYY-MM-DD"),
+              date: moment(new Date(data.close.valueX)).format('YYYY-MM-DD'),
             };
             return selectedRange.push(addSelectedData);
           });
@@ -245,17 +262,17 @@ function Chart() {
         });
 
         xAxis.set(
-          "tooltip",
+          'tooltip',
           am5.Tooltip.new(root, {
-            themeTags: ["axis"],
-          })
+            themeTags: ['axis'],
+          }),
         );
 
         yAxis.set(
-          "tooltip",
+          'tooltip',
           am5.Tooltip.new(root, {
-            themeTags: ["axis"],
-          })
+            themeTags: ['axis'],
+          }),
         );
       }
     });
@@ -289,17 +306,17 @@ function Chart() {
           return chartData.push(addChartData);
         });
 
-        var root = am5.Root.new("chartdiv");
+        var root = am5.Root.new('chartdiv');
 
         root.setThemes([am5themes_Animated.new(root)]);
 
         var chart = root.container.children.push(
           am5xy.XYChart.new(root, {
             panY: false,
-            wheelY: "zoomX",
+            wheelY: 'zoomX',
             layout: root.verticalLayout,
             maxtooltipDistance: 0,
-          })
+          }),
         );
 
         // Define data
@@ -309,122 +326,122 @@ function Chart() {
         var yAxis = chart.yAxes.push(
           am5xy.ValueAxis.new(root, {
             renderer: am5xy.AxisRendererY.new(root, {}),
-          })
+          }),
         );
         if (data.length < 14) {
           // Create X-Axis
           var xAxis = chart.xAxes.push(
             am5xy.GaplessDateAxis.new(root, {
-              baseInterval: { timeUnit: "day", count: 1 },
+              baseInterval: { timeUnit: 'day', count: 1 },
               renderer: am5xy.AxisRendererX.new(root, {
                 minGridDistance: 10,
               }),
-            })
+            }),
           );
         } else if (data.length < 19) {
           // Create X-Axis
           var xAxis = chart.xAxes.push(
             am5xy.GaplessDateAxis.new(root, {
               groupData: true,
-              groupInterval: { timeUnit: "day", count: 3 },
-              baseInterval: { timeUnit: "day", count: 1 },
+              groupInterval: { timeUnit: 'day', count: 3 },
+              baseInterval: { timeUnit: 'day', count: 1 },
               renderer: am5xy.AxisRendererX.new(root, {
                 minGridDistance: 10,
               }),
-            })
+            }),
           );
         } else if (data.length < 30) {
           // Create X-Axis
           var xAxis = chart.xAxes.push(
             am5xy.GaplessDateAxis.new(root, {
               groupData: true,
-              groupInterval: { timeUnit: "day", count: 4 },
-              baseInterval: { timeUnit: "day", count: 1 },
+              groupInterval: { timeUnit: 'day', count: 4 },
+              baseInterval: { timeUnit: 'day', count: 1 },
               renderer: am5xy.AxisRendererX.new(root, {
                 minGridDistance: 10,
               }),
-            })
+            }),
           );
         } else {
           // Create X-Axis
           var xAxis = chart.xAxes.push(
             am5xy.GaplessDateAxis.new(root, {
               groupData: true,
-              groupInterval: { timeUnit: "day", count: 7 },
-              baseInterval: { timeUnit: "day", count: 1 },
+              groupInterval: { timeUnit: 'day', count: 7 },
+              baseInterval: { timeUnit: 'day', count: 1 },
               renderer: am5xy.AxisRendererX.new(root, {
                 minGridDistance: 10,
               }),
-            })
+            }),
           );
         }
 
         // Create series
         var series = chart.series.push(
           am5xy.CandlestickSeries.new(root, {
-            name: "Series",
+            name: 'Series',
             xAxis: xAxis,
             yAxis: yAxis,
-            openValueYField: "open",
-            highValueYField: "high",
-            lowValueYField: "low",
-            valueYField: "close",
-            valueXField: "date",
+            openValueYField: 'open',
+            highValueYField: 'high',
+            lowValueYField: 'low',
+            valueYField: 'close',
+            valueXField: 'date',
             tooltip: am5.Tooltip.new(root, {}),
-          })
+          }),
         );
 
-        series.columns.template.states.create("riseFromOpen", {
+        series.columns.template.states.create('riseFromOpen', {
           fill: am5.color(0x76b041),
           stroke: am5.color(0x76b041),
         });
-        series.columns.template.states.create("dropFromOpen", {
+        series.columns.template.states.create('dropFromOpen', {
           fill: am5.color(0xe4572e),
           stroke: am5.color(0xe4572e),
         });
 
         series
-          .get("tooltip")
+          .get('tooltip')
           .label.set(
-            "text",
-            "[bold]{valueX.formatDate()}[/]\n시가: {openValueY}\n고가: {highValueY}\n저가: {lowValueY}\n종가: {valueY}"
+            'text',
+            '[bold]{valueX.formatDate()}[/]\n시가: {openValueY}\n고가: {highValueY}\n저가: {lowValueY}\n종가: {valueY}',
           );
         series.data.setAll(data);
 
         var cursor = chart.set(
-          "cursor",
+          'cursor',
           am5xy.XYCursor.new(root, {
-            behavior: "selectXY",
-          })
+            behavior: 'selectXY',
+          }),
         );
 
-        cursor.events.on("selectended", function (ev) {
+        cursor.events.on('selectended', function (ev) {
           // Get actors
           var cursor = ev.target;
 
           // Get selection boundaries
           var x1 = xAxis
             .positionToDate(
-              xAxis.toAxisPosition(cursor.getPrivate("downPositionX"))
+              xAxis.toAxisPosition(cursor.getPrivate('downPositionX')),
             )
             .getTime();
           var x2 = xAxis
             .positionToDate(
-              xAxis.toAxisPosition(cursor.getPrivate("positionX"))
+              xAxis.toAxisPosition(cursor.getPrivate('positionX')),
             )
             .getTime();
           var y1 = yAxis.positionToValue(
-            yAxis.toAxisPosition(cursor.getPrivate("downPositionY"))
+            yAxis.toAxisPosition(cursor.getPrivate('downPositionY')),
           );
           var y2 = yAxis.positionToValue(
-            yAxis.toAxisPosition(cursor.getPrivate("positionY"))
+            yAxis.toAxisPosition(cursor.getPrivate('positionY')),
           );
 
           // Account for centering of bullets on a DateAxis
-          var baseInterval = xAxis.getPrivate("baseInterval");
+          var baseInterval = xAxis.getPrivate('baseInterval');
           var baseDuration =
             am5.time.getDuration(baseInterval.timeUnit, baseInterval.count) *
-            series.get("locationX");
+            series.get('locationX');
           x1 -= baseDuration;
           x2 -= baseDuration;
 
@@ -439,8 +456,8 @@ function Chart() {
           // Filter data items within boundaries
           var results = [];
           am5.array.each(series.dataItems, function (dataItem) {
-            var x = dataItem.get("valueX");
-            var y = dataItem.get("valueY");
+            var x = dataItem.get('valueX');
+            var y = dataItem.get('valueY');
             if (am5.math.inBounds({ x: x, y: y }, bounds)) {
               results.push(dataItem);
             }
@@ -450,7 +467,7 @@ function Chart() {
           let selectedRange = [];
           results.map((data) => {
             var addSelectedData = {
-              date: moment(new Date(data.close.valueX)).format("YYYY-MM-DD"),
+              date: moment(new Date(data.close.valueX)).format('YYYY-MM-DD'),
             };
             return selectedRange.push(addSelectedData);
           });
@@ -468,17 +485,17 @@ function Chart() {
         });
 
         xAxis.set(
-          "tooltip",
+          'tooltip',
           am5.Tooltip.new(root, {
-            themeTags: ["axis"],
-          })
+            themeTags: ['axis'],
+          }),
         );
 
         yAxis.set(
-          "tooltip",
+          'tooltip',
           am5.Tooltip.new(root, {
-            themeTags: ["axis"],
-          })
+            themeTags: ['axis'],
+          }),
         );
       }
     });
@@ -486,8 +503,8 @@ function Chart() {
 
   const onSetData = async () => {
     let body = {
-      startDate: startDate,
-      endDate: endDate,
+      startDate: moment(chartCurrDate.startCurrDate).format('YYYY-MM-DD'),
+      endDate: moment(chartCurrDate.endCurrDate).format('YYYY-MM-DD'),
       code: currencyCode,
     };
     await dispatch(getData(body)).then((response) => {
@@ -509,17 +526,17 @@ function Chart() {
       return chartData.push(addChartData);
     });
 
-    var root = am5.Root.new("chartdiv");
+    var root = am5.Root.new('chartdiv');
 
     root.setThemes([am5themes_Animated.new(root)]);
 
     var chart = root.container.children.push(
       am5xy.XYChart.new(root, {
         panY: false,
-        wheelY: "zoomX",
+        wheelY: 'zoomX',
         layout: root.verticalLayout,
         maxtooltipDistance: 0,
-      })
+      }),
     );
 
     // Define data
@@ -529,120 +546,120 @@ function Chart() {
     var yAxis = chart.yAxes.push(
       am5xy.ValueAxis.new(root, {
         renderer: am5xy.AxisRendererY.new(root, {}),
-      })
+      }),
     );
     if (data.length < 14) {
       // Create X-Axis
       var xAxis = chart.xAxes.push(
         am5xy.GaplessDateAxis.new(root, {
-          baseInterval: { timeUnit: "day", count: 1 },
+          baseInterval: { timeUnit: 'day', count: 1 },
           renderer: am5xy.AxisRendererX.new(root, {
             minGridDistance: 10,
           }),
-        })
+        }),
       );
     } else if (data.length < 19) {
       // Create X-Axis
       var xAxis = chart.xAxes.push(
         am5xy.GaplessDateAxis.new(root, {
           groupData: true,
-          groupInterval: { timeUnit: "day", count: 3 },
-          baseInterval: { timeUnit: "day", count: 1 },
+          groupInterval: { timeUnit: 'day', count: 3 },
+          baseInterval: { timeUnit: 'day', count: 1 },
           renderer: am5xy.AxisRendererX.new(root, {
             minGridDistance: 10,
           }),
-        })
+        }),
       );
     } else if (data.length < 30) {
       // Create X-Axis
       var xAxis = chart.xAxes.push(
         am5xy.GaplessDateAxis.new(root, {
           groupData: true,
-          groupInterval: { timeUnit: "day", count: 4 },
-          baseInterval: { timeUnit: "day", count: 1 },
+          groupInterval: { timeUnit: 'day', count: 4 },
+          baseInterval: { timeUnit: 'day', count: 1 },
           renderer: am5xy.AxisRendererX.new(root, {
             minGridDistance: 10,
           }),
-        })
+        }),
       );
     } else {
       // Create X-Axis
       var xAxis = chart.xAxes.push(
         am5xy.GaplessDateAxis.new(root, {
           groupData: true,
-          groupInterval: { timeUnit: "day", count: 7 },
-          baseInterval: { timeUnit: "day", count: 1 },
+          groupInterval: { timeUnit: 'day', count: 7 },
+          baseInterval: { timeUnit: 'day', count: 1 },
           renderer: am5xy.AxisRendererX.new(root, {
             minGridDistance: 10,
           }),
-        })
+        }),
       );
     }
 
     // Create series
     var series = chart.series.push(
       am5xy.CandlestickSeries.new(root, {
-        name: "Series",
+        name: 'Series',
         xAxis: xAxis,
         yAxis: yAxis,
-        openValueYField: "open",
-        highValueYField: "high",
-        lowValueYField: "low",
-        valueYField: "close",
-        valueXField: "date",
+        openValueYField: 'open',
+        highValueYField: 'high',
+        lowValueYField: 'low',
+        valueYField: 'close',
+        valueXField: 'date',
         tooltip: am5.Tooltip.new(root, {}),
-      })
+      }),
     );
 
-    series.columns.template.states.create("riseFromOpen", {
+    series.columns.template.states.create('riseFromOpen', {
       fill: am5.color(0x76b041),
       stroke: am5.color(0x76b041),
     });
-    series.columns.template.states.create("dropFromOpen", {
+    series.columns.template.states.create('dropFromOpen', {
       fill: am5.color(0xe4572e),
       stroke: am5.color(0xe4572e),
     });
 
     series
-      .get("tooltip")
+      .get('tooltip')
       .label.set(
-        "text",
-        "[bold]{valueX.formatDate()}[/]\n시가: {openValueY}\n고가: {highValueY}\n저가: {lowValueY}\n종가: {valueY}"
+        'text',
+        '[bold]{valueX.formatDate()}[/]\n시가: {openValueY}\n고가: {highValueY}\n저가: {lowValueY}\n종가: {valueY}',
       );
     series.data.setAll(data);
 
     var cursor = chart.set(
-      "cursor",
+      'cursor',
       am5xy.XYCursor.new(root, {
-        behavior: "selectXY",
-      })
+        behavior: 'selectXY',
+      }),
     );
 
-    cursor.events.on("selectended", function (ev) {
+    cursor.events.on('selectended', function (ev) {
       // Get actors
       var cursor = ev.target;
 
       // Get selection boundaries
       var x1 = xAxis
         .positionToDate(
-          xAxis.toAxisPosition(cursor.getPrivate("downPositionX"))
+          xAxis.toAxisPosition(cursor.getPrivate('downPositionX')),
         )
         .getTime();
       var x2 = xAxis
-        .positionToDate(xAxis.toAxisPosition(cursor.getPrivate("positionX")))
+        .positionToDate(xAxis.toAxisPosition(cursor.getPrivate('positionX')))
         .getTime();
       var y1 = yAxis.positionToValue(
-        yAxis.toAxisPosition(cursor.getPrivate("downPositionY"))
+        yAxis.toAxisPosition(cursor.getPrivate('downPositionY')),
       );
       var y2 = yAxis.positionToValue(
-        yAxis.toAxisPosition(cursor.getPrivate("positionY"))
+        yAxis.toAxisPosition(cursor.getPrivate('positionY')),
       );
 
       // Account for centering of bullets on a DateAxis
-      var baseInterval = xAxis.getPrivate("baseInterval");
+      var baseInterval = xAxis.getPrivate('baseInterval');
       var baseDuration =
         am5.time.getDuration(baseInterval.timeUnit, baseInterval.count) *
-        series.get("locationX");
+        series.get('locationX');
       x1 -= baseDuration;
       x2 -= baseDuration;
 
@@ -657,8 +674,8 @@ function Chart() {
       // Filter data items within boundaries
       var results = [];
       am5.array.each(series.dataItems, function (dataItem) {
-        var x = dataItem.get("valueX");
-        var y = dataItem.get("valueY");
+        var x = dataItem.get('valueX');
+        var y = dataItem.get('valueY');
         if (am5.math.inBounds({ x: x, y: y }, bounds)) {
           results.push(dataItem);
         }
@@ -668,7 +685,7 @@ function Chart() {
       let selectedRange = [];
       results.map((data) => {
         var addSelectedData = {
-          date: moment(new Date(data.close.valueX)).format("YYYY-MM-DD"),
+          date: moment(new Date(data.close.valueX)).format('YYYY-MM-DD'),
         };
         return selectedRange.push(addSelectedData);
       });
@@ -686,17 +703,17 @@ function Chart() {
     });
 
     xAxis.set(
-      "tooltip",
+      'tooltip',
       am5.Tooltip.new(root, {
-        themeTags: ["axis"],
-      })
+        themeTags: ['axis'],
+      }),
     );
 
     yAxis.set(
-      "tooltip",
+      'tooltip',
       am5.Tooltip.new(root, {
-        themeTags: ["axis"],
-      })
+        themeTags: ['axis'],
+      }),
     );
   };
 
@@ -707,18 +724,18 @@ function Chart() {
       }
     });
 
-    const newDiv = document.createElement("div");
-    newDiv.id = "chartdiv";
-    const chart = document.getElementById("chart");
+    const newDiv = document.createElement('div');
+    newDiv.id = 'chartdiv';
+    const chart = document.getElementById('chart');
     chart.appendChild(newDiv);
   };
 
   const onMakeChart = async () => {
-    onDeleteChart("chartdiv");
+    onDeleteChart('chartdiv');
 
     let chartBody = {
-      startDate: moment(chartDates.startDate).format("YYYY-MM-DD"),
-      endDate: moment(chartDates.endDate).format("YYYY-MM-DD"),
+      startDate: moment(chartDates.startDate).format('YYYY-MM-DD'),
+      endDate: moment(chartDates.endDate).format('YYYY-MM-DD'),
       code: currencyCode,
     };
 
@@ -736,17 +753,17 @@ function Chart() {
           return chartData.push(addChartData);
         });
 
-        var root = am5.Root.new("chartdiv");
+        var root = am5.Root.new('chartdiv');
 
         root.setThemes([am5themes_Animated.new(root)]);
 
         var chart = root.container.children.push(
           am5xy.XYChart.new(root, {
             panY: false,
-            wheelY: "zoomX",
+            wheelY: 'zoomX',
             layout: root.verticalLayout,
             maxtooltipDistance: 0,
-          })
+          }),
         );
 
         // Define data
@@ -756,122 +773,122 @@ function Chart() {
         var yAxis = chart.yAxes.push(
           am5xy.ValueAxis.new(root, {
             renderer: am5xy.AxisRendererY.new(root, {}),
-          })
+          }),
         );
         if (data.length < 14) {
           // Create X-Axis
           var xAxis = chart.xAxes.push(
             am5xy.GaplessDateAxis.new(root, {
-              baseInterval: { timeUnit: "day", count: 1 },
+              baseInterval: { timeUnit: 'day', count: 1 },
               renderer: am5xy.AxisRendererX.new(root, {
                 minGridDistance: 10,
               }),
-            })
+            }),
           );
         } else if (data.length < 19) {
           // Create X-Axis
           var xAxis = chart.xAxes.push(
             am5xy.GaplessDateAxis.new(root, {
               groupData: true,
-              groupInterval: { timeUnit: "day", count: 3 },
-              baseInterval: { timeUnit: "day", count: 1 },
+              groupInterval: { timeUnit: 'day', count: 3 },
+              baseInterval: { timeUnit: 'day', count: 1 },
               renderer: am5xy.AxisRendererX.new(root, {
                 minGridDistance: 10,
               }),
-            })
+            }),
           );
         } else if (data.length < 30) {
           // Create X-Axis
           var xAxis = chart.xAxes.push(
             am5xy.GaplessDateAxis.new(root, {
               groupData: true,
-              groupInterval: { timeUnit: "day", count: 4 },
-              baseInterval: { timeUnit: "day", count: 1 },
+              groupInterval: { timeUnit: 'day', count: 4 },
+              baseInterval: { timeUnit: 'day', count: 1 },
               renderer: am5xy.AxisRendererX.new(root, {
                 minGridDistance: 10,
               }),
-            })
+            }),
           );
         } else {
           // Create X-Axis
           var xAxis = chart.xAxes.push(
             am5xy.GaplessDateAxis.new(root, {
               groupData: true,
-              groupInterval: { timeUnit: "day", count: 7 },
-              baseInterval: { timeUnit: "day", count: 1 },
+              groupInterval: { timeUnit: 'day', count: 7 },
+              baseInterval: { timeUnit: 'day', count: 1 },
               renderer: am5xy.AxisRendererX.new(root, {
                 minGridDistance: 10,
               }),
-            })
+            }),
           );
         }
 
         // Create series
         var series = chart.series.push(
           am5xy.CandlestickSeries.new(root, {
-            name: "Series",
+            name: 'Series',
             xAxis: xAxis,
             yAxis: yAxis,
-            openValueYField: "open",
-            highValueYField: "high",
-            lowValueYField: "low",
-            valueYField: "close",
-            valueXField: "date",
+            openValueYField: 'open',
+            highValueYField: 'high',
+            lowValueYField: 'low',
+            valueYField: 'close',
+            valueXField: 'date',
             tooltip: am5.Tooltip.new(root, {}),
-          })
+          }),
         );
 
-        series.columns.template.states.create("riseFromOpen", {
+        series.columns.template.states.create('riseFromOpen', {
           fill: am5.color(0x76b041),
           stroke: am5.color(0x76b041),
         });
-        series.columns.template.states.create("dropFromOpen", {
+        series.columns.template.states.create('dropFromOpen', {
           fill: am5.color(0xe4572e),
           stroke: am5.color(0xe4572e),
         });
 
         series
-          .get("tooltip")
+          .get('tooltip')
           .label.set(
-            "text",
-            "[bold]{valueX.formatDate()}[/]\n시가: {openValueY}\n고가: {highValueY}\n저가: {lowValueY}\n종가: {valueY}"
+            'text',
+            '[bold]{valueX.formatDate()}[/]\n시가: {openValueY}\n고가: {highValueY}\n저가: {lowValueY}\n종가: {valueY}',
           );
         series.data.setAll(data);
 
         var cursor = chart.set(
-          "cursor",
+          'cursor',
           am5xy.XYCursor.new(root, {
-            behavior: "selectXY",
-          })
+            behavior: 'selectXY',
+          }),
         );
 
-        cursor.events.on("selectended", function (ev) {
+        cursor.events.on('selectended', function (ev) {
           // Get actors
           var cursor = ev.target;
 
           // Get selection boundaries
           var x1 = xAxis
             .positionToDate(
-              xAxis.toAxisPosition(cursor.getPrivate("downPositionX"))
+              xAxis.toAxisPosition(cursor.getPrivate('downPositionX')),
             )
             .getTime();
           var x2 = xAxis
             .positionToDate(
-              xAxis.toAxisPosition(cursor.getPrivate("positionX"))
+              xAxis.toAxisPosition(cursor.getPrivate('positionX')),
             )
             .getTime();
           var y1 = yAxis.positionToValue(
-            yAxis.toAxisPosition(cursor.getPrivate("downPositionY"))
+            yAxis.toAxisPosition(cursor.getPrivate('downPositionY')),
           );
           var y2 = yAxis.positionToValue(
-            yAxis.toAxisPosition(cursor.getPrivate("positionY"))
+            yAxis.toAxisPosition(cursor.getPrivate('positionY')),
           );
 
           // Account for centering of bullets on a DateAxis
-          var baseInterval = xAxis.getPrivate("baseInterval");
+          var baseInterval = xAxis.getPrivate('baseInterval');
           var baseDuration =
             am5.time.getDuration(baseInterval.timeUnit, baseInterval.count) *
-            series.get("locationX");
+            series.get('locationX');
           x1 -= baseDuration;
           x2 -= baseDuration;
 
@@ -886,8 +903,8 @@ function Chart() {
           // Filter data items within boundaries
           var results = [];
           am5.array.each(series.dataItems, function (dataItem) {
-            var x = dataItem.get("valueX");
-            var y = dataItem.get("valueY");
+            var x = dataItem.get('valueX');
+            var y = dataItem.get('valueY');
             if (am5.math.inBounds({ x: x, y: y }, bounds)) {
               results.push(dataItem);
             }
@@ -897,7 +914,7 @@ function Chart() {
           let selectedRange = [];
           results.map((data) => {
             var addSelectedData = {
-              date: moment(new Date(data.close.valueX)).format("YYYY-MM-DD"),
+              date: moment(new Date(data.close.valueX)).format('YYYY-MM-DD'),
             };
             return selectedRange.push(addSelectedData);
           });
@@ -915,17 +932,17 @@ function Chart() {
         });
 
         xAxis.set(
-          "tooltip",
+          'tooltip',
           am5.Tooltip.new(root, {
-            themeTags: ["axis"],
-          })
+            themeTags: ['axis'],
+          }),
         );
 
         yAxis.set(
-          "tooltip",
+          'tooltip',
           am5.Tooltip.new(root, {
-            themeTags: ["axis"],
-          })
+            themeTags: ['axis'],
+          }),
         );
       }
     });
@@ -935,21 +952,36 @@ function Chart() {
     // });
 
     var body = {
-      startDetailDate: moment(chartDates.startDate).format("YYYY-MM-DD"),
-      endDetailDate: moment(chartDates.endDate).format("YYYY-MM-DD"),
+      startDetailDate: moment(chartDates.startDate).format('YYYY-MM-DD'),
+      endDetailDate: moment(chartDates.endDate).format('YYYY-MM-DD'),
     };
     console.log(body);
 
     await dispatch(getChartDetailDate(body)).then((response) => {
+      console.log('이거');
       console.log(response.payload);
-    });
 
-    var currBody = {
-      startCurrDate: moment(chartDates.startDate).format("YYYY-MM-DD"),
-      endCurrDate: moment(chartDates.endDate).format("YYYY-MM-DD"),
+      var currBody = {
+        startCurrDate: moment(chartDates.startDate).format('YYYY-MM-DD'),
+        endCurrDate: moment(chartDates.endDate).format('YYYY-MM-DD'),
+      };
+
+      dispatch(getCurrDate(currBody)).then((response) => {
+        console.log(response.payload);
+      });
+    });
+  };
+
+  const chartCurrDateHandler = async () => {
+    let currBody = {
+      startCurrDate: moment(chartDates.startDate).format('YYYY-MM-DD'),
+      endCurrDate: moment(chartDates.endDate).format('YYYY-MM-DD'),
     };
 
+    console.log(currBody);
+
     await dispatch(getCurrDate(currBody)).then((response) => {
+      console.log('실행 외 안되');
       console.log(response.payload);
     });
   };
@@ -958,13 +990,13 @@ function Chart() {
     <div>
       <Button
         id="font_test"
-        sx={{ mt: 5, background: "red", color: "black", mb: 5 }}
+        sx={{ mt: 5, background: 'red', color: 'black', mb: 5 }}
         onClick={onMakeChart}
       >
         차트 적용하기
       </Button>
       <div id="chart">
-        <div id="chartdiv" style={{ width: "800px", height: "300px" }}></div>
+        <div id="chartdiv" style={{ width: '800px', height: '300px' }}></div>
       </div>
     </div>
   );
