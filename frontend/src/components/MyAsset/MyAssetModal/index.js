@@ -38,7 +38,7 @@ const BasicSelect = ({ code, setCode }) => {
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">화폐 선택</InputLabel>
+        <InputLabel id="demo-simple-select-label">화폐</InputLabel>
         <Select
           id="code_code"
           value={code}
@@ -141,6 +141,7 @@ export default function BasicModal({ getMyAssetData }) {
               gutterBottom
               variant="h5"
               component="div"
+
             >
               보유 외화 등록
             </Typography>
@@ -158,6 +159,9 @@ export default function BasicModal({ getMyAssetData }) {
                     onChange={amountQuantity}
                     placeholder="보유하신 원화의 양을 입력하세요"
                     required
+                    InputProps={{
+                      style: { fontFamily: 'Pretendard Variable' }
+                    }}
                   />
                 </Grid>
               </Grid>
@@ -169,8 +173,11 @@ export default function BasicModal({ getMyAssetData }) {
                     type="text"
                     value={currPrice}
                     onChange={inputPrice}
-                    placeholder="구매한 금액을 입력하세요."
+                    placeholder="구매한 금액을 입력하세요"
                     required
+                    InputProps={{
+                      style: { fontFamily: 'Pretendard Variable' }
+                    }}
                   />
                 </Grid>
               </Grid>

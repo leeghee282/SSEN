@@ -30,7 +30,7 @@ export default function MySet() {
     getMyAssetData();
   }, []);
 
-  useEffect(() => {}, [myAsset]);
+  useEffect(() => { }, [myAsset]);
 
   // 서버에서 실시간 환율 받아오기(get방식)
   const getLiveData = () => {
@@ -40,7 +40,7 @@ export default function MySet() {
     getLiveData();
   }, []);
 
-  useEffect(() => {}, [live]);
+  useEffect(() => { }, [live]);
 
   // 국가별로 필터 기능
   const filteredItems = myAsset.filter((asset) => {
@@ -63,7 +63,7 @@ export default function MySet() {
         // alignItems: "center",
       }}
     >
-      <h1 className="myAsset-title fs-myAsset-title fc-dark-grey">보유 외화</h1>
+      <h1 className="myAsset-title ff-b fs-myAsset-title fc-dark-grey">보유 외화</h1>
       {/* 보유 외화 목록 입력(모달) */}
       <BasicModal getMyAssetData={getMyAssetData} />
       {/* 보유 외화 목록 전체 금액 */}

@@ -38,6 +38,14 @@
 }
 
 /* 폰트 */
+.ff-b{
+    font-family: 'MICEGothic Bold';
+}
+
+.fls{
+    letter-spacing: -0.5px !important;
+}
+
 .fs-title {
     font-size: 28px;
     letter-spacing: -2.5px;
