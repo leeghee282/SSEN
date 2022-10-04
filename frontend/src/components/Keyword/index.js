@@ -83,6 +83,7 @@ function Keyword(props) {
 
     await dispatch(getKeywords(keywordBody)).then((response) => {
       const data = [];
+      let sum = 0;
       console.log(response.payload);
 
       response.payload.map((res) => {
@@ -90,11 +91,12 @@ function Keyword(props) {
           text: res.keyword,
           size: res.count,
         };
+        sum += res.count;
         return data.push(addWordcloudData);
       });
 
       setKeywordLoading(false);
-
+      data.push(sum);
       onSetWordcloud(data);
 
       const maxNum = data.length - 1;
@@ -127,41 +129,16 @@ function Keyword(props) {
 
   const onSetWordcloud = async (d) => {
     var fill = d3.scaleOrdinal(d3.schemeCategory10);
-
-    var maxWordcloudNum = d.length - 1;
-
-    var maxScaleNum =
-      (parseInt(
-        d[maxWordcloudNum].size /
-          Math.pow(10, d[maxWordcloudNum].size.toString().length - 1)
-      ) +
-        3) *
-      Math.pow(10, d[maxWordcloudNum].size.toString().length - 1);
-
-    var maxTextSize = 150;
-
-    var maxWordSize = d[maxWordcloudNum].size;
-
-    if (2.5 * d[0].size <= maxWordSize) {
-      maxTextSize = 90;
-    } else if (2 * d[0].size < maxWordSize && 2.5 * d[0].size < maxWordSize) {
-      maxTextSize = 110;
-    } else if (1.75 * d[0].size < maxWordSize && 2 * d[0].size < maxWordSize) {
-      maxTextSize = 130;
-    } else if (
-      1.5 * d[0].size < maxWordSize &&
-      1.75 * d[0].size < maxWordSize
-    ) {
-      maxTextSize = 140;
-    } else if (1.2 * d[0].size < maxWordSize && 1.5 * d[0].size < maxWordSize) {
-      maxTextSize = 145;
-    }
-
-    console.log(maxTextSize);
+    var sum = d[10];
     var wordScale = d3
       .scaleLinear()
-      .domain([0, maxScaleNum])
-      .range([0, maxTextSize]);
+      .domain([0, sum])
+      .range([0, 300 * 0.9]); //전체 사이즈 대비 차지하는 비율로 wordScale
+
+    // var maxWordcloudNum = d.length - 2;
+    // console.log("d", d);
+    // var maxScaleNum = (parseInt(d[maxWordcloudNum].size / 100) + 2.8) * 100;
+    // console.log(maxScaleNum);
 
     var width = 300;
     var height = 300;
