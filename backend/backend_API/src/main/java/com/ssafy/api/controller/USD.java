@@ -35,6 +35,7 @@ public class USD {
         LiveCurrencyRes liveCurrencyRes = liveCurrencyService.findLiveCurrencyByCCUid("USD");
         LocalDateTime regdate2 = liveCurrencyRes.getRegdate();
         WebSocketHandler webSocketHandler = new WebSocketHandler();
+        System.err.println("여기에요 : "+webSocketHandler.getWebsocketSession());
         //시간이 업데이트 되었으면
         if (!regdate1.isEqual(regdate2)) {
             //실시간 환율 보내기
@@ -48,6 +49,9 @@ public class USD {
         LiveCurrencyRes liveCurrencyRes = liveCurrencyService.findLiveCurrencyByCCUid("USD");
         LocalDateTime regdate2 = liveCurrencyRes.getRegdate();
         WebSocketHandler webSocketHandler = new WebSocketHandler();
+        System.out.println("======================================");
+        System.err.println("여기에요 : "+webSocketHandler.getWebsocketSession());
+        System.out.println("======================================");
         //시간이 업데이트 되었으면
         if (!regdate3.isEqual(regdate2)) {
             regdate3 = liveCurrencyRes.getRegdate();
