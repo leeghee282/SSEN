@@ -1,6 +1,7 @@
 import React from "react";
 import Spinner from "../Loading/Spinner";
 import { Typography, Box, Link, Grid, Container } from "@mui/material";
+import './style.css'
 
 const Posts = ({ posts, loading }) => {
   if (loading) {
@@ -25,13 +26,15 @@ const Posts = ({ posts, loading }) => {
       >
         관련 뉴스 정보
       </Typography>
-      {posts.map((post) => (
+      {posts.map((post,index) => (
         <Link
+          key={index}
           href={post.url}
           target="_blank"
           sx={{ textDecoration: "none", color: "black" }}
         >
           <Box
+            className="card"
             sx={{
               width:"480px",
               display: "flex",
