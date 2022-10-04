@@ -51,11 +51,11 @@ export default function MyInterestEdit(props) {
       
       
       previous : details.target,
-      target : parseInt(interest.replaceAll(",", "")),
+      target : interest,
     }
     const addData = {
       previous : details.target,
-      target : parseInt(interest.replaceAll(",", "")),
+      target : interest,
       userId : sessionStorage.getItem('userId'),
       code : details.nation
     }

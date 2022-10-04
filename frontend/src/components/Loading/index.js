@@ -8,7 +8,7 @@ const Loading = () => {
     <div>
       <Avatar
         variant="square"
-        src="/images/loading2.gif"
+        src="/images/loading4.gif"
         sx={{ width: "80%", height: "80%" }}
       ></Avatar>
     </div>
