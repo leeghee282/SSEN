@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 // react-datepicker
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -14,7 +15,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getChartDates,
   getChartCode,
@@ -30,7 +31,14 @@ import "./style.css";
 // 나라 선택 라디오 버튼 컴포넌트
 const RowRadioButtonsGroup = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
   const [type, setType] = useState("USD");
+
+  const currencyCode = useSelector((state) => state.chartReducer.chartCode);
+
+  useEffect(() => {
+    setType(currencyCode);
+  }, [location]);
 
   const selectChange = (event) => {
     setType(event.target.value);
@@ -91,6 +99,12 @@ const RowRadioButtonsGroup = () => {
 // 날짜 선택 컴포넌트
 const Calendar = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
+
+  const chartDetailDate = useSelector(
+    (state) => state.chartReducer.chartDetailDate
+  );
+
   // 날짜 선택 버튼 만들기 위해서 선언한 것
   const DateFilterData = [
     {
@@ -117,6 +131,11 @@ const Calendar = () => {
   const [startDate, setStartDate] = useState(new Date(lastWeek));
   const [endDate, setEndDate] = useState(new Date());
   const [btnClicked, setBtnClicked] = useState("");
+
+  useEffect(() => {
+    setStartDate(new Date(chartDetailDate.startDetailDate));
+    setEndDate(new Date(chartDetailDate.endDetailDate));
+  }, [location]);
 
   // 날짜 버튼 클릭, 기간 변경 기능
   const handleBtnClicked = (e) => {
