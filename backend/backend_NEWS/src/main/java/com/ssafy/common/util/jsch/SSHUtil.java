@@ -18,7 +18,13 @@ public class SSHUtil {
     }
 
     private static final String REMOTE_HOST = "localhost";
+
     private static final String USERNAME = "ubuntu";
+
+//    private static final String REMOTE_HOST = "192.168.230.128";
+//    private static final String USERNAME = "hadoop";
+//    private static final String PASSWORD = "1234";
+
     private static final int REMOTE_PORT = 22;
     private static final int SESSION_TIMEOUT = 300000;
     private static final int CHANNEL_TIMEOUT = 5000;
@@ -35,7 +41,10 @@ public class SSHUtil {
             // authenticate using private key
             jsch.addIdentity("J7E204T.pem");
 
-            // 10 seconds session timeout
+            // authenticate using password
+//            jschSession.setPassword(PASSWORD);
+
+            // 5 minutes session timeout
             jschSession.connect(SESSION_TIMEOUT);
         } catch (JSchException e) {
             e.printStackTrace();

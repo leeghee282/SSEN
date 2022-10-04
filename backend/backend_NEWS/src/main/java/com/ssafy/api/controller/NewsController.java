@@ -60,7 +60,7 @@ public class NewsController {
         for (LocalDate date = end; date.isAfter(start.minusDays(1)); date = date.minusDays(1))
             dateRange.append(" " + date);
         dateRange.append(" ");
-        String cmd = "~/mapreduce/keyword.sh " + dateRange.toString() + "> /dev/null 2>&1 &&  /home/hadoop/hadoop/bin/hdfs dfs -cat keyword_out2/*";
+        String cmd = "/home/ubuntu/mapreduce/keyword.sh " + dateRange.toString() + "> /dev/null 2>&1 &&  /home/hadoop/hadoop/bin/hdfs dfs -cat keyword_out2/*";
         System.out.println("확인하기1" + cmd);
         String response = sshUtil.cmd(jschSession, cmd);
 
@@ -70,24 +70,24 @@ public class NewsController {
         if (!st.hasMoreTokens())
             return ResponseEntity.status(400).body(null);
 
-        StringBuilder query = new StringBuilder(); //DB에 넣을 키워드 분석 결과를 위한 쿼리(변동률이 심한 특정 날짜)
-        query.append("INSERT INTO SSEN.variance_keywords(variance_date_uid, name, frequency) VALUES \n");
+//        StringBuilder query = new StringBuilder(); //DB에 넣을 키워드 분석 결과를 위한 쿼리(변동률이 심한 특정 날짜)
+//        query.append("INSERT INTO SSEN.variance_keywords(variance_date_uid, name, frequency) VALUES \n");
 
         while (st.hasMoreTokens()) {
-            query.append("((SELECT uid FROM SSEN.variance_date where reference_date = '" + startDate + "'");
-            query.append(") ,'");
+//            query.append("((SELECT uid FROM SSEN.variance_date where reference_date = '" + startDate + "'");
+//            query.append(") ,'");
             String s = st.nextToken();
             int val = Integer.parseInt(st.nextToken());
             KeywordRes k = new KeywordRes();
             k.setKeyword(s);
-            query.append(s + "' ,");
+//            query.append(s + "' ,");
             k.setCount(val);
-            query.append(val + "), ");
+//            query.append(val + "), ");
             keywordList.add(k);
         }
-        query.setLength(query.length() - 2);
-        query.append(";");
-        System.out.println(query.toString());
+//        query.setLength(query.length() - 2);
+//        query.append(";");
+//        System.out.println(query.toString());
 
         return new ResponseEntity<>(keywordList, HttpStatus.OK);
     }
@@ -144,7 +144,7 @@ public class NewsController {
 
         Session jschSession = sshUtil.sessionConnect();
 
-        String cmd = "/home/hadoop/hadoop/bin/hadoop jar ~/mapreduce/ssen.jar news " + keyword + " news_in/weekend news_out > /dev/null 2>&1 &&  /home/hadoop/hadoop/bin/hdfs dfs -cat news_out/*";
+        String cmd = "/home/hadoop/hadoop/bin/hadoop jar /home/ubuntu/mapreduce/ssen.jar news " + keyword + " news_in/weekend news_out > /dev/null 2>&1 &&  /home/hadoop/hadoop/bin/hdfs dfs -cat news_out/*";
 
 //        System.out.println("확인하기4 " + cmd);
         String response = sshUtil.cmd(jschSession, cmd);
@@ -190,7 +190,7 @@ public class NewsController {
 
         Session jschSession = sshUtil.sessionConnect();
 
-        String cmd = "/home/hadoop/hadoop/bin/hadoop jar ~/mapreduce/ssen.jar topksearch 4 " + query + " 10 topksearch topksearch_out1 topksearch_out2 > /dev/null 2>&1 &&  /home/hadoop/hadoop/bin/hdfs dfs -cat topksearch_out2/*";
+        String cmd = "/home/hadoop/hadoop/bin/hadoop jar /home/ubuntu//mapreduce/ssen.jar topksearch 4 " + query + " 10 topksearch topksearch_out1 topksearch_out2 > /dev/null 2>&1 &&  /home/hadoop/hadoop/bin/hdfs dfs -cat topksearch_out2/*";
 
 //        System.out.println("확인하기3 " + cmd);
         String response = sshUtil.cmd(jschSession, cmd);
