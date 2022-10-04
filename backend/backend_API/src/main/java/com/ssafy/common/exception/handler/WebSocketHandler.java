@@ -19,12 +19,22 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class WebSocketHandler extends TextWebSocketHandler {
 
-    private static final ConcurrentHashMap<String, WebSocketSession> CLIENTS = new ConcurrentHashMap<String, WebSocketSession>();
+    private static final ConcurrentHashMap<String, WebSocketSession> CLIENTS
+            = new ConcurrentHashMap<String, WebSocketSession>();
+    static long sessionSize = 0;
     Gson gson = new Gson();
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         CLIENTS.put(session.getId(), session);
+        System.err.println("size: "+ CLIENTS.size());
+        if(CLIENTS.size()!=0){
+            sessionSize = Math.max(sessionSize,CLIENTS.size());
+
+        System.out.println("===================최대 세션 값 : "+sessionSize);
+
     }
+    }
+
 
     public ConcurrentHashMap getWebsocketSession() {
         return CLIENTS;
@@ -36,7 +46,9 @@ public class WebSocketHandler extends TextWebSocketHandler {
     }
     //push 알림용
     public void handleTextMessage(LiveUserRes lurList) {
+
         CLIENTS.entrySet().forEach(arg -> {
+
             try {
                 arg.getValue().sendMessage(new TextMessage(gson.toJson(lurList)));
             } catch (IOException e) {
@@ -46,12 +58,15 @@ public class WebSocketHandler extends TextWebSocketHandler {
     }
     //실시간 알림용
     public void handleTextMessage2(LiveCurrencyRes liveCurrencyRes) {
+
         CLIENTS.entrySet().forEach(arg -> {
-            try {
-                arg.getValue().sendMessage(new TextMessage(gson.toJson(liveCurrencyRes)));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            //if(!arg.getKey().equals(id)) {
+                try {
+                    arg.getValue().sendMessage(new TextMessage(gson.toJson(liveCurrencyRes)));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+         //   }
         });
     }
 
