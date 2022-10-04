@@ -99,7 +99,7 @@ function Keyword(props) {
       data.push(sum);
       onSetWordcloud(data);
 
-      const maxNum = data.length - 1;
+      const maxNum = data.length - 2;
       const firstKeyword = data[maxNum].text;
       setShowKeyword(firstKeyword);
       console.log(firstKeyword);
@@ -232,6 +232,7 @@ function Keyword(props) {
 
     await dispatch(getKeywords(keywordBody)).then((response) => {
       const data = [];
+      let sum = 0;
       console.log(response.payload);
 
       response.payload.map((res) => {
@@ -239,14 +240,15 @@ function Keyword(props) {
           text: res.keyword,
           size: res.count,
         };
+        sum += res.count;
         return data.push(addWordcloudData);
       });
 
       setKeywordLoading(false);
-
+      data.push(sum);
       onSetWordcloud(data);
 
-      const maxNum = data.length - 1;
+      const maxNum = data.length - 2;
       const firstKeyword = data[maxNum].text;
       setShowKeyword(firstKeyword);
 
