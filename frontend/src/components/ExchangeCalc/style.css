@@ -1,3 +1,16 @@
 #calcboard {
   padding: 3px;
 }
+
+#datepick {
+  align-items: center;
+  background-color: hsl(0, 0%, 100%);
+  border-color: hsl(0, 0%, 80%);
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  min-height: 37.5px;
+  box-sizing: border-box;
+}
