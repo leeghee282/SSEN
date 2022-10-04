@@ -112,3 +112,8 @@
   background-image: url(../../../public/images/USD.png);
   background-size: cover;
 }
+
+.frontbutton {
+  font-size: 30px;
+  background-color: red;
+}
