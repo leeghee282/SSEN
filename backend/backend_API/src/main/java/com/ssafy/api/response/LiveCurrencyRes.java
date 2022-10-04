@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @ApiModel("LiveCurrencyRes")
 public class LiveCurrencyRes {
     @ApiModelProperty(name = "currencyCode", example = "USD")
-    String currencyCode;
+    String cc2;
     @ApiModelProperty(name = "buyPrice", example = "1300")
     Double buyPrice;
     @ApiModelProperty(name = "sellPrice", example = "1290.55")
@@ -35,7 +35,7 @@ public class LiveCurrencyRes {
 
     public static LiveCurrencyRes of(LiveCurrency liveCurrency) {
         return LiveCurrencyRes.builder()
-                .currencyCode(liveCurrency.getCurrencyCategory().getCode())
+                .cc2(liveCurrency.getCurrencyCategory().getCode())
                 .buyPrice(liveCurrency.getBuyPrice())
                 .sellPrice(liveCurrency.getSellPrice())
                 .highPrice(liveCurrency.getHighPrice())

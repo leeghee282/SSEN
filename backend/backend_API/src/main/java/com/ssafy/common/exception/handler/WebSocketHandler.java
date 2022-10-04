@@ -36,6 +36,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
     }
     //push 알림용
     public void handleTextMessage(LiveUserRes lurList) {
+
         CLIENTS.entrySet().forEach(arg -> {
             try {
                 arg.getValue().sendMessage(new TextMessage(gson.toJson(lurList)));

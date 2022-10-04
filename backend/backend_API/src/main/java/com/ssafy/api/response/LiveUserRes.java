@@ -28,22 +28,16 @@ public class LiveUserRes {
     String userId;
     @ApiModelProperty(name = "name", example = "김싸피")
     String name;
-    @ApiModelProperty(name = "email", example = "ssafy123@ssafy.com")
-    String email;
-    @ApiModelProperty(name = "phone", example = "01012345678")
-    String phone;
     @ApiModelProperty(name = "기준 날짜", example = "2022-09-20")
     LocalDateTime regdate;
 
     public static LiveUserRes of(LiveCurrencyRes liveCurrencyRes, User user, Double target) {
         return LiveUserRes.builder()
-                .currencyCode(liveCurrencyRes.getCurrencyCode())
+                .currencyCode(liveCurrencyRes.getCc2())
                 .buyPrice(liveCurrencyRes.getBuyPrice())
                 .targetPrice(target)
                 .userId(user.getUserId())
                 .name(user.getName())
-                .email(user.getEmail())
-                .phone(user.getPhone())
                 .regdate(liveCurrencyRes.getRegdate())
                 .build();
     }
