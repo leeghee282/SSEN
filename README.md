@@ -9,14 +9,22 @@
 ## 📘 프로젝트 진행 기간
 
 2022.08.22(월) ~ 2022.10.07(금)  
-SSAFY 7기 2학기 특화 프로젝트 - S$EN
+SSAFY 7기 2학기 특화 프로젝트 빅데이터 분산 도메인 - S$EN
 
 </br>
 
-## 🏅 S$EN - 배경
+## :grey_question: S$EN - 배경
 최근 커지고 있는 환율 변동 추이,  
 무슨 이유로 환율의 변동이 일어났는지 궁금하진 않으셨나요?  
 검색을 해봐도 중복된 내용때문에 '그래서 뭐 때문인데?' 라는 생각이 들진 않으셨나요?  
+    
+      
+  
+  
+해외 여행에 관심이 많은 일반인부터
+인사이트가 필요한 전문가까지! 
+  
+
 
 **S$EN에서 환율의 변동의 이유를 한눈에 알아보세요!**
 
@@ -49,7 +57,7 @@ top-K searchhhhh
 
 </br>
 
-## ⚖ 사이트 사용 방법
+## :newspaper: 사이트 사용 방법
 
 - #### 메인화면
   
@@ -157,7 +165,7 @@ top-K searchhhhh
 |   Name   | 김유정           | 박주연                  | 배지우           | 안정현                        | 이근희                          |          이상진                    |
 | :------: | ---------------- | ----------------------- | ---------------- | ----------------------------- | ------------------------------- | ---------------------------------- |
 | Profile  |  ![김유정](https://user-images.githubusercontent.com/51036842/185786075-586f3cae-09af-4332-bc42-b168a92ecf27.png)     |           |       |                   |     |                  |
-| Position | 팀장 & Backend & WebSocket | Backend & UI/UX | Frontend & UI/UX & WebSocket | Frontend & UI/UX | Frontend & UI/UX & CI/CD| Backend & CI/CD  |
+| Position | 팀장 & Backend & WebSocket & UCC | Backend & Hadoop & UI/UX | Frontend & UI/UX & WebSocket | Frontend & UI/UX & UCC| Frontend & UI/UX & CI/CD| Backend & Hadoop & CI/CD  |
 |   Git    | [yujeonge](https://github.com/yujeonge)          | [juyeoon](https://github.com/juyeoon)                  | [JIWOO2](https://github.com/JIWOO2)           | [hyunii02](https://github.com/hyunii02)                        | [leeghee282](https://github.com/leeghee282)                          | [leesj8676](https://github.com/leesj8676)                             |
 
 ## ✔ 설계 산출물
