@@ -9,6 +9,8 @@ import {
   GET_CHART_DETAIL_DATE,
   DO_DETAIL_FN,
   SET_WORDCLOUD_DATA,
+  GET_LIVE_CURR,
+  GET_CURR_DATE,
 } from "./types";
 import { baseURL, baseNewsURL } from "../api/index";
 
@@ -111,6 +113,29 @@ export function setWordcloudData(dataToSubmit) {
 
   return {
     type: SET_WORDCLOUD_DATA,
+    payload: request,
+  };
+}
+
+export function getLiveCurr(dataToSubmit) {
+  const request = axios
+    .get(`/api/v1/live/${dataToSubmit.code}`)
+    .then((response) => response.data);
+
+  return {
+    type: GET_LIVE_CURR,
+    payload: request,
+  };
+}
+
+export function getCurrDate(dataToSubmit) {
+  const request = {
+    startCurrDate: dataToSubmit.startCurrDate,
+    endCurrDate: dataToSubmit.endCurrDate,
+  };
+
+  return {
+    type: GET_CURR_DATE,
     payload: request,
   };
 }

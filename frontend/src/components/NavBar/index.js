@@ -101,8 +101,10 @@ const Header = () => {
   }, []);
 
   webSocket.onmessage = function (message) {
-    //======push 알림 시작==============
+    // console.log(JSON.parse(message.data),123123)
+    //======push알림용 시작==============
     if (message.data.includes('targetPrice')) {
+      //console.log(JSON.parse(message.data));
       // 목표환율 설정한 유저와 목표 환율 유저가 같으면
       if (loginFlag === JSON.parse(message.data).userId) {
         const currencyCode = JSON.parse(message.data).currencyCode;
@@ -343,7 +345,6 @@ const Header = () => {
           </Button>
         </Box>
         <Box sx={{ width: 400 }}></Box>
-
         <Box sx={{ width: 150 }}></Box>
         <Box></Box>
         <Box></Box>
