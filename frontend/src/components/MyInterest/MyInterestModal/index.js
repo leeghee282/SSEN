@@ -88,10 +88,10 @@ export default function MyInterestModal({ getInterest,handleOpen,open,setOpen}) 
     const body = {
       code: nation,
       previous: previous,
-      target: parseInt(interest.replaceAll(",", "")),
+      target: interest,
       userId: sessionStorage.getItem('userId'),
     };
-    console.log(body);
+    console.log(body, '왜!');
     axios
       .post(baseURL + "/api/v1/intrcurr/", body)
       .then((response) => getInterest());
