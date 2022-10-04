@@ -126,7 +126,7 @@ const Header = () => {
   //   }
   // };
   webSocket.onmessage = function (message) {
-    console.log(JSON.parse(message.data),123123)
+    // console.log(JSON.parse(message.data),123123)
     //======push알림용 시작==============
     if (message.data.includes("targetPrice")) {
       //console.log(JSON.parse(message.data));
@@ -235,38 +235,61 @@ const Header = () => {
     >
       <Toolbar
         sx={{
-          
-          display:"flex",justifyContent:"space-between",
+          display: "flex",
+          justifyContent: "space-between",
           overflowX: "auto",
           background: "#ffffff",
         }}
       >
         {/* LOGO IMAGE */}
-        <Box sx={{display:"flex",}}>
-        <Avatar
-          sx={{ width: 100, height: 100, cursor: "pointer" }}
-          alt="Academy"
-          src="/images/SsenLogo.png"
-          onClick={logoClickHandler}
-          style={{ alignItems: "center" }}
-        />
-        <Button id="font_test" sx={{fontSize:"13px",fontWeight:"700",color:"black",ml:2 }} >Home</Button>
-        <Button id="font_test" sx={{fontSize:"13px",fontWeight:"700",color:"black"}}>계산기</Button>
-        <Button id="font_test" sx={{fontSize:"13px",fontWeight:"700",color:"black"}}>뉴스검색</Button>
-        <Button id="font_test" sx={{fontSize:"13px",fontWeight:"700",color:"black"}}>보유 및 관심화폐</Button>
-        <Button id="font_test" sx={{fontSize:"13px",fontWeight:"700",color:"black"}} >Settings</Button>
+        <Box sx={{ display: "flex" }}>
+          <Avatar
+            sx={{ width: 100, height: 100, cursor: "pointer" }}
+            alt="Academy"
+            src="/images/SsenLogo.png"
+            onClick={logoClickHandler}
+            style={{ alignItems: "center" }}
+          />
+          <Button
+            id="font_test"
+            sx={{ fontSize: "13px", fontWeight: "700", color: "black", ml: 2 }}
+          >
+            Home
+          </Button>
+          <Button
+            id="font_test"
+            sx={{ fontSize: "13px", fontWeight: "700", color: "black" }}
+            onClick={newExchangeCalc}
+          >
+            계산기
+          </Button>
+          <Button
+            id="font_test"
+            sx={{ fontSize: "13px", fontWeight: "700", color: "black" }}
+          >
+            뉴스검색
+          </Button>
+          <Button
+            id="font_test"
+            sx={{ fontSize: "13px", fontWeight: "700", color: "black" }}
+          >
+            보유 및 관심화폐
+          </Button>
+          <Button
+            id="font_test"
+            sx={{ fontSize: "13px", fontWeight: "700", color: "black" }}
+          >
+            Settings
+          </Button>
         </Box>
-        <Box sx={{width:500}}></Box>
-        
-        <Box sx={{width:150}} ></Box>
-        <Box></Box>
-        <Box></Box>
-        
-        
+        <Box sx={{ width: 500 }}></Box>
 
-        <Stack spacing={1} direction="row" sx={{ width: "250px"}}>
+        <Box sx={{ width: 150 }}></Box>
+        <Box></Box>
+        <Box></Box>
+
+        <Stack spacing={1} direction="row" sx={{ width: "250px" }}>
           <TextField
-            
             id="font_Sans"
             fullWidth
             type="search"
@@ -278,22 +301,25 @@ const Header = () => {
           />
           <Avatar
             type="submit"
-            sx={{ p: "10px", height: "15px", width: "15px", cursor: "pointer",mr:"100px" }}
+            sx={{
+              p: "10px",
+              height: "15px",
+              width: "15px",
+              cursor: "pointer",
+              mr: "100px",
+            }}
             aria-label="search"
             onClick={onSubmit}
             src="/images/search.png"
           ></Avatar>
-          
         </Stack>
         {/* 로그인을 안했을 경우 */}
-        
-          {loginFlag === null && (
-            <Stack spacing={1} direction="row" >
-            <Box >
-              
+
+        {loginFlag === null && (
+          <Stack spacing={1} direction="row">
+            <Box>
               <Button
-                sx={{ ml: 1 ,fontSize:"12px"}}
-                
+                sx={{ ml: 1, fontSize: "12px" }}
                 id="font_test"
                 variant="contained"
                 size="small"
@@ -302,7 +328,7 @@ const Header = () => {
                 로그인
               </Button>
               <Button
-                sx={{ ml: 1 ,fontSize:"12px"}}
+                sx={{ ml: 1, fontSize: "12px" }}
                 id="font_test"
                 variant="contained"
                 size="small"
@@ -311,16 +337,16 @@ const Header = () => {
                 회원가입
               </Button>
             </Box>
-            </Stack>
-          )}
-          {/* 로그인한 경우 */}
-          {loginFlag !== null && (
-            <Stack spacing={1} direction="row" >
+          </Stack>
+        )}
+        {/* 로그인한 경우 */}
+        {loginFlag !== null && (
+          <Stack spacing={1} direction="row">
             <Box sx={{ display: "flex", flexDirection: "row" }}>
-              <Typography id="font_test" sx={{  mr: 2 }}>
+              <Typography id="font_test" sx={{ mr: 2 }}>
                 '{sessionStorage.getItem("name")}' 님
               </Typography>
-              
+
               <BasicPopover />
               {/* <Button
                 sx={{ ml: 1, background: "red" }}
@@ -342,9 +368,8 @@ const Header = () => {
                 로그아웃
               </Button>
             </Box>
-            </Stack>
-          )}
-        
+          </Stack>
+        )}
       </Toolbar>
 
       <NotificationContainer sx={{ background: "red" }} />

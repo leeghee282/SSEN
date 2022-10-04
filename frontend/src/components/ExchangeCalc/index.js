@@ -13,6 +13,8 @@ import {
   getBanksInfo,
 } from "../../_actions/exchange_action";
 
+import "./style.css";
+
 function ExchangeCalc() {
   const dispatch = useDispatch();
 
@@ -24,7 +26,13 @@ function ExchangeCalc() {
   // );
   const banksInfo = useSelector((state) => state.exchangecalcReducer.banksInfo);
 
-  const [selectDate, setSelectDate] = useState(new Date());
+  var year = new Date().getFullYear();
+  var month = new Date().getMonth();
+  var day = new Date().getDate() - 1;
+
+  var yesterday = new Date(year, month, day);
+
+  const [selectDate, setSelectDate] = useState(yesterday);
   const [banklist, setBanklist] = useState([]);
   const [bankInfo, setBankInfo] = useState("");
   const [codeValue, setCodeValue] = useState("");
@@ -34,6 +42,14 @@ function ExchangeCalc() {
   const [fromCurrency, setFromCurrency] = useState("");
   const [toCurrencyName, setToCurrencyName] = useState("");
   const [toCurrency, setToCurrency] = useState("");
+
+  const [finalPrice, setFinalPrice] = useState(0);
+
+  const [bank, setBank] = useState("");
+  const [commission, setCommission] = useState("");
+  const [basicRate, setBasicRate] = useState("");
+
+  var changeStatus = 0;
 
   useEffect(() => {
     onSetBankinfos();
@@ -67,6 +83,10 @@ function ExchangeCalc() {
       commission: bankinfo[0].commission,
       basicRate: bankinfo[0].basicRate,
     });
+
+    setBank(bankinfo[0].bank);
+    setCommission(bankinfo[0].commission);
+    setBasicRate(bankinfo[0].basicRate);
   };
 
   const currencylist = [
@@ -83,31 +103,54 @@ function ExchangeCalc() {
     setToCurrencyName(selectedOption.label.substr(-3));
   };
 
-  const onSetExchangeRate = (date, code) => {
+  const onSetExchangeRate = async (date, code) => {
     let body = {
       date: moment(date).format("YYYY-MM-DD"),
       code: code,
     };
-    dispatch(getExchangeRate(body)).then((response) => {
+    await dispatch(getExchangeRate(body)).then((response) => {
       console.log(response.payload);
       setExchangePrice(response.payload.closePrice);
+
+      setFromCurrency(1);
+      setToCurrency(response.payload.closePrice);
     });
   };
 
   const onExchangeCalculation = (event) => {
     setFromCurrency(event.currentTarget.value);
-    setToCurrency(event.currentTarget.value * exchangePrice);
+    setToCurrency(
+      Math.round(event.currentTarget.value * exchangePrice * 100) / 100
+    );
   };
 
-  const onChangeCalculation = () => {
+  const onChangeCalculation = async () => {
     const temp = fromCurrencyName;
     setFromCurrencyName(toCurrencyName);
     setToCurrencyName(temp);
 
-    setExchangePrice((1 / exchangePrice).toFixed(5));
+    if (changeStatus === 0) {
+      setExchangePrice(Math.round((1 / exchangePrice) * 100000) / 100000);
+      changeStatus += 1;
+    } else if (changeStatus === 1) {
+      await onSetChangeExchangeRate();
+      changeStatus -= 1;
+    }
+
     console.log(exchangePrice);
     setFromCurrency(toCurrency);
     setToCurrency(fromCurrency);
+  };
+
+  const onSetChangeExchangeRate = async (date, code) => {
+    let body = {
+      date: moment(date).format("YYYY-MM-DD"),
+      code: code,
+    };
+    await dispatch(getExchangeRate(body)).then((response) => {
+      console.log(response.payload);
+      setExchangePrice(response.payload.closePrice);
+    });
   };
 
   const getCurrencyCodeHandler = (code) => {
@@ -117,55 +160,31 @@ function ExchangeCalc() {
   };
 
   return (
-    <div>
+    <div id="calcboard">
       <Grid container spacing={2}>
-        <Grid item xs={4}>
+        <Grid item xs={5}>
           <DatePicker
             dateFormat="yyyy-MM-dd"
             selected={selectDate}
             onChange={(date) => setSelectDate(date)}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={7}>
           <Select options={banklist} onChange={onSelectBankHandler} />
         </Grid>
-
-        <p>은행: {`${bankInfo.bank}`}</p>
-        <p>수수료: {`${bankInfo.commission}`}</p>
-        <p>기본 우대율: {`${bankInfo.basicRate}`}</p>
-
-        <Select options={currencylist} onChange={onSelectCurrencyHandler} />
-
-        <label>{`${fromCurrencyName}`}</label>
-        <input onChange={onExchangeCalculation} value={fromCurrency} />
-        <p>{`${toCurrencyName} : ${toCurrency}`}</p>
+        <Grid item xs={12}>
+          <p>{`${bank}, 수수료 ${commission}, 기본 우대율 ${basicRate}`}</p>
+        </Grid>
+        <Grid item xs={12}>
+          <Select options={currencylist} onChange={onSelectCurrencyHandler} />
+        </Grid>
+        <Grid item xs={12}>
+          <label>{`${fromCurrencyName}`}</label>
+          <input onChange={onExchangeCalculation} value={fromCurrency} />
+          <p>{`${toCurrencyName} : ${toCurrency}`}</p>
+        </Grid>
         <button onClick={onChangeCalculation}>change</button>
       </Grid>
-
-      {/* <div>
-        <DatePicker
-          dateFormat="yyyy-MM-dd"
-          selected={selectDate}
-          onChange={(date) => setSelectDate(date)}
-        />
-        <Select options={banklist} onChange={onSelectBankHandler} />
-        <p>date: {`${selectDate}`}</p>
-        <p>은행: {`${bankInfo.bank}`}</p>
-        <p>수수료: {`${bankInfo.commission}`}</p>
-        <p>기본 우대율: {`${bankInfo.basic_rate}`}</p>
-      </div>
-      <div>
-        
-        <p>currency: {`${currencyCode}`}</p>
-      </div>
-      <div>
-        <p>exchangeRate: {`${exchangeRate}`}</p>
-        <label>{`${fromCurrencyName}`}</label>
-        <input onChange={onExchangeCalculation} value={fromCurrency} />
-        <p>{`${toCurrencyName} : ${toCurrency}`}</p>
-        <button onClick={onChangeCalculation}>change</button>
-      </div>
-      <button onClick={onExchangeRateHandler}>테스트</button> */}
     </div>
   );
 }
