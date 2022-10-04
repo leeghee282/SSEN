@@ -302,7 +302,7 @@ const Header = () => {
           <Avatar
             sx={{ width: 100, height: 100, cursor: "pointer" }}
             alt="Academy"
-            src="/images/SsenLogo.png"
+            src="/images/SsenLogo_last.png"
             onClick={logoClickHandler}
             style={{ alignItems: "center" }}
           />
