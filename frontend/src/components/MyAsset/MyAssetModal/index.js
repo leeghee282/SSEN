@@ -146,9 +146,7 @@ export default function BasicModal({ getMyAssetData }) {
               보유 외화 등록
             </Typography>
             <Box sx={{ m: 2 }}>
-              <BasicSelect code={currCode} setCode={setCurrCode} InputProps={{
-                style: { fontFamily: 'Pretendard Variable' }
-              }} />
+              <BasicSelect code={currCode} setCode={setCurrCode} />
             </Box>
             <Box sx={{ m: 2 }}>
               <Grid container alignItems="center">

@@ -8,44 +8,46 @@ import { baseURL } from "../../api";
 
 const EditNickname = (props) => {
 
-  const [nicknameCheck,setNicknameCheck] =useState('');
+  const [nicknameCheck, setNicknameCheck] = useState('');
 
-  const { setTotalData, totalData, cancelClicked2, cancelClicked22,checkNicknameMessage,setCheckNicknameMessage } = props;
-  
-  const onClickHandler2 = async ()=>{
+  const { setTotalData, totalData, cancelClicked2, cancelClicked22, checkNicknameMessage, setCheckNicknameMessage } = props;
+
+  const onClickHandler2 = async () => {
     await axios
-      .get(baseURL +`/api/v1/user/nickname-info/${totalData.nickname}` )
+      .get(baseURL + `/api/v1/user/nickname-info/${totalData.nickname}`)
       .then((response) => {
-        if (response.status ===200 ){
-          if(response.data === ''){
+        if (response.status === 200) {
+          if (response.data === '') {
             onClickHandler()
           }
           else {
-            setCheckNicknameMessage("중복된 닉네임 입니다.") 
+            setCheckNicknameMessage("중복된 닉네임입니다.")
           }
         }
       })
   }
 
   const validate = () => {
-    const errors ={}
+    const errors = {}
     let flag = false;
 
-    
+
   }
 
   const onChange = (e) => {
-    setTotalData({...totalData, nickname: e.target.value})
-    
+    setTotalData({ ...totalData, nickname: e.target.value })
+
   };
 
   const onClickHandler = () => {
     axios
       .put(baseURL + '/api/v1/user/edit', totalData)
-      .then((response) => {console.log(response)
-      if(response.status ===200 ){
-        sessionStorage.setItem('nickname',totalData.nickname)
-      }})
+      .then((response) => {
+        console.log(response)
+        if (response.status === 200) {
+          sessionStorage.setItem('nickname', totalData.nickname)
+        }
+      })
     cancelClicked2();
   };
 
@@ -54,10 +56,10 @@ const EditNickname = (props) => {
       <TextField
         id="font_test"
         onChange={onChange}
-        
+        defaultValue={totalData.nickname}
         placeholder="닉네임을 변경하세요"
       ></TextField>
-      
+
       <Button
         id="font_test"
         sx={{ ml: 6, color: "#3C3C3D", background: "#F3F6FA" }}
@@ -72,8 +74,8 @@ const EditNickname = (props) => {
       >
         취소
       </Button>
-      
-      
+
+
     </Box>
   );
 };
