@@ -1,24 +1,24 @@
-import Axios from "axios";
+import Axios from 'axios';
 import {
   GET_PAST_DATALIST,
   GET_PAST_DATA,
   GET_PAST_KEYWORDS,
   GET_PAST_NEWS,
   GET_PAST_CURR_DATA,
-} from "./types";
-import { baseURL, baseNewsURL } from "../api/index";
+} from './types';
+import { baseURL, baseNewsURL } from '../api/index';
 
 const axios = Axios.create({
   baseURL: baseURL,
   headers: {
-    "Content-type": "application/json",
+    'Content-type': 'application/json',
   },
 });
 
 const newsAxios = Axios.create({
   baseURL: baseNewsURL,
   headers: {
-    "Content-type": "application/json",
+    'Content-type': 'application/json',
   },
 });
 
@@ -33,7 +33,7 @@ export function getPastDatalist(dataToSubmit) {
   // });
 
   const request = newsAxios
-    .post("/news/past", dataToSubmit)
+    .post('/news/past', dataToSubmit)
     .then((response) => response.data);
 
   return {

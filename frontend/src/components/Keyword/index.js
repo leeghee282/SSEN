@@ -136,7 +136,7 @@ function Keyword(props) {
     var wordScale = d3
       .scaleLinear()
       .domain([0, sum])
-      .range([0, 300 * 1.2]); //전체 사이즈 대비 차지하는 비율로 wordScale
+      .range([0, 300 * 1.3]); //전체 사이즈 대비 차지하는 비율로 wordScale
 
     // var maxWordcloudNum = d.length - 2;
     // console.log("d", d);
@@ -295,7 +295,7 @@ function Keyword(props) {
               'YYYY.MM.DD',
             )} ~ ${moment(chartDetailDate.endDetailDate).format('YYYY.MM.DD')}`}
           </span>
-          <span className="keyword_title-smaller">의 분석 결과</span>
+          <span className="keyword_title-smaller"> 의 분석 결과</span>
         </p>
         <button
           id="font_test"
@@ -308,6 +308,7 @@ function Keyword(props) {
         <Grid item xs={12}>
           {keywordLoading ? <KeywordLoading /> : null}
           <div id="word-cloud"></div>
+          <button onClick={pastSearchClickHandler}>과거</button>
         </Grid>
 
         <Grid item xs={12}>
