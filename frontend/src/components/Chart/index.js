@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import './style.css';
 
 import * as am5 from '@amcharts/amcharts5';
 import * as am5xy from '@amcharts/amcharts5/xy';
@@ -1058,25 +1059,11 @@ function Chart() {
   };
 
   return (
-    <div>
-      <Grid container>
-        <Grid item xs={2}>
-          <Button
-            id="font_test"
-            sx={{ mt: 5, background: 'red', color: 'black', mb: 5 }}
-            onClick={onMakeChart}
-          >
-            차트 적용하기
-          </Button>
-        </Grid>
-        <Grid item xs={10}></Grid>
-        <Grid item xs={12}>
-          <Calendar />
-        </Grid>
-        {/* <Grid item xs={12}>
-          <LiveCurrencyTable/>
-        </Grid> */}
-      </Grid>
+    <div className="chart_box">
+      <Calendar />
+      <button id="font_test" className="custom-btn btn-3" onClick={onMakeChart}>
+        <span>차트 적용하기</span>
+      </button>
       <div id="chart">
         <div id="chartdiv" style={{ width: '800px', height: '300px' }}></div>
       </div>
