@@ -100,7 +100,7 @@ function Keyword(props) {
       data.push(sum);
       onSetWordcloud(data);
 
-      const maxNum = data.length - 2;
+      const maxNum = data.length - 1;
       const firstKeyword = data[maxNum].text;
       setShowKeyword(firstKeyword);
       console.log(firstKeyword);
@@ -134,7 +134,7 @@ function Keyword(props) {
     var wordScale = d3
       .scaleLinear()
       .domain([0, sum])
-      .range([0, 300 * 1.5]); //전체 사이즈 대비 차지하는 비율로 wordScale
+      .range([0, 300 * 1.2]); //전체 사이즈 대비 차지하는 비율로 wordScale
 
     // var maxWordcloudNum = d.length - 2;
     // console.log("d", d);
@@ -251,7 +251,7 @@ function Keyword(props) {
       data.push(sum);
       onSetWordcloud(data);
 
-      const maxNum = data.length - 2;
+      const maxNum = data.length - 1;
       const firstKeyword = data[maxNum].text;
       setShowKeyword(firstKeyword);
 
