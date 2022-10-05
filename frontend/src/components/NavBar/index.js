@@ -332,21 +332,21 @@ const Header = () => {
           <Button
             href="/"
             id="font_test"
-            sx={{ fontSize: '12px', fontWeight: '700', color: 'black', ml: 2 }}
+            sx={{ fontSize: '16px', fontWeight: '700', color: 'black', ml: 2 }}
           >
             Home
           </Button>
           <Button
             onClick={newExchangeCalc}
             id="font_test"
-            sx={{ fontSize: '12px', fontWeight: '700', color: 'black' }}
+            sx={{ fontSize: '16px', fontWeight: '700', color: 'black' }}
           >
             계산기
           </Button>
           <Button
             onClick={onLinkSubmit}
             id="font_test"
-            sx={{ fontSize: '12px', fontWeight: '700', color: 'black' }}
+            sx={{ fontSize: '16px', fontWeight: '700', color: 'black' }}
           >
             뉴스검색
           </Button>
@@ -354,10 +354,10 @@ const Header = () => {
             onClick={goLinkProfile}
             id="font_test"
             sx={{
-              fontSize: '12px',
+              fontSize: '16px',
               fontWeight: '700',
               color: 'black',
-              width: '110px',
+              width: '138px',
             }}
           >
             보유 및 관심화폐
@@ -365,7 +365,7 @@ const Header = () => {
           <Button
             onClick={goLinkSettings}
             id="font_test"
-            sx={{ fontSize: '12px', fontWeight: '700', color: 'black' }}
+            sx={{ fontSize: '16px', fontWeight: '700', color: 'black' }}
           >
             Settings
           </Button>
