@@ -15,19 +15,21 @@ import Apitest from "./api/apitest";
 import Search from "./components/Search";
 import PastSearch from "./components/Past/PastSearch";
 import PastDetail from "./components/Past/PastDetail";
-
+import { useState } from "react";
 function App() {
+  
   return (
     <Router>
       <Routes>
         {/* Header 있는 페이지 */}
-        <Route element={<Header />}>
+        <Route element={<Header/>}>
           <Route path="/" element={<MainCalendar />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/profileupdate" element={<ProfileUpdate />} />
           <Route path="/search" element={<Search />} />
           <Route path="/pastsearch" element={<PastSearch />} />
           <Route path="/pastdetail" element={<PastDetail />} />
+          <Route path="/ss" element={<WebTest getWebData={getWebData}/>}/>
         </Route>
         {/* Header 없는 페이지 */}
         <Route path="/signup" element={<Signup />} />
