@@ -75,10 +75,7 @@ const RowRadioButtonsGroup = () => {
         국가선택
       </FormLabel> */}
       <ToggleButtonGroup
-        sx={{ mt: 3, width: '820px', height: '30px' ,color:"black"
-            }}
-        
-        
+        sx={{ mt: 3, width: '820px', height: '30px', color: 'black' }}
         row
         size="large"
         fullWidth="true"
@@ -247,14 +244,14 @@ const Calendar = () => {
   };
 
   return (
-    <Box >
+    <Box>
       <Grid container>
         <Typography
           component="h1"
           id="font_test"
           sx={{
             mt: 3,
-            color: 'rgba(0, 0, 0, 0.6)',
+            color: '#333',
             height: '40px',
             fontWeight: '900',
             fontSize: '30px',
@@ -264,49 +261,84 @@ const Calendar = () => {
         </Typography>
         <Grid
           container
-          sx={{ mt: 2,display:"flex",justifyContent:"space-between" }}
-          
+          sx={{ mt: 2, display: 'flex', justifyContent: 'space-between' }}
         >
-          <Grid item xs={2.5}>
-            <DatePicker
-              className="calendar_datepicker"
-              id="font_test"
-              dateFormat="yyyy년 MM월 dd일"
-              locale={ko}
-              selected={startDate}
-              onChange={(date) => onSetStartDate(date)}
-              selectsStart
-              startDate={startDate}
-              endDate={endDate}
-            />
+          <Grid item xs={3}>
+            {/* 3안에서 나누기*/}
+            <Grid container>
+              <Grid item xs={3}>
+                <Typography
+                  id="font_test"
+                  sx={{
+                    width: 50,
+                    fontSize: '14px',
+                    display: 'flex',
+                    height: '30px',
+                    alignItems: 'center',
+                  }}
+                >
+                  시작일{' '}
+                </Typography>
+              </Grid>
+              <Grid item xs={9}>
+                <DatePicker
+                  className="calendar_datepicker"
+                  id="font_test"
+                  dateFormat="yyyy년 MM월 dd일"
+                  locale={ko}
+                  selected={startDate}
+                  onChange={(date) => onSetStartDate(date)}
+                  selectsStart
+                  startDate={startDate}
+                  endDate={endDate}
+                />
+              </Grid>
+            </Grid>
           </Grid>
-          <Grid item xs={0.4}>
-            <Typography sx={{ fontWeight: 500 }}>~</Typography>
-          </Grid>
-          <Grid item xs={2.5}>
-            <DatePicker
-              className="calendar_datepicker"
-              id="font_test"
-              dateFormat="yyyy년 MM월 dd일"
-              locale={ko}
-              selected={endDate}
-              onChange={(date) => onSetEndDate(date)}
-              selectsEnd
-              startDate={startDate}
-              endDate={endDate}
-              minDate={startDate}
-            />
+
+          <Grid item xs={3}>
+            {/* 3안에서 나누기*/}
+            <Grid container>
+              <Grid item xs={3}>
+                <Typography
+                  id="font_test"
+                  sx={{
+                    width: 50,
+                    fontSize: '14px',
+                    display: 'flex',
+                    height: '30px',
+                    alignItems: 'center',
+                  }}
+                >
+                  최종일
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <DatePicker
+                  className="calendar_datepicker"
+                  id="font_test"
+                  dateFormat="yyyy년 MM월 dd일"
+                  locale={ko}
+                  selected={endDate}
+                  onChange={(date) => onSetEndDate(date)}
+                  selectsEnd
+                  startDate={startDate}
+                  endDate={endDate}
+                  minDate={startDate}
+                />
+              </Grid>
+            </Grid>
           </Grid>
           <Grid item xs={5} justifyContent="center">
             {DateFilterData.map((e, idx) => (
               <Button
+                value={e.value}
+                key={idx}
+                variant="contained"
+                id="font_test"
                 size="small"
                 sx={{ ml: 2.2 }}
-                id="font_test"
-                variant="contained"
                 onClick={handleBtnClicked}
-                key={idx}
-                value={e.value}
               >
                 {e.value}
               </Button>
