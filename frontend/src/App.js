@@ -15,19 +15,14 @@ import Apitest from "./api/apitest";
 import Search from "./components/Search";
 import PastSearch from "./components/Past/PastSearch";
 import PastDetail from "./components/Past/PastDetail";
-import WebTest from "./components/WebTest";
 import { useState } from "react";
 function App() {
-  const [getWebData,setGetWebData] = useState('');
-  const getWeb =(data) =>{
-    
-    setGetWebData(data)
-  }
+  
   return (
     <Router>
       <Routes>
         {/* Header 있는 페이지 */}
-        <Route element={<Header getWeb={getWeb}/>}>
+        <Route element={<Header/>}>
           <Route path="/" element={<MainCalendar />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/profileupdate" element={<ProfileUpdate />} />
