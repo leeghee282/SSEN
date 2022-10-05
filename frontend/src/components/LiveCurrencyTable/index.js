@@ -11,12 +11,9 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button, Grid } from '@mui/material';
 
-
 const webSocket = new WebSocket('wss://j7e204.p.ssafy.io:8080/ssen');
 
 const LiveCurrencyTable = () => {
-  
-  
   //미국
   const [sellPrice1, setSellPrice1] = useState('');
   const [buyPrice1, setBuyPrice1] = useState('');
@@ -130,8 +127,7 @@ const LiveCurrencyTable = () => {
     });
   };
   //////////웹소켓 시작
-  
-  
+
   useEffect(() => {
     webSocket.onopen = function () {};
     getStartData();
@@ -146,7 +142,6 @@ const LiveCurrencyTable = () => {
     // console.log(message.data,12423)
     // console.log(toChartType.toChartType,"체크필요")
     if (message.data.includes('targetPrice')) {
-      
     }
     //========실시간 환율 시작
     else {
@@ -167,9 +162,6 @@ const LiveCurrencyTable = () => {
         setSecond1(JSON.parse(message.data).regdate.time.second);
         //  console.log("==========="+JSON.parse(message.data).regdate.time.hour);
         // console.log(JSON.parse(message.data).regdate);
-        
-        
-        
       }
       if (JSON.parse(message.data).cc2 === 'EUR') {
         console.log('eur성공');
@@ -185,7 +177,6 @@ const LiveCurrencyTable = () => {
         setSecond2(JSON.parse(message.data).regdate.time.second);
         //  console.log("==========="+JSON.parse(message.data).regdate.time.hour);
         // console.log(JSON.parse(message.data).regdate);
-        
       }
       if (JSON.parse(message.data).cc2 === 'GBP') {
         setCc3(JSON.parse(message.data).cc2);
@@ -200,7 +191,6 @@ const LiveCurrencyTable = () => {
         setSecond3(JSON.parse(message.data).regdate.time.second);
         //  console.log("==========="+JSON.parse(message.data).regdate.time.hour);
         // console.log(JSON.parse(message.data).regdate);
-        
       }
       if (JSON.parse(message.data).cc2 === 'JPY') {
         setCc4(JSON.parse(message.data).cc2);
@@ -215,7 +205,6 @@ const LiveCurrencyTable = () => {
         setSecond4(JSON.parse(message.data).regdate.time.second);
         //  console.log("==========="+JSON.parse(message.data).regdate.time.hour);
         // console.log(JSON.parse(message.data).regdate);
-        
       }
       if (JSON.parse(message.data).cc2 === 'CNY') {
         setCc5(JSON.parse(message.data).cc2);
@@ -230,15 +219,11 @@ const LiveCurrencyTable = () => {
         setSecond5(JSON.parse(message.data).regdate.time.second);
         //  console.log("==========="+JSON.parse(message.data).regdate.time.hour);
         // console.log(JSON.parse(message.data).regdate);
-        
       }
-      
     }
-    
   };
 
   return (
-    
     <div>
       <Grid container>
         <Grid sx={{ display: 'flex', alignItems: 'center' }} item xs={10}>
@@ -255,15 +240,15 @@ const LiveCurrencyTable = () => {
                   <TableCell align="right" style={{ fontWeight: 'bold' }}>
                     매수
                   </TableCell>
-                  <TableCell align="right" style={{ fontWeight: 'bold' }}>
+                  {/* <TableCell align="right" style={{ fontWeight: 'bold' }}>
                     고가
                   </TableCell>
                   <TableCell align="right" style={{ fontWeight: 'bold' }}>
                     저가
-                  </TableCell>
-                  <TableCell align="right" style={{ fontWeight: 'bold' }}>
+                  </TableCell> */}
+                  {/* <TableCell align="right" style={{ fontWeight: 'bold' }}>
                     변동금액
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell align="right" style={{ fontWeight: 'bold' }}>
                     변동 %{' '}
                   </TableCell>
@@ -278,14 +263,14 @@ const LiveCurrencyTable = () => {
                   <TableCell align="right">USD</TableCell>
                   <TableCell align="right">{sellPrice1}</TableCell>
                   <TableCell align="right">{buyPrice1}</TableCell>
-                  <TableCell align="right">{highPrice1}</TableCell>
-                  <TableCell align="right">{lowPrice1}</TableCell>
-                  <TableCell
+                  {/* <TableCell align="right">{highPrice1}</TableCell> */}
+                  {/* <TableCell align="right">{lowPrice1}</TableCell> */}
+                  {/* <TableCell
                     align="right"
                     style={{ color: variancePrice1 > 0 ? 'red' : 'blue' }}
                   >
                     {variancePrice1}
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell
                     align="right"
                     style={{ color: variance1 > 0 ? 'red' : 'blue' }}
@@ -303,14 +288,14 @@ const LiveCurrencyTable = () => {
                   <TableCell align="right">EUR</TableCell>
                   <TableCell align="right">{sellPrice2}</TableCell>
                   <TableCell align="right">{buyPrice2}</TableCell>
-                  <TableCell align="right">{highPrice2}</TableCell>
-                  <TableCell align="right">{lowPrice2}</TableCell>
-                  <TableCell
+                  {/* <TableCell align="right">{highPrice2}</TableCell> */}
+                  {/* <TableCell align="right">{lowPrice2}</TableCell> */}
+                  {/* <TableCell
                     align="right"
                     style={{ color: variancePrice2 > 0 ? 'red' : 'blue' }}
                   >
                     {variancePrice2}
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell
                     align="right"
                     style={{ color: variance2 > 0 ? 'red' : 'blue' }}
@@ -328,14 +313,14 @@ const LiveCurrencyTable = () => {
                   <TableCell align="right">GBP</TableCell>
                   <TableCell align="right">{sellPrice3}</TableCell>
                   <TableCell align="right">{buyPrice3}</TableCell>
-                  <TableCell align="right">{highPrice3}</TableCell>
-                  <TableCell align="right">{lowPrice3}</TableCell>
-                  <TableCell
+                  {/* <TableCell align="right">{highPrice3}</TableCell> */}
+                  {/* <TableCell align="right">{lowPrice3}</TableCell> */}
+                  {/* <TableCell
                     align="right"
                     style={{ color: variancePrice3 > 0 ? 'red' : 'blue' }}
                   >
                     {variancePrice3}
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell
                     align="right"
                     style={{ color: variance3 > 0 ? 'red' : 'blue' }}
@@ -353,14 +338,14 @@ const LiveCurrencyTable = () => {
                   <TableCell align="right">JPY</TableCell>
                   <TableCell align="right">{sellPrice4}</TableCell>
                   <TableCell align="right">{buyPrice4}</TableCell>
-                  <TableCell align="right">{highPrice4}</TableCell>
-                  <TableCell align="right">{lowPrice4}</TableCell>
-                  <TableCell
+                  {/* <TableCell align="right">{highPrice4}</TableCell> */}
+                  {/* <TableCell align="right">{lowPrice4}</TableCell> */}
+                  {/* <TableCell
                     align="right"
                     style={{ color: variancePrice4 > 0 ? 'red' : 'blue' }}
                   >
                     {variancePrice4}
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell
                     align="right"
                     style={{ color: variance4 > 0 ? 'red' : 'blue' }}
@@ -378,14 +363,14 @@ const LiveCurrencyTable = () => {
                   <TableCell align="right">CNY</TableCell>
                   <TableCell align="right">{sellPrice5}</TableCell>
                   <TableCell align="right">{buyPrice5}</TableCell>
-                  <TableCell align="right">{highPrice5}</TableCell>
-                  <TableCell align="right">{lowPrice5}</TableCell>
-                  <TableCell
+                  {/* <TableCell align="right">{highPrice5}</TableCell> */}
+                  {/* <TableCell align="right">{lowPrice5}</TableCell> */}
+                  {/* <TableCell
                     align="right"
                     style={{ color: variancePrice5 > 0 ? 'red' : 'blue' }}
                   >
                     {variancePrice5}
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell
                     align="right"
                     style={{ color: variance5 > 0 ? 'red' : 'blue' }}
