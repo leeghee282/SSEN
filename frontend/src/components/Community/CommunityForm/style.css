@@ -10,6 +10,7 @@
   font-weight: 600;
   color: #fff;
   cursor: pointer;
+  font-family: 'MICEGothic Bold';
 }
 
 .comment {
@@ -23,6 +24,12 @@
   width: 340px;
   height: 30px;
   font-weight: 600;
-  color: #fff;
+  /* color: #fff; */
   cursor: pointer;
+  /* padding-left: 30px; */
+}
+
+.comment::placeholder{
+  color: rgb(137, 137, 137);
+  padding-left: 10px;
 }

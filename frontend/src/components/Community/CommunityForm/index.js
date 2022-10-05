@@ -28,7 +28,7 @@ const CommunityForm = ({ getCommunity }) => {
     sendCommunity();
   };
 
-  const handleOnKeyPress = (e)=> {
+  const handleOnKeyPress = (e) => {
     if (e.key === 'Enter') {
       handleSubmit(e); // Enter 입력이 되면 클릭 이벤트 실행
     }
@@ -37,26 +37,26 @@ const CommunityForm = ({ getCommunity }) => {
   return (
     <div>
       <div>
-        {sessionStorage.getItem('userId') &&(
-        <input
-          className="comment"
-          value={content}
-          name="content"
-          placeholder="댓글을 작성해주세요 😊"
-          onChange={handleChange}
-          onKeyPress={handleOnKeyPress}
-          style={{ fontSize:"16px", color:"#333333"}}
-        />
+        {sessionStorage.getItem('userId') && (
+          <input
+            className="comment"
+            value={content}
+            name="content"
+            placeholder="댓글을 작성해주세요 😊"
+            onChange={handleChange}
+            onKeyPress={handleOnKeyPress}
+            style={{ fontSize: "16px", color: "rgb(137, 137, 137)", fontFamily: 'MICEGothic Bold' }}
+          />
         )}
-        {!sessionStorage.getItem('userId') &&(
-        <input
-          className="comment"
-          value=''
-          name="content"
-          placeholder="로그인시 이용가능합니다. 😊"
-          onChange={handleChange}
-          style={{ fontSize:"16px", color:"#333333"}}
-        />
+        {!sessionStorage.getItem('userId') && (
+          <input
+            className="comment"
+            value=''
+            name="content"
+            placeholder="로그인 시 이용할 수 있습니다 😊"
+            onChange={handleChange}
+            style={{ fontSize: "16px", color: "rgb(137, 137, 137)", fontFamily: 'MICEGothic Bold' }}
+          />
         )}
       </div>
       <div className="button" onClick={handleSubmit} style={{ textAlign: "center" }}>

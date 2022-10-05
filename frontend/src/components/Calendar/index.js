@@ -295,7 +295,6 @@ const Calendar = () => {
               </Grid>
             </Grid>
           </Grid>
-          
           <Grid item xs={3}>
             {/* 3안에서 나누기*/}
             <Grid container>
@@ -309,7 +308,9 @@ const Calendar = () => {
                     height: '30px',
                     alignItems: 'center',
                   }}
-                >최종일</Typography>
+                >
+                  최종일
+                </Typography>
               </Grid>
               <Grid item xs={6}>
                 <DatePicker
@@ -336,6 +337,7 @@ const Calendar = () => {
                 id="font_test"
                 size="small"
                 sx={{ ml: 2.2 }}
+                onClick={handleBtnClicked}
               >
                 {e.value}
               </Button>
