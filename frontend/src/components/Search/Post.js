@@ -1,8 +1,12 @@
 import React from 'react';
 import { Typography, Grid, Box, Link } from '@mui/material';
 import './style.css';
+import { useEffect } from 'react';
 
 const Posts = ({ posts, search }) => {
+  useEffect(()=>{
+    window.scrollTo({top: 0});
+},[posts])
   return (
     <div>
       <p className="jb-default-2 fc-grey search-result" id="font_test">
@@ -38,7 +42,7 @@ const Posts = ({ posts, search }) => {
             <option value="100">100</option>
           </select>
         </Typography> */}
-
+      
       <main>
         <ul>
           {posts.map((post, index) => (
@@ -96,6 +100,7 @@ const Posts = ({ posts, search }) => {
                   </Link>
                 </Grid>
               </Grid>
+              
             </li>
           ))}
         </ul>
