@@ -5,8 +5,9 @@ import './style.css';
 const Posts = ({ posts, search }) => {
   return (
     <div>
-      <p className="jb-default-2 fc-grey " id="font_test">
-        <span>"{search}"</span>
+      <p className="jb-default-2 fc-grey search-result" id="font_test">
+        {/* <span >"<span className="search-keyword">{search}</span>"</span> */}
+        <span className="search-keyword">"{search}"</span>
         <span className="jb-smaller">(으)로 검색한 결과</span>
       </p>
       {/* <Typography
@@ -51,7 +52,7 @@ const Posts = ({ posts, search }) => {
                   >
                     <Box
                       sx={{
-                        pt: 2,
+                        pt: 1,
                         '&:hover': {
                           background: '#DEE0E4',
                         },
@@ -63,7 +64,8 @@ const Posts = ({ posts, search }) => {
                           <Typography
                             id="font_test"
                             fontSize="30px"
-                            sx={{ ml: 1, height: '60px' }}
+                            className="search-title"
+                            sx={{ ml: 2, height: '60px' }}
                           >
                             {post.title.length >= 1
                               ? post.title.replaceAll('…', ' ').substr(0, 30) +
@@ -71,7 +73,7 @@ const Posts = ({ posts, search }) => {
                               : post.title}
                           </Typography>
                         </Grid>
-                        <Grid item xs={2}>
+                        <Grid item xs={2} className="search-press">
                           <Grid container direction="column">
                             <Grid id="font_test" item xs={2}>
                               {post.press}
@@ -83,8 +85,8 @@ const Posts = ({ posts, search }) => {
                         </Grid>
                       </Grid>
 
-                      <Grid sx={{ pl: 1 }} item xs={11.5}>
-                        <Typography sx={{ pt: 3 }} id="font_Gmarket">
+                      <Grid sx={{ pl: 1 }} item xs={11.8}>
+                        <Typography sx={{ pt: 2 }} id="font_test" className="search-content">
                           {post.content.length >= 170
                             ? post.content.substr(0, 170) + '...'
                             : post.content}
