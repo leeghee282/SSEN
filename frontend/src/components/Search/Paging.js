@@ -15,8 +15,10 @@ function Paging({
       itemsCountPerPage={postPerPage}
       totalItemsCount={totalCount ? totalCount : 0}
       pageRangeDisplayed={postRangeDisplayed}
-      prevPageText={'‹'}
-      nextPageText={'›'}
+      prevPageText={'<'}
+      nextPageText={'>'}
+      lastPageText={'>>'}
+      firstPageText={'<<'}
       onChange={handlePageChange}
     />
   );
