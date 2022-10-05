@@ -110,18 +110,22 @@ const Header = ({getWeb}) => {
       // 목표환율 설정한 유저와 목표 환율 유저가 같으면
       if (loginFlag === JSON.parse(message.data).userId) {
         const currencyCode = JSON.parse(message.data).currencyCode;
+        const hour = JSON.parse(message.data).regdate.time.hour;
+        const minute = JSON.parse(message.data).regdate.time.minute;
+        const second = JSON.parse(message.data).regdate.time.second;
         if (currencyCode === 'USD') {
           NotificationManager.error(
             // 볼드 처리 안된 부분에 쓸 내용
+            '\''+
             JSON.parse(message.data).name +
-              '님의 목표 환율 ' +
+              '\'님의 목표 환율 ' +
               JSON.parse(message.data).targetPrice +
-              '에 도달했습니다.' +
-              +JSON.parse(message.data).regdate.time.hour +
+              '에 도달했습니다.' + '\u00A0'+ '\u00A0'+
+              ( (hour < 10) ? `0${hour}` :  hour)+
               ':' +
-              JSON.parse(message.data).regdate.time.minute +
+              ( (minute < 10) ? `0${minute}` :  minute) +
               ':' +
-              JSON.parse(message.data).regdate.time.second,
+              ( (second < 10) ? `0${second}` :  second),
 
             // 볼드 처리 된 부분에 쓸 내용
             JSON.parse(message.data).currencyCode +
@@ -129,20 +133,21 @@ const Header = ({getWeb}) => {
               JSON.parse(message.data).buyPrice,
 
             // 자동으로 사라지기까지 걸리는 시간 (단위는 ms인거같음)
-            5000,
+            6000,
           );
         } else if (currencyCode === 'EUR') {
           NotificationManager.success(
             // 볼드 처리 안된 부분에 쓸 내용
+            '\''+
             JSON.parse(message.data).name +
-              '님의 목표 환율 ' +
+              '\'님의 목표 환율 ' +
               JSON.parse(message.data).targetPrice +
-              '에 도달했습니다.' +
-              +JSON.parse(message.data).regdate.time.hour +
+              '에 도달했습니다.'+  '\u00A0'+ '\u00A0'+
+              ( (hour < 10) ? `0${hour}` :  hour)+
               ':' +
-              JSON.parse(message.data).regdate.time.minute +
+              ( (minute < 10) ? `0${minute}` :  minute) +
               ':' +
-              JSON.parse(message.data).regdate.time.second,
+              ( (second < 10) ? `0${second}` :  second),
 
             // 볼드 처리 된 부분에 쓸 내용
             JSON.parse(message.data).currencyCode +
@@ -150,40 +155,42 @@ const Header = ({getWeb}) => {
               JSON.parse(message.data).buyPrice,
 
             // 자동으로 사라지기까지 걸리는 시간 (단위는 ms인거같음)
-            5000,
+            6000,
           );
         } else if (currencyCode === 'GBP') {
           NotificationManager.info(
             // 볼드 처리 안된 부분에 쓸 내용
+            '\''+
             JSON.parse(message.data).name +
-              '님의 목표 환율 ' +
+              '\'님의 목표 환율 ' +
               JSON.parse(message.data).targetPrice +
-              '에 도달했습니다.\n' +
-              +JSON.parse(message.data).regdate.time.hour +
+              '에 도달했습니다.' + '\u00A0'+ '\u00A0'+
+              ( (hour < 10) ? `0${hour}` :  hour)+
               ':' +
-              JSON.parse(message.data).regdate.time.minute +
+              ( (minute < 10) ? `0${minute}` :  minute) +
               ':' +
-              JSON.parse(message.data).regdate.time.second,
+              ( (second < 10) ? `0${second}` :  second),
             // 볼드 처리 된 부분에 쓸 내용
             JSON.parse(message.data).currencyCode +
               ' 현재 환율 : ' +
               JSON.parse(message.data).buyPrice,
 
             // 자동으로 사라지기까지 걸리는 시간 (단위는 ms인거같음)
-            5000,
+            6000,
           );
         } else if (currencyCode === 'JPY') {
           NotificationManager.warning(
             // 볼드 처리 안된 부분에 쓸 내용
+            '\''+
             JSON.parse(message.data).name +
-              '님의 목표 환율 ' +
+              '\'님의 목표 환율 ' +
               JSON.parse(message.data).targetPrice +
-              '에 도달했습니다.' +
-              +JSON.parse(message.data).regdate.time.hour +
+              '에 도달했습니다.' + '\u00A0'+ '\u00A0'+
+              ( (hour < 10) ? `0${hour}` :  hour)+
               ':' +
-              JSON.parse(message.data).regdate.time.minute +
+              ( (minute < 10) ? `0${minute}` :  minute) +
               ':' +
-              JSON.parse(message.data).regdate.time.second,
+              ( (second < 10) ? `0${second}` :  second),
 
             // 볼드 처리 된 부분에 쓸 내용
             JSON.parse(message.data).currencyCode +
@@ -191,7 +198,7 @@ const Header = ({getWeb}) => {
               JSON.parse(message.data).buyPrice,
 
             // 자동으로 사라지기까지 걸리는 시간 (단위는 ms인거같음)
-            5000,
+            6000,
           );
         }
       }
