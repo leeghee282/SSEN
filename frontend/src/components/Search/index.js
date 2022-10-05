@@ -112,6 +112,7 @@ function Search() {
                 search={location.state.search}
               />
               <Paging
+                
                 totalCount={posts.length}
                 postPerPage={postPerPage}
                 postRangeDisplayed={10}

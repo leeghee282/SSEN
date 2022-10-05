@@ -295,7 +295,6 @@ const Calendar = () => {
               </Grid>
             </Grid>
           </Grid>
-
           <Grid item xs={3}>
             {/* 3안에서 나누기*/}
             <Grid container>
@@ -342,6 +341,18 @@ const Calendar = () => {
               >
                 {e.value}
               </Button>
+              // <button
+              // className="custom2-btn btn-4"
+              //   size="small"
+              //   sx={{ ml: 2.2 }}
+              //   id="font_test"
+              //   variant="contained"
+              //   onClick={handleBtnClicked}
+              //   key={idx}
+              //   value={e.value}
+              // >
+              //   <span>{e.value}</span>
+              // </button>
             ))}
           </Grid>
         </Grid>
