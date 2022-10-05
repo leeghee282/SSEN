@@ -1,13 +1,25 @@
 .card {
-    
     background-color: white;
     border-radius: 15px;
     padding-left: 20px;
     padding-right: 10px;
     height:180px;
     margin-top: 15px;
+    box-shadow: 0 0 10px 0 #d9d9d9;
 }
 
-
-
 #div:hover{color: #ff2255;}
+
+.jb-default-2 { 
+    font-size: 50px;
+    text-align: center;
+    margin: 30px;
+}
+
+.jb-smaller {
+    font-size: 30px;
+}
+
+.fc-grey {
+    color: #373737;
+}

@@ -1,6 +1,6 @@
-import React from "react";
-import "./Paging2.css";
-import Pagination from "react-js-pagination";
+import React from 'react';
+import './Paging2.css';
+import Pagination from 'react-js-pagination';
 
 function Paging({
   totalCount,
@@ -15,8 +15,8 @@ function Paging({
       itemsCountPerPage={postPerPage}
       totalItemsCount={totalCount ? totalCount : 0}
       pageRangeDisplayed={postRangeDisplayed}
-      prevPageText={"‹"}
-      nextPageText={"›"}
+      prevPageText={'‹'}
+      nextPageText={'›'}
       onChange={handlePageChange}
     />
   );
