@@ -93,41 +93,30 @@ const Header = () => {
 
   // 유정 추가
   // 웹소켓 연결
-  
+
   // const webSocket = new WebSocket("wss://loclhost:8080/ssen");
 
   // 프로필 버튼 바로가기 로그인 안됬을 시 알람
-  const goLinkProfile =(e) =>{
+  const goLinkProfile = (e) => {
     e.preventDefault();
     if (!sessionStorage.getItem('userId')) {
-      
-      alert('로그인이 필요한 서비스입니다.')
-    }
-    else (
-      navigate('/profile')
-    )
-  }
+      alert('로그인이 필요한 서비스입니다.');
+    } else navigate('/profile');
+  };
 
   // settings 바로가기 로그인 안됬을 시 알람
 
-  const goLinkSettings =(e) =>{
+  const goLinkSettings = (e) => {
     e.preventDefault();
     if (!sessionStorage.getItem('userId')) {
-      
-      alert('로그인이 필요한 서비스입니다.')
-    }
-    else (
-      navigate('/profileupdate')
-    )
-  }
-
+      alert('로그인이 필요한 서비스입니다.');
+    } else navigate('/profileupdate');
+  };
 
   useEffect(() => {
-    
     webSocket.onopen = function () {};
-    
   }, []);
-  
+
   webSocket.onmessage = function (message) {
     // console.log(JSON.parse(message.data),123123)
     //======push알림용 시작==============
@@ -142,16 +131,18 @@ const Header = () => {
         if (currencyCode === 'USD') {
           NotificationManager.error(
             // 볼드 처리 안된 부분에 쓸 내용
-            '\''+
-            JSON.parse(message.data).name +
-              '\'님의 목표 환율 ' +
+            "'" +
+              JSON.parse(message.data).name +
+              "'님의 목표 환율 " +
               JSON.parse(message.data).targetPrice +
-              '에 도달했습니다.' + '\u00A0'+ '\u00A0'+
-              ( (hour < 10) ? `0${hour}` :  hour)+
+              '에 도달했습니다.' +
+              '\u00A0' +
+              '\u00A0' +
+              (hour < 10 ? `0${hour}` : hour) +
               ':' +
-              ( (minute < 10) ? `0${minute}` :  minute) +
+              (minute < 10 ? `0${minute}` : minute) +
               ':' +
-              ( (second < 10) ? `0${second}` :  second),
+              (second < 10 ? `0${second}` : second),
 
             // 볼드 처리 된 부분에 쓸 내용
             JSON.parse(message.data).currencyCode +
@@ -164,16 +155,18 @@ const Header = () => {
         } else if (currencyCode === 'EUR') {
           NotificationManager.success(
             // 볼드 처리 안된 부분에 쓸 내용
-            '\''+
-            JSON.parse(message.data).name +
-              '\'님의 목표 환율 ' +
+            "'" +
+              JSON.parse(message.data).name +
+              "'님의 목표 환율 " +
               JSON.parse(message.data).targetPrice +
-              '에 도달했습니다.'+  '\u00A0'+ '\u00A0'+
-              ( (hour < 10) ? `0${hour}` :  hour)+
+              '에 도달했습니다.' +
+              '\u00A0' +
+              '\u00A0' +
+              (hour < 10 ? `0${hour}` : hour) +
               ':' +
-              ( (minute < 10) ? `0${minute}` :  minute) +
+              (minute < 10 ? `0${minute}` : minute) +
               ':' +
-              ( (second < 10) ? `0${second}` :  second),
+              (second < 10 ? `0${second}` : second),
 
             // 볼드 처리 된 부분에 쓸 내용
             JSON.parse(message.data).currencyCode +
@@ -186,16 +179,18 @@ const Header = () => {
         } else if (currencyCode === 'GBP') {
           NotificationManager.info(
             // 볼드 처리 안된 부분에 쓸 내용
-            '\''+
-            JSON.parse(message.data).name +
-              '\'님의 목표 환율 ' +
+            "'" +
+              JSON.parse(message.data).name +
+              "'님의 목표 환율 " +
               JSON.parse(message.data).targetPrice +
-              '에 도달했습니다.' + '\u00A0'+ '\u00A0'+
-              ( (hour < 10) ? `0${hour}` :  hour)+
+              '에 도달했습니다.' +
+              '\u00A0' +
+              '\u00A0' +
+              (hour < 10 ? `0${hour}` : hour) +
               ':' +
-              ( (minute < 10) ? `0${minute}` :  minute) +
+              (minute < 10 ? `0${minute}` : minute) +
               ':' +
-              ( (second < 10) ? `0${second}` :  second),
+              (second < 10 ? `0${second}` : second),
             // 볼드 처리 된 부분에 쓸 내용
             JSON.parse(message.data).currencyCode +
               ' 현재 환율 : ' +
@@ -207,16 +202,18 @@ const Header = () => {
         } else if (currencyCode === 'JPY') {
           NotificationManager.warning(
             // 볼드 처리 안된 부분에 쓸 내용
-            '\''+
-            JSON.parse(message.data).name +
-              '\'님의 목표 환율 ' +
+            "'" +
+              JSON.parse(message.data).name +
+              "'님의 목표 환율 " +
               JSON.parse(message.data).targetPrice +
-              '에 도달했습니다.' + '\u00A0'+ '\u00A0'+
-              ( (hour < 10) ? `0${hour}` :  hour)+
+              '에 도달했습니다.' +
+              '\u00A0' +
+              '\u00A0' +
+              (hour < 10 ? `0${hour}` : hour) +
               ':' +
-              ( (minute < 10) ? `0${minute}` :  minute) +
+              (minute < 10 ? `0${minute}` : minute) +
               ':' +
-              ( (second < 10) ? `0${second}` :  second),
+              (second < 10 ? `0${second}` : second),
 
             // 볼드 처리 된 부분에 쓸 내용
             JSON.parse(message.data).currencyCode +
@@ -231,18 +228,14 @@ const Header = () => {
     } //=======push알림 끝============
     //========실시간 환율 시작
     else {
-      
       //json형식으로 변환
       //아래처럼 쓰면 해당 데이터만 잘 나오는데 변수에 저장해서 쓰는건 몰겟음ㅇㅂㅇ....ㅠ
-      
-      
     }
   };
 
   //유정 추가 끝
 
   const onSubmit = async (e) => {
-    
     e.preventDefault();
     navigate('/search', {
       state: {
@@ -262,7 +255,6 @@ const Header = () => {
   };
 
   const onLinkSubmit = async (e) => {
-    
     e.preventDefault();
     navigate('/search', {
       state: {
@@ -275,7 +267,6 @@ const Header = () => {
 
   const onChange = (e) => {
     setWord(e.target.value);
-    
   };
 
   const keyDownHandler = (e) => {
@@ -291,8 +282,6 @@ const Header = () => {
   // };
 
   const logoClickHandler = () => {
-    
-
     navigate('/');
   };
 
@@ -310,7 +299,7 @@ const Header = () => {
 
   //환율계산기
   const newExchangeCalc = () => {
-    window.open('/exchangecalc', '_blank', 'height=700, width= 600');
+    window.open('/exchangecalc', '_blank', 'height=600, width= 600');
   };
 
   return (
