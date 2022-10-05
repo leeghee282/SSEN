@@ -47,6 +47,8 @@ function PastDetail() {
   const [keywordLoading, setKeywordLoading] = useState(false);
   const [newsLoading, setNewsLoading] = useState(false);
 
+  const currDataList = [];
+
   useEffect(() => {
     var currBody = {
       date: searchData.date,
@@ -61,7 +63,6 @@ function PastDetail() {
   }, [location]);
 
   const onInitialSet = (inputData) => {
-    // Define data
     var data = [
       {
         code: searchData.currencyCode,
@@ -223,7 +224,7 @@ function PastDetail() {
 
     d.pop();
 
-    var width = 450;
+    var width = 400;
     var height = 300;
 
     cloud()
@@ -301,32 +302,49 @@ function PastDetail() {
   };
 
   return (
-    <div>
-      <h1>{`${searchData.date}`}</h1>
-      <p>{`${searchData.currencyCode}`}</p>
-      <div id="chart">
-        <div id="chartdiv" style={{ width: '500px', height: '300px' }}></div>
-      </div>
-      <Grid container spacing={2}>
-        <Grid item xs={5}>
-          {keywordLoading ? <KeywordLoading /> : null}
-          <div id="word-cloud"></div>
-        </Grid>
-        <br></br>
-        <Grid item xs={5}>
-          {keywordLoading ? null : <h1>{`${showKeyword}`}</h1>}
+    <div id="detailboard">
+      <Grid item xs={10}>
+        <p className="past_title" id="font_test">
+          <span>{`${searchData.date}`}</span>
+          <span className="past_title-smaller"> 의 분석 결과</span>
+          <p
+            className="past_title-smaller"
+            id="font_test"
+          >{`일치율: ${searchData.similarity}%`}</p>
+        </p>
 
-          <div className="newscontainer">
-            <Post posts={currentPosts} loading={newsLoading} />
-            <Paging
-              totalCount={posts.length}
-              postPerPage={postPerPage}
-              postRangeDisplayed={5}
-              handlePageChange={handlePageChange}
-              page={currentPage}
-              loading={newsLoading}
-            />
-          </div>
+        <Grid container>
+          <Grid item xs={7}>
+            <div id="chart">
+              <div
+                id="chartdiv"
+                style={{ width: '500px', height: '300px' }}
+              ></div>
+            </div>
+          </Grid>
+          <Grid item xs={5}>
+            {keywordLoading ? <KeywordLoading /> : null}
+            <div id="word-cloud"></div>
+          </Grid>
+        </Grid>
+
+        <Grid container spacing={2}>
+          <br></br>
+          <Grid item xs={5}>
+            {keywordLoading ? null : <h1>{`${showKeyword}`}</h1>}
+
+            <div className="newscontainer">
+              <Post posts={currentPosts} loading={newsLoading} />
+              <Paging
+                totalCount={posts.length}
+                postPerPage={postPerPage}
+                postRangeDisplayed={5}
+                handlePageChange={handlePageChange}
+                page={currentPage}
+                loading={newsLoading}
+              />
+            </div>
+          </Grid>
         </Grid>
       </Grid>
     </div>
