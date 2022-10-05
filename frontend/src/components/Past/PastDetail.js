@@ -134,6 +134,13 @@ function PastDetail() {
       );
     series.data.setAll(data);
 
+    var cursor = chart.set(
+      'cursor',
+      am5xy.XYCursor.new(root, {
+        behavior: 'selectY',
+      }),
+    );
+
     xAxis.set(
       'tooltip',
       am5.Tooltip.new(root, {
@@ -177,7 +184,7 @@ function PastDetail() {
       data.push(sum);
       onSetWordcloud(data);
 
-      const maxNum = data.length - 2;
+      const maxNum = data.length - 1;
       const firstKeyword = data[maxNum].text;
       setShowKeyword(firstKeyword);
       console.log(firstKeyword);
@@ -207,7 +214,7 @@ function PastDetail() {
     var wordScale = d3
       .scaleLinear()
       .domain([0, sum])
-      .range([0, 300 * 1.2]); //전체 사이즈 대비 차지하는 비율로 wordScale
+      .range([0, 300 * 1.4]); //전체 사이즈 대비 차지하는 비율로 wordScale
 
     // var maxWordcloudNum = d.length - 2;
     // console.log("d", d);
@@ -305,7 +312,8 @@ function PastDetail() {
           {keywordLoading ? <KeywordLoading /> : null}
           <div id="word-cloud"></div>
         </Grid>
-        <Grid item xs={7}>
+        <br></br>
+        <Grid item xs={5}>
           {keywordLoading ? null : <h1>{`${showKeyword}`}</h1>}
 
           <div className="newscontainer">
