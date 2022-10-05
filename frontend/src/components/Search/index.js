@@ -1,20 +1,20 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import "./style.css";
-import { baseNewsURL } from "../../api/index";
-import { Typography, Box, Link, Grid, Container, Avatar } from "@mui/material";
-import { useLocation } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import './style.css';
+import { baseNewsURL } from '../../api/index';
+import { Typography, Box, Link, Grid, Container, Avatar } from '@mui/material';
+import { useLocation } from 'react-router-dom';
 
-import Loading from "../Loading";
-import Post from "./Post";
-import Paging from "./Paging";
+import Loading from '../Loading';
+import Post from './Post';
+import Paging from './Paging';
 
 function Search() {
   const [limit, setLimit] = useState(5);
   const [page, setPage] = useState(1);
   const offset = (page - 1) * limit;
   const [noneDataFlag, setNoneDataFlag] = useState(false); // 데이터가 있는지 없는지 확인하는 곳
-  const [search, setSearch] = useState(""); //검색어
+  const [search, setSearch] = useState(''); //검색어
   const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const handlePageChange = (page) => {
@@ -46,25 +46,25 @@ function Search() {
   const location = useLocation();
 
   const data = [
-    "한국",
-    "미국",
-    "중국",
-    "일본",
-    "경제",
-    "뉴스",
-    "국민",
-    "뉴욕",
-    "코로나",
+    '한국',
+    '미국',
+    '중국',
+    '일본',
+    '경제',
+    '뉴스',
+    '국민',
+    '뉴욕',
+    '코로나',
   ];
   const pick = Math.floor(Math.random() * data.length);
 
   useEffect(() => {
     async function fetchData() {
-      console.log(location.state.search, "확인용");
+      console.log(location.state.search, '확인용');
       setLoading(true);
       try {
         const result = await axios.get(
-          baseNewsURL + `/news/search/${location.state.search}`
+          baseNewsURL + `/news/search/${location.state.search}`,
         );
 
         setPosts(result.data);
@@ -86,21 +86,31 @@ function Search() {
         <div>
           {noneDataFlag && (
             <Box>
+              <p className="jb-default-3 fc-grey" id="font_test">
+                <span className="search-keyword">"{data[pick]}"</span>
+                <span className="jb-smaller">
+                  (으)로 검색해보는 건 어떠세요?
+                </span>
+              </p>
               <Avatar
                 src="images/nosearch.png"
                 variant="square"
                 sx={{
-                  ml: 30,
-                  width: "50%",
-                  height: "30%",
+                  ml: 45,
+                  width: '40%',
+                  height: '20%',
+                  justifyContent: 'center',
                 }}
               ></Avatar>
-              <Typography>추천 검색어 : {data[pick]}</Typography>
             </Box>
           )}
           {!noneDataFlag && (
-            <div >
-              <Post posts={currentPosts} loading={loading} search={location.state.search} />
+            <div>
+              <Post
+                posts={currentPosts}
+                loading={loading}
+                search={location.state.search}
+              />
               <Paging
                 totalCount={posts.length}
                 postPerPage={postPerPage}
