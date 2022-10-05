@@ -1,5 +1,5 @@
-import React from "react";
-import { Avatar } from "@mui/material";
+import React from 'react';
+import { Avatar } from '@mui/material';
 
 const KeywordLoading = () => {
   return (
@@ -7,7 +7,7 @@ const KeywordLoading = () => {
       <Avatar
         variant="square"
         src="/images/keyword_loading_last.gif"
-        sx={{ width: "80%", height: "80%" }}
+        sx={{ width: '60%', height: '60%' }}
       ></Avatar>
     </div>
   );
