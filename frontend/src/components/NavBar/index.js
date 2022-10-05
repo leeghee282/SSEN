@@ -76,7 +76,7 @@ const BasicPopover = () => {
   );
 };
 
-const Header = ({getWeb}) => {
+const Header = () => {
   const navigate = useNavigate();
   // 키워드 저장
   const [word, setWord] = useState('');
@@ -208,7 +208,7 @@ const Header = ({getWeb}) => {
       
       //json형식으로 변환
       //아래처럼 쓰면 해당 데이터만 잘 나오는데 변수에 저장해서 쓰는건 몰겟음ㅇㅂㅇ....ㅠ
-      getWeb(JSON.parse(message.data));
+      
       
     }
   };

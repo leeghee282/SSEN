@@ -299,10 +299,10 @@ function Keyword(props) {
           <div id="word-cloud"></div>
         </Grid>
         <Grid item xs={6}>
-          {keywordLoading ? null : <h1>{`${showKeyword}`}</h1>}
+          {/* {keywordLoading ? null : <h1>{`${showKeyword}`}</h1>} */}
 
           <div className="newscontainer">
-            <Post posts={currentPosts} loading={newsLoading} />
+            <Post posts={currentPosts} loading={newsLoading} showKeyword={showKeyword} />
             <Paging
               totalCount={posts.length}
               postPerPage={postPerPage}

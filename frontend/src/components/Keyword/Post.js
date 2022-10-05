@@ -3,7 +3,7 @@ import PostLoading from '../Loading/PostLoading';
 import { Typography, Box, Link, Grid, Container } from '@mui/material';
 import './style.css';
 
-const Posts = ({ posts, loading }) => {
+const Posts = ({ posts, loading,showKeyword }) => {
   if (loading) {
     return <PostLoading />;
   }
@@ -22,7 +22,7 @@ const Posts = ({ posts, loading }) => {
         marginTop="20px"
         marginBottom="6px"
       >
-        관련 뉴스 정보
+        {showKeyword}  뉴스 정보
       </Typography>
       {posts.map((post, index) => (
         <Link
