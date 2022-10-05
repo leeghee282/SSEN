@@ -1,3 +1,4 @@
+
 .pagination {
   display: flex;
   justify-content: center;
@@ -44,11 +45,17 @@ ul.pagination li.active a {
 
 ul.pagination li.active {
   background-color: #77787A;
+  color: white;
 }
 
 ul.pagination li a:hover,
 ul.pagination li a.active {
   color: white;
+}
+
+ul.pagination li:hover {
+  background-color: #72A9D9;
+  color: white !important;
 }
 
 /* .page-selection {
