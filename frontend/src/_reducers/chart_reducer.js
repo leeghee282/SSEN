@@ -10,17 +10,19 @@ import {
   SET_WORDCLOUD_DATA,
   GET_LIVE_CURR,
   GET_CURR_DATE,
-} from "../_actions/types";
+} from '../_actions/types';
 
 const today = new Date();
 const dayOfToday = today.getDate();
+const monthOfToday = today.getMonth();
 const lastWeek = today.setDate(dayOfToday - 7);
-const startDate = new Date(lastWeek);
+const threeMonthAgo = today.setMonth(monthOfToday - 3);
+const startDate = new Date(threeMonthAgo);
 const endDate = new Date();
 
 const INITIAL_STATE = {
   chartDates: { startDate: startDate, endDate: endDate },
-  chartCode: "USD",
+  chartCode: 'USD',
   doing: 0,
   chartDetailDate: { startDetailDate: startDate, endDetailDate: endDate },
   doDetail: 0,

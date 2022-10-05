@@ -14,3 +14,7 @@
   min-height: 37.5px;
   box-sizing: border-box;
 }
+
+body {
+  background-color: rgb(245, 245, 245);
+}
