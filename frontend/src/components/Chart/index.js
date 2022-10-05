@@ -1073,9 +1073,9 @@ function Chart() {
         <Grid item xs={12}>
           <Calendar />
         </Grid>
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <LiveCurrencyTable/>
-        </Grid>
+        </Grid> */}
       </Grid>
       <div id="chart">
         <div id="chartdiv" style={{ width: '800px', height: '300px' }}></div>
