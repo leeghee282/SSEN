@@ -114,7 +114,7 @@ const Header = () => {
   };
 
   useEffect(() => {
-    webSocket.onopen = function () {};
+    webSocket.onopen = function () { };
   }, []);
 
   webSocket.onmessage = function (message) {
@@ -132,22 +132,22 @@ const Header = () => {
           NotificationManager.error(
             // 볼드 처리 안된 부분에 쓸 내용
             "'" +
-              JSON.parse(message.data).name +
-              "'님의 목표 환율 " +
-              JSON.parse(message.data).targetPrice +
-              '에 도달했습니다.' +
-              '\u00A0' +
-              '\u00A0' +
-              (hour < 10 ? `0${hour}` : hour) +
-              ':' +
-              (minute < 10 ? `0${minute}` : minute) +
-              ':' +
-              (second < 10 ? `0${second}` : second),
+            JSON.parse(message.data).name +
+            "'님의 목표 환율 " +
+            JSON.parse(message.data).targetPrice +
+            '원에 도달했습니다.' +
+            '\u00A0' +
+            '\u00A0' +
+            (hour < 10 ? `0${hour}` : hour) +
+            ':' +
+            (minute < 10 ? `0${minute}` : minute) +
+            ':' +
+            (second < 10 ? `0${second}` : second),
 
             // 볼드 처리 된 부분에 쓸 내용
             JSON.parse(message.data).currencyCode +
-              ' 현재 환율 : ' +
-              JSON.parse(message.data).buyPrice,
+            ' 현재 환율 : ' +
+            JSON.parse(message.data).buyPrice,
 
             // 자동으로 사라지기까지 걸리는 시간 (단위는 ms인거같음)
             6000,
@@ -156,22 +156,22 @@ const Header = () => {
           NotificationManager.success(
             // 볼드 처리 안된 부분에 쓸 내용
             "'" +
-              JSON.parse(message.data).name +
-              "'님의 목표 환율 " +
-              JSON.parse(message.data).targetPrice +
-              '에 도달했습니다.' +
-              '\u00A0' +
-              '\u00A0' +
-              (hour < 10 ? `0${hour}` : hour) +
-              ':' +
-              (minute < 10 ? `0${minute}` : minute) +
-              ':' +
-              (second < 10 ? `0${second}` : second),
+            JSON.parse(message.data).name +
+            "'님의 목표 환율 " +
+            JSON.parse(message.data).targetPrice +
+            '원에 도달했습니다.' +
+            '\u00A0' +
+            '\u00A0' +
+            (hour < 10 ? `0${hour}` : hour) +
+            ':' +
+            (minute < 10 ? `0${minute}` : minute) +
+            ':' +
+            (second < 10 ? `0${second}` : second),
 
             // 볼드 처리 된 부분에 쓸 내용
             JSON.parse(message.data).currencyCode +
-              ' 현재 환율 : ' +
-              JSON.parse(message.data).buyPrice,
+            ' 현재 환율 : ' +
+            JSON.parse(message.data).buyPrice,
 
             // 자동으로 사라지기까지 걸리는 시간 (단위는 ms인거같음)
             6000,
@@ -180,21 +180,21 @@ const Header = () => {
           NotificationManager.info(
             // 볼드 처리 안된 부분에 쓸 내용
             "'" +
-              JSON.parse(message.data).name +
-              "'님의 목표 환율 " +
-              JSON.parse(message.data).targetPrice +
-              '에 도달했습니다.' +
-              '\u00A0' +
-              '\u00A0' +
-              (hour < 10 ? `0${hour}` : hour) +
-              ':' +
-              (minute < 10 ? `0${minute}` : minute) +
-              ':' +
-              (second < 10 ? `0${second}` : second),
+            JSON.parse(message.data).name +
+            "'님의 목표 환율 " +
+            JSON.parse(message.data).targetPrice +
+            '원에 도달했습니다.' +
+            '\u00A0' +
+            '\u00A0' +
+            (hour < 10 ? `0${hour}` : hour) +
+            ':' +
+            (minute < 10 ? `0${minute}` : minute) +
+            ':' +
+            (second < 10 ? `0${second}` : second),
             // 볼드 처리 된 부분에 쓸 내용
             JSON.parse(message.data).currencyCode +
-              ' 현재 환율 : ' +
-              JSON.parse(message.data).buyPrice,
+            ' 현재 환율 : ' +
+            JSON.parse(message.data).buyPrice,
 
             // 자동으로 사라지기까지 걸리는 시간 (단위는 ms인거같음)
             6000,
@@ -203,22 +203,22 @@ const Header = () => {
           NotificationManager.warning(
             // 볼드 처리 안된 부분에 쓸 내용
             "'" +
-              JSON.parse(message.data).name +
-              "'님의 목표 환율 " +
-              JSON.parse(message.data).targetPrice +
-              '에 도달했습니다.' +
-              '\u00A0' +
-              '\u00A0' +
-              (hour < 10 ? `0${hour}` : hour) +
-              ':' +
-              (minute < 10 ? `0${minute}` : minute) +
-              ':' +
-              (second < 10 ? `0${second}` : second),
+            JSON.parse(message.data).name +
+            "'님의 목표 환율 " +
+            JSON.parse(message.data).targetPrice +
+            '원에 도달했습니다.' +
+            '\u00A0' +
+            '\u00A0' +
+            (hour < 10 ? `0${hour}` : hour) +
+            ':' +
+            (minute < 10 ? `0${minute}` : minute) +
+            ':' +
+            (second < 10 ? `0${second}` : second),
 
             // 볼드 처리 된 부분에 쓸 내용
             JSON.parse(message.data).currencyCode +
-              ' 현재 환율 : ' +
-              JSON.parse(message.data).buyPrice,
+            ' 현재 환율 : ' +
+            JSON.parse(message.data).buyPrice,
 
             // 자동으로 사라지기까지 걸리는 시간 (단위는 ms인거같음)
             6000,
