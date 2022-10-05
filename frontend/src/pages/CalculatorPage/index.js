@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import ExchangeCalc from "../../components/ExchangeCalc";
+import React, { useState } from 'react';
+import ExchangeCalc from '../../components/ExchangeCalc';
 
-import "./style.css";
+import './style.css';
 
 function Calculator() {
   const [calc, setCalc] = useState([<ExchangeCalc />]);
@@ -14,8 +14,10 @@ function Calculator() {
     <div id="calc">
       <h1>환율계산기</h1>
       <div>
-        <div>{calc}</div>
-        <button onClick={addCalc}>추가</button>
+        <div className="calcdetail">{calc}</div>
+        <button onClick={addCalc} className="calbutton">
+          비교하기
+        </button>
       </div>
     </div>
   );

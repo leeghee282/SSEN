@@ -302,7 +302,7 @@ function PastDetail() {
   };
 
   return (
-    <div id="detailboard">
+    <Grid id="detailboard" item xs={12}>
       <Grid item xs={10}>
         <p className="past_title" id="font_test">
           <span>{`${searchData.date}`}</span>
@@ -314,7 +314,7 @@ function PastDetail() {
         </p>
 
         <Grid container>
-          <Grid item xs={7}>
+          <Grid item xs={6}>
             <div id="chart">
               <div
                 id="chartdiv"
@@ -322,6 +322,7 @@ function PastDetail() {
               ></div>
             </div>
           </Grid>
+          <Grid item xs={1}></Grid>
           <Grid item xs={5}>
             {keywordLoading ? <KeywordLoading /> : null}
             <div id="word-cloud"></div>
@@ -330,11 +331,13 @@ function PastDetail() {
 
         <Grid container spacing={2}>
           <br></br>
-          <Grid item xs={5}>
-            {keywordLoading ? null : <h1>{`${showKeyword}`}</h1>}
-
+          <Grid item xs={12}>
             <div className="newscontainer">
-              <Post posts={currentPosts} loading={newsLoading} />
+              <Post
+                posts={currentPosts}
+                loading={newsLoading}
+                showKeyword={showKeyword}
+              />
               <Paging
                 totalCount={posts.length}
                 postPerPage={postPerPage}
@@ -347,7 +350,7 @@ function PastDetail() {
           </Grid>
         </Grid>
       </Grid>
-    </div>
+    </Grid>
   );
 }
 
