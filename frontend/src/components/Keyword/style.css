@@ -22,4 +22,31 @@
   padding: 10px;
 }
 
+.keyword_box {
+  background: white;
+  padding-left: 2%;
+  padding-bottom: 3%;
+  margin-top: 30px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  border: none;
+  box-shadow: 0 0 10px 0 #d9d9d9;
+}
+
+.keyword_title { 
+  font-size: 30px;
+  text-align: center;
+  margin: 30px;
+}
+
+.keyword_title-smaller {
+  font-size: 20px;
+}
+
+.keyword_title-grey {
+  /* color: rgba(0, 0, 0, 0.6)  */
+  color: #333333;
+}
+
+
 
