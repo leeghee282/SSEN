@@ -136,7 +136,7 @@ function Keyword(props) {
     var wordScale = d3
       .scaleLinear()
       .domain([0, sum])
-      .range([0, 300 * 1.2]); //전체 사이즈 대비 차지하는 비율로 wordScale
+      .range([0, 300 * 1.3]); //전체 사이즈 대비 차지하는 비율로 wordScale
 
     // var maxWordcloudNum = d.length - 2;
     // console.log("d", d);
@@ -145,8 +145,8 @@ function Keyword(props) {
 
     d.pop();
 
-    var width = 400;
-    var height = 300;
+    var width = 700;
+    var height = 250;
 
     cloud()
       .size([width, height])
@@ -288,18 +288,19 @@ function Keyword(props) {
 
   return (
     <div className="keyword_box">
-      <Grid container spacing={2}>
+      <Grid container spacing={0.5}>
         <p className="keyword_title keyword_title-grey" id="font_test">
           <span>
             {`${moment(chartDetailDate.startDetailDate).format(
               'YYYY.MM.DD',
             )} ~ ${moment(chartDetailDate.endDetailDate).format('YYYY.MM.DD')}`}
           </span>
-          <span className="keyword_title-smaller">의 분석 결과</span>
+          <span className="keyword_title-smaller"> 의 분석 결과</span>
         </p>
         <Grid item xs={12}>
           {keywordLoading ? <KeywordLoading /> : null}
           <div id="word-cloud"></div>
+          <button onClick={pastSearchClickHandler}>과거</button>
         </Grid>
         <Grid item xs={12}>
           {/* {keywordLoading ? null : <h1>{`${showKeyword}`}</h1>} */}
@@ -321,7 +322,6 @@ function Keyword(props) {
           </div>
         </Grid>
       </Grid>
-      <button onClick={pastSearchClickHandler}>과거</button>
     </div>
   );
 }
