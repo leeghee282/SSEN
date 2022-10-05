@@ -22,6 +22,7 @@ function Paging({
       prevPageText={"‹"}
       nextPageText={"›"}
       onChange={handlePageChange}
+      lastPageText={">>"}
     />
   );
 }

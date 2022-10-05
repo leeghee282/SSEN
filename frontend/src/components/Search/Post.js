@@ -7,7 +7,7 @@ const Posts = ({ posts, search }) => {
     <div>
       <p className="jb-default-2 fc-grey " id="font_test">
         <span>"{search}"</span>
-        <span className="jb-smaller">으로 검색한 결과</span>
+        <span className="jb-smaller">(으)로 검색한 결과</span>
       </p>
       {/* <Typography
         sx={{
@@ -67,7 +67,7 @@ const Posts = ({ posts, search }) => {
                           >
                             {post.title.length >= 1
                               ? post.title.replaceAll('…', ' ').substr(0, 30) +
-                                '...'
+                              '...'
                               : post.title}
                           </Typography>
                         </Grid>
@@ -98,7 +98,6 @@ const Posts = ({ posts, search }) => {
           ))}
         </ul>
       </main>
-      <br></br>
       <br></br>
     </div>
   );

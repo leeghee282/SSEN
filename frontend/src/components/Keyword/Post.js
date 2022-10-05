@@ -3,7 +3,7 @@ import PostLoading from '../Loading/PostLoading';
 import { Typography, Box, Link, Grid, Container } from '@mui/material';
 import './style.css';
 
-const Posts = ({ posts, loading,showKeyword }) => {
+const Posts = ({ posts, loading, showKeyword }) => {
   if (loading) {
     return <PostLoading />;
   }
@@ -21,8 +21,9 @@ const Posts = ({ posts, loading,showKeyword }) => {
         fontWeight="600"
         marginTop="20px"
         marginBottom="6px"
+        color={'#333333'}
       >
-        {showKeyword}  뉴스 정보
+        "{showKeyword}" 뉴스 정보
       </Typography>
       {posts.map((post, index) => (
         <Link
@@ -34,12 +35,12 @@ const Posts = ({ posts, loading,showKeyword }) => {
           <Box
             className="card"
             sx={{
-              width: '400px',
+              width: '650px',
               display: 'flex',
 
               height: '100px',
               mt: 1,
-              border: '3px solid black',
+              border: '1px solid black',
               borderRadius: '10px',
 
               '&:hover': {
@@ -49,19 +50,18 @@ const Posts = ({ posts, loading,showKeyword }) => {
           >
             <Grid container>
               <Grid
-                sx={{ borderBottom: '1px dashed black', mt: 1 }}
+                sx={{ borderBottom: '1px dashed black', mt: 2 }}
                 item
                 xs={10}
               >
                 <Typography sx={{ pl: 1, fontSize: '18px', fontWeight: 600 }}>
                   {post.title.length >= 1
-                    ? post.title.replaceAll('…', ' ').substr(0, 19) + '...'
+                    ? post.title.replaceAll('…', ' ').substr(0, 36) + '...'
                     : post.title}
                 </Typography>
               </Grid>
-
               <Grid
-                sx={{ borderBottom: '1px dashed black', mt: 1 }}
+                sx={{ borderBottom: '1px dashed black', mt: 2 }}
                 item
                 xs={2}
               >
@@ -75,9 +75,9 @@ const Posts = ({ posts, loading,showKeyword }) => {
                 </Grid>
               </Grid>
               <Grid item xs={12}>
-                <Typography sx={{ fontSize: '13px', pl: 1 }}>
-                  {post.content.length >= 70
-                    ? post.content.substr(0, 70) + '...'
+                <Typography sx={{ fontSize: '13px', pl: 1, pr: 1, mt: 1 }}>
+                  {post.content.length >= 110
+                    ? post.content.substr(0, 110) + '...'
                     : post.content}
                 </Typography>
               </Grid>

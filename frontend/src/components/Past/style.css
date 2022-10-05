@@ -9,18 +9,7 @@
   border: 1px solid #828282;
 }
 
-.pagination li {
-  display: inline-block;
-  background: #bdbec2;
-  overflow: hidden;
-}
 
-.pagination li a {
-  text-decoration: none;
-  width: 10px;
-  height: 10px;
-  padding: 10px;
-}
 
 #searchlist {
   font-family: 'MICEGothic Bold';

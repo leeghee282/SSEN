@@ -75,15 +75,36 @@ const LiveCurrencyTable = () => {
   const getStartData = async () => {
     await axios.get(baseURL + '/api/v1/live').then((response) => {
       console.log(response.data, '초기데이터 세팅');
+      const reg1 = response.data[0].regdate.substr(
+        response.data[0].regdate.indexOf(' ') + 1,
+        8,
+      );
+      const reg4 = response.data[1].regdate.substr(
+        response.data[1].regdate.indexOf(' ') + 1,
+        8,
+      );
+      const reg2 = response.data[2].regdate.substr(
+        response.data[2].regdate.indexOf(' ') + 1,
+        8,
+      );
+      const reg3 = response.data[3].regdate.substr(
+        response.data[3].regdate.indexOf(' ') + 1,
+        8,
+      );
+      const reg5 = response.data[4].regdate.substr(
+        response.data[4].regdate.indexOf(' ') + 1,
+        8,
+      );
+
       setSellPrice1(response.data[0].sellPrice);
       setBuyPrice1(response.data[0].buyPrice);
       setHighPrice1(response.data[0].highPrice);
       setLowPrice1(response.data[0].lowPrice);
       setVariance1(response.data[0].variance);
       setVariancePrice1(response.data[0].variancePrice);
-      setHour1(response.data[0].hour);
-      setMinute1(response.data[0].minute);
-      setSecond1(response.data[0].second);
+      setHour1(reg1.substr(0, 2));
+      setMinute1(reg1.substr(3, 2));
+      setSecond1(reg1.substr(6, 2));
 
       setSellPrice4(response.data[1].sellPrice);
       setBuyPrice4(response.data[1].buyPrice);
@@ -91,9 +112,9 @@ const LiveCurrencyTable = () => {
       setLowPrice4(response.data[1].lowPrice);
       setVariance4(response.data[1].variance);
       setVariancePrice4(response.data[1].variancePrice);
-      setHour4(response.data[1].hour);
-      setMinute4(response.data[1].minute);
-      setSecond4(response.data[1].second);
+      setHour4(reg4.substr(0, 2));
+      setMinute4(reg4.substr(3, 2));
+      setSecond4(reg4.substr(6, 2));
 
       setSellPrice2(response.data[2].sellPrice);
       setBuyPrice2(response.data[2].buyPrice);
@@ -101,9 +122,9 @@ const LiveCurrencyTable = () => {
       setLowPrice2(response.data[2].lowPrice);
       setVariance2(response.data[2].variance);
       setVariancePrice2(response.data[2].variancePrice);
-      setHour2(response.data[2].hour);
-      setMinute2(response.data[2].minute);
-      setSecond2(response.data[2].second);
+      setHour2(reg2.substr(0, 2));
+      setMinute2(reg2.substr(3, 2));
+      setSecond2(reg2.substr(6, 2));
 
       setSellPrice3(response.data[3].sellPrice);
       setBuyPrice3(response.data[3].buyPrice);
@@ -111,9 +132,9 @@ const LiveCurrencyTable = () => {
       setLowPrice3(response.data[3].lowPrice);
       setVariance3(response.data[3].variance);
       setVariancePrice3(response.data[3].variancePrice);
-      setHour3(response.data[3].hour);
-      setMinute3(response.data[3].minute);
-      setSecond3(response.data[3].second);
+      setHour3(reg3.substr(0, 2));
+      setMinute3(reg3.substr(3, 2));
+      setSecond3(reg3.substr(6, 2));
 
       setSellPrice5(response.data[4].sellPrice);
       setBuyPrice5(response.data[4].buyPrice);
@@ -121,9 +142,9 @@ const LiveCurrencyTable = () => {
       setLowPrice5(response.data[4].lowPrice);
       setVariance5(response.data[4].variance);
       setVariancePrice5(response.data[4].variancePrice);
-      setHour5(response.data[4].hour);
-      setMinute5(response.data[4].minute);
-      setSecond5(response.data[4].second);
+      setHour5(reg5.substr(0, 2));
+      setMinute5(reg5.substr(3, 2));
+      setSecond5(reg5.substr(6, 2));
     });
   };
   //////////웹소켓 시작
@@ -145,6 +166,9 @@ const LiveCurrencyTable = () => {
     }
     //========실시간 환율 시작
     else {
+      const hour = JSON.parse(message.data).regdate.time.hour;
+      const minute = JSON.parse(message.data).regdate.time.minute;
+      const second = JSON.parse(message.data).regdate.time.second;
       if (JSON.parse(message.data).cc2 === 'USD') {
         //json형식으로 변환
         //   console.log(JSON.parse(message.data));
@@ -157,9 +181,9 @@ const LiveCurrencyTable = () => {
         setLowPrice1(JSON.parse(message.data).lowPrice);
         setVariance1(JSON.parse(message.data).variance);
         setVariancePrice1(JSON.parse(message.data).variancePrice);
-        setHour1(JSON.parse(message.data).regdate.time.hour);
-        setMinute1(JSON.parse(message.data).regdate.time.minute);
-        setSecond1(JSON.parse(message.data).regdate.time.second);
+        setHour1(hour < 10 ? `0${hour}` : hour);
+        setMinute1(minute < 10 ? `0${minute}` : minute);
+        setSecond1(second < 10 ? `0${second}` : second);
         //  console.log("==========="+JSON.parse(message.data).regdate.time.hour);
         // console.log(JSON.parse(message.data).regdate);
       }
@@ -172,9 +196,9 @@ const LiveCurrencyTable = () => {
         setLowPrice2(JSON.parse(message.data).lowPrice);
         setVariance2(JSON.parse(message.data).variance);
         setVariancePrice2(JSON.parse(message.data).variancePrice);
-        setHour2(JSON.parse(message.data).regdate.time.hour);
-        setMinute2(JSON.parse(message.data).regdate.time.minute);
-        setSecond2(JSON.parse(message.data).regdate.time.second);
+        setHour2(hour < 10 ? `0${hour}` : hour);
+        setMinute2(minute < 10 ? `0${minute}` : minute);
+        setSecond2(second < 10 ? `0${second}` : second);
         //  console.log("==========="+JSON.parse(message.data).regdate.time.hour);
         // console.log(JSON.parse(message.data).regdate);
       }
@@ -186,9 +210,9 @@ const LiveCurrencyTable = () => {
         setLowPrice3(JSON.parse(message.data).lowPrice);
         setVariance3(JSON.parse(message.data).variance);
         setVariancePrice3(JSON.parse(message.data).variancePrice);
-        setHour3(JSON.parse(message.data).regdate.time.hour);
-        setMinute3(JSON.parse(message.data).regdate.time.minute);
-        setSecond3(JSON.parse(message.data).regdate.time.second);
+        setHour3(hour < 10 ? `0${hour}` : hour);
+        setMinute3(minute < 10 ? `0${minute}` : minute);
+        setSecond3(second < 10 ? `0${second}` : second);
         //  console.log("==========="+JSON.parse(message.data).regdate.time.hour);
         // console.log(JSON.parse(message.data).regdate);
       }
@@ -200,9 +224,9 @@ const LiveCurrencyTable = () => {
         setLowPrice4(JSON.parse(message.data).lowPrice);
         setVariance4(JSON.parse(message.data).variance);
         setVariancePrice4(JSON.parse(message.data).variancePrice);
-        setHour4(JSON.parse(message.data).regdate.time.hour);
-        setMinute4(JSON.parse(message.data).regdate.time.minute);
-        setSecond4(JSON.parse(message.data).regdate.time.second);
+        setHour4(hour < 10 ? `0${hour}` : hour);
+        setMinute4(minute < 10 ? `0${minute}` : minute);
+        setSecond4(second < 10 ? `0${second}` : second);
         //  console.log("==========="+JSON.parse(message.data).regdate.time.hour);
         // console.log(JSON.parse(message.data).regdate);
       }
@@ -214,9 +238,9 @@ const LiveCurrencyTable = () => {
         setLowPrice5(JSON.parse(message.data).lowPrice);
         setVariance5(JSON.parse(message.data).variance);
         setVariancePrice5(JSON.parse(message.data).variancePrice);
-        setHour5(JSON.parse(message.data).regdate.time.hour);
-        setMinute5(JSON.parse(message.data).regdate.time.minute);
-        setSecond5(JSON.parse(message.data).regdate.time.second);
+        setHour5(hour < 10 ? `0${hour}` : hour);
+        setMinute5(minute < 10 ? `0${minute}` : minute);
+        setSecond5(second < 10 ? `0${second}` : second);
         //  console.log("==========="+JSON.parse(message.data).regdate.time.hour);
         // console.log(JSON.parse(message.data).regdate);
       }
