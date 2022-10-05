@@ -50,6 +50,7 @@ function ExchangeCalc() {
   const [basicRate, setBasicRate] = useState('');
 
   const [selectStatus, setSelectStatus] = useState(true);
+  const [selectCurrStatus, setSelectCurrStatus] = useState(true);
 
   var changeStatus = 0;
 
@@ -102,9 +103,11 @@ function ExchangeCalc() {
   ];
 
   const onSelectCurrencyHandler = (selectedOption) => {
+    setSelectCurrStatus(true);
     setCodeValue(selectedOption.value);
     setFromCurrencyName(selectedOption.label.substr(0, 3));
     setToCurrencyName(selectedOption.label.substr(-3));
+    setSelectCurrStatus(false);
   };
 
   const onSetExchangeRate = async (date, code) => {
@@ -180,20 +183,44 @@ function ExchangeCalc() {
         </Grid>
         <Grid item xs={12}>
           {selectStatus ? (
-            <p></p>
+            <p>은행을 선택해주세요.</p>
           ) : (
-            <p>{`${bank}, 수수료 ${commission}, 기본 우대율 ${basicRate}`}</p>
+            <p>{`${bank}, 수수료 ${commission}%, 기본 우대율 ${basicRate}%`}</p>
           )}
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={5}>
+          <label>화폐 선택</label>
           <Select options={currencylist} onChange={onSelectCurrencyHandler} />
         </Grid>
-        <Grid item xs={12}>
-          <label>{`${fromCurrencyName}`}</label>
-          <input onChange={onExchangeCalculation} value={fromCurrency} />
-          <p>{`${toCurrencyName} : ${toCurrency}`}</p>
+        <Grid item xs={4}>
+          <button onClick={onChangeCalculation} className="calbutton">
+            순서바꾸기
+          </button>
         </Grid>
-        <button onClick={onChangeCalculation}>change</button>
+        <Grid item xs={12}>
+          {selectCurrStatus ? (
+            <p>화폐를 선택해주세요.</p>
+          ) : (
+            <p>
+              <span className="calcurr1">
+                <label>{`${fromCurrencyName} : `}</label>
+                <input
+                  className="calbox"
+                  onChange={onExchangeCalculation}
+                  value={fromCurrency}
+                />
+              </span>
+              <span>{' = '}</span>
+              {/* <p>
+                <button onClick={onChangeCalculation}>change</button>
+              </p> */}
+              <span className="calcurr2">
+                <label>{`${toCurrencyName} : `}</label>
+                <input className="calbox" value={toCurrency} />
+              </span>
+            </p>
+          )}
+        </Grid>
       </Grid>
     </div>
   );
