@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import './style.css';
+
 import moment from 'moment';
 import * as d3 from 'd3';
 import cloud from 'd3-cloud';
@@ -285,24 +287,29 @@ function Keyword(props) {
   };
 
   return (
-    <div>
+    <div className="keyword_box">
       <Grid container spacing={2}>
+        <p className="keyword_title keyword_title-grey" id="font_test">
+          <span>
+            {`${moment(chartDetailDate.startDetailDate).format(
+              'YYYY.MM.DD',
+            )} ~ ${moment(chartDetailDate.endDetailDate).format('YYYY.MM.DD')}`}
+          </span>
+          <span className="keyword_title-smaller">의 분석 결과</span>
+        </p>
         <Grid item xs={12}>
-          <h1>{`${moment(chartDetailDate.startDetailDate).format(
-            'YYYY.MM.DD',
-          )} ~ ${moment(chartDetailDate.endDetailDate).format(
-            'YYYY.MM.DD',
-          )}`}</h1>
-        </Grid>
-        <Grid item xs={6}>
           {keywordLoading ? <KeywordLoading /> : null}
           <div id="word-cloud"></div>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12}>
           {/* {keywordLoading ? null : <h1>{`${showKeyword}`}</h1>} */}
 
           <div className="newscontainer">
-            <Post posts={currentPosts} loading={newsLoading} showKeyword={showKeyword} />
+            <Post
+              posts={currentPosts}
+              loading={newsLoading}
+              showKeyword={showKeyword}
+            />
             <Paging
               totalCount={posts.length}
               postPerPage={postPerPage}

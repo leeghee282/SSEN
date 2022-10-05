@@ -165,6 +165,7 @@ function ExchangeCalc() {
     <div id="calcboard">
       <Grid container spacing={2}>
         <Grid item xs={4}>
+          <span id="calclabel">날짜 선택</span>
           <DatePicker
             dateFormat="yyyy-MM-dd"
             selected={selectDate}
@@ -174,6 +175,7 @@ function ExchangeCalc() {
         </Grid>
         <Grid item xs={0.5}></Grid>
         <Grid item xs={5}>
+          <span>은행 선택</span>
           <Select options={banklist} onChange={onSelectBankHandler} />
         </Grid>
         <Grid item xs={12}>

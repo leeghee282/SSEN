@@ -3,10 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
-import { Typography, Box, Link, Grid, Container } from '@mui/material';
+import { Typography, Box, Link, Grid, Container, Card } from '@mui/material';
 
 import { getPastData, getPastDatalist } from '../../_actions/past_action';
 import Spinner from '../Loading/Spinner';
+import Loading from '../Loading';
 
 function PastSearch() {
   const dispatch = useDispatch();
@@ -46,39 +47,48 @@ function PastSearch() {
   return (
     <div>
       {pastLoading ? (
-        <Spinner />
+        <Loading />
       ) : (
-        <div id="searchlist">
+        <Grid container id="searchlist">
+          <Grid
+            item
+            xs={10}
+            sx={{ textAlign: 'center', fontSize: 40, my: 2, mx: 2 }}
+          >
+            키워드 분석 결과
+          </Grid>
           {searchList.map((search, index) => {
             return (
-              <Box
-                sx={{
-                  padding: 0.2,
-                  '&:hover': {
-                    background: '#DEE0E4',
-                  },
-                }}
-              >
-                <ul
-                  onClick={(event) => pastClickHandler(event, index)}
-                  style={{ cursor: 'pointer' }}
-                  key={index}
+              <Grid item xs={5} sx={{ mx: 2, my: 1 }}>
+                <Card
+                  sx={{
+                    padding: 2,
+                    '&:hover': {
+                      background: '#DEE0E4',
+                    },
+                  }}
                 >
-                  <li id="searchdate">{search.date}</li>
-                  <li>일치율: {search.similarity}%</li>
-                  <li>
-                    주요통화 변화율:{' '}
-                    <span
-                      style={{ color: search.variance > 0 ? 'red' : 'blue' }}
-                    >
-                      {search.currencyCode} {search.variance}%
-                    </span>
-                  </li>
-                </ul>
-              </Box>
+                  <ul
+                    onClick={(event) => pastClickHandler(event, index)}
+                    style={{ cursor: 'pointer' }}
+                    key={index}
+                  >
+                    <li id="searchdate">{search.date}</li>
+                    <li>일치율: {search.similarity}%</li>
+                    <li>
+                      주요통화 변화율:{' '}
+                      <span
+                        style={{ color: search.variance > 0 ? 'red' : 'blue' }}
+                      >
+                        {search.currencyCode} {search.variance}%
+                      </span>
+                    </li>
+                  </ul>
+                </Card>
+              </Grid>
             );
           })}
-        </div>
+        </Grid>
       )}
     </div>
   );
