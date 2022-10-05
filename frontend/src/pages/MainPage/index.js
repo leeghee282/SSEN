@@ -10,7 +10,7 @@ import LiveCurrencyTable from '../../components/LiveCurrencyTable';
 const MainCalendar = () => {
   return (
     <>
-      <Grid container={2} sx={{ width: 'fit-content' }}>
+      <Grid container spacing={2} sx={{ width: 'fit-content' }}>
         <Grid item xs={9}>
           {/* <Calendar /> */}
           <Chart />
