@@ -308,7 +308,7 @@ function Keyword(props) {
         <Grid item xs={12}>
           {keywordLoading ? <KeywordLoading /> : null}
           <div id="word-cloud"></div>
-          <button onClick={pastSearchClickHandler}>과거</button>
+          {/* <button onClick={pastSearchClickHandler}>과거</button> */}
         </Grid>
 
         <Grid item xs={12}>
