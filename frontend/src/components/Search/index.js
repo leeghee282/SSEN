@@ -102,6 +102,7 @@ function Search() {
             <div >
               <Post posts={currentPosts} loading={loading} search={location.state.search} />
               <Paging
+                
                 totalCount={posts.length}
                 postPerPage={postPerPage}
                 postRangeDisplayed={10}
