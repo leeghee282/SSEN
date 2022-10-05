@@ -95,7 +95,33 @@ const Header = () => {
   // 웹소켓 연결
   
   // const webSocket = new WebSocket("wss://loclhost:8080/ssen");
-  
+
+  // 프로필 버튼 바로가기 로그인 안됬을 시 알람
+  const goLinkProfile =(e) =>{
+    e.preventDefault();
+    if (!sessionStorage.getItem('userId')) {
+      
+      alert('로그인이 필요한 서비스입니다.')
+    }
+    else (
+      navigate('/profile')
+    )
+  }
+
+  // settings 바로가기 로그인 안됬을 시 알람
+
+  const goLinkSettings =(e) =>{
+    e.preventDefault();
+    if (!sessionStorage.getItem('userId')) {
+      
+      alert('로그인이 필요한 서비스입니다.')
+    }
+    else (
+      navigate('/profileupdate')
+    )
+  }
+
+
   useEffect(() => {
     
     webSocket.onopen = function () {};
@@ -336,7 +362,7 @@ const Header = () => {
             뉴스검색
           </Button>
           <Button
-            href="/profile"
+            onClick={goLinkProfile}
             id="font_test"
             sx={{
               fontSize: '12px',
@@ -348,7 +374,7 @@ const Header = () => {
             보유 및 관심화폐
           </Button>
           <Button
-            href="/profileupdate"
+            onClick={goLinkSettings}
             id="font_test"
             sx={{ fontSize: '12px', fontWeight: '700', color: 'black' }}
           >

@@ -16,3 +16,12 @@
   /* padding-bottom: 3%; */
   /* border-radius: 20px; */
 }
+
+
+
+button.MuiToggleButton-root.Mui-selected {
+  
+  background-color: rgba(23, 67, 110, 0.467) !important;
+  color: #DDDFE3;
+  border-color: #365b73 !important;
+}

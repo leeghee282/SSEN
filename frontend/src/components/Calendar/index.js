@@ -75,7 +75,10 @@ const RowRadioButtonsGroup = () => {
         국가선택
       </FormLabel> */}
       <ToggleButtonGroup
-        sx={{ mt: 1, width: '800px', height: '30px' }}
+        sx={{ mt: 3, width: '820px', height: '30px' ,color:"black"
+            }}
+        
+        
         row
         size="large"
         fullWidth="true"
@@ -244,7 +247,7 @@ const Calendar = () => {
   };
 
   return (
-    <Box>
+    <Box >
       <Grid container>
         <Typography
           component="h1"
@@ -261,9 +264,8 @@ const Calendar = () => {
         </Typography>
         <Grid
           container
-          sx={{ mt: 2 }}
-          direction="row"
-          justifyContent="space-between"
+          sx={{ mt: 2,display:"flex",justifyContent:"space-between" }}
+          
         >
           <Grid item xs={2.5}>
             <DatePicker
@@ -278,7 +280,7 @@ const Calendar = () => {
               endDate={endDate}
             />
           </Grid>
-          <Grid item xs={1}>
+          <Grid item xs={0.4}>
             <Typography sx={{ fontWeight: 500 }}>~</Typography>
           </Grid>
           <Grid item xs={2.5}>
@@ -295,7 +297,7 @@ const Calendar = () => {
               minDate={startDate}
             />
           </Grid>
-          <Grid item xs={6} justifyContent="center">
+          <Grid item xs={5} justifyContent="center">
             {DateFilterData.map((e, idx) => (
               <Button
                 size="small"
