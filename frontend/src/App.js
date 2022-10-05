@@ -29,7 +29,7 @@ function App() {
           <Route path="/search" element={<Search />} />
           <Route path="/pastsearch" element={<PastSearch />} />
           <Route path="/pastdetail" element={<PastDetail />} />
-          <Route path="/ss" element={<WebTest getWebData={getWebData}/>}/>
+          
         </Route>
         {/* Header 없는 페이지 */}
         <Route path="/signup" element={<Signup />} />
