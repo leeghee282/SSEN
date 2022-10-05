@@ -5,7 +5,7 @@ import Keyword from '../../components/Keyword';
 import { Box } from '@mui/system';
 import { Grid } from '@mui/material';
 import CommunityButton from '../../components/Community/CommunityButton';
-
+import LiveCurrencyTable from '../../components/LiveCurrencyTable';
 
 const MainCalendar = () => {
   return (
@@ -17,7 +17,9 @@ const MainCalendar = () => {
           <Keyword />
         </Grid>
         <Grid item xs={3}>
-          <CommunityButton></CommunityButton>
+          <LiveCurrencyTable />
+          <br />
+          <CommunityButton />
         </Grid>
       </Grid>
     </>
