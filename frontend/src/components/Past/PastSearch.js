@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, useLocation } from "react-router-dom";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate, useLocation } from 'react-router-dom';
+import axios from 'axios';
 
-// import { Typography, Box, Link, Grid, Container, Avatar } from "@mui/material";
+import { Typography, Box, Link, Grid, Container } from '@mui/material';
 
-import { getPastData, getPastDatalist } from "../../_actions/past_action";
-import Spinner from "../Loading/Spinner";
+import { getPastData, getPastDatalist } from '../../_actions/past_action';
+import Spinner from '../Loading/Spinner';
 
 function PastSearch() {
   const dispatch = useDispatch();
@@ -37,7 +37,7 @@ function PastSearch() {
   };
 
   const pastClickHandler = (event, key) => {
-    navigate("/pastdetail", { state: { searchData: pastDatalist[key] } });
+    navigate('/pastdetail', { state: { searchData: pastDatalist[key] } });
     // dispatch(getPastData()).then((response) => {
     //   console.log(response.payload);
     // });
@@ -48,19 +48,34 @@ function PastSearch() {
       {pastLoading ? (
         <Spinner />
       ) : (
-        <div>
+        <div id="searchlist">
           {searchList.map((search, index) => {
             return (
-              <ul
-                onClick={(event) => pastClickHandler(event, index)}
-                style={{ cursor: "pointer" }}
-                key={index}
+              <Box
+                sx={{
+                  padding: 0.2,
+                  '&:hover': {
+                    background: '#DEE0E4',
+                  },
+                }}
               >
-                <li>{search.date}</li>
-                <li>{search.similarity}</li>
-                <li>{search.currencyCode}</li>
-                <li>{search.variance}</li>
-              </ul>
+                <ul
+                  onClick={(event) => pastClickHandler(event, index)}
+                  style={{ cursor: 'pointer' }}
+                  key={index}
+                >
+                  <li id="searchdate">{search.date}</li>
+                  <li>일치율: {search.similarity}%</li>
+                  <li>
+                    주요통화 변화율:{' '}
+                    <span
+                      style={{ color: search.variance > 0 ? 'red' : 'blue' }}
+                    >
+                      {search.currencyCode} {search.variance}%
+                    </span>
+                  </li>
+                </ul>
+              </Box>
             );
           })}
         </div>

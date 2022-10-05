@@ -21,3 +21,16 @@
   height: 10px;
   padding: 10px;
 }
+
+#searchlist {
+  font-family: 'MICEGothic Bold';
+}
+
+#searchdate {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+li {
+  margin: 5px;
+}
