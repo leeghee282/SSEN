@@ -40,7 +40,7 @@ const Posts = ({ posts, loading, showKeyword }) => {
 
               height: '100px',
               mt: 1,
-              border: '1px solid black',
+              border: '1px solid #757575',
               borderRadius: '10px',
 
               '&:hover': {
