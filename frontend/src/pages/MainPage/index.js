@@ -17,7 +17,7 @@ const MainCalendar = () => {
           <Keyword />
         </Grid>
         <Grid item xs={3}>
-          <LiveCurrencyTable />
+          {/* <LiveCurrencyTable /> */}
           <br />
           <CommunityButton />
         </Grid>
