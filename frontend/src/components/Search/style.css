@@ -2,8 +2,8 @@
     background-color: white;
     border-radius: 15px;
     padding-left: 20px;
-    padding-right: 10px;
-    height:180px;
+    padding-right: 20px;
+    height:160px;
     margin-top: 15px;
     box-shadow: 0 0 10px 0 #d9d9d9;
 }
@@ -22,4 +22,32 @@
 
 .fc-grey {
     color: #373737;
+}
+
+.search-keyword{
+    color: #0062c4;
+    font-size: 55px;
+}
+
+.search-title{
+    display: flex;
+    align-items: center;
+    color: #003870;
+    font-size: 26px !important;
+}
+
+.search-press{
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    color: #1a63ac;
+}
+
+.search-result{
+    margin: 50px !important;
+
+}
+
+.search-content{
+    color: rgb(73, 73, 73) !important;
 }

@@ -145,8 +145,8 @@ function Keyword(props) {
 
     d.pop();
 
-    var width = 700;
-    var height = 250;
+    var width = 669;
+    var height = 400;
 
     cloud()
       .size([width, height])
@@ -288,7 +288,7 @@ function Keyword(props) {
 
   return (
     <div className="keyword_box">
-      <Grid container spacing={0.5}>
+      <Grid container spacing={2} justifyContent="space-between">
         <p className="keyword_title keyword_title-grey" id="font_test">
           <span>
             {`${moment(chartDetailDate.startDetailDate).format(
@@ -297,11 +297,20 @@ function Keyword(props) {
           </span>
           <span className="keyword_title-smaller"> 의 분석 결과</span>
         </p>
+        <button
+          id="font_test"
+          className="custom-btn btn-3"
+          onClick={pastSearchClickHandler}
+        >
+          <span>과거 키워드 검색</span>
+        </button>
+
         <Grid item xs={12}>
           {keywordLoading ? <KeywordLoading /> : null}
           <div id="word-cloud"></div>
           <button onClick={pastSearchClickHandler}>과거</button>
         </Grid>
+
         <Grid item xs={12}>
           {/* {keywordLoading ? null : <h1>{`${showKeyword}`}</h1>} */}
 
