@@ -16,6 +16,13 @@
     margin: 30px;
 }
 
+.jb-default-3 { 
+    font-size: 50px;
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 0;
+}
+
 .jb-smaller {
     font-size: 30px;
 }
