@@ -348,8 +348,10 @@ const Header = ({getWeb}) => {
             Settings
           </Button>
         </Box>
-        <Box sx={{ width: 400 }}></Box>
-        <Box sx={{ width: 150 }}></Box>
+
+        <Box sx={{ width: 300 }}></Box>
+
+        <Box sx={{ width: 100 }}></Box>
         <Box></Box>
         <Box></Box>
 
