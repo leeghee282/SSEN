@@ -16,8 +16,13 @@ const today = new Date();
 const dayOfToday = today.getDate();
 const monthOfToday = today.getMonth();
 const lastWeek = today.setDate(dayOfToday - 7);
-const threeMonthAgo = today.setMonth(monthOfToday - 3);
-const startDate = new Date(threeMonthAgo);
+const threeMonthAgo = new Date(
+  today.getFullYear(),
+  today.getMonth() - 3,
+  today.getDate(),
+);
+// const threeMonthAgo = today.setMonth(monthOfToday - 3);
+const startDate = threeMonthAgo;
 const endDate = new Date();
 
 const INITIAL_STATE = {

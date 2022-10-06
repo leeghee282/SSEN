@@ -241,12 +241,12 @@ function Chart() {
         );
 
         series.columns.template.states.create('riseFromOpen', {
-          fill: am5.color(0x76b041),
-          stroke: am5.color(0x76b041),
+          fill: am5.color(0xff5b5b),
+          stroke: am5.color(0xff5b5b),
         });
         series.columns.template.states.create('dropFromOpen', {
-          fill: am5.color(0xe4572e),
-          stroke: am5.color(0xe4572e),
+          fill: am5.color(0x5d5fef),
+          stroke: am5.color(0x5d5fef),
         });
 
         series
@@ -463,14 +463,13 @@ function Chart() {
           }),
         );
 
-
         series.columns.template.states.create('riseFromOpen', {
-          fill: am5.color(0xFF5B5B),
-          stroke: am5.color(0xFF5B5B),
+          fill: am5.color(0xff5b5b),
+          stroke: am5.color(0xff5b5b),
         });
         series.columns.template.states.create('dropFromOpen', {
-          fill: am5.color(0x5D5FEF),
-          stroke: am5.color(0x5D5FEF),
+          fill: am5.color(0x5d5fef),
+          stroke: am5.color(0x5d5fef),
         });
 
         series
@@ -907,8 +906,7 @@ function Chart() {
             lowValueYField: 'low',
             valueYField: 'close',
             valueXField: 'date',
-            tooltip: am5.Tooltip.new(root, {fontFamily: 'MICEGothic Bold'      }),
-            
+            tooltip: am5.Tooltip.new(root, { fontFamily: 'MICEGothic Bold' }),
           }),
         );
 

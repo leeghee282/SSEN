@@ -120,12 +120,12 @@ function PastDetail() {
     );
 
     series.columns.template.states.create('riseFromOpen', {
-      fill: am5.color(0x76b041),
-      stroke: am5.color(0x76b041),
+      fill: am5.color(0xff5b5b),
+      stroke: am5.color(0xff5b5b),
     });
     series.columns.template.states.create('dropFromOpen', {
-      fill: am5.color(0xe4572e),
-      stroke: am5.color(0xe4572e),
+      fill: am5.color(0x5d5fef),
+      stroke: am5.color(0x5d5fef),
     });
 
     series
@@ -204,9 +204,8 @@ function PastDetail() {
         indexOfLastPost = currentPage * postPerPage;
         indexOfFirstPost = indexOfLastPost - postPerPage;
         currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+        setNewsLoading(false);
       });
-
-      setNewsLoading(false);
     });
   };
 
@@ -216,7 +215,7 @@ function PastDetail() {
     var wordScale = d3
       .scaleLinear()
       .domain([0, sum])
-      .range([0, 300 * 1.4]); //전체 사이즈 대비 차지하는 비율로 wordScale
+      .range([0, 300 * 1.1]); //전체 사이즈 대비 차지하는 비율로 wordScale
 
     // var maxWordcloudNum = d.length - 2;
     // console.log("d", d);
@@ -292,9 +291,8 @@ function PastDetail() {
         indexOfLastPost = currentPage * postPerPage;
         indexOfFirstPost = indexOfLastPost - postPerPage;
         currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+        newsLoadingChange();
       });
-
-      newsLoadingChange();
     };
 
     const newsLoadingChange = () => {
@@ -331,10 +329,10 @@ function PastDetail() {
           </Grid>
         </Grid>
 
-        <Grid container >
+        <Grid container>
           <br></br>
           <Grid item xs={12}>
-            <div >
+            <div>
               <Post
                 posts={currentPosts}
                 loading={newsLoading}

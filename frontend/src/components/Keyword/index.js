@@ -120,9 +120,9 @@ function Keyword(props) {
         indexOfLastPost = currentPage * postPerPage;
         indexOfFirstPost = indexOfLastPost - postPerPage;
         currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
-      });
 
-      setNewsLoading(false);
+        setNewsLoading(false);
+      });
 
       // dispatch(getPastDatalist(keywordList)).then((res) => {
       //   console.log(res.payload);
@@ -212,9 +212,8 @@ function Keyword(props) {
         indexOfLastPost = currentPage * postPerPage;
         indexOfFirstPost = indexOfLastPost - postPerPage;
         currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+        newsLoadingChange();
       });
-
-      newsLoadingChange();
     };
 
     const newsLoadingChange = () => {
@@ -272,9 +271,8 @@ function Keyword(props) {
         indexOfLastPost = currentPage * postPerPage;
         indexOfFirstPost = indexOfLastPost - postPerPage;
         currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+        setNewsLoading(false);
       });
-
-      setNewsLoading(false);
 
       // dispatch(getPastDatalist(keywordList)).then((res) => {
       //   console.log(res.payload);
@@ -310,8 +308,8 @@ function Keyword(props) {
         ></Avatar>
         <Box sx={{ ml: 83, mt: 9 }} className="info2">
           <Typography id="font_test" fontSize="14px">
-            > 현재 키워드 분석 결과와 유사한 키워드 분석 결과를 가진 날짜들을
-            제공합니다. <br></br>> 유사도를 통해 현재 날짜와의 유사한 정도를
+            현재 키워드 분석 결과와 유사한 키워드 분석 결과를 가진 날짜들을
+            제공합니다. <br></br> 유사도를 통해 현재 날짜와의 유사한 정도를
             확인할 수 있습니다.<br></br>
             <br></br> * S$EN 서비스는 변동률이 심한 날짜 100개의 키워드 분석
             결과를 가지고 있습니다.
