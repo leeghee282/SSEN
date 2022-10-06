@@ -8,6 +8,7 @@ import { Typography, Box, Link, Grid, Container, Card } from '@mui/material';
 import { getPastData, getPastDatalist } from '../../_actions/past_action';
 import Spinner from '../Loading/Spinner';
 import Loading from '../Loading';
+import './style.css';
 
 function PastSearch() {
   const dispatch = useDispatch();
@@ -60,10 +61,8 @@ function PastSearch() {
               mx: 2,
             }}
           >
-            <p>
-              <span className="span_font_color">키워드 분포 유사도</span>
-              <span>분석</span>
-            </p>
+            <span className="font_zz">키워드 분포 유사도</span>
+            <span> 분석</span>
           </Grid>
           <Grid item xs={12}>
             <Typography
