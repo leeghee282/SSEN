@@ -1,9 +1,9 @@
 # S$EN(S$afy Exchange News)
 
-
 ## 링크 : [S$EN 홈페이지](https://j7e204.p.ssafy.io/)
 
 ## 소개 영상 : [소개 영상 링크]()
+
 </br>
 
 ## 📘 프로젝트 진행 기간
@@ -14,17 +14,13 @@ SSAFY 7기 2학기 특화 프로젝트 빅데이터 분산 도메인 - S$EN
 </br>
 
 ## :grey_question: S$EN - 배경
+
 최근 커지고 있는 환율 변동 추이,  
 무슨 이유로 환율의 변동이 일어났는지 궁금하진 않으셨나요?  
 검색을 해봐도 중복된 내용때문에 '그래서 뭐 때문인데?' 라는 생각이 들진 않으셨나요?  
-    
-      
-  
-  
+
 해외 여행에 관심이 많은 일반인부터
 인사이트가 필요한 전문가까지! 
-  
-
 
 **S$EN에서 환율의 변동의 이유를 한눈에 알아보세요!**
 
@@ -50,17 +46,11 @@ top-K searchhhhh
 사용자 보유 외화목록ㄱㄱ  
 사용자 목표 환율 알림ㅁㅁㅁㅁ  
 
-
-
-
-
-
 </br>
 
 ## :newspaper: 사이트 사용 방법
 
 - #### 메인화면
-  
 
 ---
 
@@ -105,14 +95,122 @@ top-K searchhhhh
 ### Frontend
 
 ```
+src
+    ├─api   
+    ├─assets
+    │  └─images    
+    ├─components
+    │  ├─Calendar
+    │  ├─Chart   
+    │  ├─Community
+    │  │  ├─CommunityButton   
+    │  │  ├─CommunityForm     
+    │  │  └─CommunityList        
+    │  ├─ExchangeCalc     
+    │  ├─Keyword     
+    │  ├─LiveCurrencyTable     
+    │  ├─Loading
+    │  │  ├─KeywordLoding     
+    │  │  └─PostLoading         
+    │  ├─MyAsset 
+    │  │  ├─MyAssetChart    
+    │  │  ├─MyAssetFilter    
+    │  │  ├─MyAssetItemList    
+    │  │  ├─MyAssetModal   
+    │  │  └─MyAssetTotal        
+    │  ├─MyInterest
+    │  │  ├─MyInterestEdit    
+    │  │  ├─MyInterestItemList     
+    │  │  └─MyInterestModal        
+    │  ├─MySet      
+    │  ├─NavBar   
+    │  ├─News    
+    │  ├─Past     
+    │  └─Search 
+    │      └─SearchPagination            
+    ├─context    
+    ├─pages
+    │  ├─CalculatorPage   
+    │  ├─CommunityPage      
+    │  ├─LoginPage    
+    │  ├─MainPage    
+    │  ├─ProfilePage     
+    │  ├─ProfileUpdatePage      
+    │  ├─SearchPage     
+    │  └─SignupPage       
+    ├─_actions    
+    └─_reducers
+
 
 ```
 
 ### Backend
 
 ```
+main
+    ├─generated
+    │  └─com
+    │      └─ssafy
+    │          └─db
+    │              └─entity                   
+    ├─java
+    │  └─com
+    │      └─ssafy
+    │          ├─api
+    │          │  ├─controller
+    │          │  ├─request
+    │          │  ├─response
+    │          │  └─service       
+    │          ├─common
+    │          │  ├─auth
+    │          │  ├─exception
+    │          │  │  └─handler
+    │          │  ├─model
+    │          │  │  └─response
+    │          │  └─util
+    │          ├─config
+    │          └─db
+    │              ├─entity
+    │              └─repository
+    └─resources
+        └─ssl
 
 ```
+
+### Backend News
+
+```
+main
+    ├─generated
+    │  └─com
+    │      └─ssafy
+    │          └─db
+    │              └─entity   
+    ├─java
+    │  └─com
+    │      └─ssafy
+    │          ├─api
+    │          │  ├─controller    
+    │          │  ├─request
+    │          │  ├─response     
+    │          │  └─service         
+    │          ├─common
+    │          │  ├─auth
+    │          │  ├─exception
+    │          │  │  └─handler 
+    │          │  ├─model
+    │          │  │  └─response        
+    │          │  └─util
+    │          │      └─jsch        
+    │          ├─config    
+    │          └─db
+    │              ├─entity   
+    │              └─repository                   
+    └─resources
+            
+```
+
+
 
 ## ✔ 협업 툴
 
@@ -125,7 +223,6 @@ top-K searchhhhh
 - [ERD Cloud](https://www.erdcloud.com/d/dQeLSFFd9ZPwbw6eE)
 - [MatterMost](https://meeting.ssafy.com/s07p11e1/channels/333)
 - [Webex](https://ssafyclass.webex.com/meet/jeong746746)
-
 
 ## ✔ 협업 환경
 
@@ -162,11 +259,11 @@ top-K searchhhhh
 
 ---
 
-|   Name   | 김유정           | 박주연                  | 배지우           | 안정현                        | 이근희                          |          이상진                    |
-| :------: | ---------------- | ----------------------- | ---------------- | ----------------------------- | ------------------------------- | ---------------------------------- |
-| Profile  |  ![김유정](https://user-images.githubusercontent.com/51036842/185786075-586f3cae-09af-4332-bc42-b168a92ecf27.png)     |           |       |                   |     |                  |
-| Position | 팀장 & Backend & WebSocket & UCC | Backend & Hadoop & UI/UX | Frontend & UI/UX & WebSocket | Frontend & UI/UX & UCC| Frontend & UI/UX & CI/CD| Backend & Hadoop & CI/CD  |
-|   Git    | [yujeonge](https://github.com/yujeonge)          | [juyeoon](https://github.com/juyeoon)                  | [JIWOO2](https://github.com/JIWOO2)           | [hyunii02](https://github.com/hyunii02)                        | [leeghee282](https://github.com/leeghee282)                          | [leesj8676](https://github.com/leesj8676)                             |
+| Name     | 김유정                                                                                                           | 박주연                                   | 배지우                                 | 안정현                                     | 이근희                                         | 이상진                                       |
+|:--------:| ------------------------------------------------------------------------------------------------------------- | ------------------------------------- | ----------------------------------- | --------------------------------------- | ------------------------------------------- | ----------------------------------------- |
+| Profile  | ![김유정](https://user-images.githubusercontent.com/51036842/185786075-586f3cae-09af-4332-bc42-b168a92ecf27.png) |                                       |                                     |                                         |                                             |                                           |
+| Position | 팀장 & Backend & WebSocket & UCC                                                                                | Backend & Hadoop & UI/UX              | Frontend & UI/UX & WebSocket        | Frontend & UI/UX & UCC                  | Frontend & UI/UX & CI/CD                    | Backend & Hadoop & CI/CD                  |
+| Git      | [yujeonge](https://github.com/yujeonge)                                                                       | [juyeoon](https://github.com/juyeoon) | [JIWOO2](https://github.com/JIWOO2) | [hyunii02](https://github.com/hyunii02) | [leeghee282](https://github.com/leeghee282) | [leesj8676](https://github.com/leesj8676) |
 
 ## ✔ 설계 산출물
 
@@ -177,15 +274,20 @@ top-K searchhhhh
   - API 명세서
 
 ## ✔ 프로젝트 결과물
----
-## 포팅메뉴얼
+
 ---
 
+## 포팅메뉴얼
+
+---
 
 ## 👔 발표 자료
+
 ---
+
 - [중간발표자료]()
 - [최종발표자료]()
+
 ---
 
 ## 🎵 S$EN 서비스 화면
@@ -193,7 +295,3 @@ top-K searchhhhh
 ---
 
 ### 메인화면
-
-
-
-

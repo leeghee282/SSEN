@@ -1,12 +1,12 @@
 // 보유화폐 총액 보여주는 컴포넌트
-import React, { useEffect, useState } from "react";
-import MyAssetChart from "../MyAssetChart";
-import Grid from "@mui/material/Grid";
-import "./style.css";
+import React, { useEffect, useState } from 'react';
+import MyAssetChart from '../MyAssetChart';
+import Grid from '@mui/material/Grid';
+import './style.css';
 
 const MyAssetTotal = (props) => {
   const addComma = (num) => {
-    return num.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return num.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   };
 
   const MyAssetForTotal = props.myAsset.map((asset) => {
@@ -29,25 +29,24 @@ const MyAssetTotal = (props) => {
     };
     if (props.myAsset.length > 0) {
       props.myAsset.forEach((bsset) => {
-        if (bsset.code === "USD") {
+        if (bsset.code === 'USD') {
           ChartTotal.usdchart += bsset.quantity * bsset.price;
         }
-        if (bsset.code === "CNY") {
+        if (bsset.code === 'CNY') {
           ChartTotal.cnychart += bsset.quantity * bsset.price;
         }
-        if (bsset.code === "EUR") {
+        if (bsset.code === 'EUR') {
           ChartTotal.eurchart += bsset.quantity * bsset.price;
         }
-        if (bsset.code === "GBP") {
+        if (bsset.code === 'GBP') {
           ChartTotal.gbpchart += bsset.quantity * bsset.price;
         }
-        if (bsset.code === "JPY") {
+        if (bsset.code === 'JPY') {
           ChartTotal.jpychart += bsset.quantity * bsset.price;
         }
       });
     }
 
-    console.log(ChartTotal);
     setUSDChartTotal(ChartTotal.usdchart);
     setCNYChartTotal(ChartTotal.cnychart);
     setEURChartTotal(ChartTotal.eurchart);
@@ -73,15 +72,15 @@ const MyAssetTotal = (props) => {
 
     if (props.filteredItems.length > 0) {
       props.filteredItems.forEach((asset) => {
-        if (asset.code === "USD") {
+        if (asset.code === 'USD') {
           totalForGraph.eachUSD += +asset.multi;
-        } else if (asset.code === "EUR") {
+        } else if (asset.code === 'EUR') {
           totalForGraph.eachEUR += +asset.multi;
-        } else if (asset.code === "GBP") {
+        } else if (asset.code === 'GBP') {
           totalForGraph.eachGBP += +asset.multi;
-        } else if (asset.code === "CNY") {
+        } else if (asset.code === 'CNY') {
           totalForGraph.eachCNY += +asset.multi;
-        } else if (asset.code === "JPY") {
+        } else if (asset.code === 'JPY') {
           totalForGraph.eachJPY += +asset.multi;
         }
       });
@@ -101,15 +100,15 @@ const MyAssetTotal = (props) => {
     const total = { eachTotal: 0 };
     if (props.filteredItems.length > 0) {
       props.filteredItems.forEach((asset) => {
-        if (asset.code === "USD") {
+        if (asset.code === 'USD') {
           total.eachTotal += +asset.multi;
-        } else if (asset.code === "EUR") {
+        } else if (asset.code === 'EUR') {
           total.eachTotal += +asset.multi;
-        } else if (asset.code === "GBP") {
+        } else if (asset.code === 'GBP') {
           total.eachTotal += +asset.multi;
-        } else if (asset.code === "CNY") {
+        } else if (asset.code === 'CNY') {
           total.eachTotal += +asset.multi;
-        } else if (asset.code === "JPY") {
+        } else if (asset.code === 'JPY') {
           total.eachTotal += +asset.multi;
         }
       });
@@ -125,15 +124,15 @@ const MyAssetTotal = (props) => {
     const total = { eachTotal: 0 };
     if (props.filteredItems.length > 0) {
       props.filteredItems.forEach((asset) => {
-        if (asset.code === "USD") {
+        if (asset.code === 'USD') {
           total.eachTotal += +asset.quantity;
-        } else if (asset.code === "EUR") {
+        } else if (asset.code === 'EUR') {
           total.eachTotal += +asset.quantity;
-        } else if (asset.code === "GBP") {
+        } else if (asset.code === 'GBP') {
           total.eachTotal += +asset.quantity;
-        } else if (asset.code === "CNY") {
+        } else if (asset.code === 'CNY') {
           total.eachTotal += +asset.quantity;
-        } else if (asset.code === "JPY") {
+        } else if (asset.code === 'JPY') {
           total.eachTotal += +asset.quantity;
         }
       });
@@ -157,18 +156,17 @@ const MyAssetTotal = (props) => {
       CNYTotal: 0,
       JPYTotal: 0,
     };
-    console.log(props.myAsset, 33341);
     if (props.myAsset.length > 0) {
       props.myAsset.forEach((asset) => {
-        if (asset.code === "USD") {
+        if (asset.code === 'USD') {
           total.USDTotal += +asset.quantity;
-        } else if (asset.code === "EUR") {
+        } else if (asset.code === 'EUR') {
           total.EURTotal += +asset.quantity;
-        } else if (asset.code === "GBP") {
+        } else if (asset.code === 'GBP') {
           total.GBPTotal += +asset.quantity;
-        } else if (asset.code === "CNY") {
+        } else if (asset.code === 'CNY') {
           total.CNYTotal += +asset.quantity;
-        } else if (asset.code === "JPY") {
+        } else if (asset.code === 'JPY') {
           total.JPYTotal += +asset.quantity;
         }
       });
@@ -182,11 +180,11 @@ const MyAssetTotal = (props) => {
   }, [props.myAsset]);
 
   // 실시간 환율 새로고침 오류 해결
-  const forUSD = props.live.length === 5 ? props.live[0].buyPrice : "none";
-  const forJPY = props.live.length === 5 ? props.live[1].buyPrice : "none";
-  const forEUR = props.live.length === 5 ? props.live[2].buyPrice : "none";
-  const forGBP = props.live.length === 5 ? props.live[3].buyPrice : "none";
-  const forCNY = props.live.length === 5 ? props.live[4].buyPrice : "none";
+  const forUSD = props.live.length === 5 ? props.live[0].buyPrice : 'none';
+  const forJPY = props.live.length === 5 ? props.live[1].buyPrice : 'none';
+  const forEUR = props.live.length === 5 ? props.live[2].buyPrice : 'none';
+  const forGBP = props.live.length === 5 ? props.live[3].buyPrice : 'none';
+  const forCNY = props.live.length === 5 ? props.live[4].buyPrice : 'none';
 
   const liveUSD = myUSDTotal * forUSD;
   const liveJPY = myJPYTotal * forJPY;
@@ -206,13 +204,13 @@ const MyAssetTotal = (props) => {
       container
       spacing={2}
       sx={{
-        alignItems: "center",
+        alignItems: 'center',
       }}
     >
       <Grid item xs={6}>
         <div className="title">
           <h1 className="ff-b fls fs-normal fc-dark-grey">
-            '{sessionStorage.getItem("name")}'님의 보유 외화 목록
+            '{sessionStorage.getItem('name')}'님의 보유 외화 목록
           </h1>
           <strong className="ff-b fs-title fc-dark-grey">
             자산 현황 : {addComma(Total.toString())}원
@@ -220,22 +218,22 @@ const MyAssetTotal = (props) => {
         </div>
         <div className="detail">
           <div className="detail-box">
-            {props.filterBaseCode === "All" && (
+            {props.filterBaseCode === 'All' && (
               <h1 className="ff-b fs-normal fc-grey">구매 금액</h1>
             )}
-            {props.filterBaseCode === "USD" && (
+            {props.filterBaseCode === 'USD' && (
               <h1 className="ff-b fs-normal fc-grey">구매 금액 (USD)</h1>
             )}
-            {props.filterBaseCode === "EUR" && (
+            {props.filterBaseCode === 'EUR' && (
               <h1 className="ff-b fs-normal fc-grey">구매 금액 (EUR)</h1>
             )}
-            {props.filterBaseCode === "GBP" && (
+            {props.filterBaseCode === 'GBP' && (
               <h1 className="ff-b fs-normal fc-grey">구매 금액 (GBP)</h1>
             )}
-            {props.filterBaseCode === "CNY" && (
+            {props.filterBaseCode === 'CNY' && (
               <h1 className="ff-b fs-normal fc-grey">구매 금액 (CNY)</h1>
             )}
-            {props.filterBaseCode === "JPY" && (
+            {props.filterBaseCode === 'JPY' && (
               <h1 className="ff-b fs-normal fc-grey">구매 금액 (JPY)</h1>
             )}
             <strong className="ff-b fs-title fc-green">

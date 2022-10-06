@@ -1,29 +1,29 @@
 // 관심 화폐 모달창으로 입력하는 부분
-import React from "react";
-import { useState } from "react";
-import axios from "../../../api/user";
-import { baseURL } from "../../../api";
+import React from 'react';
+import { useState } from 'react';
+import axios from '../../../api/user';
+import { baseURL } from '../../../api';
 
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
-import { TextField } from "@mui/material";
-import Grid from "@mui/material/Grid";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import InputLabel from "@mui/material/InputLabel";
-import Stack from "@mui/material/Stack";
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import { TextField } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
+import Stack from '@mui/material/Stack';
 
 // 모달창 스타일
 const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
   width: 400,
-  bgcolor: "background.paper",
+  bgcolor: 'background.paper',
   boxShadow: 24,
   p: 4,
 };
@@ -57,31 +57,30 @@ const BasicSelect = ({ nation, setNation }) => {
 
 // 숫자만 입력 가능하게 해 놓은 것(0 입력 방지)
 const enteredOnlyNumber = (val) => {
-  return val.replace(/[^0-9]/g, "");
+  return val.replace(/[^0-9]/g, '');
 };
 // 천 단위 ',' 자동 입력을 위한 것
 const addComma = (num) => {
-  return num.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return num.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
-
 // 모달창
-export default function MyInterestModal({ getInterest, handleOpen, open, setOpen }) {
-  const [nation, setNation] = useState(""); //국가 선택
-  const [previous, setPrevious] = useState(""); //이전 값
-  const [interest, setInterest] = useState(""); //타겟
+export default function MyInterestModal({
+  getInterest,
+  handleOpen,
+  open,
+  setOpen,
+}) {
+  const [nation, setNation] = useState(''); //국가 선택
+  const [previous, setPrevious] = useState(''); //이전 값
+  const [interest, setInterest] = useState(''); //타겟
   const [isEnteredWrongAmount, setIsEnteredWrongAmount] = useState(false);
-
-
-
 
   const handleClose = (e) => {
     setOpen(false);
-    setNation("");
-    setInterest("");
+    setNation('');
+    setInterest('');
   };
-
-
 
   // 서버에 보유 통화 보내기(post 방식)
   const sendMyInterest = () => {
@@ -91,9 +90,8 @@ export default function MyInterestModal({ getInterest, handleOpen, open, setOpen
       target: interest,
       userId: sessionStorage.getItem('userId'),
     };
-    console.log(body, '왜!');
     axios
-      .post(baseURL + "/api/v1/intrcurr/", body)
+      .post(baseURL + '/api/v1/intrcurr/', body)
       .then((response) => getInterest());
   };
 
@@ -103,8 +101,8 @@ export default function MyInterestModal({ getInterest, handleOpen, open, setOpen
     if (!nation || !interest) return;
     // props.onSubmit(nation, interest);
     setOpen(false); //submit 후 창 닫기
-    setNation("");
-    setInterest(""); //submit 후 textfield 창 비우기
+    setNation('');
+    setInterest(''); //submit 후 textfield 창 비우기
     sendMyInterest();
   };
 
@@ -128,10 +126,8 @@ export default function MyInterestModal({ getInterest, handleOpen, open, setOpen
     }
   };
 
-
   return (
     <div>
-
       <Modal
         open={open}
         onClose={handleClose}
@@ -140,7 +136,7 @@ export default function MyInterestModal({ getInterest, handleOpen, open, setOpen
       >
         <Box sx={style}>
           {/* 모달창 내부 */}
-          <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
+          <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
             <Box sx={{ m: 2 }}>
               {/* 특이사항 title */}
               <Typography

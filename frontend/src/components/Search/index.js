@@ -60,7 +60,6 @@ function Search() {
 
   useEffect(() => {
     async function fetchData() {
-      console.log(location.state.search, '확인용');
       setLoading(true);
       try {
         const result = await axios.get(
@@ -112,7 +111,6 @@ function Search() {
                 search={location.state.search}
               />
               <Paging
-                
                 totalCount={posts.length}
                 postPerPage={postPerPage}
                 postRangeDisplayed={10}

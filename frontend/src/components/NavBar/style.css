@@ -61,7 +61,7 @@
   left: 8px;
   margin-top: -14px;
   display: block;
-  font-family: "Notification";
+  font-family: 'Notification';
 
   width: 40px;
   height: 28px;
@@ -71,44 +71,43 @@
 }
 /*영국 GBP */
 .notification-info {
-  background-color: #2C7ABF;
+  background-color: #2c7abf;
 }
 
 .notification-info:before {
   background-position: center;
-  content: "";
-  height:25px;
+  content: '';
+  height: 25px;
   background-image: url(../../../public/images/GBP.png);
   background-size: cover;
 }
 /*유럽 EUR */
 .notification-success {
-  background-color: #3588E1;
+  background-color: #3588e1;
 }
 
 .notification-success:before {
-  content: "";
+  content: '';
   background-image: url(../../../public/images/EUR.png);
   background-size: contain;
 }
 /*일본 JPY */
 .notification-warning {
-  background-color: #6AB2DC;
+  background-color: #6ab2dc;
 }
 
 .notification-warning:before {
-  content: "";
+  content: '';
   background-image: url(../../../public/images/JPY.png);
   background-size: cover;
 }
 /*미국 USD */
 .notification-error {
-  background-color: #0049A6;
- 
+  background-color: #0049a6;
 }
 
 .notification-error:before {
-  content: "";
+  content: '';
   background-image: url(../../../public/images/USD.png);
   background-size: cover;
 }
@@ -116,4 +115,23 @@
 .frontbutton {
   font-size: 30px;
   background-color: red;
+}
+
+.infobutton4:hover + .info4 {
+  opacity: 1;
+  display: block;
+  z-index: 999;
+}
+
+.info4 {
+  
+  background-color: #f7f7f7;
+  background-color: #d7e7f9;
+  border: 1px solid rgba(196, 196, 196, 0.736);
+  border-radius: 5px;
+  color: black;
+  position: absolute;
+  display: none;
+  opacity: 0;
+  box-shadow: 7px 7px 5px 1px rgba(121, 121, 121, 0.514);
 }
