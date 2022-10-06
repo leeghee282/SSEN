@@ -21,7 +21,7 @@ function CommunityList() {
   };
   useEffect(() => {
     getCommunity();
-  }, []);
+  }, [currencyCode]);
 
   useEffect(() => {}, [community]);
 
