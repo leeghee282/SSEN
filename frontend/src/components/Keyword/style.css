@@ -182,8 +182,8 @@ button {
 }
 
 .main-post-press{
-  display: flex;
-  align-items: center;
+  
+  
   font-size: 13px;
   color: #1a63ac;
 }

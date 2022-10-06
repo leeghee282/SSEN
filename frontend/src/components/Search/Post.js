@@ -7,6 +7,7 @@ const Posts = ({ posts, search }) => {
   useEffect(()=>{
     window.scrollTo({top: 0});
 },[posts])
+  console.log(posts,"확인ㅇ확인")
   return (
     <div>
       <p className="jb-default-2 fc-grey search-result" id="font_test">
@@ -57,6 +58,7 @@ const Posts = ({ posts, search }) => {
                     <Box
                       sx={{
                         pt: 1,
+                        height: 'auto',
                         '&:hover': {
                           background: '#DEE0E4',
                         },
@@ -71,7 +73,7 @@ const Posts = ({ posts, search }) => {
                             className="search-title"
                             sx={{ ml: 2, height: '60px' }}
                           >
-                            {post.title.length >= 1
+                            {post.title.length >= 30
                               ? post.title.replaceAll('…', ' ').substr(0, 30) +
                               '...'
                               : post.title}
@@ -90,7 +92,7 @@ const Posts = ({ posts, search }) => {
                       </Grid>
 
                       <Grid sx={{ pl: 1 }} item xs={11.8}>
-                        <Typography sx={{ pt: 2 }} id="font_test" className="search-content">
+                        <Typography sx={{ pt: 2.4, pb: 2.4 }} id="font_test" className="search-content">
                           {post.content.length >= 170
                             ? post.content.substr(0, 170) + '...'
                             : post.content}

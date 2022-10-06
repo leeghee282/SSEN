@@ -10,7 +10,7 @@ import moment from 'moment';
 import * as d3 from 'd3';
 import cloud from 'd3-cloud';
 
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 
 import Post from './Post';
 import Paging from './Paging';
@@ -331,10 +331,10 @@ function PastDetail() {
           </Grid>
         </Grid>
 
-        <Grid container spacing={2}>
+        <Grid container >
           <br></br>
           <Grid item xs={12}>
-            <div className="newscontainer">
+            <div >
               <Post
                 posts={currentPosts}
                 loading={newsLoading}

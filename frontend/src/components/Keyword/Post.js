@@ -20,7 +20,7 @@ const Posts = ({ posts, loading, showKeyword }) => {
       <Typography className="jb-default-2 fc-grey main-result" id="font_test" >
         {/* <span >"<span className="search-keyword">{search}</span>"</span> */}
         <span className="main-result-keyword">"{showKeyword}"</span>
-        <span className="jb-smaller">뉴스 정보</span>
+        <span className="jb-smaller"> 뉴스 정보</span>
       </Typography>
       {/* <Typography
         fontSize="28px"
@@ -60,7 +60,7 @@ const Posts = ({ posts, loading, showKeyword }) => {
                     className="main-post-title"
                     sx={{ ml: 2, height: '40px' }}
                   >
-                    {post.title.length >= 1
+                    {post.title.length >= 36
                       ? post.title.replaceAll('…', ' ').substr(0, 36) +
                       '...'
                       : post.title}
@@ -68,18 +68,19 @@ const Posts = ({ posts, loading, showKeyword }) => {
                 </Grid>
                 <Grid item xs={2} className="main-post-press">
                   <Grid container direction="column">
-                    <Grid id="font_test" item xs={2}>
+                    <Grid sx={{display:"flex",justifyContent:"flex-start"}} id="font_test" item xs={2}>
+                    
                       {post.press}
                     </Grid>
-                    <Grid id="font_test" sx={{ mt: 1 }} item xs={10}>
+                    <Grid sx={{display:"flex",justifyContent:"flex-start",mt:1}} id="font_test"  item xs={10}>
                       {post.time.slice(0, 10).replaceAll('\u0000', '')}
                     </Grid>
                   </Grid>
                 </Grid>
               </Grid>
 
-              <Grid sx={{ pl: 1 }} item xs={11.8}>
-                <Typography sx={{ pt: 2 }} id="font_test" className="main-post-content">
+              <Grid sx={{ pl: 1 }} item xs={12} >
+                <Typography sx={{ pt: 2, display:"flex",justifyContent:"flex-start"}} id="font_test" className="main-post-content" >
                   {post.content.length >= 110
                     ? post.content.substr(0, 110) + '...'
                     : post.content}
