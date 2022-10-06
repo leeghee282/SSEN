@@ -30,9 +30,16 @@
 
 .past_title {
   font-size: 35px;
-  margin: 30px;
+  /* margin-left: 100px; */
+  text-align: center;
+  color: #333;
 }
 
 .past_title-smaller {
-  font-size: 25px;
+  font-size: 32px;
+}
+
+.past_title-smaller2 {
+  font-size: 32px;
+  color: #0062c4;
 }
