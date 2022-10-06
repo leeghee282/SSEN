@@ -52,7 +52,6 @@ export default function MyInerest() {
   const onRemove = (id) => {
     setInterests(interests.filter((interest) => interest.id !== id));
   };
-  console.log(interests);
 
   return (
     <Box

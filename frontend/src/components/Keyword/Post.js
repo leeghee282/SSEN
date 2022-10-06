@@ -7,34 +7,21 @@ const Posts = ({ posts, loading, showKeyword }) => {
   if (loading) {
     return <PostLoading />;
   }
-  console.log(posts, 123123);
   return (
     <Box
       sx={{
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        marginBottom: '30px'
+        marginBottom: '30px',
       }}
     >
-      <Typography className="jb-default-2 fc-grey main-result" id="font_test" >
-        {/* <span >"<span className="search-keyword">{search}</span>"</span> */}
+      <Typography className="jb-default-2 fc-grey main-result" id="font_test">
         <span className="main-result-keyword">"{showKeyword}"</span>
         <span className="jb-smaller"> 뉴스 정보</span>
       </Typography>
-      {/* <Typography
-        fontSize="28px"
-        fontWeight="600"
-        marginTop="20px"
-        marginBottom="6px"
-        color={'#333333'}
-      >
-         뉴스 정보
-        <Typography>"{showKeyword}"</Typography>
-      </Typography> */}
 
       {posts.map((post, index) => (
-
         <Grid item xs={12}>
           <Link
             key={index}
@@ -61,26 +48,42 @@ const Posts = ({ posts, loading, showKeyword }) => {
                     sx={{ ml: 2, height: '40px' }}
                   >
                     {post.title.length >= 36
-                      ? post.title.replaceAll('…', ' ').substr(0, 36) +
-                      '...'
+                      ? post.title.replaceAll('…', ' ').substr(0, 36) + '...'
                       : post.title}
                   </Typography>
                 </Grid>
                 <Grid item xs={1.5} className="main-post-press">
                   <Grid container direction="column">
-                    <Grid sx={{display:"flex",justifyContent:"flex-start"}} id="font_test" item xs={2}>
-                    
+                    <Grid
+                      sx={{ display: 'flex', justifyContent: 'flex-start' }}
+                      id="font_test"
+                      item
+                      xs={2}
+                    >
                       {post.press}
                     </Grid>
-                    <Grid sx={{display:"flex",justifyContent:"flex-start",mt:0.5}} id="font_test"  item xs={10}>
+                    <Grid
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'flex-start',
+                        mt: 0.5,
+                      }}
+                      id="font_test"
+                      item
+                      xs={10}
+                    >
                       {post.time.slice(0, 10).replaceAll('\u0000', '')}
                     </Grid>
                   </Grid>
                 </Grid>
               </Grid>
 
-              <Grid sx={{ pl: 1 }} item xs={12} >
-                <Typography sx={{ pt: 2, pb: 2}} id="font_test" className="main-post-content" >
+              <Grid sx={{ pl: 1 }} item xs={12}>
+                <Typography
+                  sx={{ pt: 2, pb: 2 }}
+                  id="font_test"
+                  className="main-post-content"
+                >
                   {post.content.length >= 120
                     ? post.content.substr(0, 120) + '...'
                     : post.content}
@@ -89,9 +92,7 @@ const Posts = ({ posts, loading, showKeyword }) => {
             </Box>
           </Link>
         </Grid>
-
       ))}
-
     </Box>
   );
 };

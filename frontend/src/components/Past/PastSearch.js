@@ -28,7 +28,7 @@ function PastSearch() {
 
   const onSetPastSearchResult = async () => {
     await dispatch(getPastDatalist(keywordList)).then((response) => {
-      console.log(response.payload);
+      // console.log(response.payload);
       setSearchList(response.payload);
       pastLoadingChange();
     });
