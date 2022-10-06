@@ -27,7 +27,7 @@ public class EUR {
     @Autowired
     CurrencyCategoryService currencyCategoryService;
 
-    @Scheduled(fixedRate = 2900)
+    @Scheduled(fixedRate = 3000)
     public void  LiveCurrency() {
         //실시간 환율 받아오기
         LiveCurrencyRes liveCurrencyRes = liveCurrencyService.findLiveCurrencyByCCUid("EUR");
