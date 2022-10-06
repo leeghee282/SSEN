@@ -286,7 +286,12 @@ function Keyword(props) {
 
   return (
     <div className="keyword_box">
-      <Grid container spacing={2} justifyContent="space-between">
+      <Grid
+        container
+        spacing={2}
+        justifyContent="space-between"
+        alignItems="center"
+      >
         <Box sx={{ display: 'flex', flexDirection: 'row' }}>
           <p className="keyword_title keyword_title-grey" id="font_test">
             <span>
@@ -336,7 +341,7 @@ function Keyword(props) {
           <Avatar
             sx={{
               mt: 3,
-
+              mr: 2,
               width: 'auto',
               height: '30px',
               cursor: 'pointer',
