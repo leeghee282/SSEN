@@ -261,7 +261,13 @@ const Calendar = () => {
         </Typography>
         <Grid item xs={2}>
           <Avatar
-            sx={{ mt: 4, ml: 1, width: '30px', height: 'auto' }}
+            sx={{
+              mt: 4,
+              ml: 1,
+              width: '30px',
+              height: 'auto',
+              cursor: 'pointer',
+            }}
             src="/images/questionlogo2.png"
             className="infobutton"
           ></Avatar>
