@@ -52,16 +52,20 @@ function PastSearch() {
         <Grid container id="searchlist">
           <Grid
             item
-            xs={10}
+            xs={12}
             sx={{ textAlign: 'center', fontSize: 40, my: 2, mx: 2 }}
           >
-            키워드 분석 결과
+            키워드 분포 유사도 분석
+          </Grid>
+          <Grid item xs={12}>
+            <Typography id="font_test" sx={{ textAlign: 'center', fontSize: 20, my: 2, mx: 2 }}>본 페이지는 검색한 구간의 키워드와 비슷한 분포를 가진 날짜 목록을 제공합니다.</Typography>
           </Grid>
           {searchList.map((search, index) => {
             return (
-              <Grid item xs={5} sx={{ mx: 2, my: 1 }}>
+              <Grid item xs={4} >
                 <Card
                   sx={{
+                    m:1,
                     padding: 2,
                     '&:hover': {
                       background: '#DEE0E4',
@@ -73,14 +77,29 @@ function PastSearch() {
                     style={{ cursor: 'pointer' }}
                     key={index}
                   >
+                    <Grid container>
+                      <Grid item xs={8}>
                     <li id="searchdate">{search.date}</li>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography>더보기</Typography>
+                    </Grid>
+                    </Grid>
                     <li>일치율: {search.similarity}%</li>
                     <li>
-                      주요통화 변화율:{' '}
+                      주요통화:{' '}
+                      <span
+                        style={{ color: 'black' }}
+                      >
+                        {search.currencyCode}
+                      </span>
+                    </li>
+                    <li>
+                      변화율:{' '}
                       <span
                         style={{ color: search.variance > 0 ? 'red' : 'blue' }}
                       >
-                        {search.currencyCode} {search.variance}%
+                        {search.variance}%
                       </span>
                     </li>
                   </ul>
