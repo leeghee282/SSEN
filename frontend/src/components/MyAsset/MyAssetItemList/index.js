@@ -151,7 +151,7 @@ export default function MyAssetItemList({
       />
       <TableContainer component={Paper} sx={{ mt: 2 }}>
         <Table sx={{ minWidth: 650, width: 1152 }} aria-label="simple table">
-          <TableHead sx={{ backgroundColor: "#c4c4c4" }}>
+          <TableHead sx={{ backgroundColor: "#b2d4f1" }}>
             <TableRow>
               <TableCell
                 align="center"
@@ -207,9 +207,9 @@ export default function MyAssetItemList({
           <TableBody>
             {(rowsPerPage > 0
               ? filteredItems.slice(
-                  page * rowsPerPage,
-                  page * rowsPerPage + rowsPerPage
-                )
+                page * rowsPerPage,
+                page * rowsPerPage + rowsPerPage
+              )
               : filteredItems
             ).map((asset) => (
               <TableRow
@@ -313,8 +313,8 @@ export default function MyAssetItemList({
                 >
                   {live.length === 5
                     ? addComma(
-                        live[chart[asset.code]].buyPrice.toFixed(2).toString()
-                      )
+                      live[chart[asset.code]].buyPrice.toFixed(2).toString()
+                    )
                     : "none"}
                   원
                 </TableCell>

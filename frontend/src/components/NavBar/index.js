@@ -27,7 +27,7 @@ import {
   NotificationManager,
 } from 'react-notifications';
 // import '../../../node_modules/react-notifications/lib/notifications.css';
-
+const webSocket = new WebSocket('wss://j7e204.p.ssafy.io:8080/ssen');
 // 회원정보 popover
 const BasicPopover = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -93,11 +93,28 @@ const Header = () => {
 
   // 유정 추가
   // 웹소켓 연결
-  const webSocket = new WebSocket('wss://j7e204.p.ssafy.io:8080/ssen');
+
   // const webSocket = new WebSocket("wss://loclhost:8080/ssen");
 
+  // 프로필 버튼 바로가기 로그인 안됬을 시 알람
+  const goLinkProfile = (e) => {
+    e.preventDefault();
+    if (!sessionStorage.getItem('userId')) {
+      alert('로그인이 필요한 서비스입니다.');
+    } else navigate('/profile');
+  };
+
+  // settings 바로가기 로그인 안됬을 시 알람
+
+  const goLinkSettings = (e) => {
+    e.preventDefault();
+    if (!sessionStorage.getItem('userId')) {
+      alert('로그인이 필요한 서비스입니다.');
+    } else navigate('/profileupdate');
+  };
+
   useEffect(() => {
-    webSocket.onopen = function () {};
+    webSocket.onopen = function () { };
   }, []);
 
   webSocket.onmessage = function (message) {
@@ -108,88 +125,103 @@ const Header = () => {
       // 목표환율 설정한 유저와 목표 환율 유저가 같으면
       if (loginFlag === JSON.parse(message.data).userId) {
         const currencyCode = JSON.parse(message.data).currencyCode;
+        const hour = JSON.parse(message.data).regdate.time.hour;
+        const minute = JSON.parse(message.data).regdate.time.minute;
+        const second = JSON.parse(message.data).regdate.time.second;
         if (currencyCode === 'USD') {
           NotificationManager.error(
             // 볼드 처리 안된 부분에 쓸 내용
+            "'" +
             JSON.parse(message.data).name +
-              '님의 목표 환율 ' +
-              JSON.parse(message.data).targetPrice +
-              '에 도달했습니다.' +
-              +JSON.parse(message.data).regdate.time.hour +
-              ':' +
-              JSON.parse(message.data).regdate.time.minute +
-              ':' +
-              JSON.parse(message.data).regdate.time.second,
+            "'님의 목표 환율 " +
+            JSON.parse(message.data).targetPrice +
+            '원에 도달했습니다.' +
+            '\u00A0' +
+            '\u00A0' +
+            (hour < 10 ? `0${hour}` : hour) +
+            ':' +
+            (minute < 10 ? `0${minute}` : minute) +
+            ':' +
+            (second < 10 ? `0${second}` : second),
 
             // 볼드 처리 된 부분에 쓸 내용
             JSON.parse(message.data).currencyCode +
-              ' 현재 환율 : ' +
-              JSON.parse(message.data).buyPrice,
+            ' 현재 환율 : ' +
+            JSON.parse(message.data).buyPrice,
 
             // 자동으로 사라지기까지 걸리는 시간 (단위는 ms인거같음)
-            5000,
+            6000,
           );
         } else if (currencyCode === 'EUR') {
           NotificationManager.success(
             // 볼드 처리 안된 부분에 쓸 내용
+            "'" +
             JSON.parse(message.data).name +
-              '님의 목표 환율 ' +
-              JSON.parse(message.data).targetPrice +
-              '에 도달했습니다.' +
-              +JSON.parse(message.data).regdate.time.hour +
-              ':' +
-              JSON.parse(message.data).regdate.time.minute +
-              ':' +
-              JSON.parse(message.data).regdate.time.second,
+            "'님의 목표 환율 " +
+            JSON.parse(message.data).targetPrice +
+            '원에 도달했습니다.' +
+            '\u00A0' +
+            '\u00A0' +
+            (hour < 10 ? `0${hour}` : hour) +
+            ':' +
+            (minute < 10 ? `0${minute}` : minute) +
+            ':' +
+            (second < 10 ? `0${second}` : second),
 
             // 볼드 처리 된 부분에 쓸 내용
             JSON.parse(message.data).currencyCode +
-              ' 현재 환율 : ' +
-              JSON.parse(message.data).buyPrice,
+            ' 현재 환율 : ' +
+            JSON.parse(message.data).buyPrice,
 
             // 자동으로 사라지기까지 걸리는 시간 (단위는 ms인거같음)
-            5000,
+            6000,
           );
         } else if (currencyCode === 'GBP') {
           NotificationManager.info(
             // 볼드 처리 안된 부분에 쓸 내용
+            "'" +
             JSON.parse(message.data).name +
-              '님의 목표 환율 ' +
-              JSON.parse(message.data).targetPrice +
-              '에 도달했습니다.\n' +
-              +JSON.parse(message.data).regdate.time.hour +
-              ':' +
-              JSON.parse(message.data).regdate.time.minute +
-              ':' +
-              JSON.parse(message.data).regdate.time.second,
+            "'님의 목표 환율 " +
+            JSON.parse(message.data).targetPrice +
+            '원에 도달했습니다.' +
+            '\u00A0' +
+            '\u00A0' +
+            (hour < 10 ? `0${hour}` : hour) +
+            ':' +
+            (minute < 10 ? `0${minute}` : minute) +
+            ':' +
+            (second < 10 ? `0${second}` : second),
             // 볼드 처리 된 부분에 쓸 내용
             JSON.parse(message.data).currencyCode +
-              ' 현재 환율 : ' +
-              JSON.parse(message.data).buyPrice,
+            ' 현재 환율 : ' +
+            JSON.parse(message.data).buyPrice,
 
             // 자동으로 사라지기까지 걸리는 시간 (단위는 ms인거같음)
-            5000,
+            6000,
           );
         } else if (currencyCode === 'JPY') {
           NotificationManager.warning(
             // 볼드 처리 안된 부분에 쓸 내용
+            "'" +
             JSON.parse(message.data).name +
-              '님의 목표 환율 ' +
-              JSON.parse(message.data).targetPrice +
-              '에 도달했습니다.' +
-              +JSON.parse(message.data).regdate.time.hour +
-              ':' +
-              JSON.parse(message.data).regdate.time.minute +
-              ':' +
-              JSON.parse(message.data).regdate.time.second,
+            "'님의 목표 환율 " +
+            JSON.parse(message.data).targetPrice +
+            '원에 도달했습니다.' +
+            '\u00A0' +
+            '\u00A0' +
+            (hour < 10 ? `0${hour}` : hour) +
+            ':' +
+            (minute < 10 ? `0${minute}` : minute) +
+            ':' +
+            (second < 10 ? `0${second}` : second),
 
             // 볼드 처리 된 부분에 쓸 내용
             JSON.parse(message.data).currencyCode +
-              ' 현재 환율 : ' +
-              JSON.parse(message.data).buyPrice,
+            ' 현재 환율 : ' +
+            JSON.parse(message.data).buyPrice,
 
             // 자동으로 사라지기까지 걸리는 시간 (단위는 ms인거같음)
-            5000,
+            6000,
           );
         }
       }
@@ -198,14 +230,12 @@ const Header = () => {
     else {
       //json형식으로 변환
       //아래처럼 쓰면 해당 데이터만 잘 나오는데 변수에 저장해서 쓰는건 몰겟음ㅇㅂㅇ....ㅠ
-      // console.log(JSON.parse(message.data).regdate);
     }
   };
 
   //유정 추가 끝
 
   const onSubmit = async (e) => {
-    webSocket.close();
     e.preventDefault();
     navigate('/search', {
       state: {
@@ -225,7 +255,6 @@ const Header = () => {
   };
 
   const onLinkSubmit = async (e) => {
-    webSocket.close();
     e.preventDefault();
     navigate('/search', {
       state: {
@@ -238,7 +267,6 @@ const Header = () => {
 
   const onChange = (e) => {
     setWord(e.target.value);
-    webSocket.close();
   };
 
   const keyDownHandler = (e) => {
@@ -254,8 +282,6 @@ const Header = () => {
   // };
 
   const logoClickHandler = () => {
-    webSocket.close();
-
     navigate('/');
   };
 
@@ -273,7 +299,7 @@ const Header = () => {
 
   //환율계산기
   const newExchangeCalc = () => {
-    window.open('/exchangecalc', '_blank', 'height=700, width= 600');
+    window.open('/exchangecalc', '_blank', 'height=600, width= 600');
   };
 
   return (
@@ -306,46 +332,48 @@ const Header = () => {
           <Button
             href="/"
             id="font_test"
-            sx={{ fontSize: '12px', fontWeight: '700', color: 'black', ml: 2 }}
+            sx={{ fontSize: '16px', fontWeight: '700', color: 'black', ml: 2 }}
           >
             Home
           </Button>
           <Button
-            href="/exchangecalc"
+            onClick={newExchangeCalc}
             id="font_test"
-            sx={{ fontSize: '12px', fontWeight: '700', color: 'black' }}
+            sx={{ fontSize: '16px', fontWeight: '700', color: 'black' }}
           >
-            계산기
+            환율계산기
           </Button>
           <Button
             onClick={onLinkSubmit}
             id="font_test"
-            sx={{ fontSize: '12px', fontWeight: '700', color: 'black' }}
+            sx={{ fontSize: '16px', fontWeight: '700', color: 'black' }}
           >
             뉴스검색
           </Button>
           <Button
-            href="/profile"
+            onClick={goLinkProfile}
             id="font_test"
             sx={{
-              fontSize: '12px',
+              fontSize: '16px',
               fontWeight: '700',
               color: 'black',
-              width: '110px',
+              width: '138px',
             }}
           >
             보유 및 관심화폐
           </Button>
           <Button
-            href="/profileupdate"
+            onClick={goLinkSettings}
             id="font_test"
-            sx={{ fontSize: '12px', fontWeight: '700', color: 'black' }}
+            sx={{ fontSize: '16px', fontWeight: '700', color: 'black' }}
           >
             Settings
           </Button>
         </Box>
-        <Box sx={{ width: 400 }}></Box>
-        <Box sx={{ width: 150 }}></Box>
+
+        <Box sx={{ width: 300 }}></Box>
+
+        <Box sx={{ width: 100 }}></Box>
         <Box></Box>
         <Box></Box>
 

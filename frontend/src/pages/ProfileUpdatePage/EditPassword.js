@@ -10,6 +10,8 @@ import { useState } from "react";
 import { baseURL } from "../../api";
 import axios from "../../api/user";
 
+import "./style.css";
+
 const EditPassword = (props) => {
   const getUserPassword = () => {
     axios
@@ -18,7 +20,7 @@ const EditPassword = (props) => {
   };
 
 
-  
+
 
   const initialValues = {
     password: "",
@@ -39,73 +41,73 @@ const EditPassword = (props) => {
   const [confirmChangePassword, setConfirmChangePassword] = useState("");
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
-  const [checkPassword,setCheckPassword] = useState(true);
+  const [checkPassword, setCheckPassword] = useState(true);
   //현재비밀번호 입력시 데이터베이스와 같은지 확인
-  
+
 
   const checkNowPassword = async () => {
-    
-    const body ={
-      
-      password : formValues.password,
-      userId : sessionStorage.getItem('userId')
+
+    const body = {
+
+      password: formValues.password,
+      userId: sessionStorage.getItem('userId')
     }
-    
+
     try {
       console.log(body)
-    await axios
-      .post(baseURL+`/api/v1/user/login`,body)
-      .then((response)=>{console.log(response,33333333)})
+      await axios
+        .post(baseURL + `/api/v1/user/login`, body)
+        .then((response) => { console.log(response, 33333333) })
 
-      
+
       insertClicked5()
 
-      const body2 ={
-        newPassword : formValues.changePassword,
-        password : formValues.password,
-        userId : sessionStorage.getItem('userId')
+      const body2 = {
+        newPassword: formValues.changePassword,
+        password: formValues.password,
+        userId: sessionStorage.getItem('userId')
       }
 
       axios
-        .put(baseURL + '/api/v1/user/edit/password',body2)
-        .then((response)=>console.log(response))
+        .put(baseURL + '/api/v1/user/edit/password', body2)
+        .then((response) => console.log(response))
     }
-    catch(e) {
-      if (e.response.status===401){
+    catch (e) {
+      if (e.response.status === 401) {
         setFormErrors({ ...formErrors, 'password': "비밀번호일치하지않음" });
-        
+
       }
-      
+
     }
   }
 
-  const validate =  () => {
+  const validate = () => {
     const errors = {};
-    
-    
-    
 
-    
+
+
+
+
     if (!formValues.password) {
       errors.password = "비밀번호를 입력해주세요.";
     }
 
     if (!formValues.changePassword) {
-      errors.changePassword = "변경비밀번호를 입력해주세요.";
+      errors.changePassword = "새 비밀번호를 입력해주세요.";
       console.log(errors.changePassword);
     }
 
-    
+
 
     if (formValues.changePassword !== formValues.confirmChangePassword) {
-      errors.confirmChangePassword = "변경비밀번호가 같지않습니다.";
-      
+      errors.confirmChangePassword = "새 비밀번호가 일치하지 않습니다.";
+
     }
 
-    
-    
+
+
     setFormErrors(errors);
-    
+
     if (
       !(
         errors.changePassword +
@@ -114,27 +116,27 @@ const EditPassword = (props) => {
         errors.password
       )
     ) {
-      
+
       return true;
     }
-    
+
     return false;
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    
+
 
     if (validate()) {
       checkNowPassword()
-      
+
     }
   };
 
   //비밀번호 변경 폼 입력
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFormErrors({...formErrors,[name]:''})
+    setFormErrors({ ...formErrors, [name]: '' })
     setFormValues({ ...formValues, [name]: value });
     //setFormErrors(validate(event.target));
   };
@@ -179,9 +181,12 @@ const EditPassword = (props) => {
             background: "#E7E9ED",
             pl: 3,
             color: "rgba(0, 0, 0, 0.6)",
-            height: "50px",
+            height: "60px",
             fontWeight: "900",
             fontSize: "30px",
+            // textAlign: "center",
+            display: "flex",
+            alignItems: "center"
           }}
         >
           비밀번호 변경
@@ -199,14 +204,14 @@ const EditPassword = (props) => {
         }}
       >
         <Grid item xs={4}>
-          <Box sx={{ pl: 2 }}>현재비밀번호</Box>
+          <Box sx={{ pl: 2 }}>현재 비밀번호</Box>
         </Grid>
         <Grid item xs={5}>
           <TextField
             type="password"
             name="password"
             onChange={handleChange}
-            placeholder="현재비밀번호 를 입력하세요"
+            placeholder="현재 비밀번호를 입력하세요"
             sx={{ width: 400 }}
           ></TextField>
         </Grid>
@@ -228,14 +233,14 @@ const EditPassword = (props) => {
         }}
       >
         <Grid item xs={4}>
-          <Box sx={{ pl: 2 }}>변경할 비밀번호</Box>
+          <Box sx={{ pl: 2 }}>새 비밀번호</Box>
         </Grid>
         <Grid item xs={5}>
           <TextField
             type="password"
             name="changePassword"
             onChange={handleChange}
-            placeholder="변경할 비밀번호 를 입력하세요"
+            placeholder="새 비밀번호를 입력하세요"
             sx={{ width: 400 }}
           ></TextField>
         </Grid>
@@ -257,14 +262,14 @@ const EditPassword = (props) => {
         }}
       >
         <Grid item xs={4}>
-          <Box sx={{ pl: 2 }}>비밀번호확인</Box>
+          <Box sx={{ pl: 2 }}>비밀번호 확인</Box>
         </Grid>
         <Grid item xs={5}>
           <TextField
             type="password"
             onChange={handleChange}
             name="confirmChangePassword"
-            placeholder="변경할 비밀번호를 입력하세요"
+            placeholder="새 비밀번호를 입력하세요"
             sx={{ width: 400 }}
           ></TextField>
         </Grid>
@@ -284,21 +289,26 @@ const EditPassword = (props) => {
       >
         <Button
           onClick={handleSubmit}
+          className="btn-st btn-st-save"
           id="font_test"
-          sx={{ background: "#81CDFD", height: 50, mt: 5, mr: 3 }}
+          sx={{
+            background: "#81CDFD", height: 45, mt: 3, mr: 3, pl: 3, pr: 3,
+
+          }}
         >
-          비밀번호 변경완료
+          변경
         </Button>
 
         <Button
           onClick={cancelClicked4}
+          className="btn-st btn-st-cancel"
           id="font_test"
-          sx={{ background: "#FAF8DF", height: 50, mt: 5, ml: 3 }}
+          sx={{ background: "#f7f096", height: 45, mt: 3, ml: 3, pl: 3, pr: 3, color: "rgba(0, 0, 0, 0.6)", }}
         >
           취소
         </Button>
       </Box>
-    </Box>
+    </Box >
   );
 };
 

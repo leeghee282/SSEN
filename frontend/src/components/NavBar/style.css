@@ -71,7 +71,7 @@
 }
 /*영국 GBP */
 .notification-info {
-  background-color: #2f96b4;
+  background-color: #2C7ABF;
 }
 
 .notification-info:before {
@@ -83,7 +83,7 @@
 }
 /*유럽 EUR */
 .notification-success {
-  background-color: #5260b4;
+  background-color: #3588E1;
 }
 
 .notification-success:before {
@@ -93,7 +93,7 @@
 }
 /*일본 JPY */
 .notification-warning {
-  background-color: #d34e5b;
+  background-color: #6AB2DC;
 }
 
 .notification-warning:before {
@@ -103,7 +103,7 @@
 }
 /*미국 USD */
 .notification-error {
-  background-color: darkred;
+  background-color: #0049A6;
  
 }
 

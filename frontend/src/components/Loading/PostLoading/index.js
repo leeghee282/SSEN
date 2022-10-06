@@ -1,15 +1,16 @@
 import React from "react";
-import { Avatar } from "@mui/material";
+import { Avatar,Box } from "@mui/material";
+
 
 const PostLoading = () => {
   return (
-    <div>
+    <Box sx={{display:"flex",justifyContent:"center"}}>
       <Avatar
         variant="square"
         src="/images/news_loading_last.gif"
-        sx={{ width: "80%", height: "80%" }}
+        sx={{ width: "40%", height: "40%" }}
       ></Avatar>
-    </div>
+    </Box>
   );
 };
 

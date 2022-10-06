@@ -33,9 +33,9 @@ const CommunityButton = () => {
             }}
           >
             {visible ? (
-              <img src="images/chat_close.png" width={'86%'} />
+              <img src="images/chat_close.png" width={'402px'} />
             ) : (
-              <img src="images/chat_open.png" width={'86%'} />
+              <img src="images/chat_open.png" width={'402px'} />
             )}
           </div>
           {/* </Avatar> */}
@@ -52,17 +52,17 @@ const CommunityButton = () => {
             }}
           >
             {visible ? (
-              <img src="images/chat_close.png" width={'86%'} />
+              <img src="images/chat_close.png" width={'402px'} />
             ) : (
-              <img src="images/chat_open.png" width={'86%'} />
+              <img src="images/chat_open.png" width={'402px'} />
             )}
           </div>
-          <Avatar
+          {/* <Avatar
             className="chat_title"
             src="images/ssenchat3.png"
             sx={{ mt: 10, width: '350px', height: '110px' }}
             variant="square"
-          />
+          /> */}
           <CommunityList />
         </Box>
       )}

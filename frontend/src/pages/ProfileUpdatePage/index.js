@@ -16,6 +16,8 @@ import Link from "@mui/material/Link";
 import axios from "../../api/user";
 import { baseURL } from "../../api";
 
+import "./style.css";
+
 const theme = createTheme();
 
 const ProfileUpdate = () => {
@@ -25,7 +27,7 @@ const ProfileUpdate = () => {
   const [insertFlag4, setInsertFlag4] = useState(true);
   const [insertFlag5, setInsertFlag5] = useState(false);
   const [totalData, setTotalData] = useState({});
-  const [checkNicknameMessage,setCheckNicknameMessage] =useState('');
+  const [checkNicknameMessage, setCheckNicknameMessage] = useState('');
 
   const insertClicked1 = () => {
     // 이름 변경
@@ -125,9 +127,12 @@ const ProfileUpdate = () => {
                 background: "#E7E9ED",
                 pl: 3,
                 color: "rgba(0, 0, 0, 0.6)",
-                height: "50px",
+                height: "60px",
                 fontWeight: "900",
                 fontSize: "30px",
+                // textAlign: "center",
+                display: "flex",
+                alignItems: "center"
               }}
             >
               내 정보 설정
@@ -149,7 +154,7 @@ const ProfileUpdate = () => {
               <Box sx={{ pl: 2 }}>아이디</Box>
             </Grid>
             <Grid item xs={4}>
-              <Box sx={{ pl: 2 }}>{totalData.userId}</Box>
+              <Box sx={{ pl: 2, color: "#777777" }}>{totalData.userId}</Box>
             </Grid>
             <Grid item xs={4}></Grid>
           </Grid>
@@ -169,7 +174,7 @@ const ProfileUpdate = () => {
               <Box sx={{ pl: 2 }}>이름</Box>
             </Grid>
             <Grid item xs={5}>
-              {!insertFlag1 && <Box sx={{ pl: 2 }}>{totalData.name}</Box>}
+              {!insertFlag1 && <Box sx={{ pl: 2, color: "#777777" }}>{totalData.name}</Box>}
 
               {insertFlag1 && (
                 <Box
@@ -222,7 +227,7 @@ const ProfileUpdate = () => {
               <Box sx={{ pl: 2 }}>닉네임</Box>
             </Grid>
             <Grid item xs={5}>
-              {!insertFlag2 && <Box sx={{ pl: 2 }}>{totalData.nickname}</Box>}
+              {!insertFlag2 && <Box sx={{ pl: 2, color: "#777777" }}>{totalData.nickname}</Box>}
 
               {insertFlag2 && (
                 <Box
@@ -238,9 +243,9 @@ const ProfileUpdate = () => {
                     totalData={totalData}
                     setTotalData={setTotalData}
                     checkNicknameMessage={checkNicknameMessage}
-                    setCheckNicknameMessage = {setCheckNicknameMessage}
+                    setCheckNicknameMessage={setCheckNicknameMessage}
                   />
-                  <Typography id="font_test" sx={{color:"red",pl:1,fontSize:"13px"}}>{checkNicknameMessage}</Typography>
+                  <Typography id="font_test" sx={{ color: "red", pl: 1, fontSize: "13px" }}>{checkNicknameMessage}</Typography>
                 </Box>
               )}
             </Grid>
@@ -274,10 +279,10 @@ const ProfileUpdate = () => {
             }}
           >
             <Grid item xs={4}>
-              <Box sx={{ pl: 2 }}>휴대전화번호</Box>
+              <Box sx={{ pl: 2 }}>연락처</Box>
             </Grid>
             <Grid item xs={5}>
-              {!insertFlag3 && <Box sx={{ pl: 2 }}>{totalData.phone}</Box>}
+              {!insertFlag3 && <Box sx={{ pl: 2, color: "#777777" }}>{totalData.phone}</Box>}
 
               {insertFlag3 && (
                 <Box
@@ -325,13 +330,16 @@ const ProfileUpdate = () => {
               alignItems: "center",
             }}
           >
-            <Grid item xs={3}>
+            {/* <Grid item xs={2}>
               <Box sx={{ pl: 8 }}>🔒</Box>
+            </Grid> */}
+            <Grid item xs={2}>
+              <Box>🔒 비밀번호 설정</Box>
             </Grid>
-            <Grid item xs={4}>
-              <Box>비밀번호 설정</Box>
+            <Grid item xs={6.5}>
+              <Box></Box>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={3}>
               {insertFlag4 && !insertFlag5 && (
                 <Button
                   id="font_test"
@@ -370,22 +378,22 @@ const ProfileUpdate = () => {
                 justifyContent: "center",
               }}
             >
-              <Link href="/">
-                <Button
-                  id="font_test"
-                  sx={{ background: "#81CDFD", height: 50, mt: 5, mr: 3 }}
-                >
-                  저장
-                </Button>
-              </Link>
-              <Link href="/">
-                <Button
-                  id="font_test"
-                  sx={{ background: "#FAF8DF", height: 50, mt: 5, ml: 3 }}
-                >
-                  취소
-                </Button>
-              </Link>
+              <Button
+                id="font_test"
+                className="btn-st btn-st-save"
+                href="/"
+                sx={{ height: 50, mt: 5, mr: 3 }}
+              >
+                저장
+              </Button>
+              <Button
+                id="font_test"
+                className="btn-st btn-st-cancel"
+                href="/"
+                sx={{ height: 50, mt: 5, ml: 3 }}
+              >
+                취소
+              </Button>
             </Box>
           )}
         </Box>

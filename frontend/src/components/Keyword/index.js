@@ -1,48 +1,50 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-import moment from "moment";
-import * as d3 from "d3";
-import cloud from "d3-cloud";
-import "./style.css";
-import Spinner from "../Loading/Spinner";
-import KeywordLoading from "../Loading/KeywordLoding";
+import './style.css';
+
+import moment from 'moment';
+import * as d3 from 'd3';
+import cloud from 'd3-cloud';
+import './style.css';
+import Spinner from '../Loading/Spinner';
+import KeywordLoading from '../Loading/KeywordLoding';
 
 import {
   getKeywords,
   getNews,
   setWordcloudData,
   getChartDetailDate,
-} from "../../_actions/chart_action";
-import { getPastDatalist } from "../../_actions/past_action";
+} from '../../_actions/chart_action';
+import { getPastDatalist } from '../../_actions/past_action';
 
-import useDidMountEffect from "./useDidMountEffect";
+import useDidMountEffect from './useDidMountEffect';
 
-import Post from "./Post";
-import Paging from "./Paging";
+import Post from './Post';
+import Paging from './Paging';
 
-import { Grid } from "@mui/material";
+import { Grid, Avatar, Box, Typography } from '@mui/material';
 
 function Keyword(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const chartDates = useSelector((state) => state.chartReducer.chartDates);
-  const startDate = moment(chartDates.startDate).format("YYYY-MM-DD");
-  const endDate = moment(chartDates.endDate).format("YYYY-MM-DD");
+  const startDate = moment(chartDates.startDate).format('YYYY-MM-DD');
+  const endDate = moment(chartDates.endDate).format('YYYY-MM-DD');
   const keywordList = useSelector((state) => state.chartReducer.keywords);
   const newsList = useSelector((state) => state.chartReducer.news);
   const doing = useSelector((state) => state.chartReducer.doing);
 
-  const [showKeyword, setShowKeyword] = useState("");
+  const [showKeyword, setShowKeyword] = useState('');
 
   const chartDetailDate = useSelector(
-    (state) => state.chartReducer.chartDetailDate
+    (state) => state.chartReducer.chartDetailDate,
   );
 
   const wordcloudData = useSelector(
-    (state) => state.chartReducer.wordcloudData
+    (state) => state.chartReducer.wordcloudData,
   );
 
   const doDetail = useSelector((state) => state.chartReducer.doDetail);
@@ -77,7 +79,7 @@ function Keyword(props) {
       startDate: startDate,
       endDate: endDate,
     };
-    d3.selectAll("svg").remove();
+    d3.selectAll('svg').remove();
 
     setKeywordLoading(true);
     setNewsLoading(true);
@@ -100,7 +102,7 @@ function Keyword(props) {
       data.push(sum);
       onSetWordcloud(data);
 
-      const maxNum = data.length - 2;
+      const maxNum = data.length - 1;
       const firstKeyword = data[maxNum].text;
       setShowKeyword(firstKeyword);
       console.log(firstKeyword);
@@ -118,9 +120,9 @@ function Keyword(props) {
         indexOfLastPost = currentPage * postPerPage;
         indexOfFirstPost = indexOfLastPost - postPerPage;
         currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
-      });
 
-      setNewsLoading(false);
+        setNewsLoading(false);
+      });
 
       // dispatch(getPastDatalist(keywordList)).then((res) => {
       //   console.log(res.payload);
@@ -134,7 +136,7 @@ function Keyword(props) {
     var wordScale = d3
       .scaleLinear()
       .domain([0, sum])
-      .range([0, 300 * 0.9]); //전체 사이즈 대비 차지하는 비율로 wordScale
+      .range([0, 300 * 1.3]); //전체 사이즈 대비 차지하는 비율로 wordScale
 
     // var maxWordcloudNum = d.length - 2;
     // console.log("d", d);
@@ -143,8 +145,8 @@ function Keyword(props) {
 
     d.pop();
 
-    var width = 300;
-    var height = 300;
+    var width = 500;
+    var height = 350;
 
     cloud()
       .size([width, height])
@@ -154,40 +156,40 @@ function Keyword(props) {
       .rotate(function () {
         return ~~(Math.random() * 2) * 90;
       })
-      .font("MICEGothic Bold")
+      .font('MICEGothic Bold')
       .fontSize(function (d) {
         return wordScale(d.size);
       })
-      .on("end", end)
+      .on('end', end)
       .start();
 
     function end(words) {
-      d3.select("#word-cloud")
-        .append("svg")
-        .attr("width", width)
-        .attr("height", height)
-        .append("g")
-        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
-        .selectAll("text")
+      d3.select('#word-cloud')
+        .append('svg')
+        .attr('width', width)
+        .attr('height', height)
+        .append('g')
+        .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')')
+        .selectAll('text')
         .data(words)
         .enter()
-        .append("text")
-        .style("font-size", function (d) {
-          return d.size + "px";
+        .append('text')
+        .style('font-size', function (d) {
+          return d.size + 'px';
         })
-        .style("font-family", "MICEGothic Bold")
-        .style("fill", function (d, i) {
+        .style('font-family', 'MICEGothic Bold')
+        .style('fill', function (d, i) {
           return fill(i);
         })
-        .attr("text-anchor", "middle")
-        .attr("transform", function (d) {
-          return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+        .attr('text-anchor', 'middle')
+        .attr('transform', function (d) {
+          return 'translate(' + [d.x, d.y] + ')rotate(' + d.rotate + ')';
         })
         .text(function (d) {
           return d.text;
         })
-        .style("cursor", "pointer")
-        .on("click", function (d) {
+        .style('cursor', 'pointer')
+        .on('click', function (d) {
           newsLoadingChange();
           onSetNews(d.target.__data__.text);
         });
@@ -210,9 +212,8 @@ function Keyword(props) {
         indexOfLastPost = currentPage * postPerPage;
         indexOfFirstPost = indexOfLastPost - postPerPage;
         currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+        newsLoadingChange();
       });
-
-      newsLoadingChange();
     };
 
     const newsLoadingChange = () => {
@@ -228,7 +229,7 @@ function Keyword(props) {
 
     console.log(keywordBody);
 
-    d3.selectAll("svg").remove();
+    d3.selectAll('svg').remove();
 
     setKeywordLoading(true);
     setNewsLoading(true);
@@ -251,7 +252,7 @@ function Keyword(props) {
       data.push(sum);
       onSetWordcloud(data);
 
-      const maxNum = data.length - 2;
+      const maxNum = data.length - 1;
       const firstKeyword = data[maxNum].text;
       setShowKeyword(firstKeyword);
 
@@ -270,9 +271,8 @@ function Keyword(props) {
         indexOfLastPost = currentPage * postPerPage;
         indexOfFirstPost = indexOfLastPost - postPerPage;
         currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+        setNewsLoading(false);
       });
-
-      setNewsLoading(false);
 
       // dispatch(getPastDatalist(keywordList)).then((res) => {
       //   console.log(res.payload);
@@ -281,28 +281,74 @@ function Keyword(props) {
   };
 
   const pastSearchClickHandler = () => {
-    navigate("/pastsearch");
+    navigate('/pastsearch');
   };
 
   return (
-    <div>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <h1>{`${moment(chartDetailDate.startDetailDate).format(
-            "YYYY.MM.DD"
-          )} ~ ${moment(chartDetailDate.endDetailDate).format(
-            "YYYY.MM.DD"
-          )}`}</h1>
-        </Grid>
-        <Grid item xs={5}>
+    <div className="keyword_box">
+      <Grid container spacing={2} justifyContent="space-between">
+        <p className="keyword_title keyword_title-grey" id="font_test">
+          <span>
+            {`${moment(chartDetailDate.startDetailDate).format(
+              'YYYY.MM.DD',
+            )} ~ ${moment(chartDetailDate.endDetailDate).format('YYYY.MM.DD')}`}
+          </span>
+          <span className="keyword_title-smaller"> 의 분석 결과</span>
+        </p>
+        <Avatar
+          sx={{
+            mt: 3.5,
+            ml: 16,
+            width: 'auto',
+            height: '30px',
+            cursor: 'pointer',
+          }}
+          src="/images/questionlogo2.png"
+          className="infobutton2"
+        ></Avatar>
+        <Box sx={{ ml: 83, mt: 9 }} className="info2">
+          <Typography id="font_test" fontSize="14px">
+            현재 키워드 분석 결과와 유사한 키워드 분석 결과를 가진 날짜들을
+            제공합니다. <br></br> 유사도를 통해 현재 날짜와의 유사한 정도를
+            확인할 수 있습니다.<br></br>
+            <br></br> * S$EN 서비스는 변동률이 심한 날짜 100개의 키워드 분석
+            결과를 가지고 있습니다.
+          </Typography>
+        </Box>
+        <button
+          id="font_test"
+          className="custom-btn btn-3"
+          onClick={pastSearchClickHandler}
+        >
+          <span>유사 동향 보기</span>
+        </button>
+
+        <Grid sx={{ display: 'flex', justifyContent: 'center' }} item xs={12}>
           {keywordLoading ? <KeywordLoading /> : null}
           <div id="word-cloud"></div>
+          {/* <button onClick={pastSearchClickHandler}>과거</button> */}
         </Grid>
-        <Grid item xs={7}>
-          {keywordLoading ? null : <h1>{`${showKeyword}`}</h1>}
+        <Grid
+          container
+          xs={12}
+          sx={{ display: 'flex', justifyContent: 'center' }}
+        >
+          <Grid
+            container
+            xs={11}
+            sx={{ borderBottom: '1px dashed black' }}
+          ></Grid>
+        </Grid>
+
+        <Grid item xs={12}>
+          {/* {keywordLoading ? null : <h1>{`${showKeyword}`}</h1>} */}
 
           <div className="newscontainer">
-            <Post posts={currentPosts} loading={newsLoading} />
+            <Post
+              posts={currentPosts}
+              loading={newsLoading}
+              showKeyword={showKeyword}
+            />
             <Paging
               totalCount={posts.length}
               postPerPage={postPerPage}
@@ -314,7 +360,6 @@ function Keyword(props) {
           </div>
         </Grid>
       </Grid>
-      <button onClick={pastSearchClickHandler}>과거</button>
     </div>
   );
 }

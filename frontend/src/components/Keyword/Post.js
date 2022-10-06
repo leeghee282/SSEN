@@ -1,80 +1,97 @@
-import React from "react";
-import Spinner from "../Loading/Spinner";
-import PostLoading from "../Loading/PostLoading";
-import { Typography, Box, Link, Grid, Container } from "@mui/material";
-import './style.css'
+import React from 'react';
+import PostLoading from '../Loading/PostLoading';
+import { Typography, Box, Link, Grid, Container } from '@mui/material';
+import './style.css';
 
-const Posts = ({ posts, loading }) => {
+const Posts = ({ posts, loading, showKeyword }) => {
   if (loading) {
     return <PostLoading />;
   }
   console.log(posts, 123123);
   return (
-    <Box 
+    <Box
       sx={{
-        
-
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        marginBottom: '30px'
       }}
     >
-      <Typography
+      <Typography className="jb-default-2 fc-grey main-result" id="font_test" >
+        {/* <span >"<span className="search-keyword">{search}</span>"</span> */}
+        <span className="main-result-keyword">"{showKeyword}"</span>
+        <span className="jb-smaller"> 뉴스 정보</span>
+      </Typography>
+      {/* <Typography
         fontSize="28px"
         fontWeight="600"
         marginTop="20px"
         marginBottom="6px"
+        color={'#333333'}
       >
-        관련 뉴스 정보
-      </Typography>
-      {posts.map((post,index) => (
-        <Link
-          key={index}
-          href={post.url}
-          target="_blank"
-          sx={{ textDecoration: "none", color: "black" }}
-        >
-          <Box
-            className="card"
-            sx={{
-              width:"400px",
-              display: "flex",
-              
-              height: "100px",
-              mt: 1,
-              border: "3px solid black",
-              borderRadius: "10px",
+         뉴스 정보
+        <Typography>"{showKeyword}"</Typography>
+      </Typography> */}
 
-              "&:hover": {
-                background: "#DEE0E4",
-              },
-            }}
+      {posts.map((post, index) => (
+
+        <Grid item xs={12}>
+          <Link
+            key={index}
+            href={post.url}
+            target="_blank"
+            sx={{ textDecoration: 'none', color: 'black' }}
           >
-            <Grid container>
-              <Grid sx={{borderBottom:"1px dashed black", mt:1}}  item xs={10}>
-                <Typography sx={{ pl: 1,fontSize:"18px", fontWeight:600, }}>
-                  {post.title.length >= 1
-                    ? post.title.replaceAll("…", " ").substr(0, 19) + "..."
-                    : post.title}
+            <Box
+              sx={{
+                height: 'auto',
+                pt: 1.3,
+                '&:hover': {
+                  background: '#DEE0E4',
+                },
+              }}
+              className="card"
+            >
+              <Grid sx={{ borderBottom: '1px dashed black' }} container>
+                <Grid item xs={10.5}>
+                  <Typography
+                    id="font_test"
+                    // fontSize="30px"
+                    className="main-post-title"
+                    sx={{ ml: 2, height: '40px' }}
+                  >
+                    {post.title.length >= 36
+                      ? post.title.replaceAll('…', ' ').substr(0, 36) +
+                      '...'
+                      : post.title}
+                  </Typography>
+                </Grid>
+                <Grid item xs={1.5} className="main-post-press">
+                  <Grid container direction="column">
+                    <Grid sx={{display:"flex",justifyContent:"flex-start"}} id="font_test" item xs={2}>
+                    
+                      {post.press}
+                    </Grid>
+                    <Grid sx={{display:"flex",justifyContent:"flex-start",mt:0.5}} id="font_test"  item xs={10}>
+                      {post.time.slice(0, 10).replaceAll('\u0000', '')}
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Grid>
+
+              <Grid sx={{ pl: 1 }} item xs={12} >
+                <Typography sx={{ pt: 2, pb: 2}} id="font_test" className="main-post-content" >
+                  {post.content.length >= 120
+                    ? post.content.substr(0, 120) + '...'
+                    : post.content}
                 </Typography>
               </Grid>
+            </Box>
+          </Link>
+        </Grid>
 
-              <Grid sx={{borderBottom:"1px dashed black", mt:1}}  item xs={2}>
-                <Grid container direction="column">
-                  <Grid fontSize="10px" item xs={6}>{post.press}</Grid>
-                  <Grid fontSize="10px" item xs={6}>{post.time.slice(0,10).replaceAll("\u0000","")}</Grid>
-                </Grid>
-                
-              </Grid>
-              <Grid item xs={12}>
-                <Typography sx={{fontSize:"13px",pl:1}}>{post.content.length >= 70
-                                  ? post.content.substr(0, 70) + "..."
-                                  : post.content}</Typography>
-              </Grid>
-            </Grid>
-          </Box>
-        </Link>
       ))}
+
     </Box>
   );
 };

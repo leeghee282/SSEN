@@ -28,10 +28,13 @@ export default function MyAssetChart({
       title: {
         text: "현재 보유 외화 통계",
         align: "center",
+        style: {
+          fontFamily: 'MICEGothic Bold'
+        },
       },
     },
   };
-  useEffect(() => {}, [rendercny, rendereur, rendergbp, renderusd, renderjpy]);
+  useEffect(() => { }, [rendercny, rendereur, rendergbp, renderusd, renderjpy]);
 
   return (
     <div id="chart" style={{ margin: 0, padding: 0, marginLeft: 150 }}>

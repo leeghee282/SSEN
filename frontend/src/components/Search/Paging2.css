@@ -1,7 +1,7 @@
+
 .pagination {
   display: flex;
   justify-content: center;
-  
   margin-top: 15px;
 }
 
@@ -12,13 +12,14 @@ ul {
 
 ul.pagination li {
   display: inline-block;
-  width: 80px;
-  height: 30px;
-  border: 1px solid white;
+  /* width: 80px; */
+  /* height: 30px; */
+  border: 1px solid rgb(103, 103, 103);
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1rem;
+  /* font-size: 2rem; */
+  background-color: white;
 }
 
 ul.pagination li:first-child {
@@ -33,23 +34,32 @@ ul.pagination li a {
   text-decoration: none;
   color: black;
   font-size: 1rem;
+  text-align: center;
+  margin-bottom: 10px;
 }
 
 ul.pagination li.active a {
   color: white;
+  font-size: 1rem;
 }
 
 ul.pagination li.active {
   background-color: #77787A;
+  color: white;
 }
 
 ul.pagination li a:hover,
 ul.pagination li a.active {
-  color: blue;
+  color: white;
 }
 
-.page-selection {
+ul.pagination li:hover {
+  background-color: #72A9D9;
+  color: white !important;
+}
+
+/* .page-selection {
   width: 48px;
   height: 30px;
   color: #2c2e2f;
-}
+} */

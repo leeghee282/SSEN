@@ -1,0 +1,19 @@
+.btn-st{
+    color: rgba(0, 0, 0, 0.6) !important;
+    box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
+}
+
+.btn-st-save:hover{
+    background-color: #4dade9 !important;
+}
+
+.btn-st-save{
+    background-color: #81CDFD !important;
+}
+
+.btn-st-cancel{
+    background-color: #f7f096 !important;
+}
+.btn-st-cancel:hover{
+    background-color: #e9e179 !important;
+}
