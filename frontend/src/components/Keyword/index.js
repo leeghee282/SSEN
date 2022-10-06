@@ -24,7 +24,7 @@ import useDidMountEffect from './useDidMountEffect';
 import Post from './Post';
 import Paging from './Paging';
 
-import { Grid } from '@mui/material';
+import { Grid, Avatar, Box, Typography } from '@mui/material';
 
 function Keyword(props) {
   const dispatch = useDispatch();
@@ -297,6 +297,26 @@ function Keyword(props) {
           </span>
           <span className="keyword_title-smaller"> 의 분석 결과</span>
         </p>
+        <Avatar
+          sx={{
+            mt: 3.5,
+            ml: 16,
+            width: 'auto',
+            height: '30px',
+            cursor: 'pointer',
+          }}
+          src="/images/questionlogo2.png"
+          className="infobutton2"
+        ></Avatar>
+        <Box sx={{ ml: 83, mt: 9 }} className="info2">
+          <Typography id="font_test" fontSize="14px">
+            > 현재 키워드 분석 결과와 유사한 키워드 분석 결과를 가진 날짜들을
+            제공합니다. <br></br>> 유사도를 통해 현재 날짜와의 유사한 정도를
+            확인할 수 있습니다.<br></br>
+            <br></br> * S$EN 서비스는 변동률이 심한 날짜 100개의 키워드 분석
+            결과를 가지고 있습니다.
+          </Typography>
+        </Box>
         <button
           id="font_test"
           className="custom-btn btn-3"
@@ -305,21 +325,28 @@ function Keyword(props) {
           <span>유사 동향 보기</span>
         </button>
 
-        <Grid sx={{ display: "flex", justifyContent: "center" }} item xs={12}>
+        <Grid sx={{ display: 'flex', justifyContent: 'center' }} item xs={12}>
           {keywordLoading ? <KeywordLoading /> : null}
           <div id="word-cloud"></div>
           {/* <button onClick={pastSearchClickHandler}>과거</button> */}
         </Grid>
-        <Grid container xs={12} sx={{ display: "flex", justifyContent: "center" }}>
-        <Grid container xs={11} sx={{ borderBottom: '1px dashed black'}}>
-        </Grid>
+        <Grid
+          container
+          xs={12}
+          sx={{ display: 'flex', justifyContent: 'center' }}
+        >
+          <Grid
+            container
+            xs={11}
+            sx={{ borderBottom: '1px dashed black' }}
+          ></Grid>
         </Grid>
 
         <Grid item xs={12}>
           {/* {keywordLoading ? null : <h1>{`${showKeyword}`}</h1>} */}
 
           <div className="newscontainer">
-            <Post 
+            <Post
               posts={currentPosts}
               loading={newsLoading}
               showKeyword={showKeyword}
