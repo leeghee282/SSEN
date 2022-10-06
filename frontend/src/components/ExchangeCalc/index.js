@@ -4,6 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
 import { Grid } from '@mui/material';
 import LoopIcon from '@mui/icons-material/Loop';
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -188,7 +189,7 @@ function ExchangeCalc() {
             {selectStatus ? (
               <p className='calc_alarm'></p>
             ) : (
-              <p>{`${bank}, 수수료 ${commission}%, 기본 우대율 ${basicRate}%`}</p>
+              <p className='calc_bank'>{`${bank}, 수수료 ${commission}%, 기본 우대율 ${basicRate}%`}</p>
             )}
           </Grid>
           {/* 화폐 선택 컴포넌트 */}
@@ -220,7 +221,7 @@ function ExchangeCalc() {
           </Grid>
           <Grid item xs={2}>
             {!selectStatus && !selectCurrStatus && ( <button onClick={onChangeCalculation} className="calbutton">
-              <LoopIcon sx={{display: 'flex'}}></LoopIcon>
+              <CurrencyExchangeIcon sx={{display: 'flex', color:"#333"}}></CurrencyExchangeIcon>
             </button>)}
           </Grid>
         </Grid>

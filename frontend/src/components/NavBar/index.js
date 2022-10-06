@@ -341,7 +341,7 @@ const Header = () => {
             id="font_test"
             sx={{ fontSize: '16px', fontWeight: '700', color: 'black' }}
           >
-            계산기
+            환율계산기
           </Button>
           <Button
             onClick={onLinkSubmit}
