@@ -1,23 +1,23 @@
 package com.ssafy.api.response;
 
-import com.ssafy.db.entity.InterestRate;
 import com.ssafy.db.entity.LiveCurrency;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @Builder
+@ToString
 @ApiModel("LiveCurrencyRes")
 public class LiveCurrencyRes {
     @ApiModelProperty(name = "currencyCode", example = "USD")
-    String currencyCode;
+    String cc2;
     @ApiModelProperty(name = "buyPrice", example = "1300")
     Double buyPrice;
     @ApiModelProperty(name = "sellPrice", example = "1290.55")
@@ -35,7 +35,7 @@ public class LiveCurrencyRes {
 
     public static LiveCurrencyRes of(LiveCurrency liveCurrency) {
         return LiveCurrencyRes.builder()
-                .currencyCode(liveCurrency.getCurrencyCategory().getCode())
+                .cc2(liveCurrency.getCurrencyCategory().getCode())
                 .buyPrice(liveCurrency.getBuyPrice())
                 .sellPrice(liveCurrency.getSellPrice())
                 .highPrice(liveCurrency.getHighPrice())

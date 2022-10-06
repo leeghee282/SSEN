@@ -3,24 +3,33 @@ import TextField from "@mui/material/TextField";
 import { Box } from "@mui/system";
 import { Button } from "@mui/material";
 import { useState } from "react";
+import axios from "../../api/user";
+import { baseURL } from "../../api";
 
 const EditPhoneNumber = (props) => {
-  const { setUserPhoneNumber, userPhoneNumber, cancelClicked3 } = props;
-  const [inputPhoneNumber, setInputPhoneNumber] = useState(userPhoneNumber);
+  const { setTotalData, totalData, cancelClicked3,cancelClicked33 } = props;
+  
 
   const onChange = (e) => {
-    setInputPhoneNumber((inputPhoneNumber) => e.target.value);
+    setTotalData({...totalData, phone: e.target.value})
+    
   };
 
   const onClickHandler = () => {
-    setUserPhoneNumber(inputPhoneNumber);
+    axios
+      .put(baseURL + '/api/v1/user/edit', totalData)
+      .then((response) => {console.log(response)
+      if(response.status === 200){
+        sessionStorage.setItem('phone',totalData.phone)
+      }})
+    
     cancelClicked3();
   };
   return (
     <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
       <TextField
         id="font_test"
-        defaultValue={userPhoneNumber}
+        defaultValue={totalData.phone}
         onChange={onChange}
         placeholder="전화번호를 변경하세요"
       ></TextField>
@@ -34,7 +43,7 @@ const EditPhoneNumber = (props) => {
       <Button
         id="font_test"
         sx={{ ml: 1, color: "red", background: "#F3F6FA" }}
-        onClick={cancelClicked3}
+        onClick={cancelClicked33}
       >
         취소
       </Button>

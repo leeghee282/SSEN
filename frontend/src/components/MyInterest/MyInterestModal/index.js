@@ -1,6 +1,8 @@
 // 관심 화폐 모달창으로 입력하는 부분
 import React from "react";
 import { useState } from "react";
+import axios from "../../../api/user";
+import { baseURL } from "../../../api";
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -35,7 +37,7 @@ const BasicSelect = ({ nation, setNation }) => {
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Currency Code</InputLabel>
+        <InputLabel id="demo-simple-select-label">화폐</InputLabel>
         <Select
           id="currency_code"
           value={nation}
@@ -62,31 +64,51 @@ const addComma = (num) => {
   return num.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
+
 // 모달창
-export default function MyInterestModal(props) {
-  const [nation, setNation] = useState("");
-  const [interest, setInterest] = useState("");
+export default function MyInterestModal({ getInterest, handleOpen, open, setOpen }) {
+  const [nation, setNation] = useState(""); //국가 선택
+  const [previous, setPrevious] = useState(""); //이전 값
+  const [interest, setInterest] = useState(""); //타겟
   const [isEnteredWrongAmount, setIsEnteredWrongAmount] = useState(false);
 
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
+
+
+
   const handleClose = (e) => {
     setOpen(false);
     setNation("");
     setInterest("");
   };
 
+
+
+  // 서버에 보유 통화 보내기(post 방식)
+  const sendMyInterest = () => {
+    const body = {
+      code: nation,
+      previous: previous,
+      target: interest,
+      userId: sessionStorage.getItem('userId'),
+    };
+    console.log(body, '왜!');
+    axios
+      .post(baseURL + "/api/v1/intrcurr/", body)
+      .then((response) => getInterest());
+  };
+
   const handleSumit = (e) => {
     e.preventDefault(); //새로고침 방지
     // 아무것도 입력하지 않았을 때, submit 방지
     if (!nation || !interest) return;
-    props.onSubmit(nation, interest);
+    // props.onSubmit(nation, interest);
     setOpen(false); //submit 후 창 닫기
     setNation("");
     setInterest(""); //submit 후 textfield 창 비우기
+    sendMyInterest();
   };
 
-  // 천단위별 ',' 자동 입력 되게 하는 함수(quantity)
+  // 천단위별 ',' 자동 입력 되게 하는 함수
   const amountInterest = (event) => {
     const isNotNumber = /^[^1-9][^0-9]{0,11}$/g.test(event.target.value)
       ? true
@@ -98,11 +120,18 @@ export default function MyInterestModal(props) {
     setInterest(amount);
   };
 
+  // 소수점 입력
+  const inputInterest = (event) => {
+    const pattern = /^(\d{0,10}([.]\d{0,2})?)?$/;
+    if (pattern.test(event.target.value)) {
+      setInterest(event.target.value);
+    }
+  };
+
+
   return (
     <div>
-      <Button id="font_test" variant="contained" onClick={handleOpen}>
-        관심 화폐 등록
-      </Button>
+
       <Modal
         open={open}
         onClose={handleClose}
@@ -134,7 +163,7 @@ export default function MyInterestModal(props) {
                     fullWidth
                     type="text"
                     value={interest}
-                    onChange={amountInterest}
+                    onChange={inputInterest}
                     placeholder="목표 금액을 입력하세요."
                     required
                   />

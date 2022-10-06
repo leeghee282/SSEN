@@ -3,25 +3,44 @@ import TextField from "@mui/material/TextField";
 import { Box } from "@mui/system";
 import { Button } from "@mui/material";
 import { useState } from "react";
+import axios from "../../api/user";
+import { baseURL } from "../../api";
+
 const EditName = (props) => {
-  const { setUserName, userName, cancelClicked } = props;
-  const [inputName, setInputName] = useState(userName);
+  const { setTotalData, totalData, cancelClicked, cancelClicked11 } = props;
+  
 
   const onChange = (e) => {
-    setInputName((inputName) => e.target.value);
+    
+    setTotalData({...totalData, name: e.target.value})
   };
 
   const onClickHandler = () => {
-    setUserName(inputName);
+
+    
+    
+    
+
+    axios
+      .put(baseURL + '/api/v1/user/edit', totalData)
+      .then((response) => {console.log(response)
+      if(response.status === 200 ){
+        sessionStorage.setItem('name',totalData.name)
+        window.location.replace("/profileupdate")
+      }})
+
+    
     cancelClicked();
+    
   };
 
   return (
     <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
       <TextField
         id="font_test"
+        
         onChange={onChange}
-        defaultValue={userName}
+        defaultValue={totalData.name}
         placeholder="이름을 변경하세요"
       ></TextField>
       <Button
@@ -34,7 +53,7 @@ const EditName = (props) => {
       <Button
         id="font_test"
         sx={{ ml: 1, color: "red", background: "#F3F6FA" }}
-        onClick={cancelClicked}
+        onClick={cancelClicked11}
       >
         취소
       </Button>

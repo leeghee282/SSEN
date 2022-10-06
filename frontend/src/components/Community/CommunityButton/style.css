@@ -1,0 +1,54 @@
+.button_main {
+  /* border: none; */
+  /* margin-top: 20px; */
+  /* margin-bottom: 20px; */
+  /* margin-left: 80px; */
+  /* background: #3C91E6; */
+  /* border-radius: 15px; */
+  /* padding: 7px; */
+  /* width: 300px; */
+  /* height: 40px; */
+  /* font-weight: 600; */
+  /* color: #fff; */
+  cursor: pointer;
+  position: fixed;
+  margin-bottom: 0;
+  /* margin-left: 60px; */
+  padding: 0;
+  bottom: 0;
+  height: 44.05px;
+  z-index: 2;
+  /* width: 402px; */
+  /* transform: translate(0%, 0%); */
+}
+
+
+.chat_main {
+  border: none;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  position: fixed;
+  top: 90%;
+  left: 85%;
+  transform: translate(-50%, -50%);
+}
+
+.cal {
+  border: none;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  position: fixed;
+  top: 88%;
+  left: 95%;
+  transform: translate(-50%, -50%);
+}
+
+.chat_title {
+  position: relative;
+  top: 5%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+}

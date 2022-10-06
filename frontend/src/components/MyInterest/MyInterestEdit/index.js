@@ -13,7 +13,8 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
 import Stack from "@mui/material/Stack";
-
+import axios from "../../../api/user";
+import { baseURL } from "../../../api";
 // 모달창 스타일
 
 
@@ -28,7 +29,8 @@ const addComma = (num) => {
 
 // 모달창
 export default function MyInterestEdit(props) {
-  const {details,handleClose2} = props;
+
+  const {details,handleClose2,getInterest} = props;
   
   const [editInterest,setEditInterest] = useState(details.target);
   const [nation, setNation] = useState("");
@@ -38,16 +40,36 @@ export default function MyInterestEdit(props) {
   const handleOpen = () => setOpen(true);
   
 
+  
+
   const handleSumit = (e) => {
     e.preventDefault(); //새로고침 방지
     // 아무것도 입력하지 않았을 때, submit 방지
     if (!interest) return;
     // props.onSubmit(nation, interest);
     const editData = {
+      
+      
       previous : details.target,
-      target : interest
+      target : interest,
     }
-    console.log(editData)
+    const addData = {
+      previous : details.target,
+      target : interest,
+      userId : sessionStorage.getItem('userId'),
+      code : details.nation
+    }
+    if (details.target === 0 ) {
+      axios
+        .post(baseURL + "/api/v1/intrcurr/", addData)
+        .then((response) => getInterest());
+    }
+    else {
+      axios
+        .patch(baseURL + `/api/v1/intrcurr/${details.uid}`, editData)
+        .then((response) => getInterest());
+    }
+
     handleClose2(); //submit 후 창 닫기
     
   };
@@ -62,6 +84,14 @@ export default function MyInterestEdit(props) {
 
     const amount = addComma(enteredOnlyNumber(event.target.value));
     setInterest(amount);
+  };
+
+  // 소수점 입력
+  const inputInterest = (event) => {
+    const pattern = /^(\d{0,10}([.]\d{0,2})?)?$/;
+    if (pattern.test(event.target.value)) {
+      setInterest(event.target.value);
+    }
   };
   
 
@@ -93,7 +123,7 @@ export default function MyInterestEdit(props) {
                     fullWidth
                     type="text"
                     value={interest}
-                    onChange={amountInterest}
+                    onChange={inputInterest}
                     placeholder="목표 금액을 입력하세요."
                     required
                   />

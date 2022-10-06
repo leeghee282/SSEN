@@ -1,7 +1,7 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import Main from "./pages/MainPage";
+import MainCalendar from "./pages/MainPage";
 import Signup from "./pages/SignupPage";
 import Login from "./pages/LoginPage";
 import Profile from "./pages/ProfilePage";
@@ -11,15 +11,25 @@ import Calculator from "./pages/CalculatorPage";
 import Chart from "./components/Chart";
 import Apitest from "./api/apitest";
 
+// test 위한 것
+import Search from "./components/Search";
+import PastSearch from "./components/Past/PastSearch";
+import PastDetail from "./components/Past/PastDetail";
+import { useState } from "react";
 function App() {
+  
   return (
     <Router>
       <Routes>
         {/* Header 있는 페이지 */}
-        <Route element={<Header />}>
-          <Route path="/" element={<Main />} />
+        <Route element={<Header/>}>
+          <Route path="/" element={<MainCalendar />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/profileupdate" element={<ProfileUpdate />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/pastsearch" element={<PastSearch />} />
+          <Route path="/pastdetail" element={<PastDetail />} />
+          
         </Route>
         {/* Header 없는 페이지 */}
         <Route path="/signup" element={<Signup />} />

@@ -7,12 +7,16 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import EditName from "./EditName";
 import EditNickname from "./EditNickname";
 import EditPhoneNumber from "./EditPhoneNumber";
 import EditPassword from "./EditPassword";
 import Link from "@mui/material/Link";
+import axios from "../../api/user";
+import { baseURL } from "../../api";
+
+import "./style.css";
 
 const theme = createTheme();
 
@@ -22,10 +26,9 @@ const ProfileUpdate = () => {
   const [insertFlag3, setInsertFlag3] = useState(false);
   const [insertFlag4, setInsertFlag4] = useState(true);
   const [insertFlag5, setInsertFlag5] = useState(false);
-  const [userName, setUserName] = useState("배지우");
-  const [userNickName, setUserNickName] = useState("환율짱짱");
-  const [userPhoneNumber, setUserPhoneNumber] = useState("010-4791-5385");
-  console.log(insertFlag5, 55);
+  const [totalData, setTotalData] = useState({});
+  const [checkNicknameMessage, setCheckNicknameMessage] = useState('');
+
   const insertClicked1 = () => {
     // 이름 변경
 
@@ -33,6 +36,11 @@ const ProfileUpdate = () => {
   };
 
   function insertComponentToggle1() {
+    setInsertFlag1((insertFlag1) => !insertFlag1);
+  }
+  // 취소했을때, 값 변경 안되게 하기 위한함수
+  function insertComponentToggle11() {
+    getProfile();
     setInsertFlag1((insertFlag1) => !insertFlag1);
   }
 
@@ -44,16 +52,27 @@ const ProfileUpdate = () => {
 
   function insertComponentToggle2() {
     setInsertFlag2((insertFlag2) => !insertFlag2);
+    setCheckNicknameMessage('')
+  }
+
+  function insertComponentToggle22() {
+    setCheckNicknameMessage('')
+    getProfile();
+    setInsertFlag2((insertFlag2) => !insertFlag2);
   }
 
   const insertClicked3 = () => {
     // 전화번호 변경
 
     insertComponentToggle3();
-    console.log(insertFlag3, 3);
   };
 
   function insertComponentToggle3() {
+    setInsertFlag3((insertFlag3) => !insertFlag3);
+  }
+
+  function insertComponentToggle33() {
+    getProfile();
     setInsertFlag3((insertFlag3) => !insertFlag3);
   }
 
@@ -68,10 +87,20 @@ const ProfileUpdate = () => {
     setInsertFlag4((insertFlag4) => !insertFlag4);
   }
 
-  const user_id = "potr12";
+  const getProfile = () => {
+    axios
+      .get(baseURL + `/api/v1/user/mypage/${sessionStorage.getItem("userId")}`)
+      .then((response) => {
+        setTotalData(response.data);
+        console.log(123123);
+      });
+  };
+  useEffect(() => {
+    getProfile();
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
-      
       <CssBaseline />
       <Box
         id="font_test"
@@ -80,7 +109,6 @@ const ProfileUpdate = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          
         }}
       >
         <Box sx={{ mt: 15, width: 1000, height: 1100, background: "white" }}>
@@ -99,9 +127,12 @@ const ProfileUpdate = () => {
                 background: "#E7E9ED",
                 pl: 3,
                 color: "rgba(0, 0, 0, 0.6)",
-                height: "50px",
+                height: "60px",
                 fontWeight: "900",
                 fontSize: "30px",
+                // textAlign: "center",
+                display: "flex",
+                alignItems: "center"
               }}
             >
               내 정보 설정
@@ -123,7 +154,7 @@ const ProfileUpdate = () => {
               <Box sx={{ pl: 2 }}>아이디</Box>
             </Grid>
             <Grid item xs={4}>
-              <Box sx={{ pl: 2 }}>{user_id}</Box>
+              <Box sx={{ pl: 2, color: "#777777" }}>{totalData.userId}</Box>
             </Grid>
             <Grid item xs={4}></Grid>
           </Grid>
@@ -140,10 +171,10 @@ const ProfileUpdate = () => {
             }}
           >
             <Grid item xs={4}>
-              <Box sx={{ pl: 2  }}>이름</Box>
+              <Box sx={{ pl: 2 }}>이름</Box>
             </Grid>
             <Grid item xs={5}>
-              {!insertFlag1 && <Box sx={{ pl: 2 }}>{userName}</Box>}
+              {!insertFlag1 && <Box sx={{ pl: 2, color: "#777777" }}>{totalData.name}</Box>}
 
               {insertFlag1 && (
                 <Box
@@ -155,8 +186,9 @@ const ProfileUpdate = () => {
                 >
                   <EditName
                     cancelClicked={insertComponentToggle1}
-                    userName={userName}
-                    setUserName={setUserName}
+                    cancelClicked11={insertComponentToggle11}
+                    totalData={totalData}
+                    setTotalData={setTotalData}
                   />
                 </Box>
               )}
@@ -195,7 +227,7 @@ const ProfileUpdate = () => {
               <Box sx={{ pl: 2 }}>닉네임</Box>
             </Grid>
             <Grid item xs={5}>
-              {!insertFlag2 && <Box sx={{ pl: 2 }}>{userNickName}</Box>}
+              {!insertFlag2 && <Box sx={{ pl: 2, color: "#777777" }}>{totalData.nickname}</Box>}
 
               {insertFlag2 && (
                 <Box
@@ -207,9 +239,13 @@ const ProfileUpdate = () => {
                 >
                   <EditNickname
                     cancelClicked2={insertComponentToggle2}
-                    userNickName={userNickName}
-                    setUserNickName={setUserNickName}
+                    cancelClicked22={insertComponentToggle22}
+                    totalData={totalData}
+                    setTotalData={setTotalData}
+                    checkNicknameMessage={checkNicknameMessage}
+                    setCheckNicknameMessage={setCheckNicknameMessage}
                   />
+                  <Typography id="font_test" sx={{ color: "red", pl: 1, fontSize: "13px" }}>{checkNicknameMessage}</Typography>
                 </Box>
               )}
             </Grid>
@@ -243,10 +279,10 @@ const ProfileUpdate = () => {
             }}
           >
             <Grid item xs={4}>
-              <Box sx={{ pl: 2 }}>휴대전화번호</Box>
+              <Box sx={{ pl: 2 }}>연락처</Box>
             </Grid>
             <Grid item xs={5}>
-              {!insertFlag3 && <Box sx={{ pl: 2 }}>{userPhoneNumber}</Box>}
+              {!insertFlag3 && <Box sx={{ pl: 2, color: "#777777" }}>{totalData.phone}</Box>}
 
               {insertFlag3 && (
                 <Box
@@ -258,8 +294,9 @@ const ProfileUpdate = () => {
                 >
                   <EditPhoneNumber
                     cancelClicked3={insertComponentToggle3}
-                    userPhoneNumber={userPhoneNumber}
-                    setUserPhoneNumber={setUserPhoneNumber}
+                    cancelClicked33={insertComponentToggle33}
+                    totalData={totalData}
+                    setTotalData={setTotalData}
                   />
                 </Box>
               )}
@@ -293,13 +330,16 @@ const ProfileUpdate = () => {
               alignItems: "center",
             }}
           >
-            <Grid item xs={3}>
+            {/* <Grid item xs={2}>
               <Box sx={{ pl: 8 }}>🔒</Box>
+            </Grid> */}
+            <Grid item xs={2}>
+              <Box>🔒 비밀번호 설정</Box>
             </Grid>
-            <Grid item xs={4}>
-              <Box>비밀번호 설정</Box>
+            <Grid item xs={6.5}>
+              <Box></Box>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={3}>
               {insertFlag4 && !insertFlag5 && (
                 <Button
                   id="font_test"
@@ -325,6 +365,8 @@ const ProfileUpdate = () => {
               insertFlag4={insertFlag4}
               setInsertFlag4={setInsertFlag4}
               cancelClicked4={insertComponentToggle4}
+              totalData={totalData}
+              setTotalData={setTotalData}
             ></EditPassword>
           )}
           {insertFlag4 && (
@@ -336,22 +378,22 @@ const ProfileUpdate = () => {
                 justifyContent: "center",
               }}
             >
-              <Link href="/">
-                <Button
-                  id="font_test"
-                  sx={{ background: "#81CDFD", height: 50, mt: 5, mr: 3 }}
-                >
-                  저장
-                </Button>
-              </Link>
-              <Link href="/">
-                <Button
-                  id="font_test"
-                  sx={{ background: "#FAF8DF", height: 50, mt: 5, ml: 3 }}
-                >
-                  취소
-                </Button>
-              </Link>
+              <Button
+                id="font_test"
+                className="btn-st btn-st-save"
+                href="/"
+                sx={{ height: 50, mt: 5, mr: 3 }}
+              >
+                저장
+              </Button>
+              <Button
+                id="font_test"
+                className="btn-st btn-st-cancel"
+                href="/"
+                sx={{ height: 50, mt: 5, ml: 3 }}
+              >
+                취소
+              </Button>
             </Box>
           )}
         </Box>

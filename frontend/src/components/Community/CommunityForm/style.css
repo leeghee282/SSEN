@@ -1,0 +1,35 @@
+.button {
+  border: none;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 134px;
+  background: #3C91E6;
+  border-radius: 15px;
+  padding: 7px;
+  width: 120px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  font-family: 'MICEGothic Bold';
+}
+
+.comment {
+  border: none;
+  margin-left: 20px;
+  background: #fff;
+  border-radius: 15px;
+  padding: 10px;
+  
+  /* padding-left: 15px; */
+  width: 340px;
+  height: 30px;
+  font-weight: 600;
+  /* color: #fff; */
+  cursor: pointer;
+  /* padding-left: 30px; */
+}
+
+.comment::placeholder{
+  color: rgb(137, 137, 137);
+  padding-left: 10px;
+}
