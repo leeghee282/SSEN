@@ -40,28 +40,28 @@ function Calculator() {
       <div>
         <div className="calcdetail">{calc}</div>
         <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-        <button onClick={addCalc} id="font_test" className="custom-btn btn-3">
-          <span>추가 환율 계산하기</span>
-        </button>
-        <Avatar
-          sx={{
-            mt: 3,
-            
-            width: 'auto',
-            height: '30px',
-            cursor: 'pointer',
-          }}
-          src="/images/questionlogo2.png"
-          className="infobutton7"
-        ></Avatar>
-        <Typography
-          sx={{ ml: 22, }}
-          className="info7"
-          id="font_test"
-          fontSize="14px"
-        >
-          - 다른 날짜를 비교하고싶을때 사용합니다. 
-        </Typography>
+          <button onClick={addCalc} id="font_test" className="custom-btn btn-3">
+            <span>추가 환율 계산하기</span>
+          </button>
+          <Avatar
+            sx={{
+              mt: 3,
+
+              width: 'auto',
+              height: '30px',
+              cursor: 'pointer',
+            }}
+            src="/images/questionlogo2.png"
+            className="infobutton7"
+          ></Avatar>
+          <Typography
+            sx={{ ml: 22 }}
+            className="info7"
+            id="font_test"
+            fontSize="14px"
+          >
+            - 다른 날짜를 비교하고 싶을 때 사용합니다.
+          </Typography>
         </Box>
       </div>
     </div>

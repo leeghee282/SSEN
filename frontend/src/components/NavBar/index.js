@@ -371,7 +371,7 @@ const Header = () => {
           </Button>
         </Box>
 
-        <Box sx={{ width: 300 }}></Box>
+        <Box sx={{ width: 200 }}></Box>
 
         <Box sx={{ width: 100 }}></Box>
         <Box></Box>
