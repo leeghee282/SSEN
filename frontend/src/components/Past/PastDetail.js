@@ -305,7 +305,7 @@ function PastDetail() {
       <Grid item xs={12}>
         <p className="past_title" id="font_test">
           <span className="past_title-smaller2">"{`${searchData.date}`}"</span>
-          <span className="past_title-smaller">의 분석 결과 - </span>
+          <span className="past_title-smaller"> 의 분석 결과 - </span>
           <span
             className="past_title-smaller2"
             id="font_test"

@@ -142,13 +142,13 @@ function PastSearch() {
                         </li>
                       </Grid>
                     </Grid>
+                    <Card className="middle">
+                      <div className="text">
+                        {/* <p>상세보기</p> */}
+                        <p>클릭시 상세 페이지로 이동할 수 있습니다.</p>
+                      </div>
+                    </Card>
                   </ul>
-                </Card>
-                <Card className="middle">
-                  <div className="text">
-                    {/* <p>상세보기</p> */}
-                    <p>클릭시 상세 페이지로 이동할 수 있습니다.</p>
-                  </div>
                 </Card>
               </Grid>
             );

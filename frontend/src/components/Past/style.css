@@ -2,7 +2,6 @@
   text-align: center;
   max-width: 700px;
   margin: 0 auto;
-  
 }
 
 .newscontainer li {
@@ -51,39 +50,36 @@
   color: #0062c4;
 }
 
-
-.css-mhc70k-MuiGrid-root>.MuiGrid-item{
+.css-mhc70k-MuiGrid-root > .MuiGrid-item {
   padding: 0px !important;
 }
 
-
-.past-post-title{
+.past-post-title {
   display: flex;
   align-items: center;
   color: #003870;
-    font-size: 20px !important;
+  font-size: 20px !important;
 }
 
-.past-post-press{
+.past-post-press {
   display: flex;
   align-items: center;
   font-size: 13px;
   color: #1a63ac;
 }
 
-.past-post-content{
+.past-post-content {
   color: rgb(73, 73, 73) !important;
   font-size: 14px !important;
 }
 
-.past-result{
-  margin-bottom: 30px !important;
-  padding: 50px 70px 0px !important;
-  margin-top: 30px !important;
-
+.past-result {
+  margin-bottom: 10px !important;
+  padding: 20px 70px 0px !important;
+  /* margin-top: 30px !important; */
 }
 
-.past-result-keyword{
+.past-result-keyword {
   color: #0062c4;
   font-size: 55px;
 }
@@ -103,12 +99,12 @@
   display: block;
   width: 100%;
   height: auto;
-  transition: .5s ease;
+  transition: 0.5s ease;
   backface-visibility: hidden;
 }
 
 .middle {
-  transition: .5s ease;
+  transition: 0.5s ease;
   opacity: 0;
   position: absolute;
   top: 50%;
@@ -116,7 +112,7 @@
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   text-align: center;
-  cursor: pointer
+  cursor: pointer;
 }
 
 .container:hover .image {
@@ -133,5 +129,5 @@
   color: white;
   font-size: 16px;
   padding: 16px 32px;
-  cursor: pointer
+  cursor: pointer;
 }
