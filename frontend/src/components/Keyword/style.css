@@ -2,7 +2,6 @@
   text-align: center;
   max-width: 700px;
   margin: 0 auto;
-  
 }
 
 .newscontainer li {
@@ -37,7 +36,10 @@
 .keyword_title {
   font-size: 30px;
   text-align: center;
-  margin: 30px;
+  margin-left: 30px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-right: 10px;
 }
 
 .keyword_title-smaller {
@@ -170,38 +172,37 @@ button {
   width: 100%;
 }
 
-.css-1xu1mzw-MuiGrid-root>.MuiGrid-item{
+.css-1xu1mzw-MuiGrid-root > .MuiGrid-item {
   padding: 0 !important;
 }
 
-.main-post-title{
+.main-post-title {
   display: flex;
   align-items: center;
   color: #003870;
-    font-size: 20px !important;
+  font-size: 20px !important;
 }
 
-.main-post-press{
+.main-post-press {
   display: flex;
   align-items: center;
   font-size: 13px;
   color: #1a63ac;
 }
 
-.main-post-content{
+.main-post-content {
   color: rgb(73, 73, 73) !important;
   font-size: 14px !important;
   display: flex;
-  justify-content:flex-start;
+  justify-content: flex-start;
 }
 
-.main-result{
+.main-result {
   margin-bottom: 30px !important;
   padding: 50px 70px 0px !important;
-
 }
 
-.main-result-keyword{
+.main-result-keyword {
   color: #0062c4;
   font-size: 55px;
 }
@@ -212,20 +213,38 @@ button {
 }
 .infobutton2:hover + .info2 {
   opacity: 1;
-  display:block;
-  z-index: 1;
+  display: block;
+  z-index: 999;
 }
 
 .info2 {
   padding: 15px 20px;
-        background-color: #f7f7f7;
-        background-color: #d7e7f9;
-        border: 1px solid rgba(196, 196, 196, 0.736);
-        border-radius: 5px;
-        color: black;
-        position: absolute;
-        display:block;
-        opacity: 0;
-        box-shadow: 7px 7px 5px 1px rgba(121, 121, 121, 0.514);
-        
+  background-color: #f7f7f7;
+  background-color: #d7e7f9;
+  border: 1px solid rgba(196, 196, 196, 0.736);
+  border-radius: 5px;
+  color: black;
+  position: absolute;
+  display: none;
+  opacity: 0;
+  box-shadow: 7px 7px 5px 1px rgba(121, 121, 121, 0.514);
+}
+
+.infobutton9:hover + .info9 {
+  opacity: 1;
+  display: block;
+  z-index: 999;
+}
+
+.info9 {
+  padding: 15px 20px;
+  background-color: #f7f7f7;
+  background-color: #d7e7f9;
+  border: 1px solid rgba(196, 196, 196, 0.736);
+  border-radius: 5px;
+  color: black;
+  position: absolute;
+  display: none;
+  opacity: 0;
+  box-shadow: 7px 7px 5px 1px rgba(121, 121, 121, 0.514);
 }
