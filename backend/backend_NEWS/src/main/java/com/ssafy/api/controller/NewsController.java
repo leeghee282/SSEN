@@ -119,6 +119,7 @@ public class NewsController {
             StringTokenizer st2 = new StringTokenizer(news, ",");
             while (st2.hasMoreTokens()) {
                 String time = st2.nextToken();
+                time = time.substring(11).trim(); // 뉴스 목록 정렬을 위해 사용하는 키 값 넘어가기
                 String press = st2.nextToken().trim();
                 String title = st2.nextToken();
                 String content = st2.nextToken();
@@ -127,7 +128,6 @@ public class NewsController {
                 newsResList.add(newsRes);
             }
         }
-        Collections.reverse(newsResList);
         return new ResponseEntity<>(newsResList, HttpStatus.OK);
     }
 
@@ -158,6 +158,7 @@ public class NewsController {
             StringTokenizer st2 = new StringTokenizer(news, ",");
             while (st2.hasMoreTokens()) {
                 String time = st2.nextToken();
+                time = time.substring(11).trim(); // 뉴스 목록 정렬을 위해 사용하는 키 값 넘어가기
                 String press = st2.nextToken().trim();
                 String title = st2.nextToken();
                 String content = st2.nextToken();
@@ -166,7 +167,6 @@ public class NewsController {
                 newsResList.add(newsRes);
             }
         }
-        Collections.reverse(newsResList);
         return new ResponseEntity<>(newsResList, HttpStatus.OK);
     }
 
