@@ -1,5 +1,10 @@
 #calcboard {
-  padding: 3px;
+  padding: 2%;
+  background-color: white;
+  border-radius: 5px;
+  border: none;
+  box-shadow: 0 0 10px 0 #d9d9d9;
+  margin-bottom: 8px;
 }
 
 #datepick {
@@ -17,4 +22,38 @@
 
 body {
   background-color: rgb(245, 245, 245);
+}
+
+.calbox {
+  align-items: center;
+  background-color: hsl(0, 0%, 100%);
+  border-color: hsl(0, 0%, 80%);
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  min-height: 37.5px;
+  box-sizing: border-box;
+}
+
+.calcurr1 {
+  margin-right: 10px;
+}
+
+.calcurr2 {
+  margin-left: 10px;
+}
+
+.calbutton {
+  align-items: center;
+  background-color: rgb(245, 245, 245);
+  border-color: hsl(0, 0%, 80%);
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  min-height: 30px;
+  box-sizing: border-box;
 }
