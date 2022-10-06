@@ -1,30 +1,30 @@
 // 보유 원화 모달창으로 입력하는 부분
-import React, { useEffect } from "react";
-import { useState } from "react";
-import axios from "../../../api/user";
-import "./style.css";
+import React, { useEffect } from 'react';
+import { useState } from 'react';
+import axios from '../../../api/user';
+import './style.css';
 
 //mui
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
-import { TextField } from "@mui/material";
-import Grid from "@mui/material/Grid";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import InputLabel from "@mui/material/InputLabel";
-import Stack from "@mui/material/Stack";
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import { TextField } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
+import Stack from '@mui/material/Stack';
 
 // 모달창 스타일
 const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
   width: 400,
-  bgcolor: "background.paper",
+  bgcolor: 'background.paper',
   boxShadow: 24,
   p: 4,
 };
@@ -58,47 +58,47 @@ const BasicSelect = ({ code, setCode }) => {
 
 // 숫자만 입력 가능하게 해 놓은 것(0 입력 방지)
 const enteredOnlyNumber = (val) => {
-  return val.replace(/[^0-9]/g, "");
+  return val.replace(/[^0-9]/g, '');
 };
 // 천 단위 ',' 자동 입력을 위한 것
 const addComma = (num) => {
-  return num.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return num.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
 // 모달창
 export default function BasicModal({ getMyAssetData }) {
-  const [currCode, setCurrCode] = useState(""); //국가선택
-  const [currQuantity, setCurrQuantity] = useState(""); //양
-  const [currPrice, setCurrPrice] = useState(""); //구매 금액
+  const [currCode, setCurrCode] = useState(''); //국가선택
+  const [currQuantity, setCurrQuantity] = useState(''); //양
+  const [currPrice, setCurrPrice] = useState(''); //구매 금액
   const [isEnteredWrongAmount, setIsEnteredWrongAmount] = useState(false);
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = (e) => {
     setOpen(false);
-    setCurrCode(""); //close 후 창 비우기
-    setCurrQuantity("");
-    setCurrPrice("");
+    setCurrCode(''); //close 후 창 비우기
+    setCurrQuantity('');
+    setCurrPrice('');
   };
 
   // 서버에서 보유 통화 보내기(post 방식)
   const sendMyAsset = () => {
     const body = {
       code: currCode,
-      quantity: parseInt(currQuantity.replaceAll(",", "")),
+      quantity: parseInt(currQuantity.replaceAll(',', '')),
       price: currPrice,
-      userId: sessionStorage.getItem("userId"),
+      userId: sessionStorage.getItem('userId'),
     };
-    axios.post("/api/v1/holdcurr", body).then((response) => getMyAssetData());
+    axios.post('/api/v1/holdcurr', body).then((response) => getMyAssetData());
   };
 
   const handleSumit = (e) => {
     e.preventDefault(); //새로고침 방지
     if (!currCode || !currQuantity || !currPrice) return; // 아무것도 입력하지 않았을 때, submit 방지
     setOpen(false); //submit 후 창 닫기
-    setCurrCode(""); //submit 창 비우기
-    setCurrQuantity("");
-    setCurrPrice("");
+    setCurrCode(''); //submit 창 비우기
+    setCurrQuantity('');
+    setCurrPrice('');
     sendMyAsset();
   };
 
@@ -134,14 +134,13 @@ export default function BasicModal({ getMyAssetData }) {
       >
         <Box sx={style}>
           {/* 모달창 내부 */}
-          <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
+          <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
             {/* 보유 외화 title */}
             <Typography
               id="font_test"
               gutterBottom
               variant="h5"
               component="div"
-
             >
               보유 외화 등록
             </Typography>
@@ -157,10 +156,10 @@ export default function BasicModal({ getMyAssetData }) {
                     type="text"
                     value={currQuantity}
                     onChange={amountQuantity}
-                    placeholder="보유하신 원화의 양을 입력하세요"
+                    placeholder="보유하신 외화의 양을 입력하세요"
                     required
                     InputProps={{
-                      style: { fontFamily: 'Pretendard Variable' }
+                      style: { fontFamily: 'Pretendard Variable' },
                     }}
                   />
                 </Grid>
@@ -176,7 +175,7 @@ export default function BasicModal({ getMyAssetData }) {
                     placeholder="구매한 금액을 입력하세요"
                     required
                     InputProps={{
-                      style: { fontFamily: 'Pretendard Variable' }
+                      style: { fontFamily: 'Pretendard Variable' },
                     }}
                   />
                 </Grid>
