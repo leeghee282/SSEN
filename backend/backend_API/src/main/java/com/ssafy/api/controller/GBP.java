@@ -40,7 +40,7 @@ public class GBP {
             regdate1 = liveCurrencyRes.getRegdate();
         }
     }
-    @Scheduled(fixedRate = 60*1000)
+    @Scheduled(fixedRate = 10*1000)
     public void push() {
         //실시간 환율 받아오기
         LiveCurrencyRes liveCurrencyRes = liveCurrencyService.findLiveCurrencyByCCUid("GBP");
