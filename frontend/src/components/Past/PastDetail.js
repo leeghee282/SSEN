@@ -303,7 +303,7 @@ function PastDetail() {
 
   return (
     <Grid id="detailboard" item xs={12}>
-      <Grid item xs={10}>
+      <Grid item xs={12}>
         <p className="past_title" id="font_test">
           <span>{`${searchData.date}`}</span>
           <span className="past_title-smaller"> 의 분석 결과</span>
@@ -323,7 +323,7 @@ function PastDetail() {
             </div>
           </Grid>
           <Grid item xs={1}></Grid>
-          <Grid item xs={5}>
+          <Grid sx={{ display: 'flex', justifyContent: 'center' }} item xs={5}>
             {keywordLoading ? <KeywordLoading /> : null}
             <div id="word-cloud"></div>
           </Grid>
