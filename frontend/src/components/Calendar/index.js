@@ -22,7 +22,7 @@ import {
   getChartCode,
   getChartDetailDate,
 } from '../../_actions/chart_action';
-import { Typography } from '@mui/material';
+import { Avatar, Typography } from '@mui/material';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import ToggleButton from '@mui/material/ToggleButton';
 import CommunityButton from '../Community/CommunityButton';
@@ -259,6 +259,24 @@ const Calendar = () => {
         >
           환율 분석 차트
         </Typography>
+        <Grid item xs={2}>
+          <Avatar
+            sx={{ mt: 4, ml: 1, width: '30px', height: 'auto' }}
+            src="/images/questionlogo2.png"
+            className="infobutton"
+          ></Avatar>
+          <Box sx={{ ml: 3 }} className="info1">
+            <Typography id="font_test" fontSize="14px">
+              > 달러, 유로, 파운드, 엔, 위안 환율 정보를 제공합니다. <br></br>>
+              원하는 날짜 범위와 화폐를 선택한 다음 차트 적용하기를 눌러주세요.
+              <br></br>> 마우스 휠로 확대하거나 축소할 수 있습니다. <br></br>>
+              드래그를 통해 특정 범위만 뉴스 키워드 분석을 할 수 있습니다{' '}
+              <br></br>
+              <br></br>* S$EN 서비스는 1993년 1월 1일부터 환율 데이터를
+              제공합니다.
+            </Typography>
+          </Box>
+        </Grid>
         <Grid
           container
           sx={{ mt: 2, display: 'flex', justifyContent: 'space-between' }}

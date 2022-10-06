@@ -30,3 +30,23 @@ button.MuiToggleButton-root{
   border-color: #47474746 !important;
   color:rgb(90, 90, 90);
 }
+
+.infobutton:hover + .info1 {
+  opacity: 1;
+  display:block;
+  z-index: 1;
+}
+
+.info1 {
+  padding: 15px 20px;
+        background-color: #f7f7f7;
+        background-color: #d7e7f9;
+        border: 1px solid rgba(196, 196, 196, 0.736);
+        border-radius: 5px;
+        color: black;
+        position: absolute;
+        display:block;
+        opacity: 0;
+        box-shadow: 7px 7px 5px 1px rgba(121, 121, 121, 0.514);
+        
+}
