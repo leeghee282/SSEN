@@ -17,15 +17,21 @@ const Posts = ({ posts, loading, showKeyword }) => {
         marginBottom: '30px'
       }}
     >
-      <Typography
+      <Typography className="jb-default-2 fc-grey main-result" id="font_test" >
+        {/* <span >"<span className="search-keyword">{search}</span>"</span> */}
+        <span className="main-result-keyword">"{showKeyword}"</span>
+        <span className="jb-smaller">뉴스 정보</span>
+      </Typography>
+      {/* <Typography
         fontSize="28px"
         fontWeight="600"
         marginTop="20px"
         marginBottom="6px"
         color={'#333333'}
       >
-        "{showKeyword}" 뉴스 정보
-      </Typography>
+         뉴스 정보
+        <Typography>"{showKeyword}"</Typography>
+      </Typography> */}
 
       {posts.map((post, index) => (
 

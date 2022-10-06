@@ -310,12 +310,16 @@ function Keyword(props) {
           <div id="word-cloud"></div>
           {/* <button onClick={pastSearchClickHandler}>과거</button> */}
         </Grid>
+        <Grid container xs={12} sx={{ display: "flex", justifyContent: "center" }}>
+        <Grid container xs={11} sx={{ borderBottom: '1px dashed black'}}>
+        </Grid>
+        </Grid>
 
         <Grid item xs={12}>
           {/* {keywordLoading ? null : <h1>{`${showKeyword}`}</h1>} */}
 
           <div className="newscontainer">
-            <Post
+            <Post 
               posts={currentPosts}
               loading={newsLoading}
               showKeyword={showKeyword}
