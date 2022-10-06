@@ -287,41 +287,76 @@ function Keyword(props) {
   return (
     <div className="keyword_box">
       <Grid container spacing={2} justifyContent="space-between">
-        <p className="keyword_title keyword_title-grey" id="font_test">
-          <span>
-            {`${moment(chartDetailDate.startDetailDate).format(
-              'YYYY.MM.DD',
-            )} ~ ${moment(chartDetailDate.endDetailDate).format('YYYY.MM.DD')}`}
-          </span>
-          <span className="keyword_title-smaller"> 의 분석 결과</span>
-        </p>
-        <Avatar
-          sx={{
-            mt: 3.5,
-            ml: 16,
-            width: 'auto',
-            height: '30px',
-            cursor: 'pointer',
-          }}
-          src="/images/questionlogo2.png"
-          className="infobutton2"
-        ></Avatar>
-        <Box sx={{ ml: 83, mt: 9 }} className="info2">
-          <Typography id="font_test" fontSize="14px">
-            현재 키워드 분석 결과와 유사한 키워드 분석 결과를 가진 날짜들을
-            제공합니다. <br></br> 유사도를 통해 현재 날짜와의 유사한 정도를
+        <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+          <p className="keyword_title keyword_title-grey" id="font_test">
+            <span>
+              {`${moment(chartDetailDate.startDetailDate).format(
+                'YYYY.MM.DD',
+              )} ~ ${moment(chartDetailDate.endDetailDate).format(
+                'YYYY.MM.DD',
+              )}`}
+            </span>
+            <span className="keyword_title-smaller"> 의 분석 결과</span>
+          </p>
+          <Avatar
+            sx={{
+              mt: 4.5,
+
+              width: 'auto',
+              height: '30px',
+              cursor: 'pointer',
+            }}
+            src="/images/questionlogo2.png"
+            className="infobutton9"
+          ></Avatar>
+          <Typography
+            sx={{ ml: 65, mt: 7 }}
+            className="info9"
+            id="font_test"
+            fontSize="14px"
+          >
+            - 네이버 뉴스의 글로벌 경제, 네이버 금융의 환율 뉴스 정보를
+            제공합니다.<br></br>- 선택한 기간의 뉴스에서 가장 많이 언급된 키워드
+            10개를 제공합니다.<br></br>- 키워드 조회를 통해 해당키워드와 관련된
+            뉴스를 조회할 수 있습니다.<br></br>
+            <br></br>* S$EN 서비스는 2004년 2월 2일 기사부터 서비스를
+            제공합니다.<br></br>* S$EN 서비스는 전체 70만건의 뉴스를 저장하고
+            있습니다.
+          </Typography>
+        </Box>
+
+        <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+          <button
+            id="font_test"
+            className="custom-btn btn-3"
+            onClick={pastSearchClickHandler}
+          >
+            <span>유사 동향 보기</span>
+          </button>
+          <Avatar
+            sx={{
+              mt: 3,
+
+              width: 'auto',
+              height: '30px',
+              cursor: 'pointer',
+            }}
+            src="/images/questionlogo2.png"
+            className="infobutton2"
+          ></Avatar>
+          <Typography
+            sx={{ ml: 21, mt: 6 }}
+            className="info2"
+            id="font_test"
+            fontSize="14px"
+          >
+            - 현재 키워드 분석 결과와 유사한 키워드 분석 결과를 가진 날짜들을
+            제공합니다. <br></br>- 유사도를 통해 현재 날짜와의 유사한 정도를
             확인할 수 있습니다.<br></br>
             <br></br> * S$EN 서비스는 변동률이 심한 날짜 100개의 키워드 분석
             결과를 가지고 있습니다.
           </Typography>
         </Box>
-        <button
-          id="font_test"
-          className="custom-btn btn-3"
-          onClick={pastSearchClickHandler}
-        >
-          <span>유사 동향 보기</span>
-        </button>
 
         <Grid sx={{ display: 'flex', justifyContent: 'center' }} item xs={12}>
           {keywordLoading ? <KeywordLoading /> : null}
