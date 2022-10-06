@@ -1,8 +1,8 @@
 .pagination {
   display: flex;
   justify-content: center;
-
-  margin-top: 15px;
+  margin-top: 10px;
+  margin-bottom: 50px;
 }
 
 ul {
@@ -10,46 +10,83 @@ ul {
   padding: 0;
 }
 
+
 ul.pagination li {
   display: inline-block;
-  width: 60px;
+  width: 30px;
   height: 30px;
-  border: 1px solid white;
+  border: 1px solid #d6d6d6;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 1rem;
+  text-align: center;
+  font-family: 'MICEGothic Bold';
+  border-radius: 3px;
+  margin: 0px 6px 0px;
 }
 
-ul.pagination li:first-child {
-  border-radius: 5px 0 0 5px;
-}
-
-ul.pagination li:last-child {
-  border-radius: 0 5px 5px 0;
-}
 
 ul.pagination li a {
   text-decoration: none;
-  color: black;
+  color: #337ab7;
   font-size: 1rem;
+  justify-content: center;
+  text-align: center;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 0px;
+  
 }
+
+ul.pagination li:first-child{
+  border-radius: 10px 3px 3px 10px;
+  width: 35px;
+}
+
+ul.pagination li:nth-child(2) {
+  border-radius: 8px 3px 3px 8px;
+}
+
+ul.pagination li:last-child {
+  border-radius: 3px 10px 10px 3px;
+  width: 35px;
+}
+
+ul.pagination li:nth-child(13) {
+  border-radius: 3px 8px 8px 3px;
+}
+
+
 
 ul.pagination li.active a {
   color: white;
 }
 
 ul.pagination li.active {
-  background-color: #77787a;
+  background-color: #1565C0;
 }
 
 ul.pagination li a:hover,
 ul.pagination li a.active {
-  color: blue;
+  /* color: rgb(0, 0, 0); */
+  background-color: #72A9D9;
+}
+
+ul.pagination li:hover {
+  background-color: #72A9D9;
+  color: white !important;
 }
 
 .page-selection {
   width: 48px;
   height: 30px;
-  color: #2c2e2f;
+  color: #1565C0;
+}
+
+.pagination li {
+  display: inline-block;
+  background: #bdbec2;
+  overflow: hidden;
 }

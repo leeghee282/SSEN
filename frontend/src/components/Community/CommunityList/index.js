@@ -33,7 +33,7 @@ function CommunityList() {
   return (
     <>
       <div className="timeLineWrap">
-        <Avatar
+        {/* <Avatar
           src="images/ssenchat3.png"
           sx={{
             mt: '20px',
@@ -43,7 +43,7 @@ function CommunityList() {
             justifyContent: 'center',
           }}
           variant="square"
-        />
+        /> */}
         {currencyCode === 'USD' && <p className="chatCodeTitle">달러/원</p>}
         {currencyCode === 'EUR' && <p className="chatCodeTitle">유로/원</p>}
         {currencyCode === 'GBP' && <p className="chatCodeTitle">파운드/원</p>}
