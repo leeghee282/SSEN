@@ -14,6 +14,7 @@ import { Grid } from '@mui/material';
 
 import Post from './Post';
 import Paging from './Paging';
+import './style.css';
 
 import {
   getPastCurrData,
@@ -305,24 +306,25 @@ function PastDetail() {
     <Grid id="detailboard" item xs={12}>
       <Grid item xs={12}>
         <p className="past_title" id="font_test">
-          <span>{`${searchData.date}`}</span>
-          <span className="past_title-smaller"> 의 분석 결과</span>
-          <p
-            className="past_title-smaller"
+          <span className="past_title-smaller2">"{`${searchData.date}`}"</span>
+          <span className="past_title-smaller">의 분석 결과 - </span>
+          <span
+            className="past_title-smaller2"
             id="font_test"
-          >{`일치율: ${searchData.similarity}%`}</p>
+          >{`일치율 ${searchData.similarity}%`}</span>
         </p>
 
         <Grid container>
-          <Grid item xs={6}>
+          <Grid item xs={5}>
             <div id="chart">
               <div
                 id="chartdiv"
-                style={{ width: '500px', height: '300px' }}
+                style={{ width: '450px', height: '300px' }}
               ></div>
             </div>
           </Grid>
-          <Grid item xs={1}></Grid>
+          <Grid item xs={1.5} sx={{ borderRight: '1px dashed black' }}></Grid>
+          <Grid item xs={0.5}></Grid>
           <Grid sx={{ display: 'flex', justifyContent: 'center' }} item xs={5}>
             {keywordLoading ? <KeywordLoading /> : null}
             <div id="word-cloud"></div>
