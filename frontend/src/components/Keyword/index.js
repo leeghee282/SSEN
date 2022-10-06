@@ -155,7 +155,7 @@ function Keyword(props) {
       // .rotate(0)
       .rotate(function () {
         return ~~(Math.random() * 2) * 90;
-      })  
+      })
       .font('MICEGothic Bold')
       .fontSize(function (d) {
         return wordScale(d.size);
@@ -302,10 +302,10 @@ function Keyword(props) {
           className="custom-btn btn-3"
           onClick={pastSearchClickHandler}
         >
-          <span>과거 키워드 검색</span>
+          <span>유사 동향 보기</span>
         </button>
-        
-        <Grid sx={{display:"flex", justifyContent:"center"}}item xs={12}>
+
+        <Grid sx={{ display: "flex", justifyContent: "center" }} item xs={12}>
           {keywordLoading ? <KeywordLoading /> : null}
           <div id="word-cloud"></div>
           {/* <button onClick={pastSearchClickHandler}>과거</button> */}
