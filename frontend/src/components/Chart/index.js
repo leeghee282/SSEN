@@ -684,12 +684,12 @@ function Chart() {
     );
 
     series.columns.template.states.create('riseFromOpen', {
-      fill: am5.color(0x76b041),
-      stroke: am5.color(0x76b041),
+      fill: am5.color(0xff5b5b),
+      stroke: am5.color(0xff5b5b),
     });
     series.columns.template.states.create('dropFromOpen', {
-      fill: am5.color(0xe4572e),
-      stroke: am5.color(0xe4572e),
+      fill: am5.color(0x5d5fef),
+      stroke: am5.color(0x5d5fef),
     });
 
     series
@@ -911,12 +911,12 @@ function Chart() {
         );
 
         series.columns.template.states.create('riseFromOpen', {
-          fill: am5.color(0x76b041),
-          stroke: am5.color(0x76b041),
+          fill: am5.color(0xff5b5b),
+          stroke: am5.color(0xff5b5b),
         });
         series.columns.template.states.create('dropFromOpen', {
-          fill: am5.color(0xe4572e),
-          stroke: am5.color(0xe4572e),
+          fill: am5.color(0x5d5fef),
+          stroke: am5.color(0x5d5fef),
         });
 
         series
@@ -1053,7 +1053,6 @@ function Chart() {
     console.log(currBody);
 
     await dispatch(getCurrDate(currBody)).then((response) => {
-      console.log('실행 외 안되');
       console.log(response.payload);
     });
   };
