@@ -119,7 +119,7 @@ function ExchangeCalc() {
       code: code,
     };
     await dispatch(getExchangeRate(body)).then((response) => {
-      console.log(response.payload);
+      // console.log(response.payload);
       setExchangePrice(response.payload.closePrice);
 
       setFromCurrency(1);
@@ -145,7 +145,6 @@ function ExchangeCalc() {
       changeStatus -= 1;
     }
 
-    console.log(exchangePrice);
     setFromCurrency(toCurrency);
     setToCurrency(fromCurrency);
   };
@@ -156,14 +155,14 @@ function ExchangeCalc() {
       code: code,
     };
     await dispatch(getExchangeRate(body)).then((response) => {
-      console.log(response.payload);
+      // console.log(response.payload);
       setExchangePrice(response.payload.closePrice);
     });
   };
 
   const getCurrencyCodeHandler = (code) => {
     dispatch(getCurrencyCode(code)).then((reponse) => {
-      console.log(reponse.payload);
+      // console.log(reponse.payload);
     });
   };
 
@@ -171,8 +170,8 @@ function ExchangeCalc() {
     <div id="calcboard">
       <Grid container>
         {/* 날짜 선택 컴포넌트 */}
-        <Grid item xs={12} sx={{fontFamily:'MICEGothic Bold'}}>
-          <p className='calc_title'>날짜 선택</p>
+        <Grid item xs={12} sx={{ fontFamily: 'MICEGothic Bold' }}>
+          <p className="calc_title">날짜 선택</p>
           <DatePicker
             dateFormat="yyyy년 MM월 dd일"
             selected={selectDate}
@@ -181,50 +180,62 @@ function ExchangeCalc() {
           />
         </Grid>
         {/* 은행 선택 컴포넌트 */}
-          <Grid item xs={12}>
-            <p className='calc_title'>은행 선택</p>
-            <Select placeholder="은행을 선택해주세요" options={banklist} onChange={onSelectBankHandler} />
-          </Grid>
-          <Grid item xs={12}>
-            {selectStatus ? (
-              <p className='calc_alarm'></p>
-            ) : (
-              <p className='calc_bank'>{`${bank}, 수수료 ${commission}%, 기본 우대율 ${basicRate}%`}</p>
-            )}
-          </Grid>
-          {/* 화폐 선택 컴포넌트 */}
-          <Grid item xs={12}>
-            <p className='calc_title'>화폐 선택</p>
-            <Select placeholder="화폐를 선택해주세요" options={currencylist} onChange={onSelectCurrencyHandler} />
-          </Grid>
-          {/* 화폐 선택 시 계산 컴포넌트 */}
-          <Grid item xs={10}>
-            {selectCurrStatus ? (
-              <p className='calc_alarm'></p>
-            ) : (
-              <p>
-                <span className="calcurr1">
-                  <label>{`${fromCurrencyName} : `}</label>
-                  <input
-                    className="calbox"  
-                    onChange={onExchangeCalculation}
-                    value={fromCurrency}
-                  />
-                </span>
-                <span>{' = '}</span>
-                <span className="calcurr2">
-                  <label>{`${toCurrencyName} : `}</label>
-                  <input className="calbox" value={toCurrency} />
-                </span>
-              </p>
-            )}
-          </Grid>
-          <Grid item xs={2}>
-            {!selectStatus && !selectCurrStatus && ( <button onClick={onChangeCalculation} className="calbutton">
-              <CurrencyExchangeIcon sx={{display: 'flex', color:"#333"}}></CurrencyExchangeIcon>
-            </button>)}
-          </Grid>
+        <Grid item xs={12}>
+          <p className="calc_title">은행 선택</p>
+          <Select
+            placeholder="은행을 선택해주세요"
+            options={banklist}
+            onChange={onSelectBankHandler}
+          />
         </Grid>
+        <Grid item xs={12}>
+          {selectStatus ? (
+            <p className="calc_alarm"></p>
+          ) : (
+            <p className="calc_bank">{`${bank}, 수수료 ${commission}%, 기본 우대율 ${basicRate}%`}</p>
+          )}
+        </Grid>
+        {/* 화폐 선택 컴포넌트 */}
+        <Grid item xs={12}>
+          <p className="calc_title">화폐 선택</p>
+          <Select
+            placeholder="화폐를 선택해주세요"
+            options={currencylist}
+            onChange={onSelectCurrencyHandler}
+          />
+        </Grid>
+        {/* 화폐 선택 시 계산 컴포넌트 */}
+        <Grid item xs={10}>
+          {selectCurrStatus ? (
+            <p className="calc_alarm"></p>
+          ) : (
+            <p>
+              <span className="calcurr1">
+                <label>{`${fromCurrencyName} : `}</label>
+                <input
+                  className="calbox"
+                  onChange={onExchangeCalculation}
+                  value={fromCurrency}
+                />
+              </span>
+              <span>{' = '}</span>
+              <span className="calcurr2">
+                <label>{`${toCurrencyName} : `}</label>
+                <input className="calbox" value={toCurrency} />
+              </span>
+            </p>
+          )}
+        </Grid>
+        <Grid item xs={2}>
+          {!selectStatus && !selectCurrStatus && (
+            <button onClick={onChangeCalculation} className="calbutton">
+              <CurrencyExchangeIcon
+                sx={{ display: 'flex', color: '#333' }}
+              ></CurrencyExchangeIcon>
+            </button>
+          )}
+        </Grid>
+      </Grid>
     </div>
   );
 }

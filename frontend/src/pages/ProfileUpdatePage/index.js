@@ -1,22 +1,22 @@
-import React from "react";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import { useState, useEffect } from "react";
-import EditName from "./EditName";
-import EditNickname from "./EditNickname";
-import EditPhoneNumber from "./EditPhoneNumber";
-import EditPassword from "./EditPassword";
-import Link from "@mui/material/Link";
-import axios from "../../api/user";
-import { baseURL } from "../../api";
+import React from 'react';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import { useState, useEffect } from 'react';
+import EditName from './EditName';
+import EditNickname from './EditNickname';
+import EditPhoneNumber from './EditPhoneNumber';
+import EditPassword from './EditPassword';
+import Link from '@mui/material/Link';
+import axios from '../../api/user';
+import { baseURL } from '../../api';
 
-import "./style.css";
+import './style.css';
 
 const theme = createTheme();
 
@@ -52,11 +52,11 @@ const ProfileUpdate = () => {
 
   function insertComponentToggle2() {
     setInsertFlag2((insertFlag2) => !insertFlag2);
-    setCheckNicknameMessage('')
+    setCheckNicknameMessage('');
   }
 
   function insertComponentToggle22() {
-    setCheckNicknameMessage('')
+    setCheckNicknameMessage('');
     getProfile();
     setInsertFlag2((insertFlag2) => !insertFlag2);
   }
@@ -80,7 +80,7 @@ const ProfileUpdate = () => {
     // 비밀번호변경
 
     insertComponentToggle4();
-    console.log(insertFlag4, 4);
+    // console.log(insertFlag4, 4);
   };
 
   function insertComponentToggle4() {
@@ -89,10 +89,9 @@ const ProfileUpdate = () => {
 
   const getProfile = () => {
     axios
-      .get(baseURL + `/api/v1/user/mypage/${sessionStorage.getItem("userId")}`)
+      .get(baseURL + `/api/v1/user/mypage/${sessionStorage.getItem('userId')}`)
       .then((response) => {
         setTotalData(response.data);
-        console.log(123123);
       });
   };
   useEffect(() => {
@@ -106,33 +105,33 @@ const ProfileUpdate = () => {
         id="font_test"
         sx={{
           mb: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
         }}
       >
-        <Box sx={{ mt: 15, width: 1000, height: 1100, background: "white" }}>
+        <Box sx={{ mt: 15, width: 1000, height: 1100, background: 'white' }}>
           <Grid
             container
             sx={{
-              dispaly: "flex",
-              flexDirection: "column",
-              justifyContent: "flex-start",
+              dispaly: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'flex-start',
             }}
           >
             <Typography
               component="h1"
               id="font_test"
               sx={{
-                background: "#E7E9ED",
+                background: '#E7E9ED',
                 pl: 3,
-                color: "rgba(0, 0, 0, 0.6)",
-                height: "60px",
-                fontWeight: "900",
-                fontSize: "30px",
+                color: 'rgba(0, 0, 0, 0.6)',
+                height: '60px',
+                fontWeight: '900',
+                fontSize: '30px',
                 // textAlign: "center",
-                display: "flex",
-                alignItems: "center"
+                display: 'flex',
+                alignItems: 'center',
               }}
             >
               내 정보 설정
@@ -142,19 +141,19 @@ const ProfileUpdate = () => {
           <Grid
             container
             sx={{
-              borderStyle: "none none dashed",
-              borderColor: "#BFC1C4",
+              borderStyle: 'none none dashed',
+              borderColor: '#BFC1C4',
               height: 100,
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
             }}
           >
             <Grid item xs={4}>
               <Box sx={{ pl: 2 }}>아이디</Box>
             </Grid>
             <Grid item xs={4}>
-              <Box sx={{ pl: 2, color: "#777777" }}>{totalData.userId}</Box>
+              <Box sx={{ pl: 2, color: '#777777' }}>{totalData.userId}</Box>
             </Grid>
             <Grid item xs={4}></Grid>
           </Grid>
@@ -162,26 +161,28 @@ const ProfileUpdate = () => {
           <Grid
             container
             sx={{
-              borderStyle: "none none dashed",
-              borderColor: "#BFC1C4",
+              borderStyle: 'none none dashed',
+              borderColor: '#BFC1C4',
               height: 100,
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
             }}
           >
             <Grid item xs={4}>
               <Box sx={{ pl: 2 }}>이름</Box>
             </Grid>
             <Grid item xs={5}>
-              {!insertFlag1 && <Box sx={{ pl: 2, color: "#777777" }}>{totalData.name}</Box>}
+              {!insertFlag1 && (
+                <Box sx={{ pl: 2, color: '#777777' }}>{totalData.name}</Box>
+              )}
 
               {insertFlag1 && (
                 <Box
                   sx={{
-                    marginTop: "10px",
-                    marginBottom: "10px",
-                    marginLeft: "10px",
+                    marginTop: '10px',
+                    marginBottom: '10px',
+                    marginLeft: '10px',
                   }}
                 >
                   <EditName
@@ -197,8 +198,8 @@ const ProfileUpdate = () => {
               {!insertFlag1 && (
                 <Button
                   sx={{
-                    color: "#3C3C3D",
-                    background: "#DEE0E4",
+                    color: '#3C3C3D',
+                    background: '#DEE0E4',
                     width: 80,
                     height: 40,
                   }}
@@ -215,26 +216,28 @@ const ProfileUpdate = () => {
           <Grid
             container
             sx={{
-              borderStyle: "none none dashed",
-              borderColor: "#BFC1C4",
+              borderStyle: 'none none dashed',
+              borderColor: '#BFC1C4',
               height: 100,
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
             }}
           >
             <Grid item xs={4}>
               <Box sx={{ pl: 2 }}>닉네임</Box>
             </Grid>
             <Grid item xs={5}>
-              {!insertFlag2 && <Box sx={{ pl: 2, color: "#777777" }}>{totalData.nickname}</Box>}
+              {!insertFlag2 && (
+                <Box sx={{ pl: 2, color: '#777777' }}>{totalData.nickname}</Box>
+              )}
 
               {insertFlag2 && (
                 <Box
                   sx={{
-                    marginTop: "10px",
-                    marginBottom: "10px",
-                    marginLeft: "10px",
+                    marginTop: '10px',
+                    marginBottom: '10px',
+                    marginLeft: '10px',
                   }}
                 >
                   <EditNickname
@@ -245,7 +248,12 @@ const ProfileUpdate = () => {
                     checkNicknameMessage={checkNicknameMessage}
                     setCheckNicknameMessage={setCheckNicknameMessage}
                   />
-                  <Typography id="font_test" sx={{ color: "red", pl: 1, fontSize: "13px" }}>{checkNicknameMessage}</Typography>
+                  <Typography
+                    id="font_test"
+                    sx={{ color: 'red', pl: 1, fontSize: '13px' }}
+                  >
+                    {checkNicknameMessage}
+                  </Typography>
                 </Box>
               )}
             </Grid>
@@ -253,8 +261,8 @@ const ProfileUpdate = () => {
               {!insertFlag2 && (
                 <Button
                   sx={{
-                    color: "#3C3C3D",
-                    background: "#DEE0E4",
+                    color: '#3C3C3D',
+                    background: '#DEE0E4',
                     width: 80,
                     height: 40,
                   }}
@@ -270,26 +278,28 @@ const ProfileUpdate = () => {
           <Grid
             container
             sx={{
-              borderStyle: "none none dashed",
-              borderColor: "#BFC1C4",
+              borderStyle: 'none none dashed',
+              borderColor: '#BFC1C4',
               height: 100,
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
             }}
           >
             <Grid item xs={4}>
               <Box sx={{ pl: 2 }}>연락처</Box>
             </Grid>
             <Grid item xs={5}>
-              {!insertFlag3 && <Box sx={{ pl: 2, color: "#777777" }}>{totalData.phone}</Box>}
+              {!insertFlag3 && (
+                <Box sx={{ pl: 2, color: '#777777' }}>{totalData.phone}</Box>
+              )}
 
               {insertFlag3 && (
                 <Box
                   sx={{
-                    marginTop: "10px",
-                    marginBottom: "10px",
-                    marginLeft: "10px",
+                    marginTop: '10px',
+                    marginBottom: '10px',
+                    marginLeft: '10px',
                   }}
                 >
                   <EditPhoneNumber
@@ -305,8 +315,8 @@ const ProfileUpdate = () => {
               {!insertFlag3 && (
                 <Button
                   sx={{
-                    color: "#3C3C3D",
-                    background: "#DEE0E4",
+                    color: '#3C3C3D',
+                    background: '#DEE0E4',
                     width: 80,
                     height: 40,
                   }}
@@ -322,12 +332,12 @@ const ProfileUpdate = () => {
           <Grid
             container
             sx={{
-              borderStyle: "none none dashed",
-              borderColor: "#BFC1C4",
+              borderStyle: 'none none dashed',
+              borderColor: '#BFC1C4',
               height: 100,
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
             }}
           >
             {/* <Grid item xs={2}>
@@ -352,7 +362,7 @@ const ProfileUpdate = () => {
                 </Button>
               )}
               {insertFlag4 && insertFlag5 && (
-                <Typography id="font_test" sx={{ color: "blue" }}>
+                <Typography id="font_test" sx={{ color: 'blue' }}>
                   비밀번호 변경이 완료되었습니다.
                 </Typography>
               )}
@@ -374,8 +384,8 @@ const ProfileUpdate = () => {
               sx={{
                 width: 1000,
                 height: 200,
-                display: "flex",
-                justifyContent: "center",
+                display: 'flex',
+                justifyContent: 'center',
               }}
             >
               <Button

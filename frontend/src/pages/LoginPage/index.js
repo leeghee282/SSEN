@@ -1,29 +1,29 @@
-import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import { UserContext } from "../../context/user";
-import axios from "../../api/user";
-import { baseURL } from "../../api";
-import { Email } from "@mui/icons-material";
+import * as React from 'react';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Link from '@mui/material/Link';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { UserContext } from '../../context/user';
+import axios from '../../api/user';
+import { baseURL } from '../../api';
+import { Email } from '@mui/icons-material';
 
 const theme = createTheme();
 
 export default function Login() {
   const navigate = useNavigate();
 
-  const initialValues = { userId: "", password: " " };
+  const initialValues = { userId: '', password: ' ' };
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
   const [changeState, setChangeState] = useState(false);
@@ -34,13 +34,11 @@ export default function Login() {
   const validate = () => {
     const errors = {};
     if (!formValues.userId) {
-      errors.password = "로그인 정보를 확인하세요.";
+      errors.password = '로그인 정보를 확인하세요.';
     }
     if (!formValues.password) {
-      errors.password = "비밀번호를 입력해주세요.";
+      errors.password = '비밀번호를 입력해주세요.';
     }
-
-
 
     setFormErrors(errors);
     if (!(errors.userId + errors.password)) {
@@ -56,7 +54,7 @@ export default function Login() {
       password: password,
     };
     try {
-      const response = await axios.post(baseURL + "/api/v1/user/login", body);
+      const response = await axios.post(baseURL + '/api/v1/user/login', body);
       const resPassword = response.data.password;
       const resAccessToken = response.data.accessToken;
       const resEmail = response.data.email;
@@ -66,25 +64,22 @@ export default function Login() {
       const resUid = response.data.uid;
       const resUserId = response.data.userId;
 
-      console.log(response);
-      sessionStorage.setItem("password", resPassword);
-      sessionStorage.setItem("accessToken", resAccessToken);
-      sessionStorage.setItem("email", resEmail);
-      sessionStorage.setItem("name", resName);
-      sessionStorage.setItem("nickname", resNickname);
-      sessionStorage.setItem("phone", resPhone);
-      sessionStorage.setItem("uid", resUid);
-      sessionStorage.setItem("userId", resUserId);
+      sessionStorage.setItem('password', resPassword);
+      sessionStorage.setItem('accessToken', resAccessToken);
+      sessionStorage.setItem('email', resEmail);
+      sessionStorage.setItem('name', resName);
+      sessionStorage.setItem('nickname', resNickname);
+      sessionStorage.setItem('phone', resPhone);
+      sessionStorage.setItem('uid', resUid);
+      sessionStorage.setItem('userId', resUserId);
 
       if (response.status === 200) {
-        navigate("/");
+        navigate('/');
       } else {
         return;
       }
-    }
-    catch (e) {
-      setFormErrors({ ...formErrors, password: "로그인 정보를 확인하세요." })
-      console.log(formErrors, 33)
+    } catch (e) {
+      setFormErrors({ ...formErrors, password: '로그인 정보를 확인하세요.' });
     }
   };
 
@@ -103,7 +98,7 @@ export default function Login() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid container component="main" sx={{ height: "100vh" }}>
+      <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
         <Grid
           item
@@ -111,14 +106,14 @@ export default function Login() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: "url(/images/LogoChart2.gif)",
-            backgroundRepeat: "no-repeat",
+            backgroundImage: 'url(/images/LogoChart2.gif)',
+            backgroundRepeat: 'no-repeat',
             backgroundColor: (t) =>
-              t.palette.mode === "light"
+              t.palette.mode === 'light'
                 ? t.palette.grey[50]
                 : t.palette.grey[900],
-            backgroundSize: "cover",
-            backgroundPosition: "center",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
           }}
         />
         <Grid item xs={12} sm={8} md={5} component={Paper} square>
@@ -126,9 +121,9 @@ export default function Login() {
             sx={{
               my: 8,
               mx: 4,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
             }}
           >
             <Link href="/">
@@ -137,8 +132,8 @@ export default function Login() {
                   width: 300,
                   height: 200,
                   m: 1,
-                  bgcolor: "white",
-                  cursor: "pointer",
+                  bgcolor: 'white',
+                  cursor: 'pointer',
                 }}
                 src="/images/SsenLogo_last.png"
               >
@@ -157,7 +152,7 @@ export default function Login() {
                 name="userId"
                 autoFocus
                 InputProps={{
-                  style: { fontFamily: 'Pretendard Variable' }
+                  style: { fontFamily: 'Pretendard Variable' },
                 }}
               />
 
@@ -172,7 +167,9 @@ export default function Login() {
                 id="password"
                 autoComplete="current-password"
               />
-              <Typography id="font_test" color="red">{formErrors.password}</Typography>
+              <Typography id="font_test" color="red">
+                {formErrors.password}
+              </Typography>
 
               <Button
                 onClick={handleSubmit}
@@ -187,16 +184,23 @@ export default function Login() {
               <Grid container justifyContent="flex-end">
                 <Grid item>
                   <Typography
-                    sx={{ pl: 1, fontSize: "14px" }}
-                    style={{ color: "#808080", fontFamily: 'MICEGothic Bold' }}>
+                    sx={{ pl: 1, fontSize: '14px' }}
+                    style={{ color: '#808080', fontFamily: 'MICEGothic Bold' }}
+                  >
                     계정이 없으신가요?&nbsp;
-                    <Link href="/signup" variant="body2"
-                      style={{ color: "rgb(21 120 219)", fontFamily: 'MICEGothic Bold', textDecoration: "none" }}>
-                      {"회원가입"}
+                    <Link
+                      href="/signup"
+                      variant="body2"
+                      style={{
+                        color: 'rgb(21 120 219)',
+                        fontFamily: 'MICEGothic Bold',
+                        textDecoration: 'none',
+                      }}
+                    >
+                      {'회원가입'}
                     </Link>
                     하기
                   </Typography>
-
                 </Grid>
               </Grid>
             </Box>
