@@ -15,7 +15,13 @@
 
 #searchdate {
   font-size: 28px;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
+}
+
+#searchdate2 {
+  font-size: 36px;
+  color: #0062c4;
+  /* margin-bottom: 10px; */
 }
 
 #detailboard {
@@ -43,3 +49,8 @@
   font-size: 32px;
   color: #0062c4;
 }
+
+.font_zz {
+  color: #0062c4;
+}
+
