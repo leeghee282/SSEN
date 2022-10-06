@@ -1,5 +1,5 @@
 #calcboard {
-  padding: 2%;
+  padding: 4%;
   background-color: white;
   border-radius: 5px;
   border: none;
@@ -14,10 +14,14 @@
   border-radius: 4px;
   border-style: solid;
   border-width: 1px;
+  font-size: 15px;
+  color: #333;
+  font-family: 'MICEGothic Bold';
   flex-wrap: wrap;
   justify-content: space-between;
   min-height: 37.5px;
   box-sizing: border-box;
+  padding-left: 11px;
 }
 
 body {
@@ -34,7 +38,10 @@ body {
   flex-wrap: wrap;
   justify-content: space-between;
   min-height: 37.5px;
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
+  width: 130px;
+  font-size: 17px;
+  font-family: 'MICEGothic Bold';
 }
 
 .calcurr1 {
@@ -47,13 +54,31 @@ body {
 
 .calbutton {
   align-items: center;
-  background-color: rgb(245, 245, 245);
+  background-color: #fff;
+  cursor: pointer;
   border-color: hsl(0, 0%, 80%);
+  /* border-color: #fff; */
   border-radius: 4px;
   border-style: solid;
   border-width: 1px;
   flex-wrap: wrap;
   justify-content: space-between;
-  min-height: 30px;
-  box-sizing: border-box;
+  min-height: 35px;
+  /* width: 80px; */
+  /* box-sizing: border-box; */
+  box-shadow: 1px 1px 3px 0 #d9d9d9;
+}
+
+.calc_title {
+  font-size: 20px;
+}
+
+.calc_alarm {
+  font-size: 13px;
+  color: darkgray;
+}
+
+.calc_bank {
+  color: #003870;
+  margin-left: 12px;
 }
