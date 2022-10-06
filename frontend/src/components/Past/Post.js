@@ -50,7 +50,7 @@ const Posts = ({ posts, loading, showKeyword }) => {
           <Typography
             id="font_test"
             // fontSize="30px"
-            className="main-post-title"
+            className="past-post-title"
             sx={{ ml: 2, height: '50px' }}
           >
             {post.title.length >= 30
@@ -59,20 +59,20 @@ const Posts = ({ posts, loading, showKeyword }) => {
               : post.title}
           </Typography>
         </Grid>
-        <Grid item xs={1.5} className="main-post-press">
+        <Grid item xs={1.5} className="past-post-press">
           <Grid container direction="column">
             <Grid id="font_test" item xs={2}>
               {post.press}
             </Grid>
-            <Grid id="font_test" sx={{ mt: 1 }} item xs={10}>
+            <Grid id="font_test" sx={{ mt: 0.5 }} item xs={10}>
               {post.time.slice(0, 10).replaceAll('\u0000', '')}
             </Grid>
           </Grid>
         </Grid>
       </Grid>
 
-      <Grid sx={{ pl: 1 }} item xs={11.8}>
-        <Typography sx={{ pt: 2, pb: 2}} id="font_test" className="main-post-content">
+      <Grid sx={{ pl: 1 }} item xs={12}>
+        <Typography sx={{ pt: 2, pb: 2}} id="font_test" className="past-post-content">
           {post.content.length >= 130
             ? post.content.substr(0, 130) + '...'
             : post.content}

@@ -44,8 +44,8 @@ const Posts = ({ posts, loading, showKeyword }) => {
           >
             <Box
               sx={{
-                height: '120px',
-                pt: 1,
+                height: 'auto',
+                pt: 1.3,
                 '&:hover': {
                   background: '#DEE0E4',
                 },
@@ -53,7 +53,7 @@ const Posts = ({ posts, loading, showKeyword }) => {
               className="card"
             >
               <Grid sx={{ borderBottom: '1px dashed black' }} container>
-                <Grid item xs={10}>
+                <Grid item xs={10.5}>
                   <Typography
                     id="font_test"
                     // fontSize="30px"
@@ -66,13 +66,13 @@ const Posts = ({ posts, loading, showKeyword }) => {
                       : post.title}
                   </Typography>
                 </Grid>
-                <Grid item xs={2} className="main-post-press">
+                <Grid item xs={1.5} className="main-post-press">
                   <Grid container direction="column">
                     <Grid sx={{display:"flex",justifyContent:"flex-start"}} id="font_test" item xs={2}>
                     
                       {post.press}
                     </Grid>
-                    <Grid sx={{display:"flex",justifyContent:"flex-start",mt:1}} id="font_test"  item xs={10}>
+                    <Grid sx={{display:"flex",justifyContent:"flex-start",mt:0.5}} id="font_test"  item xs={10}>
                       {post.time.slice(0, 10).replaceAll('\u0000', '')}
                     </Grid>
                   </Grid>
@@ -80,9 +80,9 @@ const Posts = ({ posts, loading, showKeyword }) => {
               </Grid>
 
               <Grid sx={{ pl: 1 }} item xs={12} >
-                <Typography sx={{ pt: 2, display:"flex",justifyContent:"flex-start"}} id="font_test" className="main-post-content" >
-                  {post.content.length >= 110
-                    ? post.content.substr(0, 110) + '...'
+                <Typography sx={{ pt: 2, pb: 2}} id="font_test" className="main-post-content" >
+                  {post.content.length >= 120
+                    ? post.content.substr(0, 120) + '...'
                     : post.content}
                 </Typography>
               </Grid>
