@@ -7,7 +7,7 @@ const PostLoading = () => {
       <Avatar
         variant="square"
         src="/images/news_loading_last.gif"
-        sx={{ width: "80%", height: "80%" }}
+        sx={{ width: "40%", height: "40%" }}
       ></Avatar>
     </div>
   );

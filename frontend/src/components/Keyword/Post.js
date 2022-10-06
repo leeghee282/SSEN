@@ -38,7 +38,7 @@ const Posts = ({ posts, loading, showKeyword }) => {
           >
             <Box
               sx={{
-                height: '135px',
+                height: '120px',
                 pt: 1,
                 '&:hover': {
                   background: '#DEE0E4',
