@@ -3,6 +3,8 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
 import { Grid } from '@mui/material';
+import LoopIcon from '@mui/icons-material/Loop';
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,6 +16,7 @@ import {
 } from '../../_actions/exchange_action';
 
 import './style.css';
+import { flexbox } from '@mui/system';
 
 function ExchangeCalc() {
   const dispatch = useDispatch();
@@ -166,62 +169,62 @@ function ExchangeCalc() {
 
   return (
     <div id="calcboard">
-      <Grid container spacing={2}>
-        <Grid item xs={4}>
-          <span id="calclabel">날짜 선택</span>
+      <Grid container>
+        {/* 날짜 선택 컴포넌트 */}
+        <Grid item xs={12} sx={{fontFamily:'MICEGothic Bold'}}>
+          <p className='calc_title'>날짜 선택</p>
           <DatePicker
-            dateFormat="yyyy-MM-dd"
+            dateFormat="yyyy년 MM월 dd일"
             selected={selectDate}
             onChange={(date) => setSelectDate(date)}
             id="datepick"
           />
         </Grid>
-        <Grid item xs={0.5}></Grid>
-        <Grid item xs={5}>
-          <span>은행 선택</span>
-          <Select options={banklist} onChange={onSelectBankHandler} />
+        {/* 은행 선택 컴포넌트 */}
+          <Grid item xs={12}>
+            <p className='calc_title'>은행 선택</p>
+            <Select placeholder="은행을 선택해주세요" options={banklist} onChange={onSelectBankHandler} />
+          </Grid>
+          <Grid item xs={12}>
+            {selectStatus ? (
+              <p className='calc_alarm'></p>
+            ) : (
+              <p className='calc_bank'>{`${bank}, 수수료 ${commission}%, 기본 우대율 ${basicRate}%`}</p>
+            )}
+          </Grid>
+          {/* 화폐 선택 컴포넌트 */}
+          <Grid item xs={12}>
+            <p className='calc_title'>화폐 선택</p>
+            <Select placeholder="화폐를 선택해주세요" options={currencylist} onChange={onSelectCurrencyHandler} />
+          </Grid>
+          {/* 화폐 선택 시 계산 컴포넌트 */}
+          <Grid item xs={10}>
+            {selectCurrStatus ? (
+              <p className='calc_alarm'></p>
+            ) : (
+              <p>
+                <span className="calcurr1">
+                  <label>{`${fromCurrencyName} : `}</label>
+                  <input
+                    className="calbox"  
+                    onChange={onExchangeCalculation}
+                    value={fromCurrency}
+                  />
+                </span>
+                <span>{' = '}</span>
+                <span className="calcurr2">
+                  <label>{`${toCurrencyName} : `}</label>
+                  <input className="calbox" value={toCurrency} />
+                </span>
+              </p>
+            )}
+          </Grid>
+          <Grid item xs={2}>
+            {!selectStatus && !selectCurrStatus && ( <button onClick={onChangeCalculation} className="calbutton">
+              <CurrencyExchangeIcon sx={{display: 'flex', color:"#333"}}></CurrencyExchangeIcon>
+            </button>)}
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          {selectStatus ? (
-            <p>은행을 선택해주세요.</p>
-          ) : (
-            <p>{`${bank}, 수수료 ${commission}%, 기본 우대율 ${basicRate}%`}</p>
-          )}
-        </Grid>
-        <Grid item xs={5}>
-          <label>화폐 선택</label>
-          <Select options={currencylist} onChange={onSelectCurrencyHandler} />
-        </Grid>
-        <Grid item xs={4}>
-          <button onClick={onChangeCalculation} className="calbutton">
-            순서바꾸기
-          </button>
-        </Grid>
-        <Grid item xs={12}>
-          {selectCurrStatus ? (
-            <p>화폐를 선택해주세요.</p>
-          ) : (
-            <p>
-              <span className="calcurr1">
-                <label>{`${fromCurrencyName} : `}</label>
-                <input
-                  className="calbox"
-                  onChange={onExchangeCalculation}
-                  value={fromCurrency}
-                />
-              </span>
-              <span>{' = '}</span>
-              {/* <p>
-                <button onClick={onChangeCalculation}>change</button>
-              </p> */}
-              <span className="calcurr2">
-                <label>{`${toCurrencyName} : `}</label>
-                <input className="calbox" value={toCurrency} />
-              </span>
-            </p>
-          )}
-        </Grid>
-      </Grid>
     </div>
   );
 }
