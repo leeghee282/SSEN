@@ -74,7 +74,6 @@ const LiveCurrencyTable = () => {
 
   const getStartData = async () => {
     await axios.get(baseURL + '/api/v1/live').then((response) => {
-      console.log(response.data, '초기데이터 세팅');
       const reg1 = response.data[0].regdate.substr(
         response.data[0].regdate.indexOf(' ') + 1,
         8,
@@ -173,7 +172,6 @@ const LiveCurrencyTable = () => {
         //json형식으로 변환
         //   console.log(JSON.parse(message.data));
         // console.log(toChartType,"성공")
-        console.log('usd성공');
         setCc1(JSON.parse(message.data).cc2);
         setSellPrice1(JSON.parse(message.data).sellPrice);
         setBuyPrice1(JSON.parse(message.data).buyPrice);
@@ -188,7 +186,6 @@ const LiveCurrencyTable = () => {
         // console.log(JSON.parse(message.data).regdate);
       }
       if (JSON.parse(message.data).cc2 === 'EUR') {
-        console.log('eur성공');
         setCc2(JSON.parse(message.data).cc2);
         setSellPrice2(JSON.parse(message.data).sellPrice);
         setBuyPrice2(JSON.parse(message.data).buyPrice);

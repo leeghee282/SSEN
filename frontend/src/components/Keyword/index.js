@@ -87,7 +87,7 @@ function Keyword(props) {
     await dispatch(getKeywords(keywordBody)).then((response) => {
       const data = [];
       let sum = 0;
-      console.log(response.payload);
+      // console.log(response.payload);
 
       response.payload.map((res) => {
         var addWordcloudData = {
@@ -105,7 +105,6 @@ function Keyword(props) {
       const maxNum = data.length - 1;
       const firstKeyword = data[maxNum].text;
       setShowKeyword(firstKeyword);
-      console.log(firstKeyword);
 
       let newsBody = {
         keyword: firstKeyword,
@@ -114,7 +113,6 @@ function Keyword(props) {
       };
 
       dispatch(getNews(newsBody)).then((res) => {
-        console.log(res.payload);
         setPosts(res.payload);
         setCurrentPage(1);
         indexOfLastPost = currentPage * postPerPage;
@@ -193,7 +191,7 @@ function Keyword(props) {
           newsLoadingChange();
           onSetNews(d.target.__data__.text);
         });
-      console.log(JSON.stringify(words));
+      // console.log(JSON.stringify(words));
     }
 
     const onSetNews = async (txt) => {
@@ -206,7 +204,6 @@ function Keyword(props) {
       };
 
       await dispatch(getNews(newsBody)).then((response) => {
-        console.log(response.payload);
         setPosts(response.payload);
         setCurrentPage(1);
         indexOfLastPost = currentPage * postPerPage;
@@ -227,8 +224,6 @@ function Keyword(props) {
       endDate: chartDetailDate.endDetailDate,
     };
 
-    console.log(keywordBody);
-
     d3.selectAll('svg').remove();
 
     setKeywordLoading(true);
@@ -237,7 +232,6 @@ function Keyword(props) {
     await dispatch(getKeywords(keywordBody)).then((response) => {
       const data = [];
       let sum = 0;
-      console.log(response.payload);
 
       response.payload.map((res) => {
         var addWordcloudData = {
@@ -256,8 +250,6 @@ function Keyword(props) {
       const firstKeyword = data[maxNum].text;
       setShowKeyword(firstKeyword);
 
-      console.log(firstKeyword);
-
       let newsBody = {
         keyword: firstKeyword,
         // startDate: startDate,
@@ -265,7 +257,6 @@ function Keyword(props) {
       };
 
       dispatch(getNews(newsBody)).then((res) => {
-        console.log(res.payload);
         setPosts(res.payload);
         setCurrentPage(1);
         indexOfLastPost = currentPage * postPerPage;

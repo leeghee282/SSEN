@@ -49,7 +49,7 @@ const RowRadioButtonsGroup = () => {
 
   const selectChange = async (event) => {
     setType(event.target.value);
-    console.log(type);
+    // console.log(type);
 
     let body = {
       code: event.target.value,
@@ -164,7 +164,7 @@ const Calendar = () => {
       };
 
       await dispatch(getChartDates(body)).then((response) => {
-        console.log(response.payload);
+        // console.log(response.payload);
       });
     } else if (value === '3개월') {
       const threeMonthAgo = new Date(
@@ -180,7 +180,7 @@ const Calendar = () => {
       };
 
       await dispatch(getChartDates(body)).then((response) => {
-        console.log(response.payload);
+        // console.log(response.payload);
       });
     } else if (value === '6개월') {
       const sixMonthAgo = new Date(
@@ -196,7 +196,7 @@ const Calendar = () => {
       };
 
       await dispatch(getChartDates(body)).then((response) => {
-        console.log(response.payload);
+        // console.log(response.payload);
       });
     } else if (value === '1년') {
       const lastYear = new Date(
@@ -212,7 +212,7 @@ const Calendar = () => {
       };
 
       await dispatch(getChartDates(body)).then((response) => {
-        console.log(response.payload);
+        // console.log(response.payload);
       });
     }
   };
@@ -226,7 +226,7 @@ const Calendar = () => {
     };
 
     await dispatch(getChartDates(body)).then((response) => {
-      console.log(response.payload);
+      // console.log(response.payload);
     });
   };
 
@@ -239,7 +239,7 @@ const Calendar = () => {
     };
 
     await dispatch(getChartDates(body)).then((response) => {
-      console.log(response.payload);
+      // console.log(response.payload);
     });
   };
 
@@ -273,10 +273,10 @@ const Calendar = () => {
           ></Avatar>
           <Box sx={{ ml: 3 }} className="info1">
             <Typography id="font_test" fontSize="14px">
-              - 달러, 유로, 파운드, 엔, 위안 환율 정보를 제공합니다. <br></br>
-              - 원하는 날짜 범위와 화폐를 선택한 다음 차트 적용하기를 눌러주세요.
-              <br></br> - 마우스 휠로 확대하거나 축소할 수 있습니다. <br></br>
-              - 드래그를 통해 특정 범위만 뉴스 키워드 분석을 할 수 있습니다{' '}
+              - 달러, 유로, 파운드, 엔, 위안 환율 정보를 제공합니다. <br></br>-
+              원하는 날짜 범위와 화폐를 선택한 다음 차트 적용하기를 눌러주세요.
+              <br></br> - 마우스 휠로 확대하거나 축소할 수 있습니다. <br></br>-
+              드래그를 통해 특정 범위만 뉴스 키워드 분석을 할 수 있습니다{' '}
               <br></br>
               <br></br>* S$EN 서비스는 1993년 1월 1일부터 환율 데이터를
               제공합니다.

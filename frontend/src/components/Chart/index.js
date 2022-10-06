@@ -139,7 +139,6 @@ function Chart() {
     //   endDate: moment(chartCurrDate.endCurrDate).format('YYYY-MM-DD'),
     //   code: currencyCode,
     // };
-    console.log(body);
 
     await dispatch(getData(body)).then((response) => {
       if (response.payload) {
@@ -326,10 +325,8 @@ function Chart() {
             endDetailDate: selectedRange[selectedRange.length - 1].date,
           };
 
-          console.log(newsBody);
-
           dispatch(getChartDetailDate(newsBody)).then((response) => {
-            console.log(response.payload);
+            // console.log(response.payload);
           });
         });
 
@@ -549,10 +546,8 @@ function Chart() {
             endDetailDate: selectedRange[selectedRange.length - 1].date,
           };
 
-          console.log(newsBody);
-
           dispatch(getChartDetailDate(newsBody)).then((response) => {
-            console.log(response.payload);
+            // console.log(response.payload);
           });
         });
 
@@ -580,13 +575,12 @@ function Chart() {
       code: currencyCode,
     };
     await dispatch(getData(body)).then((response) => {
-      console.log(response.payload);
+      // console.log(response.payload);
     });
   };
 
   const onSetChart = async () => {
     let chartData = [];
-    console.log(rawChartData);
     await rawChartData.map((data) => {
       var addChartData = {
         date: new Date(data.regdate).getTime(),
@@ -767,10 +761,8 @@ function Chart() {
         endDetailDate: selectedRange[selectedRange.length - 1].date,
       };
 
-      console.log(newsBody);
-
       dispatch(getChartDetailDate(newsBody)).then((response) => {
-        console.log(response.payload);
+        // console.log(response.payload);
       });
     });
 
@@ -996,10 +988,8 @@ function Chart() {
             endDetailDate: selectedRange[selectedRange.length - 1].date,
           };
 
-          console.log(newsBody);
-
           dispatch(getChartDetailDate(newsBody)).then((response) => {
-            console.log(response.payload);
+            // console.log(response.payload);
           });
         });
 
@@ -1027,11 +1017,9 @@ function Chart() {
       startDetailDate: moment(chartDates.startDate).format('YYYY-MM-DD'),
       endDetailDate: moment(chartDates.endDate).format('YYYY-MM-DD'),
     };
-    console.log(body);
 
     await dispatch(getChartDetailDate(body)).then((response) => {
-      console.log('이거');
-      console.log(response.payload);
+      // console.log(response.payload);
 
       var currBody = {
         startCurrDate: moment(chartDates.startDate).format('YYYY-MM-DD'),
@@ -1039,7 +1027,7 @@ function Chart() {
       };
 
       dispatch(getCurrDate(currBody)).then((response) => {
-        console.log(response.payload);
+        // console.log(response.payload);
       });
     });
   };
@@ -1050,10 +1038,8 @@ function Chart() {
       endCurrDate: moment(chartDates.endDate).format('YYYY-MM-DD'),
     };
 
-    console.log(currBody);
-
     await dispatch(getCurrDate(currBody)).then((response) => {
-      console.log(response.payload);
+      // console.log(response.payload);
     });
   };
 
