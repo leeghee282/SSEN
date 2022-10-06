@@ -297,7 +297,7 @@ const LiveCurrencyTable = () => {
                   </TableCell> */}
                   <TableCell
                     align="right"
-                    style={{ color: variance1 > 0 ? 'red' : 'blue' }}
+                    style={{ color: variance1 > 0 ? '#FF5B5B' : '#604fdc' }}
                   >
                     {variance1}
                   </TableCell>
@@ -322,7 +322,7 @@ const LiveCurrencyTable = () => {
                   </TableCell> */}
                   <TableCell
                     align="right"
-                    style={{ color: variance2 > 0 ? 'red' : 'blue' }}
+                    style={{ color: variance2 > 0 ? '#FF5B5B' : '#604fdc' }}
                   >
                     {variance2}
                   </TableCell>
@@ -347,7 +347,7 @@ const LiveCurrencyTable = () => {
                   </TableCell> */}
                   <TableCell
                     align="right"
-                    style={{ color: variance3 > 0 ? 'red' : 'blue' }}
+                    style={{ color: variance3 > 0 ? '#FF5B5B' : '#604fdc' }}
                   >
                     {variance3}
                   </TableCell>
@@ -372,7 +372,7 @@ const LiveCurrencyTable = () => {
                   </TableCell> */}
                   <TableCell
                     align="right"
-                    style={{ color: variance4 > 0 ? 'red' : 'blue' }}
+                    style={{ color: variance4 > 0 ? '#FF5B5B' : '#604fdc' }}
                   >
                     {variance4}
                   </TableCell>
@@ -397,7 +397,7 @@ const LiveCurrencyTable = () => {
                   </TableCell> */}
                   <TableCell
                     align="right"
-                    style={{ color: variance5 > 0 ? 'red' : 'blue' }}
+                    style={{ color: variance5 > 0 ? '#FF5B5B' : '#604fdc' }}
                   >
                     {variance5}
                   </TableCell>

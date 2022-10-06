@@ -14,78 +14,75 @@ const Posts = ({ posts, loading, showKeyword }) => {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
+        marginBottom: '30px',
+        
+        
       }}
     >
-      <Typography
-        fontSize="28px"
-        fontWeight="600"
-        marginTop="20px"
-        marginBottom="6px"
-        color={'#333333'}
-      >
-        "{showKeyword}" 뉴스 정보
+      <Typography className="jb-default-2 fc-grey past-result" id="font_test" >
+        {/* <span >"<span className="search-keyword">{search}</span>"</span> */}
+        <span className="past-result-keyword">"{showKeyword}"</span>
+        <span className="jb-smaller">뉴스 정보</span>
       </Typography>
 
       {posts.map((post, index) => (
-        <Link
-          key={index}
-          href={post.url}
-          target="_blank"
-          sx={{ textDecoration: 'none', color: 'black' }}
-        >
-          <Box
-            className="card"
-            sx={{
-              width: '780px',
-              display: 'flex',
 
-              height: '100px',
-              mt: 1,
-              border: '1px solid #757575',
-              borderRadius: '10px',
-
-              '&:hover': {
-                background: '#DEE0E4',
-              },
-            }}
+<Grid sx={{display:"flex",justifyContent:"center"}}item xs={12} >
+  <Link
+    key={index}
+    href={post.url}
+    target="_blank"
+    sx={{ textDecoration: 'none', color: 'black' }}
+  >
+    <Box
+      sx={{
+        height: 'auto',
+        width: '800px',
+        pt: 1,
+        '&:hover': {
+          background: '#DEE0E4',
+        },
+      }}
+      className="card"
+    >
+      <Grid sx={{ borderBottom: '1px dashed black' }} container>
+        <Grid item xs={10.5}>
+          <Typography
+            id="font_test"
+            // fontSize="30px"
+            className="past-post-title"
+            sx={{ ml: 2, height: '50px' }}
           >
-            <Grid container>
-              <Grid
-                sx={{ borderBottom: '1px dashed black', mt: 2 }}
-                item
-                xs={10}
-              >
-                <Typography sx={{ pl: 1, fontSize: '18px', fontWeight: 600 }}>
-                  {post.title.length >= 1
-                    ? post.title.replaceAll('…', ' ').substr(0, 36) + '...'
-                    : post.title}
-                </Typography>
-              </Grid>
-              <Grid
-                sx={{ borderBottom: '1px dashed black', mt: 2 }}
-                item
-                xs={2}
-              >
-                <Grid container direction="column">
-                  <Grid fontSize="10px" item xs={6}>
-                    {post.press}
-                  </Grid>
-                  <Grid fontSize="10px" item xs={6}>
-                    {post.time.slice(0, 10).replaceAll('\u0000', '')}
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography sx={{ fontSize: '13px', pl: 1, pr: 1, mt: 1 }}>
-                  {post.content.length >= 110
-                    ? post.content.substr(0, 110) + '...'
-                    : post.content}
-                </Typography>
-              </Grid>
+            {post.title.length >= 30
+              ? post.title.length.replaceAll('…', ' ').substr(0, 30) +
+              '...'
+              : post.title}
+          </Typography>
+        </Grid>
+        <Grid item xs={1.5} className="past-post-press">
+          <Grid container direction="column">
+            <Grid id="font_test" item xs={2}>
+              {post.press}
             </Grid>
-          </Box>
-        </Link>
-      ))}
+            <Grid id="font_test" sx={{ mt: 0.5 }} item xs={10}>
+              {post.time.slice(0, 10).replaceAll('\u0000', '')}
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+
+      <Grid sx={{ pl: 1 }} item xs={12}>
+        <Typography sx={{ pt: 2, pb: 2}} id="font_test" className="past-post-content">
+          {post.content.length >= 130
+            ? post.content.substr(0, 130) + '...'
+            : post.content}
+        </Typography>
+      </Grid>
+    </Box>
+  </Link>
+</Grid>
+
+))}
     </Box>
   );
 };
