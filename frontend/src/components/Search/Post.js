@@ -4,10 +4,9 @@ import './style.css';
 import { useEffect } from 'react';
 
 const Posts = ({ posts, search }) => {
-  useEffect(()=>{
-    window.scrollTo({top: 0});
-},[posts])
-  console.log(posts,"확인ㅇ확인")
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, [posts]);
   return (
     <div>
       <p className="jb-default-2 fc-grey search-result" id="font_test">
@@ -43,7 +42,7 @@ const Posts = ({ posts, search }) => {
             <option value="100">100</option>
           </select>
         </Typography> */}
-      
+
       <main>
         <ul>
           {posts.map((post, index) => (
@@ -75,7 +74,7 @@ const Posts = ({ posts, search }) => {
                           >
                             {post.title.length >= 30
                               ? post.title.replaceAll('…', ' ').substr(0, 30) +
-                              '...'
+                                '...'
                               : post.title}
                           </Typography>
                         </Grid>
@@ -92,7 +91,11 @@ const Posts = ({ posts, search }) => {
                       </Grid>
 
                       <Grid sx={{ pl: 1 }} item xs={11.8}>
-                        <Typography sx={{ pt: 2.4, pb: 2.4 }} id="font_test" className="search-content">
+                        <Typography
+                          sx={{ pt: 2.4, pb: 2.4 }}
+                          id="font_test"
+                          className="search-content"
+                        >
                           {post.content.length >= 170
                             ? post.content.substr(0, 170) + '...'
                             : post.content}
@@ -102,7 +105,6 @@ const Posts = ({ posts, search }) => {
                   </Link>
                 </Grid>
               </Grid>
-              
             </li>
           ))}
         </ul>

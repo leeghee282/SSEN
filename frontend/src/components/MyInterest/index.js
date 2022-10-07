@@ -1,12 +1,13 @@
-import React, { useRef, useState, useEffect } from "react";
-import MyInterestModal from "./MyInterestModal";
-import MyInterestItemList from "./MyInterestItemList";
-import axios from "../../api/user";
-import { baseURL } from "../../api/index";
-import "./style.css";
-import { Button } from "@mui/material";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
+import React, { useRef, useState, useEffect } from 'react';
+import MyInterestModal from './MyInterestModal';
+import MyInterestItemList from './MyInterestItemList';
+import axios from '../../api/user';
+import { baseURL } from '../../api/index';
+import './style.css';
+import { Button } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
 
 export default function MyInerest() {
   // 임시 데이터
@@ -20,14 +21,14 @@ export default function MyInerest() {
   // 서버에서 관심화폐 받아오기(get방식)
   const getInterest = () => {
     axios
-      .get(baseURL + `/api/v1/intrcurr/${sessionStorage.getItem("userId")}`)
+      .get(baseURL + `/api/v1/intrcurr/${sessionStorage.getItem('userId')}`)
       .then((response) => setInterests(response.data));
   };
   useEffect(() => {
     getInterest();
   }, []);
 
-  useEffect(() => { }, [interests]);
+  useEffect(() => {}, [interests]);
 
   // 서버에서 실시간 환율 받아오기(get방식)
   const getLiveData = () => {
@@ -37,7 +38,7 @@ export default function MyInerest() {
     getLiveData();
   }, []);
 
-  useEffect(() => { }, [live]);
+  useEffect(() => {}, [live]);
 
   // const onUpdate = (nation, interestCurrency) => {
   //   const updateInt = {
@@ -51,19 +52,42 @@ export default function MyInerest() {
   const onRemove = (id) => {
     setInterests(interests.filter((interest) => interest.id !== id));
   };
-  console.log(interests);
 
   return (
     <Box
       sx={{
-        display: "flex",
-        flexDirection: "column",
+        display: 'flex',
+        flexDirection: 'column',
         // alignItems: "center",
       }}
     >
-      <h1 className="myInterest-titls, ff-b fs-myInterest-title fc-dark-grey">
-        관심 화폐
-      </h1>
+      <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+        <h1 className="myInterest-titls, ff-b fs-myInterest-title fc-dark-grey">
+          관심 화폐
+        </h1>
+        <Avatar
+          sx={{
+            mt: 2.5,
+            ml: 2,
+            width: 'auto',
+            height: '30px',
+            cursor: 'pointer',
+          }}
+          src="/images/questionlogo2.png"
+          className="infobutton6"
+        ></Avatar>
+        <Typography
+          sx={{ ml: 19, mt: 5 }}
+          className="info6"
+          id="font_test"
+          fontSize="14px"
+        >
+          - 화폐별 목표 금액을 설정합니다. <br></br>- 해당 금액에 도달하면
+          Push알림이 뜹니다.<br></br>
+          <br></br>* 화폐별로 목표금액은 3개까지만 입력 가능합니다.<br></br>*
+          Push알림은 1분당 한번씩 뜹니다.
+        </Typography>
+      </Box>
       {interests.length !== 0 && (
         <button
           id="font_test"

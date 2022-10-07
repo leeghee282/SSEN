@@ -28,7 +28,7 @@ function PastSearch() {
 
   const onSetPastSearchResult = async () => {
     await dispatch(getPastDatalist(keywordList)).then((response) => {
-      console.log(response.payload);
+      // console.log(response.payload);
       setSearchList(response.payload);
       pastLoadingChange();
     });
@@ -59,6 +59,7 @@ function PastSearch() {
               fontSize: 40,
               my: 2,
               mx: 2,
+              mt: '50px',
             }}
           >
             <span className="font_zz">키워드 분포 유사도</span>
@@ -67,7 +68,7 @@ function PastSearch() {
           <Grid item xs={12}>
             <Typography
               id="font_test"
-              sx={{ textAlign: 'center', fontSize: 20, my: 2, mx: 2 }}
+              sx={{ textAlign: 'center', fontSize: 17, my: 2, mx: 2 }}
             >
               본 페이지는 검색한 구간의 키워드와 비슷한 분포를 가진 날짜 목록을
               제공합니다.
@@ -75,14 +76,15 @@ function PastSearch() {
           </Grid>
           {searchList.map((search, index) => {
             return (
-              <Grid item xs={12}>
+              <Grid item xs={12} className="container">
                 <Card
+                  className="image"
                   sx={{
                     m: 1,
                     padding: 2,
-                    '&:hover': {
-                      background: '#DEE0E4',
-                    },
+                    // '&:hover': {
+                    //   background: '#DEE0E4',
+                    // },
                   }}
                 >
                   <ul
@@ -98,40 +100,38 @@ function PastSearch() {
                         alignItems: 'center',
                       }}
                     >
-                      {/* <Grid item xs={2.5}>
-                        <Typography
-                          id="font_test"
-                          sx={{ marginBottom: '10px', color: '#444444' }}
-                        >
+                      {/* 그리드 위에 줄 */}
+                      <Grid item xs={3}>
+                        <Typography id="font_test" sx={{ color: '#444444' }}>
                           일치율
                         </Typography>
-                        <li id="searchdate2">{search.similarity}%</li>
                       </Grid>
-                      <Grid item xs={2.5}>
-                        <Typography
-                          id="font_test"
-                          sx={{ marginBottom: '10px', color: '#444444' }}
-                        >
+                      <Grid item xs={3}>
+                        <Typography id="font_test" sx={{ color: '#444444' }}>
                           날짜
                         </Typography>
-                        <li id="searchdate">{search.date}</li>
                       </Grid>
-                      <Grid item xs={2.5}>
-                        <Typography
-                          id="font_test"
-                          sx={{ marginBottom: '10px', color: '#444444' }}
-                        >
+                      <Grid item xs={3}>
+                        <Typography id="font_test" sx={{ color: '#444444' }}>
                           통화
                         </Typography>
-                        <li id="searchdate">{search.currencyCode}</li>
                       </Grid>
-                      <Grid item xs={2.5}>
-                        <Typography
-                          id="font_test"
-                          sx={{ marginBottom: '10px', color: '#444444' }}
-                        >
+                      <Grid item xs={3}>
+                        <Typography id="font_test" sx={{ color: '#444444' }}>
                           변화율
                         </Typography>
+                      </Grid>
+                      {/* 그리드 밑에 줄 */}
+                      <Grid item xs={3}>
+                        <li id="searchdate2">{search.similarity}%</li>
+                      </Grid>
+                      <Grid item xs={3}>
+                        <li id="searchdate">{search.date}</li>
+                      </Grid>
+                      <Grid item xs={3}>
+                        <li id="searchdate">{search.currencyCode}</li>
+                      </Grid>
+                      <Grid item xs={3}>
                         <li
                           id="searchdate"
                           style={{
@@ -141,63 +141,13 @@ function PastSearch() {
                           {search.variance}%
                         </li>
                       </Grid>
-                      <Grid item xs={2}>
-                        <Typography id="font_test">더보기</Typography>
-                      </Grid> */}
-                      {/* <Grid
-                        container
-                        sx={{ justifyContent: 'center', textAlign: 'center' }}
-                      > */}
-                      <Grid item xs={2.5}>
-                        <Typography id="font_test" sx={{ color: '#444444' }}>
-                          일치율
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={2.5}>
-                        <Typography id="font_test" sx={{ color: '#444444' }}>
-                          날짜
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={2.5}>
-                        <Typography id="font_test" sx={{ color: '#444444' }}>
-                          통화
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={2.5}>
-                        <Typography id="font_test" sx={{ color: '#444444' }}>
-                          변화율
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={2}></Grid>
-                      {/* test */}
-                      <Grid item xs={2.5}>
-                        <li id="searchdate2">{search.similarity}%</li>
-                      </Grid>
-                      <Grid item xs={2.5}>
-                        <li id="searchdate">{search.date}</li>
-                      </Grid>
-                      <Grid item xs={2.5}>
-                        <li id="searchdate">{search.currencyCode}</li>
-                      </Grid>
-                      <Grid item xs={2.5}>
-                        <li
-                          id="searchdate"
-                          style={{
-                            color: search.variance > 0 ? '#FF5B5B' : '#604fdc',
-                          }}
-                        >
-                          {search.variance}%
-                        </li>
-                      </Grid>
-                      <Grid
-                        item
-                        xs={2}
-                        sx={{ color: '#444444', marginBottom: '10px' }}
-                      >
-                        더보기
-                      </Grid>
-                      {/* </Grid> */}
                     </Grid>
+                    <Card className="middle">
+                      <div className="text">
+                        {/* <p>상세보기</p> */}
+                        <p>클릭시 상세 페이지로 이동할 수 있습니다.</p>
+                      </div>
+                    </Card>
                   </ul>
                 </Card>
               </Grid>

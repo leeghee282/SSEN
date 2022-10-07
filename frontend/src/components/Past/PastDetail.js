@@ -28,7 +28,6 @@ function PastDetail() {
   const location = useLocation();
 
   const searchData = location.state.searchData;
-  console.log(searchData);
 
   const pastData = useSelector((state) => state.pastReducer.pastData);
   const pastCurrData = useSelector((state) => state.pastReducer.pastCurrData);
@@ -57,7 +56,7 @@ function PastDetail() {
     };
 
     dispatch(getPastCurrData(currBody)).then((response) => {
-      console.log(response.payload);
+      // console.log(response.payload);
       onInitialSet(response.payload);
       onSetKeywordNews();
     });
@@ -171,7 +170,6 @@ function PastDetail() {
     await dispatch(getPastKeywords(keywordBody)).then((response) => {
       const data = [];
       let sum = 0;
-      console.log(response.payload);
 
       response.payload.map((res) => {
         var addWordcloudData = {
@@ -189,7 +187,6 @@ function PastDetail() {
       const maxNum = data.length - 1;
       const firstKeyword = data[maxNum].text;
       setShowKeyword(firstKeyword);
-      console.log(firstKeyword);
 
       let newsBody = {
         keyword: firstKeyword,
@@ -198,7 +195,6 @@ function PastDetail() {
       };
 
       dispatch(getPastNews(newsBody)).then((res) => {
-        console.log(res.payload);
         setPosts(res.payload);
         setCurrentPage(1);
         indexOfLastPost = currentPage * postPerPage;
@@ -272,7 +268,7 @@ function PastDetail() {
           newsLoadingChange();
           onSetNews(d.target.__data__.text);
         });
-      console.log(JSON.stringify(words));
+      // console.log(JSON.stringify(words));
     }
 
     const onSetNews = async (txt) => {
@@ -285,7 +281,7 @@ function PastDetail() {
       };
 
       await dispatch(getPastNews(newsBody)).then((response) => {
-        console.log(response.payload);
+        // console.log(response.payload);
         setPosts(response.payload);
         setCurrentPage(1);
         indexOfLastPost = currentPage * postPerPage;
@@ -305,7 +301,7 @@ function PastDetail() {
       <Grid item xs={12}>
         <p className="past_title" id="font_test">
           <span className="past_title-smaller2">"{`${searchData.date}`}"</span>
-          <span className="past_title-smaller">의 분석 결과 - </span>
+          <span className="past_title-smaller"> 의 분석 결과 - </span>
           <span
             className="past_title-smaller2"
             id="font_test"
