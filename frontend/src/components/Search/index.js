@@ -63,7 +63,7 @@ function Search() {
       setLoading(true);
       try {
         const result = await axios.get(
-          baseNewsURL + `/news/search/${location.state.search}`,
+          baseNewsURL + `/news/search2/${location.state.search}`,
         );
 
         setPosts(result.data);
