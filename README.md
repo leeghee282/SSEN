@@ -304,7 +304,7 @@ main
 
 ![](assets/2022-10-07-03-10-09-image.png)
 
-## 포팅메뉴얼
+## [포팅메뉴얼](https://docs.google.com/document/d/1PUsWgoy-QwBiDsYJPjsXUjD8dNHbjoMDskJ8AVL7sXk/edit)
 
 ---
 
