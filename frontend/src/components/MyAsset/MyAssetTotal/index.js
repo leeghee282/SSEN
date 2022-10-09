@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import MyAssetChart from '../MyAssetChart';
 import Grid from '@mui/material/Grid';
 import './style.css';
+import { color } from 'd3';
 
 const MyAssetTotal = (props) => {
   const addComma = (num) => {
@@ -244,7 +245,7 @@ const MyAssetTotal = (props) => {
             <h1 className="ff-b fs-normal fc-grey">전체 손익</h1>
             {Calc >= 0 && (
               <strong className="ff-b fs-title fc-red">
-                +{addComma(Calc.toFixed(2).toString())}원
+                  +{addComma(Calc.toFixed(2).toString())}
               </strong>
             )}
             {Calc < 0 && (

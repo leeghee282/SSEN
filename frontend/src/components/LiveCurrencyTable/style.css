@@ -1,0 +1,13 @@
+.noScroll{
+    position: fixed;
+    top : 110px;
+    right: 150px;
+
+}
+
+.yesScroll{
+    position: fixed;
+    top : 5px;
+    right: 150px;
+
+}

@@ -10,6 +10,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button, Grid } from '@mui/material';
+import './style.css';
 
 const webSocket = new WebSocket('wss://j7e204.p.ssafy.io:8080/ssen');
 
@@ -243,12 +244,34 @@ const LiveCurrencyTable = () => {
       }
     }
   };
+  const [ScrollY, setScrollY] = useState(0); // window 의 pageYOffset값을 저장
+  console.log(ScrollY,"실시간 표 움직임");
+  const [ScrollActive, setScrollActive] = useState(false);
+  function handleScroll() {
+    if (ScrollY > 30) {
+      setScrollY(window.pageYOffset);
+      setScrollActive(true);
+    } else {
+      setScrollY(window.pageYOffset);
+      setScrollActive(false);
+    }
+  }
+  useEffect(() => {
+    function scrollListener() {
+      window.addEventListener("scroll", handleScroll);
+    } //  window 에서 스크롤을 감시 시작
+    scrollListener(); // window 에서 스크롤을 감시
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    }; //  window 에서 스크롤을 감시를 종료
+  });
+
 
   return (
     <div>
       <Grid container>
         <Grid sx={{ display: 'flex', alignItems: 'center' }} item xs={10}>
-          <TableContainer component={Paper} sx={{ minWidth: 400, width: 650 }}>
+          <TableContainer  className={ScrollActive ? "yesScroll":"noScroll"} component={Paper} sx={{ minWidth: 400, width: 400 }}>
             <Table size="small" aria-label="a dense table">
               <TableHead>
                 <TableRow>
