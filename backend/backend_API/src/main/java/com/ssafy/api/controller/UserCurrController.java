@@ -125,17 +125,6 @@ public class UserCurrController {
         String message = interestedCurrService.deleteTargetInterestedCurr(uid, Double.parseDouble(target));
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
-//    @PutMapping("/intrcurr/{uid}/{flag}")
-//    @ApiOperation(value = "알림끄고, 켜기", notes = "<strong>알림 on off</strong>를 설정한다.")
-//    @ApiResponses({@ApiResponse(code = 200, message = "성공"),
-//            @ApiResponse(code = 401, message = "인증 실패"),
-//            @ApiResponse(code = 404, message = "사용자 없음"),
-//            @ApiResponse(code = 500, message = "서버 오류")})
-//    public ResponseEntity<InterestedCurrencyRes2> updatePassword(
-//            @ApiParam(value = "interesedCurrencyUid", example = "16", required = true)@PathVariable long uid,boolean flag) {
-//        InterestedCurrency icr2 = interestedCurrService.updateNOtificationFlag(uid, flag);
-//        return ResponseEntity.ok(InterestedCurrencyRes2.of(200,icr2));
-//    }
 
     @PutMapping("/intrcurr")
     @ApiOperation(value = "알림끄고, 켜기", notes = "<strong>알림 on off</strong>를 설정한다.")
@@ -144,7 +133,7 @@ public class UserCurrController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<InterestedCurrencyRes2> updatePassword(
-            @RequestBody @ApiParam(value = "수정할 회원 비밀번호 정보", required = true) NotificationFlagReq notificationFlagReq) {
+            @RequestBody @ApiParam(value = "push알림 끄기", required = true) NotificationFlagReq notificationFlagReq) {
         InterestedCurrency icr2 = interestedCurrService.updateNOtificationFlag(notificationFlagReq);
         return ResponseEntity.ok(InterestedCurrencyRes2.of(200,icr2));
     }
