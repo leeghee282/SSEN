@@ -1,7 +1,9 @@
 package com.ssafy.api.service;
 
 import com.ssafy.api.request.InterestedCurrencyReq;
+import com.ssafy.api.request.NotificationFlagReq;
 import com.ssafy.api.response.InterestedCurrencyRes;
+import com.ssafy.api.response.InterestedCurrencyRes2;
 import com.ssafy.db.entity.CurrencyCategory;
 import com.ssafy.db.entity.InterestedCurrency;
 import com.ssafy.db.entity.User;
@@ -205,6 +207,14 @@ public class InterestedCurrServiceImpl implements InterestedCurrService {
             }
         }
         return message;
+
+    }
+    @Override
+    public InterestedCurrency updateNOtificationFlag(NotificationFlagReq notificationFlagReq) {
+        InterestedCurrency ic = interestedCurrencyRepository.findByUid(notificationFlagReq.getUid());
+        System.err.println(ic);
+        ic.setNotification(notificationFlagReq.isFlag());
+        return interestedCurrencyRepository.save(ic);
 
     }
 

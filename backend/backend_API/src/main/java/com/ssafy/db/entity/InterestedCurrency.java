@@ -30,6 +30,8 @@ public class InterestedCurrency {
     @Column(name = "target3", nullable = true)
     @ColumnDefault("0.00")
     private double target3;
+    @Column(name = "notification", nullable = true)
+    private boolean notification;
 
     //users
     @ManyToOne(fetch = FetchType.LAZY)
@@ -57,8 +59,6 @@ public class InterestedCurrency {
         if(interestedCurrency.getTarget3() != 0)
             this.target3 = interestedCurrency.getTarget3();
     }
-
-
 
 
 }

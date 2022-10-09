@@ -25,6 +25,8 @@ public class InterestedCurrencyRes {
     double target2;
     @ApiModelProperty(name = "target3")
     double target3;
+    @ApiModelProperty(name = "notification")
+    boolean notification;
 
     public static InterestedCurrencyRes of(InterestedCurrency interestedCurrency) {
         return InterestedCurrencyRes.builder()
@@ -34,6 +36,7 @@ public class InterestedCurrencyRes {
                 .target1(interestedCurrency.getTarget1())
                 .target2(interestedCurrency.getTarget2())
                 .target3(interestedCurrency.getTarget3())
+                .notification(interestedCurrency.isNotification())
                 .build();
     }
 }

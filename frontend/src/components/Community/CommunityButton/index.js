@@ -5,7 +5,8 @@ import { Box } from '@mui/system';
 import { Avatar, Button, Typography, Link } from '@mui/material';
 import './style.css';
 
-const CommunityButton = () => {
+const CommunityButton = (props) => {
+  const {ScrollActive,ScrollY} = props;
   const [visible, setVisible] = useState(false);
   return (
     <>
@@ -63,7 +64,7 @@ const CommunityButton = () => {
             sx={{ mt: 10, width: '350px', height: '110px' }}
             variant="square"
           /> */}
-          <CommunityList />
+          <CommunityList ScrollActive={ScrollActive} ScrollY = {ScrollY}/>
         </Box>
       )}
     </>

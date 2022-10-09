@@ -2,8 +2,9 @@ import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { baseNewsURL } from '../../api';
+import axios from '../../api/user';
+import { baseURL } from '../../api/index';
 
 //mui
 import Box from '@mui/material/Box';
@@ -28,6 +29,8 @@ import {
 } from 'react-notifications';
 // import '../../../node_modules/react-notifications/lib/notifications.css';
 const webSocket = new WebSocket('wss://j7e204.p.ssafy.io:8080/ssen');
+
+
 // 회원정보 popover
 const BasicPopover = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -42,6 +45,7 @@ const BasicPopover = () => {
 
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
+  
 
   return (
     <div>
@@ -80,6 +84,7 @@ const Header = () => {
   const navigate = useNavigate();
   // 키워드 저장
   const [word, setWord] = useState('');
+    
 
   // 기본 날짜주기(일주일)
   const today = new Date();
@@ -95,6 +100,22 @@ const Header = () => {
   // 웹소켓 연결
 
   // const webSocket = new WebSocket("wss://loclhost:8080/ssen");
+
+  let filterData = "";
+  // 서버에서 관심화폐 받아오기(get방식)
+
+  const getInterest = () => {
+    axios
+      .get(baseURL + `/api/v1/intrcurr/${sessionStorage.getItem('userId')}`)
+      .then((response) => {
+        filterData = response.data.filter(d => d.notification === true).map(l => l.code);
+
+    //    console.log(filterData);
+      });
+  };
+  setInterval(() =>  getInterest(), 4000);
+
+
 
   // 프로필 버튼 바로가기 로그인 안됬을 시 알람
   const goLinkProfile = (e) => {
@@ -117,18 +138,37 @@ const Header = () => {
     webSocket.onopen = function () {};
   }, []);
 
+  //notification on/off function
+//   function usdOnOff() {
+//     var answer = window.confirm("실시간 알림을 끄시겠습니까?");
+//     if (answer) {
+//       alert("알림을 껐습니다.");
+//       setUsdNotificationFlag(false);
+//       console.log("끔 usdNotificationFlag : " + usdNotificationFlag );
+//     }
+//     else {
+//       alert("취소하셨습니다.");
+//       console.log("취소 usdNotificationFlag : " + usdNotificationFlag );
+//     }
+//  }
+
+
   webSocket.onmessage = function (message) {
     // console.log(JSON.parse(message.data),123123)
     //======push알림용 시작==============
     if (message.data.includes('targetPrice')) {
       //console.log(JSON.parse(message.data));
       // 목표환율 설정한 유저와 목표 환율 유저가 같으면
+    
       if (loginFlag === JSON.parse(message.data).userId) {
+     //   console.log(JSON.parse(message.data));
         const currencyCode = JSON.parse(message.data).currencyCode;
         const hour = JSON.parse(message.data).regdate.time.hour;
         const minute = JSON.parse(message.data).regdate.time.minute;
         const second = JSON.parse(message.data).regdate.time.second;
-        if (currencyCode === 'USD') {
+      
+        if (filterData.indexOf(currencyCode) !== -1 && currencyCode === 'USD') {
+       //  if(usdNotificationFlag){
           NotificationManager.error(
             // 볼드 처리 안된 부분에 쓸 내용
             "'" +
@@ -151,8 +191,10 @@ const Header = () => {
 
             // 자동으로 사라지기까지 걸리는 시간 (단위는 ms인거같음)
             6000,
+            // () => { usdOnOff()}
           );
-        } else if (currencyCode === 'EUR') {
+       // }
+       } else if (filterData.indexOf(currencyCode) !== -1 && currencyCode === 'EUR') {
           NotificationManager.success(
             // 볼드 처리 안된 부분에 쓸 내용
             "'" +
@@ -176,7 +218,7 @@ const Header = () => {
             // 자동으로 사라지기까지 걸리는 시간 (단위는 ms인거같음)
             6000,
           );
-        } else if (currencyCode === 'GBP') {
+        } else if (filterData.indexOf(currencyCode) !== -1 && currencyCode === 'GBP') {
           NotificationManager.info(
             // 볼드 처리 안된 부분에 쓸 내용
             "'" +
@@ -199,7 +241,7 @@ const Header = () => {
             // 자동으로 사라지기까지 걸리는 시간 (단위는 ms인거같음)
             6000,
           );
-        } else if (currencyCode === 'JPY') {
+        } else if (filterData.indexOf(currencyCode) !== -1 && currencyCode === 'JPY') {
           NotificationManager.warning(
             // 볼드 처리 안된 부분에 쓸 내용
             "'" +
@@ -225,6 +267,7 @@ const Header = () => {
           );
         }
       }
+    
     } //=======push알림 끝============
     //========실시간 환율 시작
     else {
