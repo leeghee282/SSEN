@@ -245,7 +245,7 @@ const LiveCurrencyTable = () => {
     }
   };
   const [ScrollY, setScrollY] = useState(0); // window 의 pageYOffset값을 저장
-  console.log(ScrollY,"실시간 표 움직임");
+  //console.log(ScrollY,"실시간 표 움직임");
   const [ScrollActive, setScrollActive] = useState(false);
   function handleScroll() {
     if (ScrollY > 30) {

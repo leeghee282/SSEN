@@ -31,7 +31,7 @@ function CommunityList(props) {
   };
   ////////유정
   const [ScrollY, setScrollY] = useState(props.ScrollY); // window 의 pageYOffset값을 저장
-  console.log(ScrollY, '채팅 움직임');
+  //console.log(ScrollY, '채팅 움직임');
   const [ScrollActive, setScrollActive] = useState(props.ScrollActive);
   function handleScroll() {
     // if (!ScrollActive) {
