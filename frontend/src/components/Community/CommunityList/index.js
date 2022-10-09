@@ -1,6 +1,6 @@
 // chat form, list 컴포넌트 보여주는 곳
 
-import React, { useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from '../../../api/user';
 import CommunityForm from '../CommunityForm';
@@ -9,7 +9,7 @@ import './style.css';
 
 import { Avatar } from '@mui/material';
 
-function CommunityList() {
+function CommunityList(props) {
   const currencyCode = useSelector((state) => state.chartReducer.chartCode);
   const [community, setCommunity] = useState([]);
 
@@ -29,10 +29,36 @@ function CommunityList() {
   const removeCommunity = (uid) => {
     setCommunity(community.filter((commu) => commu.uid !== uid));
   };
+  ////////유정
+  const [ScrollY, setScrollY] = useState(props.ScrollY); // window 의 pageYOffset값을 저장
+  //console.log(ScrollY, '채팅 움직임');
+  const [ScrollActive, setScrollActive] = useState(props.ScrollActive);
+  function handleScroll() {
+    // if (!ScrollActive) {
+      if (ScrollY > 30) {
+        setScrollY(window.pageYOffset);
+        setScrollActive(true);
+      } 
+      
+      else {
+        setScrollY(window.pageYOffset);
+        setScrollActive(false);
+      }
+    } 
+
+  useEffect(() => {
+    function scrollListener() {
+      window.addEventListener('scroll', handleScroll);
+    } //  window 에서 스크롤을 감시 시작
+    scrollListener(); // window 에서 스크롤을 감시
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    }; //  window 에서 스크롤을 감시를 종료
+  });
 
   return (
     <>
-      <div className="timeLineWrap">
+      <div className={ScrollActive ? 'timeLineWrap2' : 'timeLineWrap'}>
         {/* <Avatar
           src="images/ssenchat3.png"
           sx={{

@@ -22,7 +22,10 @@ export default function MyInerest() {
   const getInterest = () => {
     axios
       .get(baseURL + `/api/v1/intrcurr/${sessionStorage.getItem('userId')}`)
-      .then((response) => setInterests(response.data));
+      .then((response) => {
+        setInterests(response.data);
+        //    console.log(response.data,"asdsds");
+      });
   };
   useEffect(() => {
     getInterest();

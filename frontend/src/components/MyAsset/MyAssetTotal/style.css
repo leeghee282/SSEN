@@ -93,3 +93,11 @@
 .fc-dark-grey {
     color: #333333;
 }
+.plz{
+    float: left;
+}
+.plz2{
+    margin-top: 7px;
+    float: left;
+    font-size: 1.2rem;
+}

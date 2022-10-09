@@ -9,14 +9,37 @@
   border: 1px solid #bbbbbb;
   border-radius: 30px;
   padding-top: 30px;
+  margin-top: 200px;
   /* margin-left:30px; */
   padding-bottom: 50px;
   background-color: #edf1f5;
   position: fixed;
   z-index: 1;
 }
+.timeLineWrap2{
+  /* position: absolute;
+  top: 65%;
+  left: 88%; */
+  /* transform: translate(-53%, -44%); */
+  width: 400px;
+  height: 950px;
+  overflow-y: scroll;
+  border: 1px solid #bbbbbb;
+  border-radius: 30px;
+  padding-top: 30px;
+  margin-top: 100px;
+  /* margin-left:30px; */
+  padding-bottom: 50px;
+  background-color: #edf1f5;
+  position: fixed;
+  z-index: 1;
+}
+
 .timeLineWrap::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera*/
+}
+.timeLineWrap2::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
 }
 
 .chatCodeTitle{
