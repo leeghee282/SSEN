@@ -29,7 +29,7 @@ function Search() {
   const [loading, setLoading] = useState(true);
 
   const location = useLocation();
-  console.log(location, '로케');
+  // console.log(location, '로케');
 
   const onChange = (e) => {
     setWord(e.target.value);
@@ -64,7 +64,7 @@ function Search() {
     '코로나',
   ];
   const pick = Math.floor(Math.random() * data.length);
-  console.log(data[pick], '엥');
+  // console.log(data[pick], '엥');
 
   useEffect(() => {
     async function fetchData() {
