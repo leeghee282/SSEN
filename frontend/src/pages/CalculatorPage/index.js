@@ -60,7 +60,7 @@ function Calculator() {
             id="font_test"
             fontSize="14px"
           >
-            - 다른 날짜 및 은행과 비교하고 싶을때 사용합니다.        
+            - 다른 날짜 및 은행과 비교하고 싶을 때 사용합니다.
           </Typography>
         </Box>
       </div>
