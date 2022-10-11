@@ -58,16 +58,12 @@ export default function MySet() {
 
   return (
     <Box
-
       sx={{
         display: 'flex',
         flexDirection: 'column',
         // alignItems: "center",
       }}
     >
-    
-  
-      
       <Box sx={{ display: 'flex', flexDirection: 'row' }}>
         <h1 className="myAsset-title ff-b fs-myAsset-title fc-dark-grey">
           보유 외화
@@ -83,12 +79,15 @@ export default function MySet() {
           src="/images/questionlogo2.png"
           className="infobutton5"
         ></Avatar>
-        <Typography  sx={{ml:19,mt:5}}className="info5" id="font_test" fontSize="14px">
-        - 현재 보유 외화를 등록하면 실시간 환율과 비교해 손익을 계산해줍니다.<br></br>
-        - 그래프를 통해 시각적으로 현재 보유화폐 통계를 제공합니다.
-        
-
-    </Typography>
+        <Typography
+          sx={{ ml: 19, mt: 5 }}
+          className="info5"
+          id="font_test"
+          fontSize="14px"
+        >
+          - 현재 보유 외화를 등록하면 실시간 환율과 비교해 손익을 계산해 줍니다.
+          <br></br>- 그래프를 통해 시각적으로 현재 보유 화폐 통계를 제공합니다.
+        </Typography>
       </Box>
       {/* 보유 외화 목록 입력(모달) */}
       <BasicModal getMyAssetData={getMyAssetData} />
@@ -119,6 +118,5 @@ export default function MySet() {
         '보유 외화를 입력해주세요 🙅'
       )}
     </Box>
-    
   );
 }

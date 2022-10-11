@@ -78,7 +78,6 @@ function PastSearch() {
             return (
               <Grid item xs={12} className="container">
                 <Card
-                  className="image"
                   sx={{
                     m: 1,
                     padding: 2,
@@ -93,6 +92,7 @@ function PastSearch() {
                     key={index}
                   >
                     <Grid
+                      className="image"
                       container
                       sx={{
                         justifyContent: 'center',
