@@ -43,5 +43,7 @@ public class EurKrw {
     @Column(name = "variance", nullable = false)
     @ColumnDefault("0.00")
     private double variance;
-
+    @Column(name = "news_cnt", columnDefinition = "int unsigned")
+    @ColumnDefault("0")
+    private Long newsCnt;
 }
