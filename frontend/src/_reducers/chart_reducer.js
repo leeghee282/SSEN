@@ -18,7 +18,7 @@ const monthOfToday = today.getMonth();
 const lastWeek = today.setDate(dayOfToday - 7);
 const threeMonthAgo = new Date(
   today.getFullYear(),
-  today.getMonth() - 3,
+  today.getMonth() - 2,
   today.getDate(),
 );
 // const threeMonthAgo = today.setMonth(monthOfToday - 3);

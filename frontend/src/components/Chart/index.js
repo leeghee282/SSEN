@@ -31,6 +31,7 @@ import {
 } from '../../_actions/chart_action';
 
 import useDidMountEffect from './useDidMountEffect';
+import { green } from '@mui/material/colors';
 const webSocket = new WebSocket('wss://j7e204.p.ssafy.io:8080/ssen');
 function Chart() {
   const dispatch = useDispatch();
@@ -150,6 +151,7 @@ function Chart() {
             high: data.highPrice,
             low: data.lowPrice,
             close: data.closePrice,
+            cnt: data.newsCnt,
           };
           return chartData.push(addChartData);
         });
@@ -182,7 +184,7 @@ function Chart() {
             am5xy.GaplessDateAxis.new(root, {
               baseInterval: { timeUnit: 'day', count: 1 },
               renderer: am5xy.AxisRendererX.new(root, {
-                minGridDistance: 10,
+                minGridDistance: 8,
               }),
             }),
           );
@@ -194,7 +196,7 @@ function Chart() {
               groupInterval: { timeUnit: 'day', count: 3 },
               baseInterval: { timeUnit: 'day', count: 1 },
               renderer: am5xy.AxisRendererX.new(root, {
-                minGridDistance: 10,
+                minGridDistance: 8,
               }),
             }),
           );
@@ -206,7 +208,7 @@ function Chart() {
               groupInterval: { timeUnit: 'day', count: 4 },
               baseInterval: { timeUnit: 'day', count: 1 },
               renderer: am5xy.AxisRendererX.new(root, {
-                minGridDistance: 10,
+                minGridDistance: 8,
               }),
             }),
           );
@@ -215,10 +217,10 @@ function Chart() {
           var xAxis = chart.xAxes.push(
             am5xy.GaplessDateAxis.new(root, {
               groupData: true,
-              groupInterval: { timeUnit: 'day', count: 7 },
+              groupInterval: { timeUnit: 'day', count: 9 },
               baseInterval: { timeUnit: 'day', count: 1 },
               renderer: am5xy.AxisRendererX.new(root, {
-                minGridDistance: 10,
+                minGridDistance: 8,
               }),
             }),
           );
@@ -255,6 +257,8 @@ function Chart() {
             '[bold]{valueX.formatDate()}[/]\n시가: {openValueY}\n고가: {highValueY}\n저가: {lowValueY}\n종가: {valueY}',
           );
         series.data.setAll(data);
+
+        chart.leftAxesContainer.set('layout', root.verticalLayout);
 
         var cursor = chart.set(
           'cursor',
@@ -343,6 +347,65 @@ function Chart() {
             themeTags: ['axis'],
           }),
         );
+
+        let volumeAxisRenderer = am5xy.AxisRendererY.new(root, {
+          inside: true,
+        });
+        volumeAxisRenderer.labels.template.setAll({
+          centerY: am5.percent(100),
+          maxPosition: 0.98,
+        });
+
+        let volumeAxis = chart.yAxes.push(
+          am5xy.ValueAxis.new(root, {
+            renderer: volumeAxisRenderer,
+            height: am5.percent(30),
+            layer: 5,
+            numberFormat: '#a',
+          }),
+        );
+
+        volumeAxis.axisHeader.set('paddingTop', 20);
+        volumeAxis.axisHeader.children.push(
+          am5.Label.new(root, {
+            text: '',
+            // fontWeight: 'bold',
+            paddingTop: 10,
+            paddingBottom: 1,
+          }),
+        );
+
+        let volumeSeries = chart.series.push(
+          am5xy.ColumnSeries.new(root, {
+            name: 'newsCnt',
+            fill: am5.color(0x1e7f1d),
+            clustered: false,
+            valueYField: 'cnt',
+            valueXField: 'date',
+            // valueYGrouped: 'sum',
+            xAxis: xAxis,
+            yAxis: volumeAxis,
+            // legendValueText: '{valueY}',
+            tooltip: am5.Tooltip.new(root, {
+              labelText: '{valueY}',
+            }),
+          }),
+        );
+
+        volumeSeries.columns.template.setAll({
+          //strokeWidth: 0.5,
+          //strokeOpacity: 1,
+          //stroke: am5.color(0xffffff)
+        });
+
+        volumeSeries.data.setAll(data);
+
+        // var volumeLegend = volumeAxis.axisHeader.children.push(
+        //   am5.Legend.new(root, {
+        //     useDefaultMarker: true,
+        //   }),
+        // );
+        // volumeLegend.data.setAll([volumeSeries]);
       }
     });
   }, [currencyCode]);
@@ -371,6 +434,7 @@ function Chart() {
             high: data.highPrice,
             low: data.lowPrice,
             close: data.closePrice,
+            cnt: data.newsCnt,
           };
           return chartData.push(addChartData);
         });
@@ -381,9 +445,12 @@ function Chart() {
 
         var chart = root.container.children.push(
           am5xy.XYChart.new(root, {
+            // panX: true,
             panY: false,
+            // wheelX: 'panX',
             wheelY: 'zoomX',
             layout: root.verticalLayout,
+            pinchZoomX: true,
             maxtooltipDistance: 0,
           }),
         );
@@ -397,13 +464,14 @@ function Chart() {
             renderer: am5xy.AxisRendererY.new(root, {}),
           }),
         );
+
         if (data.length < 14) {
           // Create X-Axis
           var xAxis = chart.xAxes.push(
             am5xy.GaplessDateAxis.new(root, {
               baseInterval: { timeUnit: 'day', count: 1 },
               renderer: am5xy.AxisRendererX.new(root, {
-                minGridDistance: 10,
+                minGridDistance: 8,
               }),
             }),
           );
@@ -415,7 +483,7 @@ function Chart() {
               groupInterval: { timeUnit: 'day', count: 3 },
               baseInterval: { timeUnit: 'day', count: 1 },
               renderer: am5xy.AxisRendererX.new(root, {
-                minGridDistance: 10,
+                minGridDistance: 8,
               }),
             }),
           );
@@ -427,7 +495,7 @@ function Chart() {
               groupInterval: { timeUnit: 'day', count: 4 },
               baseInterval: { timeUnit: 'day', count: 1 },
               renderer: am5xy.AxisRendererX.new(root, {
-                minGridDistance: 10,
+                minGridDistance: 8,
               }),
             }),
           );
@@ -436,10 +504,10 @@ function Chart() {
           var xAxis = chart.xAxes.push(
             am5xy.GaplessDateAxis.new(root, {
               groupData: true,
-              groupInterval: { timeUnit: 'day', count: 7 },
+              groupInterval: { timeUnit: 'day', count: 9 },
               baseInterval: { timeUnit: 'day', count: 1 },
               renderer: am5xy.AxisRendererX.new(root, {
-                minGridDistance: 10,
+                minGridDistance: 8,
               }),
             }),
           );
@@ -476,6 +544,8 @@ function Chart() {
             '[bold]{valueX.formatDate()}[/]\n시가: {openValueY}\n고가: {highValueY}\n저가: {lowValueY}\n종가: {valueY}',
           );
         series.data.setAll(data);
+
+        chart.leftAxesContainer.set('layout', root.verticalLayout);
 
         var cursor = chart.set(
           'cursor',
@@ -564,6 +634,65 @@ function Chart() {
             themeTags: ['axis'],
           }),
         );
+
+        let volumeAxisRenderer = am5xy.AxisRendererY.new(root, {
+          inside: true,
+        });
+        volumeAxisRenderer.labels.template.setAll({
+          centerY: am5.percent(100),
+          maxPosition: 0.98,
+        });
+
+        let volumeAxis = chart.yAxes.push(
+          am5xy.ValueAxis.new(root, {
+            renderer: volumeAxisRenderer,
+            height: am5.percent(30),
+            layer: 5,
+            numberFormat: '#a',
+          }),
+        );
+
+        volumeAxis.axisHeader.set('paddingTop', 20);
+        volumeAxis.axisHeader.children.push(
+          am5.Label.new(root, {
+            text: '',
+            // fontWeight: 'bold',
+            paddingTop: 10,
+            paddingBottom: 1,
+          }),
+        );
+
+        let volumeSeries = chart.series.push(
+          am5xy.ColumnSeries.new(root, {
+            name: 'newsCnt',
+            fill: am5.color(0x1e7f1d),
+            clustered: false,
+            valueYField: 'cnt',
+            valueXField: 'date',
+            // valueYGrouped: 'sum',
+            xAxis: xAxis,
+            yAxis: volumeAxis,
+            // legendValueText: '{valueY}',
+            tooltip: am5.Tooltip.new(root, {
+              labelText: '{valueY}',
+            }),
+          }),
+        );
+
+        volumeSeries.columns.template.setAll({
+          //strokeWidth: 0.5,
+          //strokeOpacity: 1,
+          //stroke: am5.color(0xffffff)
+        });
+
+        volumeSeries.data.setAll(data);
+
+        // var volumeLegend = volumeAxis.axisHeader.children.push(
+        //   am5.Legend.new(root, {
+        //     useDefaultMarker: true,
+        //   }),
+        // );
+        // volumeLegend.data.setAll([volumeSeries]);
       }
     });
   };
@@ -620,7 +749,7 @@ function Chart() {
         am5xy.GaplessDateAxis.new(root, {
           baseInterval: { timeUnit: 'day', count: 1 },
           renderer: am5xy.AxisRendererX.new(root, {
-            minGridDistance: 10,
+            minGridDistance: 8,
           }),
         }),
       );
@@ -632,7 +761,7 @@ function Chart() {
           groupInterval: { timeUnit: 'day', count: 3 },
           baseInterval: { timeUnit: 'day', count: 1 },
           renderer: am5xy.AxisRendererX.new(root, {
-            minGridDistance: 10,
+            minGridDistance: 8,
           }),
         }),
       );
@@ -644,7 +773,7 @@ function Chart() {
           groupInterval: { timeUnit: 'day', count: 4 },
           baseInterval: { timeUnit: 'day', count: 1 },
           renderer: am5xy.AxisRendererX.new(root, {
-            minGridDistance: 10,
+            minGridDistance: 8,
           }),
         }),
       );
@@ -653,10 +782,10 @@ function Chart() {
       var xAxis = chart.xAxes.push(
         am5xy.GaplessDateAxis.new(root, {
           groupData: true,
-          groupInterval: { timeUnit: 'day', count: 7 },
+          groupInterval: { timeUnit: 'day', count: 9 },
           baseInterval: { timeUnit: 'day', count: 1 },
           renderer: am5xy.AxisRendererX.new(root, {
-            minGridDistance: 10,
+            minGridDistance: 8,
           }),
         }),
       );
@@ -693,6 +822,8 @@ function Chart() {
         '[bold]{valueX.formatDate()}[/]\n시가: {openValueY}\n고가: {highValueY}\n저가: {lowValueY}\n종가: {valueY}',
       );
     series.data.setAll(data);
+
+    chart.leftAxesContainer.set('layout', root.verticalLayout);
 
     var cursor = chart.set(
       'cursor',
@@ -779,6 +910,65 @@ function Chart() {
         themeTags: ['axis'],
       }),
     );
+
+    let volumeAxisRenderer = am5xy.AxisRendererY.new(root, {
+      inside: true,
+    });
+    volumeAxisRenderer.labels.template.setAll({
+      centerY: am5.percent(100),
+      maxPosition: 0.98,
+    });
+
+    let volumeAxis = chart.yAxes.push(
+      am5xy.ValueAxis.new(root, {
+        renderer: volumeAxisRenderer,
+        height: am5.percent(30),
+        layer: 5,
+        numberFormat: '#a',
+      }),
+    );
+
+    volumeAxis.axisHeader.set('paddingTop', 20);
+    volumeAxis.axisHeader.children.push(
+      am5.Label.new(root, {
+        text: '',
+        // fontWeight: 'bold',
+        paddingTop: 10,
+        paddingBottom: 1,
+      }),
+    );
+
+    let volumeSeries = chart.series.push(
+      am5xy.ColumnSeries.new(root, {
+        name: 'newsCnt',
+        fill: am5.color(0x1e7f1d),
+        clustered: false,
+        valueYField: 'cnt',
+        valueXField: 'date',
+        // valueYGrouped: 'sum',
+        xAxis: xAxis,
+        yAxis: volumeAxis,
+        // legendValueText: '{valueY}',
+        tooltip: am5.Tooltip.new(root, {
+          labelText: '{valueY}',
+        }),
+      }),
+    );
+
+    volumeSeries.columns.template.setAll({
+      //strokeWidth: 0.5,
+      //strokeOpacity: 1,
+      //stroke: am5.color(0xffffff)
+    });
+
+    volumeSeries.data.setAll(data);
+
+    // var volumeLegend = volumeAxis.axisHeader.children.push(
+    //   am5.Legend.new(root, {
+    //     useDefaultMarker: true,
+    //   }),
+    // );
+    // volumeLegend.data.setAll([volumeSeries]);
   };
 
   const onDeleteChart = async (divId) => {
@@ -813,6 +1003,7 @@ function Chart() {
             high: data.highPrice,
             low: data.lowPrice,
             close: data.closePrice,
+            cnt: data.newsCnt,
           };
           return chartData.push(addChartData);
         });
@@ -845,7 +1036,7 @@ function Chart() {
             am5xy.GaplessDateAxis.new(root, {
               baseInterval: { timeUnit: 'day', count: 1 },
               renderer: am5xy.AxisRendererX.new(root, {
-                minGridDistance: 10,
+                minGridDistance: 8,
               }),
             }),
           );
@@ -857,7 +1048,7 @@ function Chart() {
               groupInterval: { timeUnit: 'day', count: 3 },
               baseInterval: { timeUnit: 'day', count: 1 },
               renderer: am5xy.AxisRendererX.new(root, {
-                minGridDistance: 10,
+                minGridDistance: 8,
               }),
             }),
           );
@@ -869,7 +1060,7 @@ function Chart() {
               groupInterval: { timeUnit: 'day', count: 4 },
               baseInterval: { timeUnit: 'day', count: 1 },
               renderer: am5xy.AxisRendererX.new(root, {
-                minGridDistance: 10,
+                minGridDistance: 8,
               }),
             }),
           );
@@ -878,10 +1069,10 @@ function Chart() {
           var xAxis = chart.xAxes.push(
             am5xy.GaplessDateAxis.new(root, {
               groupData: true,
-              groupInterval: { timeUnit: 'day', count: 7 },
+              groupInterval: { timeUnit: 'day', count: 9 },
               baseInterval: { timeUnit: 'day', count: 1 },
               renderer: am5xy.AxisRendererX.new(root, {
-                minGridDistance: 10,
+                minGridDistance: 8,
               }),
             }),
           );
@@ -918,6 +1109,8 @@ function Chart() {
             '[bold]{valueX.formatDate()}[/]\n시가: {openValueY}\n고가: {highValueY}\n저가: {lowValueY}\n종가: {valueY}',
           );
         series.data.setAll(data);
+
+        chart.leftAxesContainer.set('layout', root.verticalLayout);
 
         var cursor = chart.set(
           'cursor',
@@ -1006,6 +1199,65 @@ function Chart() {
             themeTags: ['axis'],
           }),
         );
+
+        let volumeAxisRenderer = am5xy.AxisRendererY.new(root, {
+          inside: true,
+        });
+        volumeAxisRenderer.labels.template.setAll({
+          centerY: am5.percent(100),
+          maxPosition: 0.98,
+        });
+
+        let volumeAxis = chart.yAxes.push(
+          am5xy.ValueAxis.new(root, {
+            renderer: volumeAxisRenderer,
+            height: am5.percent(30),
+            layer: 5,
+            numberFormat: '#a',
+          }),
+        );
+
+        volumeAxis.axisHeader.set('paddingTop', 20);
+        volumeAxis.axisHeader.children.push(
+          am5.Label.new(root, {
+            text: '',
+            // fontWeight: 'bold',
+            paddingTop: 10,
+            paddingBottom: 1,
+          }),
+        );
+
+        let volumeSeries = chart.series.push(
+          am5xy.ColumnSeries.new(root, {
+            name: 'newsCnt',
+            fill: am5.color(0x1e7f1d),
+            clustered: false,
+            valueYField: 'cnt',
+            valueXField: 'date',
+            // valueYGrouped: 'sum',
+            xAxis: xAxis,
+            yAxis: volumeAxis,
+            // legendValueText: '{valueY}',
+            tooltip: am5.Tooltip.new(root, {
+              labelText: '{valueY}',
+            }),
+          }),
+        );
+
+        volumeSeries.columns.template.setAll({
+          //strokeWidth: 0.5,
+          //strokeOpacity: 1,
+          //stroke: am5.color(0xffffff)
+        });
+
+        volumeSeries.data.setAll(data);
+
+        // var volumeLegend = volumeAxis.axisHeader.children.push(
+        //   am5.Legend.new(root, {
+        //     useDefaultMarker: true,
+        //   }),
+        // );
+        // volumeLegend.data.setAll([volumeSeries]);
       }
     });
 
@@ -1050,7 +1302,7 @@ function Chart() {
         <span>차트 적용하기</span>
       </button>
       <div id="chart">
-        <div id="chartdiv" style={{ width: '800px', height: '300px' }}></div>
+        <div id="chartdiv" style={{ width: '800px', height: '450px' }}></div>
       </div>
     </div>
   );
