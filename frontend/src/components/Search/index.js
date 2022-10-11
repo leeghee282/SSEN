@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import './style.css';
 import { baseNewsURL } from '../../api/index';
 import { Typography, Box, Link, Grid, Container, Avatar } from '@mui/material';
@@ -14,8 +15,9 @@ function Search() {
   const [page, setPage] = useState(1);
   const offset = (page - 1) * limit;
   const [noneDataFlag, setNoneDataFlag] = useState(false); // 데이터가 있는지 없는지 확인하는 곳
-  const [search, setSearch] = useState(''); //검색어
-  const [posts, setPosts] = useState([]);
+  const navigate = useNavigate();
+  const [word, setWord] = useState(''); //검색어
+  const [posts, setPosts] = useState([]); //검색된 리스트
   const [currentPage, setCurrentPage] = useState(1);
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -24,26 +26,31 @@ function Search() {
   const indexOfLastPost = currentPage * postPerPage;
   const indexOfFirstPost = indexOfLastPost - postPerPage;
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
-  const [lists, setLists] = useState([
-    // {
-    //   title: "제목은 어쩌구저쩌구",
-    //   content:
-    //     "내용은 어쩌구저쩌구sssssssssssㄴㅇㄻㄴㅇㄻㅈㄷㄱㅈㄷㄱㅈㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㅈㄷㄱㅈㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㅈㄷㄱㄴㅇㄹㄴㅇㄹㄴㅇㅈㄷㄱㅈㄹㄴㄹㄴssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssdㄴㅇㄻㅇㄴㄹㅈㄷㄱㅈㄷㄱㅈㄷㄴㅇㄹㄴㅇㅁㄻㄴㅇㄹㄴㄹㄴㅁㄻㄴㅇss",
-    //   time: "2022-09-01",
-    //   url: "www.naver.com",
-    //   press: "한국일보",
-    // },
-    // {
-    //   title: "제목은 어쩌구저쩌구",
-    //   content: "내용은 어쩌구저쩌구",
-    //   time: "2022-09-01",
-    //   url: "www.naver.com",
-    //   press: "한국일보",
-    // },
-  ]); //검색한 리스트 저장할 곳
   const [loading, setLoading] = useState(true);
 
   const location = useLocation();
+  // console.log(location, '로케');
+
+  const onChange = (e) => {
+    setWord(e.target.value);
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    navigate('/search', {
+      state: {
+        search: word,
+      },
+    });
+    setWord(''); //submit 후 창 비우기
+  };
+
+  const keyDownHandler = (e) => {
+    if (e.key === 'Enter') {
+      setWord(word);
+      onSubmit(e);
+    }
+  };
 
   const data = [
     '한국',
@@ -57,6 +64,7 @@ function Search() {
     '코로나',
   ];
   const pick = Math.floor(Math.random() * data.length);
+  // console.log(data[pick], '엥');
 
   useEffect(() => {
     async function fetchData() {
@@ -65,7 +73,6 @@ function Search() {
         const result = await axios.get(
           baseNewsURL + `/news/search2/${location.state.search}`,
         );
-
         setPosts(result.data);
         setNoneDataFlag(false);
         setLoading(false);
@@ -83,6 +90,19 @@ function Search() {
         <Loading />
       ) : (
         <div>
+          {/* <form className="search-form">
+            <input
+              className="search-input"
+              type="text"
+              onChange={onChange}
+              onKeyDown={keyDownHandler}
+              value={word}
+              placeholder="검색어를 입력해주세요"
+            />
+            <button className="search-btn" onClick={onSubmit}>
+              <img className="search-btn-img" src="/images/search.png"></img>
+            </button>
+          </form> */}
           {noneDataFlag && (
             <Box>
               <p className="jb-default-3 fc-grey" id="font_test">
