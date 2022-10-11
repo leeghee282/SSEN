@@ -31,7 +31,7 @@ public class ExchangeRateRes {
     @ApiModelProperty(name = "variance")
     double variance;
     @ApiModelProperty(name = "news_cnt")
-    long newsCnt;
+    long newsCnt; 
     public static ExchangeRateRes of(UsdKrw usdKrw) { // 달러(USD)
         return ExchangeRateRes.builder()
                 .uid(usdKrw.getUid())
