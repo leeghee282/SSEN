@@ -16,12 +16,14 @@ public class InterestedCurrencyReq {
     private double previous;
     @ApiModelProperty(name="입력 목표 환율", example="1300")
     private double target;
-
+    @ApiModelProperty(name = "notification")
+    boolean notification;
 
     public InterestedCurrency toEntity(User user, CurrencyCategory currencyCategory) {
         return InterestedCurrency.builder()
                 .user(user)
                 .currencyCategory(currencyCategory)
+                .notification(true)
                 .build();
     }
 

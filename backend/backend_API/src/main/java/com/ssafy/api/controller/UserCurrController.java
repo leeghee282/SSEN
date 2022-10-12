@@ -2,11 +2,16 @@ package com.ssafy.api.controller;
 
 import com.ssafy.api.request.HoldingCurrencyReq;
 import com.ssafy.api.request.InterestedCurrencyReq;
+import com.ssafy.api.request.NotificationFlagReq;
+import com.ssafy.api.request.UserPasswordUpdateReq;
 import com.ssafy.api.response.HoldingCurrencyRes;
 import com.ssafy.api.response.InterestedCurrencyRes;
+import com.ssafy.api.response.InterestedCurrencyRes2;
+import com.ssafy.api.response.UserRes;
 import com.ssafy.api.service.HoldingCurrService;
 import com.ssafy.api.service.InterestedCurrService;
 import com.ssafy.api.service.UserService;
+import com.ssafy.db.entity.InterestedCurrency;
 import com.ssafy.db.entity.User;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
@@ -121,5 +126,15 @@ public class UserCurrController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-
+    @PutMapping("/intrcurr")
+    @ApiOperation(value = "알림끄고, 켜기", notes = "<strong>알림 on off</strong>를 설정한다.")
+    @ApiResponses({@ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")})
+    public ResponseEntity<InterestedCurrencyRes2> updatePassword(
+            @RequestBody @ApiParam(value = "push알림 끄기", required = true) NotificationFlagReq notificationFlagReq) {
+        InterestedCurrency icr2 = interestedCurrService.updateNOtificationFlag(notificationFlagReq);
+        return ResponseEntity.ok(InterestedCurrencyRes2.of(200,icr2));
+    }
 }

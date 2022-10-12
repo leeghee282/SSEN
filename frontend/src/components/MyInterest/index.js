@@ -85,10 +85,10 @@ export default function MyInerest() {
           id="font_test"
           fontSize="14px"
         >
-          - 화폐별 목표 금액을 설정합니다. <br></br>- 해당 금액에 도달하면
-          Push알림이 뜹니다.<br></br>
+          - 화폐별 목표 금액을 설정합니다. <br></br>- 해당 금액에 도달하면 Push
+          알림이 뜹니다.<br></br>
           <br></br>* 화폐별로 목표금액은 3개까지만 입력 가능합니다.<br></br>*
-          Push알림은 1분당 한번씩 뜹니다.
+          Push 알림은 1분당 한 번씩 뜹니다.
         </Typography>
       </Box>
       {interests.length !== 0 && (

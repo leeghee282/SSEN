@@ -129,7 +129,13 @@ function ExchangeCalc() {
 
   const onExchangeCalculation = (event) => {
     setFromCurrency(event.currentTarget.value);
-    setToCurrency((event.currentTarget.value * exchangePrice).toFixed(2));
+    var res =
+      event.currentTarget.value * exchangePrice +
+      event.currentTarget.value *
+        exchangePrice *
+        (commission / 100) *
+        (1 - basicRate / 100);
+    setToCurrency(res.toFixed(2));
   };
 
   const onChangeCalculation = async () => {

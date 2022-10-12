@@ -30,7 +30,8 @@ public class ExchangeRateRes {
     double lowPrice;
     @ApiModelProperty(name = "variance")
     double variance;
-
+    @ApiModelProperty(name = "news_cnt")
+    long newsCnt; 
     public static ExchangeRateRes of(UsdKrw usdKrw) { // 달러(USD)
         return ExchangeRateRes.builder()
                 .uid(usdKrw.getUid())
@@ -40,6 +41,7 @@ public class ExchangeRateRes {
                 .highPrice(usdKrw.getHighPrice())
                 .lowPrice(usdKrw.getLowPrice())
                 .variance(usdKrw.getVariance())
+                .newsCnt(usdKrw.getNewsCnt())
                 .build();
 
     }
@@ -53,6 +55,7 @@ public class ExchangeRateRes {
                 .highPrice(jpyKrw.getHighPrice())
                 .lowPrice(jpyKrw.getLowPrice())
                 .variance(jpyKrw.getVariance())
+                .newsCnt(jpyKrw.getNewsCnt())
                 .build();
 
     }
@@ -66,6 +69,7 @@ public class ExchangeRateRes {
                 .highPrice(eurKrw.getHighPrice())
                 .lowPrice(eurKrw.getLowPrice())
                 .variance(eurKrw.getVariance())
+                .newsCnt(eurKrw.getNewsCnt())
                 .build();
 
     }
@@ -79,6 +83,7 @@ public class ExchangeRateRes {
                 .highPrice(gbpKrw.getHighPrice())
                 .lowPrice(gbpKrw.getLowPrice())
                 .variance(gbpKrw.getVariance())
+                .newsCnt(gbpKrw.getNewsCnt())
                 .build();
 
     }
@@ -92,6 +97,7 @@ public class ExchangeRateRes {
                 .highPrice(cnyKrw.getHighPrice())
                 .lowPrice(cnyKrw.getLowPrice())
                 .variance(cnyKrw.getVariance())
+                .newsCnt(cnyKrw.getNewsCnt())
                 .build();
 
     }
