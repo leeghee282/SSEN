@@ -178,53 +178,69 @@ function Chart() {
             renderer: am5xy.AxisRendererY.new(root, {}),
           }),
         );
-        if (data.length < 14) {
-          // Create X-Axis
-          var xAxis = chart.xAxes.push(
-            am5xy.GaplessDateAxis.new(root, {
-              baseInterval: { timeUnit: 'day', count: 1 },
-              renderer: am5xy.AxisRendererX.new(root, {
-                minGridDistance: 8,
-              }),
-            }),
-          );
-        } else if (data.length < 19) {
-          // Create X-Axis
-          var xAxis = chart.xAxes.push(
-            am5xy.GaplessDateAxis.new(root, {
-              groupData: true,
-              groupInterval: { timeUnit: 'day', count: 3 },
-              baseInterval: { timeUnit: 'day', count: 1 },
-              renderer: am5xy.AxisRendererX.new(root, {
-                minGridDistance: 8,
-              }),
-            }),
-          );
-        } else if (data.length < 30) {
-          // Create X-Axis
-          var xAxis = chart.xAxes.push(
-            am5xy.GaplessDateAxis.new(root, {
-              groupData: true,
-              groupInterval: { timeUnit: 'day', count: 4 },
-              baseInterval: { timeUnit: 'day', count: 1 },
-              renderer: am5xy.AxisRendererX.new(root, {
-                minGridDistance: 8,
-              }),
-            }),
-          );
-        } else {
-          // Create X-Axis
-          var xAxis = chart.xAxes.push(
-            am5xy.GaplessDateAxis.new(root, {
-              groupData: true,
-              groupInterval: { timeUnit: 'day', count: 9 },
-              baseInterval: { timeUnit: 'day', count: 1 },
-              renderer: am5xy.AxisRendererX.new(root, {
-                minGridDistance: 8,
-              }),
-            }),
-          );
-        }
+
+        // if (data.length < 14) {
+        //   // Create X-Axis
+        //   var xAxis = chart.xAxes.push(
+        //     am5xy.GaplessDateAxis.new(root, {
+        //       baseInterval: { timeUnit: 'day', count: 1 },
+        //       renderer: am5xy.AxisRendererX.new(root, {
+        //         minGridDistance: 8,
+        //       }),
+        //     }),
+        //   );
+        // } else if (data.length < 19) {
+        //   // Create X-Axis
+        //   var xAxis = chart.xAxes.push(
+        //     am5xy.GaplessDateAxis.new(root, {
+        //       groupData: true,
+        //       groupInterval: { timeUnit: 'day', count: 3 },
+        //       baseInterval: { timeUnit: 'day', count: 1 },
+        //       renderer: am5xy.AxisRendererX.new(root, {
+        //         minGridDistance: 8,
+        //       }),
+        //     }),
+        //   );
+        // } else if (data.length < 30) {
+        //   // Create X-Axis
+        //   var xAxis = chart.xAxes.push(
+        //     am5xy.GaplessDateAxis.new(root, {
+        //       groupData: true,
+        //       groupInterval: { timeUnit: 'day', count: 4 },
+        //       baseInterval: { timeUnit: 'day', count: 1 },
+        //       renderer: am5xy.AxisRendererX.new(root, {
+        //         minGridDistance: 8,
+        //       }),
+        //     }),
+        //   );
+        // } else {
+        //   // Create X-Axis
+        //   var xAxis = chart.xAxes.push(
+        //     am5xy.GaplessDateAxis.new(root, {
+        //       groupData: true,
+        //       groupInterval: { timeUnit: 'day', count: 9 },
+        //       baseInterval: { timeUnit: 'day', count: 1 },
+        //       renderer: am5xy.AxisRendererX.new(root, {
+        //         minGridDistance: 8,
+        //       }),
+        //     }),
+        //   );
+        // }
+
+        let dateAxisRenderer = am5xy.AxisRendererX.new(root, {});
+        dateAxisRenderer.labels.template.setAll({
+          minPosition: 0.01,
+          maxPosition: 0.99,
+          minGridDistance: 40,
+        });
+
+        var xAxis = chart.xAxes.push(
+          am5xy.GaplessDateAxis.new(root, {
+            groupData: true,
+            baseInterval: { timeUnit: 'day', count: 1 },
+            renderer: dateAxisRenderer,
+          }),
+        );
 
         // Create series
         var series = chart.series.push(
@@ -465,53 +481,68 @@ function Chart() {
           }),
         );
 
-        if (data.length < 14) {
-          // Create X-Axis
-          var xAxis = chart.xAxes.push(
-            am5xy.GaplessDateAxis.new(root, {
-              baseInterval: { timeUnit: 'day', count: 1 },
-              renderer: am5xy.AxisRendererX.new(root, {
-                minGridDistance: 8,
-              }),
-            }),
-          );
-        } else if (data.length < 19) {
-          // Create X-Axis
-          var xAxis = chart.xAxes.push(
-            am5xy.GaplessDateAxis.new(root, {
-              groupData: true,
-              groupInterval: { timeUnit: 'day', count: 3 },
-              baseInterval: { timeUnit: 'day', count: 1 },
-              renderer: am5xy.AxisRendererX.new(root, {
-                minGridDistance: 8,
-              }),
-            }),
-          );
-        } else if (data.length < 30) {
-          // Create X-Axis
-          var xAxis = chart.xAxes.push(
-            am5xy.GaplessDateAxis.new(root, {
-              groupData: true,
-              groupInterval: { timeUnit: 'day', count: 4 },
-              baseInterval: { timeUnit: 'day', count: 1 },
-              renderer: am5xy.AxisRendererX.new(root, {
-                minGridDistance: 8,
-              }),
-            }),
-          );
-        } else {
-          // Create X-Axis
-          var xAxis = chart.xAxes.push(
-            am5xy.GaplessDateAxis.new(root, {
-              groupData: true,
-              groupInterval: { timeUnit: 'day', count: 9 },
-              baseInterval: { timeUnit: 'day', count: 1 },
-              renderer: am5xy.AxisRendererX.new(root, {
-                minGridDistance: 8,
-              }),
-            }),
-          );
-        }
+        // if (data.length < 14) {
+        //   // Create X-Axis
+        //   var xAxis = chart.xAxes.push(
+        //     am5xy.GaplessDateAxis.new(root, {
+        //       baseInterval: { timeUnit: 'day', count: 1 },
+        //       renderer: am5xy.AxisRendererX.new(root, {
+        //         minGridDistance: 8,
+        //       }),
+        //     }),
+        //   );
+        // } else if (data.length < 19) {
+        //   // Create X-Axis
+        //   var xAxis = chart.xAxes.push(
+        //     am5xy.GaplessDateAxis.new(root, {
+        //       groupData: true,
+        //       groupInterval: { timeUnit: 'day', count: 3 },
+        //       baseInterval: { timeUnit: 'day', count: 1 },
+        //       renderer: am5xy.AxisRendererX.new(root, {
+        //         minGridDistance: 8,
+        //       }),
+        //     }),
+        //   );
+        // } else if (data.length < 30) {
+        //   // Create X-Axis
+        //   var xAxis = chart.xAxes.push(
+        //     am5xy.GaplessDateAxis.new(root, {
+        //       groupData: true,
+        //       groupInterval: { timeUnit: 'day', count: 4 },
+        //       baseInterval: { timeUnit: 'day', count: 1 },
+        //       renderer: am5xy.AxisRendererX.new(root, {
+        //         minGridDistance: 8,
+        //       }),
+        //     }),
+        //   );
+        // } else {
+        //   // Create X-Axis
+        //   var xAxis = chart.xAxes.push(
+        //     am5xy.GaplessDateAxis.new(root, {
+        //       groupData: true,
+        //       groupInterval: { timeUnit: 'day', count: 9 },
+        //       baseInterval: { timeUnit: 'day', count: 1 },
+        //       renderer: am5xy.AxisRendererX.new(root, {
+        //         minGridDistance: 8,
+        //       }),
+        //     }),
+        //   );
+        // }
+
+        let dateAxisRenderer = am5xy.AxisRendererX.new(root, {});
+        dateAxisRenderer.labels.template.setAll({
+          minPosition: 0.01,
+          maxPosition: 0.99,
+          minGridDistance: 40,
+        });
+
+        var xAxis = chart.xAxes.push(
+          am5xy.GaplessDateAxis.new(root, {
+            groupData: true,
+            baseInterval: { timeUnit: 'day', count: 1 },
+            renderer: dateAxisRenderer,
+          }),
+        );
 
         // Create series
         var series = chart.series.push(
@@ -743,53 +774,67 @@ function Chart() {
         renderer: am5xy.AxisRendererY.new(root, {}),
       }),
     );
-    if (data.length < 14) {
-      // Create X-Axis
-      var xAxis = chart.xAxes.push(
-        am5xy.GaplessDateAxis.new(root, {
-          baseInterval: { timeUnit: 'day', count: 1 },
-          renderer: am5xy.AxisRendererX.new(root, {
-            minGridDistance: 8,
-          }),
-        }),
-      );
-    } else if (data.length < 19) {
-      // Create X-Axis
-      var xAxis = chart.xAxes.push(
-        am5xy.GaplessDateAxis.new(root, {
-          groupData: true,
-          groupInterval: { timeUnit: 'day', count: 3 },
-          baseInterval: { timeUnit: 'day', count: 1 },
-          renderer: am5xy.AxisRendererX.new(root, {
-            minGridDistance: 8,
-          }),
-        }),
-      );
-    } else if (data.length < 30) {
-      // Create X-Axis
-      var xAxis = chart.xAxes.push(
-        am5xy.GaplessDateAxis.new(root, {
-          groupData: true,
-          groupInterval: { timeUnit: 'day', count: 4 },
-          baseInterval: { timeUnit: 'day', count: 1 },
-          renderer: am5xy.AxisRendererX.new(root, {
-            minGridDistance: 8,
-          }),
-        }),
-      );
-    } else {
-      // Create X-Axis
-      var xAxis = chart.xAxes.push(
-        am5xy.GaplessDateAxis.new(root, {
-          groupData: true,
-          groupInterval: { timeUnit: 'day', count: 9 },
-          baseInterval: { timeUnit: 'day', count: 1 },
-          renderer: am5xy.AxisRendererX.new(root, {
-            minGridDistance: 8,
-          }),
-        }),
-      );
-    }
+    // if (data.length < 14) {
+    //   // Create X-Axis
+    //   var xAxis = chart.xAxes.push(
+    //     am5xy.GaplessDateAxis.new(root, {
+    //       baseInterval: { timeUnit: 'day', count: 1 },
+    //       renderer: am5xy.AxisRendererX.new(root, {
+    //         minGridDistance: 8,
+    //       }),
+    //     }),
+    //   );
+    // } else if (data.length < 19) {
+    //   // Create X-Axis
+    //   var xAxis = chart.xAxes.push(
+    //     am5xy.GaplessDateAxis.new(root, {
+    //       groupData: true,
+    //       groupInterval: { timeUnit: 'day', count: 3 },
+    //       baseInterval: { timeUnit: 'day', count: 1 },
+    //       renderer: am5xy.AxisRendererX.new(root, {
+    //         minGridDistance: 8,
+    //       }),
+    //     }),
+    //   );
+    // } else if (data.length < 30) {
+    //   // Create X-Axis
+    //   var xAxis = chart.xAxes.push(
+    //     am5xy.GaplessDateAxis.new(root, {
+    //       groupData: true,
+    //       groupInterval: { timeUnit: 'day', count: 4 },
+    //       baseInterval: { timeUnit: 'day', count: 1 },
+    //       renderer: am5xy.AxisRendererX.new(root, {
+    //         minGridDistance: 8,
+    //       }),
+    //     }),
+    //   );
+    // } else {
+    //   // Create X-Axis
+    //   var xAxis = chart.xAxes.push(
+    //     am5xy.GaplessDateAxis.new(root, {
+    //       groupData: true,
+    //       groupInterval: { timeUnit: 'day', count: 9 },
+    //       baseInterval: { timeUnit: 'day', count: 1 },
+    //       renderer: am5xy.AxisRendererX.new(root, {
+    //         minGridDistance: 8,
+    //       }),
+    //     }),
+    //   );
+    // }
+    let dateAxisRenderer = am5xy.AxisRendererX.new(root, {});
+    dateAxisRenderer.labels.template.setAll({
+      minPosition: 0.01,
+      maxPosition: 0.99,
+      minGridDistance: 40,
+    });
+
+    var xAxis = chart.xAxes.push(
+      am5xy.GaplessDateAxis.new(root, {
+        groupData: true,
+        baseInterval: { timeUnit: 'day', count: 1 },
+        renderer: dateAxisRenderer,
+      }),
+    );
 
     // Create series
     var series = chart.series.push(
@@ -1030,53 +1075,67 @@ function Chart() {
             renderer: am5xy.AxisRendererY.new(root, {}),
           }),
         );
-        if (data.length < 14) {
-          // Create X-Axis
-          var xAxis = chart.xAxes.push(
-            am5xy.GaplessDateAxis.new(root, {
-              baseInterval: { timeUnit: 'day', count: 1 },
-              renderer: am5xy.AxisRendererX.new(root, {
-                minGridDistance: 8,
-              }),
-            }),
-          );
-        } else if (data.length < 19) {
-          // Create X-Axis
-          var xAxis = chart.xAxes.push(
-            am5xy.GaplessDateAxis.new(root, {
-              groupData: true,
-              groupInterval: { timeUnit: 'day', count: 3 },
-              baseInterval: { timeUnit: 'day', count: 1 },
-              renderer: am5xy.AxisRendererX.new(root, {
-                minGridDistance: 8,
-              }),
-            }),
-          );
-        } else if (data.length < 30) {
-          // Create X-Axis
-          var xAxis = chart.xAxes.push(
-            am5xy.GaplessDateAxis.new(root, {
-              groupData: true,
-              groupInterval: { timeUnit: 'day', count: 4 },
-              baseInterval: { timeUnit: 'day', count: 1 },
-              renderer: am5xy.AxisRendererX.new(root, {
-                minGridDistance: 8,
-              }),
-            }),
-          );
-        } else {
-          // Create X-Axis
-          var xAxis = chart.xAxes.push(
-            am5xy.GaplessDateAxis.new(root, {
-              groupData: true,
-              groupInterval: { timeUnit: 'day', count: 9 },
-              baseInterval: { timeUnit: 'day', count: 1 },
-              renderer: am5xy.AxisRendererX.new(root, {
-                minGridDistance: 8,
-              }),
-            }),
-          );
-        }
+        // if (data.length < 14) {
+        //   // Create X-Axis
+        //   var xAxis = chart.xAxes.push(
+        //     am5xy.GaplessDateAxis.new(root, {
+        //       baseInterval: { timeUnit: 'day', count: 1 },
+        //       renderer: am5xy.AxisRendererX.new(root, {
+        //         minGridDistance: 8,
+        //       }),
+        //     }),
+        //   );
+        // } else if (data.length < 19) {
+        //   // Create X-Axis
+        //   var xAxis = chart.xAxes.push(
+        //     am5xy.GaplessDateAxis.new(root, {
+        //       groupData: true,
+        //       groupInterval: { timeUnit: 'day', count: 3 },
+        //       baseInterval: { timeUnit: 'day', count: 1 },
+        //       renderer: am5xy.AxisRendererX.new(root, {
+        //         minGridDistance: 8,
+        //       }),
+        //     }),
+        //   );
+        // } else if (data.length < 30) {
+        //   // Create X-Axis
+        //   var xAxis = chart.xAxes.push(
+        //     am5xy.GaplessDateAxis.new(root, {
+        //       groupData: true,
+        //       groupInterval: { timeUnit: 'day', count: 4 },
+        //       baseInterval: { timeUnit: 'day', count: 1 },
+        //       renderer: am5xy.AxisRendererX.new(root, {
+        //         minGridDistance: 8,
+        //       }),
+        //     }),
+        //   );
+        // } else {
+        //   // Create X-Axis
+        //   var xAxis = chart.xAxes.push(
+        //     am5xy.GaplessDateAxis.new(root, {
+        //       groupData: true,
+        //       groupInterval: { timeUnit: 'day', count: 9 },
+        //       baseInterval: { timeUnit: 'day', count: 1 },
+        //       renderer: am5xy.AxisRendererX.new(root, {
+        //         minGridDistance: 8,
+        //       }),
+        //     }),
+        //   );
+        // }
+        let dateAxisRenderer = am5xy.AxisRendererX.new(root, {});
+        dateAxisRenderer.labels.template.setAll({
+          minPosition: 0.01,
+          maxPosition: 0.99,
+          minGridDistance: 40,
+        });
+
+        var xAxis = chart.xAxes.push(
+          am5xy.GaplessDateAxis.new(root, {
+            groupData: true,
+            baseInterval: { timeUnit: 'day', count: 1 },
+            renderer: dateAxisRenderer,
+          }),
+        );
 
         // Create series
         var series = chart.series.push(
